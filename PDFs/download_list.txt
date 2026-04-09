@@ -1,0 +1,25 @@
+https://arxiv.org/pdf/2512.14614 Hunyuan World 1.5.pdf
+https://arxiv.org/pdf/2506.09985 V-JEPA 2.pdf
+https://arxiv.org/pdf/2209.00588 IRIS.pdf
+https://arxiv.org/pdf/2503.14734 GR00T.pdf
+https://arxiv.org/pdf/2410.24164 Pi0.pdf
+https://arxiv.org/pdf/2301.08243 I-JEPA.pdf
+https://arxiv.org/pdf/2307.15818 RT-2.pdf
+https://arxiv.org/pdf/2503.20020 Gemini Robotics.pdf
+https://arxiv.org/pdf/2405.12399 DIAMOND.pdf
+https://arxiv.org/pdf/2504.16054 Pi0.5.pdf
+https://arxiv.org/pdf/2405.12213 Octo.pdf
+https://arxiv.org/pdf/2404.08471 V-JEPA.pdf
+https://arxiv.org/pdf/2510.00739 TD-JEPA.pdf
+https://arxiv.org/pdf/2301.04104 DreamerV3.pdf
+https://arxiv.org/pdf/1912.01603 DreamerV1.pdf
+https://arxiv.org/pdf/2511.14759 Pi0.6.pdf
+https://arxiv.org/pdf/2603.19312 Le-World-Model.pdf
+https://arxiv.org/pdf/2405.18418 Hierarchical Puppeteer.pdf
+https://arxiv.org/pdf/2406.09246 OpenVLA.pdf
+https://arxiv.org/pdf/2010.02193 DreamerV2.pdf
+https://arxiv.org/pdf/2511.08544 Le-JEPA.pdf
+https://arxiv.org/pdf/2601.05230 Learning Latent Action World Models In The Wild.pdf
+https://arxiv.org/pdf/2501.03575 NVIDIA Cosmos.pdf
+https://arxiv.org/pdf/2602.06949 Dream Dojo.pdf
+https://arxiv.org/pdf/2603.14482 V-JEPA 2.1.pdf

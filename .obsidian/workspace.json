@@ -1,0 +1,264 @@
+{
+  "main": {
+    "id": "c8a98c8d50f67963",
+    "type": "split",
+    "children": [
+      {
+        "id": "40489db52f3480f4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "360b1814d3a36d75",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Papers/ACT-JEPA.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ACT-JEPA"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1be75a94bbc3628d",
+    "type": "split",
+    "children": [
+      {
+        "id": "cacdee2f7469a0fd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bfeafcf15ff586c9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "4866488576356642",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "1948ef3537a99d95",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "429601aaebd8ae2d",
+    "type": "split",
+    "children": [
+      {
+        "id": "652678e1ee1820fd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ec5e78bd937a8308",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Papers/ACT-JEPA.md",
+                "collapseAll": false,
+                "extraContext": true,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for ACT-JEPA"
+            }
+          },
+          {
+            "id": "cb8b1705368f716c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Papers/ACT-JEPA.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from ACT-JEPA"
+            }
+          },
+          {
+            "id": "4efa1e1b3cee5e49",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "cea1bbcd178fb0aa",
+            "type": "leaf",
+            "state": {
+              "type": "localgraph",
+              "state": {
+                "file": "Papers/ACT-JEPA.md",
+                "options": {
+                  "collapse-filter": false,
+                  "search": "tag:#paper  ",
+                  "localJumps": 2,
+                  "localBacklinks": true,
+                  "localForelinks": true,
+                  "localInterlinks": false,
+                  "showTags": false,
+                  "showAttachments": false,
+                  "hideUnresolved": true,
+                  "collapse-color-groups": true,
+                  "colorGroups": [],
+                  "collapse-display": true,
+                  "showArrow": false,
+                  "textFadeMultiplier": 0,
+                  "nodeSizeMultiplier": 1,
+                  "lineSizeMultiplier": 1,
+                  "collapse-forces": false,
+                  "centerStrength": 0.218210802700675,
+                  "repelStrength": 14.3267066766692,
+                  "linkStrength": 1,
+                  "linkDistance": 30,
+                  "scale": 0.9999999999999998,
+                  "close": true
+                }
+              },
+              "icon": "lucide-git-fork",
+              "title": "Graph of ACT-JEPA"
+            }
+          },
+          {
+            "id": "faffa6b55bebfa36",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "9687d5155c15a7c7",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Papers/ACT-JEPA.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of ACT-JEPA"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 421.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "360b1814d3a36d75",
+  "lastOpenFiles": [
+    "Datasets/Franka Demonstration Data.md",
+    "Metrics/1-shot Accuracy.md",
+    "MOC.md.tmp.1455632.1775747474720",
+    "PDFs/PLDM.pdf",
+    "Papers/PLDM.md",
+    "Papers/PLDM.md.tmp.1455632.1775747433497",
+    "Canvases/Physical Intelligence Overview.canvas",
+    "Papers/Le-World-Model.md",
+    "MOC.md.tmp.1455632.1775747030871",
+    "MOC.md.tmp.1455632.1775747027742",
+    "MOC.md.tmp.1455632.1775747025886",
+    "_scripts/inline_link.py",
+    "_scripts/inline_link.py.tmp.1455632.1775746991900",
+    "_scripts",
+    "PDFs/Stable World Model.pdf",
+    "Papers/Stable World Model.md",
+    "Papers/LeVERB.md",
+    "Papers/ACT-JEPA.md",
+    "Papers/PEVA.md",
+    "Papers/Le-JEPA.md",
+    "1-shot Accuracy.md",
+    "Papers/Genie 2.md",
+    "Metrics/2D Pointing Accuracy.md",
+    "Metrics/F1 Score.md",
+    "Templates/Dataset Template.md",
+    "Templates/Paper Template.md",
+    "Templates/Metric Template.md",
+    "Datasets/BridgeData V2.md",
+    "Papers/OpenVLA.md",
+    "Franka Demonstration Data.md",
+    "Papers/Pi0.md",
+    "Papers/Eureka.md",
+    "Papers/UniPi.md",
+    "Papers/UniSim.md",
+    "Papers/DIAMOND.md",
+    "Papers/IRIS.md",
+    "Papers/Octo.md"
+  ]
+}
