@@ -42,6 +42,7 @@ Models that learn environment dynamics for planning, imagination, and control.
 | [[DreamerV3]] | 2023 | Single algorithm across diverse domains |
 | [[IRIS]] | 2023 | Transformer world model with discrete tokens |
 | [[DreamerV2]] | 2021 | Discrete world models for Atari |
+| [[MVAE]] | 2020 | Motion VAE for character control in latent space |
 | [[DreamerV1]] | 2020 | Latent imagination for behavior learning |
 
 ---
