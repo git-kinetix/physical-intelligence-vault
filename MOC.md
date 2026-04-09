@@ -14,14 +14,14 @@ Models based on Joint-Embedding Predictive Architectures for video/image underst
 
 | Paper | Year | Key Idea |
 |-------|------|----------|
-| [[I-JEPA]] | 2023 | Image JEPA — the original that started it all |
-| [[V-JEPA]] | 2024 | Video feature prediction with masking |
-| [[V-JEPA 2]] | 2025 | Scaled V-JEPA for understanding + planning |
 | [[V-JEPA 2.1]] | 2026 | Dense features for video SSL |
+| [[Le-World-Model]] | 2026 | Stable end-to-end JEPA world model from pixels |
+| [[V-JEPA 2]] | 2025 | Scaled V-JEPA for understanding + planning |
 | [[ACT-JEPA]] | 2025 | Joint-embedding for efficient policy representation |
 | [[TD-JEPA]] | 2025 | Temporal difference learning + JEPA for zero-shot RL |
 | [[Le-JEPA]] | 2025 | Provable, scalable SSL without heuristics |
-| [[Le-World-Model]] | 2026 | Stable end-to-end JEPA world model from pixels |
+| [[V-JEPA]] | 2024 | Video feature prediction with masking |
+| [[I-JEPA]] | 2023 | Image JEPA — the original that started it all |
 
 ---
 
@@ -30,18 +30,18 @@ Models that learn environment dynamics for planning, imagination, and control.
 
 | Paper | Year | Key Idea |
 |-------|------|----------|
-| [[DreamerV1]] | 2020 | Latent imagination for behavior learning |
-| [[DreamerV2]] | 2021 | Discrete world models for Atari |
-| [[DreamerV3]] | 2023 | Single algorithm across diverse domains |
-| [[IRIS]] | 2023 | Transformer world model with discrete tokens |
-| [[DIAMOND]] | 2024 | Diffusion-based world model for visual detail |
-| [[Genie 2]] | 2024 | Generative interactive 3D environments |
+| [[Stable World Model]] | 2026 | Reproducible world modeling research framework |
+| [[Dream Dojo]] | 2026 | Generalist robot world model from human video |
 | [[Hunyuan World 1.5]] | 2025 | Interactive world model with 3D consistency |
 | [[Hierarchical Puppeteer]] | 2025 | Hierarchical visual humanoid control |
 | [[PLDM]] | 2025 | Planning with latent dynamics from reward-free data |
 | [[PEVA]] | 2025 | Whole-body conditioned egocentric video prediction |
-| [[Stable World Model]] | 2026 | Reproducible world modeling research framework |
-| [[Dream Dojo]] | 2026 | Generalist robot world model from human video |
+| [[DIAMOND]] | 2024 | Diffusion-based world model for visual detail |
+| [[Genie 2]] | 2024 | Generative interactive 3D environments |
+| [[DreamerV3]] | 2023 | Single algorithm across diverse domains |
+| [[IRIS]] | 2023 | Transformer world model with discrete tokens |
+| [[DreamerV2]] | 2021 | Discrete world models for Atari |
+| [[DreamerV1]] | 2020 | Latent imagination for behavior learning |
 
 ---
 
@@ -50,15 +50,15 @@ Vision-Language-Action models for generalist robot control.
 
 | Paper | Year | Key Idea |
 |-------|------|----------|
-| [[RT-2]] | 2023 | Pioneering VLA transferring web knowledge to robots |
-| [[Octo]] | 2024 | Open-source generalist robot policy |
-| [[OpenVLA]] | 2024 | Open-source 7B VLA outperforming RT-2-X 55B |
-| [[Pi0]] | 2024 | Flow matching foundation model for dexterous tasks |
 | [[Pi0.5]] | 2025 | Co-training across heterogeneous robot data |
 | [[Pi0.6]] | 2025 | RL from experience with advantage conditioning |
 | [[LeVERB]] | 2025 | Humanoid control with latent vision-language instruction |
 | [[GR00T]] | 2025 | Dual-system VLA for humanoid robots |
 | [[Gemini Robotics]] | 2025 | Gemini 2.0 for embodied reasoning + action |
+| [[Pi0]] | 2024 | Flow matching foundation model for dexterous tasks |
+| [[Octo]] | 2024 | Open-source generalist robot policy |
+| [[OpenVLA]] | 2024 | Open-source 7B VLA outperforming RT-2-X 55B |
+| [[RT-2]] | 2023 | Pioneering VLA transferring web knowledge to robots |
 
 ---
 
@@ -67,10 +67,10 @@ Action-conditioned video generation and video-based planning for physical AI.
 
 | Paper | Year | Key Idea |
 |-------|------|----------|
+| [[Learning Latent Action World Models In The Wild]] | 2026 | Latent action discovery from internet video |
+| [[NVIDIA Cosmos]] | 2025 | World foundation model platform for physical AI |
 | [[UniPi]] | 2023 | Video generation as universal planning |
 | [[UniSim]] | 2023 | Universal simulator for action-conditioned video |
-| [[NVIDIA Cosmos]] | 2025 | World foundation model platform for physical AI |
-| [[Learning Latent Action World Models In The Wild]] | 2026 | Latent action discovery from internet video |
 
 ---
 
