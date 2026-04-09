@@ -10,7 +10,7 @@ importance: 5
 aliases: [GR00T, GR00T-N1, GR00T N1, GR00T-N1-2B, NVIDIA GR00T]
 ---
 
-![[PDFs/GR00T.pdf]]
+!PDFs/GR00T.pdf
 
 
 # GR00T N1: An Open Foundation Model for Generalist Humanoid Robots

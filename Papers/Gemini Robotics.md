@@ -10,7 +10,7 @@ importance:
 aliases: [Gemini Robotics, Gemini Robotics-ER, Gemini VLA]
 ---
 
-![[PDFs/Gemini Robotics.pdf]]
+!PDFs/Gemini Robotics.pdf
 
 
 # Gemini Robotics: Bringing AI into the Physical World
@@ -154,19 +154,19 @@ Gemini Robotics is the only method achieving non-zero success on the most challe
 - [[ERQA Accuracy]] -- multiple-choice accuracy on the 400-question [[ERQA Benchmark|Embodied Reasoning QA]] benchmark
 - [[2D Pointing Accuracy]] -- accuracy where predicted point falls within ground truth region mask (Paco-LVIS, Pixmo-Point, Where2Place)
 - [[3D Object Detection AP]] -- [[Mean Average Precision (mAP)|Average Precision]] at [[IoU]]@15 on [[SUN-RGBD]] benchmark
-- [[RealworldQA Accuracy]] -- multiple-choice accuracy on real-world visual QA
-- [[BLINK Accuracy]] -- multiple-choice accuracy on the BLINK visual benchmark
+- RealworldQA Accuracy -- multiple-choice accuracy on real-world visual QA
+- BLINK Accuracy -- multiple-choice accuracy on the BLINK visual benchmark
 
 ## Datasets Used
 
 - [[ALOHA 2 Teleoperation Dataset]] -- thousands of hours of expert demonstrations collected on ALOHA 2 fleet over 12 months, covering thousands of diverse tasks
 - [[ERQA Benchmark]] -- 400 multiple-choice VQA questions across 7 embodied reasoning categories, introduced in this paper
 - [[SUN-RGBD]] -- RGB-D dataset used for 3D object detection evaluation
-- [[Paco-LVIS]] -- dataset used for 2D open-vocabulary pointing evaluation
-- [[Pixmo-Point]] -- dataset used for 2D pointing evaluation
-- [[Where2Place]] -- dataset used for placement-focused 2D pointing evaluation
-- [[RealworldQA]] -- real-world visual question answering benchmark
-- [[BLINK]] -- visual benchmark for embodied reasoning evaluation
+- Paco-LVIS -- dataset used for 2D open-vocabulary pointing evaluation
+- Pixmo-Point -- dataset used for 2D pointing evaluation
+- Where2Place -- dataset used for placement-focused 2D pointing evaluation
+- RealworldQA -- real-world visual question answering benchmark
+- BLINK -- visual benchmark for embodied reasoning evaluation
 
 ## Related Papers
 

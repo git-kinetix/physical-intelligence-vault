@@ -10,7 +10,7 @@ importance:
 aliases: [ACT-JEPA, Action JEPA]
 ---
 
-![[PDFs/ACT-JEPA.pdf]]
+!PDFs/ACT-JEPA.pdf
 
 # ACT-JEPA: Novel Joint-Embedding Predictive Architecture for Efficient Policy Representation Learning
 
@@ -92,13 +92,13 @@ The two-stage approach catastrophically fails, particularly on ManiSkill (0% suc
 - [[Success Rate]] — primary metric for policy evaluation; percentage of successfully completed tasks across evaluation episodes
 - [[RMSE]] — [[RMSE|Root Mean Squared Error]]; used for world model probing evaluation measuring prediction accuracy of future proprioceptive states
 - [[ATE]] — Absolute Trajectory Error; measures distance between predicted and ground-truth trajectories in world model probing
-- [[Action Reconstruction Loss]] — L1 loss for action prediction quality during training
+- Action Reconstruction Loss — L1 loss for action prediction quality during training
 
 ## Datasets Used
 
 - [[Push-T]] — 2D manipulation task with 206 human demonstrations at 96x96 RGB resolution; push a T-shaped block to a target pose
-- [[ManiSkill]] — 5 robotic manipulation tasks with 50 demonstrations per task at 128x128 RGB resolution; simulated 3D robot manipulation
-- [[Meta-World]] — 15 diverse manipulation tasks with 40 demonstrations per task at 128x128 RGB resolution; multi-task robot learning benchmark
+- ManiSkill — 5 robotic manipulation tasks with 50 demonstrations per task at 128x128 RGB resolution; simulated 3D robot manipulation
+- Meta-World — 15 diverse manipulation tasks with 40 demonstrations per task at 128x128 RGB resolution; multi-task robot learning benchmark
 
 ## Related Papers
 

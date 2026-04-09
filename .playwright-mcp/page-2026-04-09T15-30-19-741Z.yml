@@ -1,0 +1,563 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - heading "Physical Intelligence Vault" [level=2] [ref=e5]:
+      - link "Physical Intelligence Vault" [ref=e6] [cursor=pointer]:
+        - /url: .
+    - generic [ref=e7]:
+      - button "Search Search" [ref=e10] [cursor=pointer]:
+        - img "Search" [ref=e11]
+        - paragraph [ref=e15]: Search
+      - button "Dark mode" [ref=e17] [cursor=pointer]:
+        - img "Dark mode" [ref=e18]
+      - button "Reader mode" [ref=e21] [cursor=pointer]:
+        - img "Reader mode" [ref=e22]
+    - generic [ref=e25]:
+      - button "Explorer" [expanded] [ref=e26] [cursor=pointer]:
+        - heading "Explorer" [level=2] [ref=e27]
+        - img [ref=e28]
+      - group [ref=e29]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - generic [ref=e32]:
+              - img [ref=e33] [cursor=pointer]
+              - link "Datasets" [ref=e35] [cursor=pointer]:
+                - /url: ./Datasets/
+          - listitem [ref=e36]:
+            - generic [ref=e37]:
+              - img [ref=e38] [cursor=pointer]
+              - link "Metrics" [ref=e40] [cursor=pointer]:
+                - /url: ./Metrics/
+          - listitem [ref=e41]:
+            - generic [ref=e42]:
+              - img [ref=e43] [cursor=pointer]
+              - link "Papers" [ref=e45] [cursor=pointer]:
+                - /url: ./Papers/
+          - listitem [ref=e46]:
+            - link "Datasets Index" [ref=e47] [cursor=pointer]:
+              - /url: ./Datasets-Index
+          - listitem [ref=e48]:
+            - link "Metrics Index" [ref=e49] [cursor=pointer]:
+              - /url: ./Metrics-Index
+          - listitem [ref=e50]
+  - generic [ref=e51]:
+    - generic [ref=e53]:
+      - heading "index" [level=1] [ref=e54]
+      - paragraph [ref=e55]:
+        - time [ref=e56]: Aug 23, 2023,
+        - text: 3 min read
+      - list [ref=e57]:
+        - listitem [ref=e58]:
+          - link "#moc" [ref=e59] [cursor=pointer]:
+            - /url: ./tags/moc
+    - article [ref=e60]:
+      - heading "Physical Intelligence Vault — Map of Content" [level=1] [ref=e61]:
+        - text: Physical Intelligence Vault — Map of Content
+        - link [ref=e62] [cursor=pointer]:
+          - /url: "#physical-intelligence-vault--map-of-content"
+          - img [ref=e63]
+      - paragraph [ref=e66]: "A research knowledge base covering papers on physical intelligence: world models, joint-embedding architectures, vision-language-action models, and video generation for planning."
+      - separator [ref=e67]
+      - heading "JEPA Family" [level=2] [ref=e68]:
+        - text: JEPA Family
+        - link [ref=e69] [cursor=pointer]:
+          - /url: "#jepa-family"
+          - img [ref=e70]
+      - paragraph [ref=e73]: Models based on Joint-Embedding Predictive Architectures for video/image understanding and robot control.
+      - table [ref=e75]:
+        - rowgroup [ref=e76]:
+          - row "Paper Year Key Idea" [ref=e77]:
+            - columnheader "Paper" [ref=e78]
+            - columnheader "Year" [ref=e79]
+            - columnheader "Key Idea" [ref=e80]
+        - rowgroup [ref=e81]:
+          - row "I-JEPA 2023 Image JEPA — the original that started it all" [ref=e82]:
+            - cell "I-JEPA" [ref=e83]:
+              - link "I-JEPA" [ref=e84] [cursor=pointer]:
+                - /url: ./I-JEPA
+            - cell "2023" [ref=e85]
+            - cell "Image JEPA — the original that started it all" [ref=e86]
+          - row "V-JEPA 2024 Video feature prediction with masking" [ref=e87]:
+            - cell "V-JEPA" [ref=e88]:
+              - link "V-JEPA" [ref=e89] [cursor=pointer]:
+                - /url: ./V-JEPA
+            - cell "2024" [ref=e90]
+            - cell "Video feature prediction with masking" [ref=e91]
+          - row "V-JEPA 2 2025 Scaled V-JEPA for understanding + planning" [ref=e92]:
+            - cell "V-JEPA 2" [ref=e93]:
+              - link "V-JEPA 2" [ref=e94] [cursor=pointer]:
+                - /url: ./V-JEPA-2
+            - cell "2025" [ref=e95]
+            - cell "Scaled V-JEPA for understanding + planning" [ref=e96]
+          - row "V-JEPA 2.1 2026 Dense features for video SSL" [ref=e97]:
+            - cell "V-JEPA 2.1" [ref=e98]:
+              - link "V-JEPA 2.1" [ref=e99] [cursor=pointer]:
+                - /url: ./V-JEPA-2.1
+            - cell "2026" [ref=e100]
+            - cell "Dense features for video SSL" [ref=e101]
+          - row "ACT-JEPA 2025 Joint-embedding for efficient policy representation" [ref=e102]:
+            - cell "ACT-JEPA" [ref=e103]:
+              - link "ACT-JEPA" [ref=e104] [cursor=pointer]:
+                - /url: ./ACT-JEPA
+            - cell "2025" [ref=e105]
+            - cell "Joint-embedding for efficient policy representation" [ref=e106]
+          - row "TD-JEPA 2025 Temporal difference learning + JEPA for zero-shot RL" [ref=e107]:
+            - cell "TD-JEPA" [ref=e108]:
+              - link "TD-JEPA" [ref=e109] [cursor=pointer]:
+                - /url: ./TD-JEPA
+            - cell "2025" [ref=e110]
+            - cell "Temporal difference learning + JEPA for zero-shot RL" [ref=e111]
+          - row "Le-JEPA 2025 Provable, scalable SSL without heuristics" [ref=e112]:
+            - cell "Le-JEPA" [ref=e113]:
+              - link "Le-JEPA" [ref=e114] [cursor=pointer]:
+                - /url: ./Le-JEPA
+            - cell "2025" [ref=e115]
+            - cell "Provable, scalable SSL without heuristics" [ref=e116]
+          - row "Le-World-Model 2026 Stable end-to-end JEPA world model from pixels" [ref=e117]:
+            - cell "Le-World-Model" [ref=e118]:
+              - link "Le-World-Model" [ref=e119] [cursor=pointer]:
+                - /url: ./Le-World-Model
+            - cell "2026" [ref=e120]
+            - cell "Stable end-to-end JEPA world model from pixels" [ref=e121]
+      - separator [ref=e122]
+      - heading "World Models" [level=2] [ref=e123]:
+        - text: World Models
+        - link [ref=e124] [cursor=pointer]:
+          - /url: "#world-models"
+          - img [ref=e125]
+      - paragraph [ref=e128]: Models that learn environment dynamics for planning, imagination, and control.
+      - table [ref=e130]:
+        - rowgroup [ref=e131]:
+          - row "Paper Year Key Idea" [ref=e132]:
+            - columnheader "Paper" [ref=e133]
+            - columnheader "Year" [ref=e134]
+            - columnheader "Key Idea" [ref=e135]
+        - rowgroup [ref=e136]:
+          - row "DreamerV1 2020 Latent imagination for behavior learning" [ref=e137]:
+            - cell "DreamerV1" [ref=e138]:
+              - link "DreamerV1" [ref=e139] [cursor=pointer]:
+                - /url: ./DreamerV1
+            - cell "2020" [ref=e140]
+            - cell "Latent imagination for behavior learning" [ref=e141]
+          - row "DreamerV2 2021 Discrete world models for Atari" [ref=e142]:
+            - cell "DreamerV2" [ref=e143]:
+              - link "DreamerV2" [ref=e144] [cursor=pointer]:
+                - /url: ./DreamerV2
+            - cell "2021" [ref=e145]
+            - cell "Discrete world models for Atari" [ref=e146]
+          - row "DreamerV3 2023 Single algorithm across diverse domains" [ref=e147]:
+            - cell "DreamerV3" [ref=e148]:
+              - link "DreamerV3" [ref=e149] [cursor=pointer]:
+                - /url: ./DreamerV3
+            - cell "2023" [ref=e150]
+            - cell "Single algorithm across diverse domains" [ref=e151]
+          - row "IRIS 2023 Transformer world model with discrete tokens" [ref=e152]:
+            - cell "IRIS" [ref=e153]:
+              - link "IRIS" [ref=e154] [cursor=pointer]:
+                - /url: ./IRIS
+            - cell "2023" [ref=e155]
+            - cell "Transformer world model with discrete tokens" [ref=e156]
+          - row "DIAMOND 2024 Diffusion-based world model for visual detail" [ref=e157]:
+            - cell "DIAMOND" [ref=e158]:
+              - link "DIAMOND" [ref=e159] [cursor=pointer]:
+                - /url: ./DIAMOND
+            - cell "2024" [ref=e160]
+            - cell "Diffusion-based world model for visual detail" [ref=e161]
+          - row "Genie 2 2024 Generative interactive 3D environments" [ref=e162]:
+            - cell "Genie 2" [ref=e163]:
+              - link "Genie 2" [ref=e164] [cursor=pointer]:
+                - /url: ./Genie-2
+            - cell "2024" [ref=e165]
+            - cell "Generative interactive 3D environments" [ref=e166]
+          - row "Hunyuan World 1.5 2025 Interactive world model with 3D consistency" [ref=e167]:
+            - cell "Hunyuan World 1.5" [ref=e168]:
+              - link "Hunyuan World 1.5" [ref=e169] [cursor=pointer]:
+                - /url: ./Hunyuan-World-1.5
+            - cell "2025" [ref=e170]
+            - cell "Interactive world model with 3D consistency" [ref=e171]
+          - row "Hierarchical Puppeteer 2025 Hierarchical visual humanoid control" [ref=e172]:
+            - cell "Hierarchical Puppeteer" [ref=e173]:
+              - link "Hierarchical Puppeteer" [ref=e174] [cursor=pointer]:
+                - /url: ./Hierarchical-Puppeteer
+            - cell "2025" [ref=e175]
+            - cell "Hierarchical visual humanoid control" [ref=e176]
+          - row "PLDM 2025 Planning with latent dynamics from reward-free data" [ref=e177]:
+            - cell "PLDM" [ref=e178]:
+              - link "PLDM" [ref=e179] [cursor=pointer]:
+                - /url: ./PLDM
+            - cell "2025" [ref=e180]
+            - cell "Planning with latent dynamics from reward-free data" [ref=e181]
+          - row "PEVA 2025 Whole-body conditioned egocentric video prediction" [ref=e182]:
+            - cell "PEVA" [ref=e183]:
+              - link "PEVA" [ref=e184] [cursor=pointer]:
+                - /url: ./PEVA
+            - cell "2025" [ref=e185]
+            - cell "Whole-body conditioned egocentric video prediction" [ref=e186]
+          - row "Stable World Model 2026 Reproducible world modeling research framework" [ref=e187]:
+            - cell "Stable World Model" [ref=e188]:
+              - link "Stable World Model" [ref=e189] [cursor=pointer]:
+                - /url: ./Stable-World-Model
+            - cell "2026" [ref=e190]
+            - cell "Reproducible world modeling research framework" [ref=e191]
+          - row "Dream Dojo 2026 Generalist robot world model from human video" [ref=e192]:
+            - cell "Dream Dojo" [ref=e193]:
+              - link "Dream Dojo" [ref=e194] [cursor=pointer]:
+                - /url: ./Dream-Dojo
+            - cell "2026" [ref=e195]
+            - cell "Generalist robot world model from human video" [ref=e196]
+      - separator [ref=e197]
+      - heading "VLA Models" [level=2] [ref=e198]:
+        - text: VLA Models
+        - link [ref=e199] [cursor=pointer]:
+          - /url: "#vla-models"
+          - img [ref=e200]
+      - paragraph [ref=e203]: Vision-Language-Action models for generalist robot control.
+      - table [ref=e205]:
+        - rowgroup [ref=e206]:
+          - row "Paper Year Key Idea" [ref=e207]:
+            - columnheader "Paper" [ref=e208]
+            - columnheader "Year" [ref=e209]
+            - columnheader "Key Idea" [ref=e210]
+        - rowgroup [ref=e211]:
+          - row "RT-2 2023 Pioneering VLA transferring web knowledge to robots" [ref=e212]:
+            - cell "RT-2" [ref=e213]:
+              - link "RT-2" [ref=e214] [cursor=pointer]:
+                - /url: ./RT-2
+            - cell "2023" [ref=e215]
+            - cell "Pioneering VLA transferring web knowledge to robots" [ref=e216]
+          - row "Octo 2024 Open-source generalist robot policy" [ref=e217]:
+            - cell "Octo" [ref=e218]:
+              - link "Octo" [ref=e219] [cursor=pointer]:
+                - /url: ./Octo
+            - cell "2024" [ref=e220]
+            - cell "Open-source generalist robot policy" [ref=e221]
+          - row "OpenVLA 2024 Open-source 7B VLA outperforming RT-2-X 55B" [ref=e222]:
+            - cell "OpenVLA" [ref=e223]:
+              - link "OpenVLA" [ref=e224] [cursor=pointer]:
+                - /url: ./OpenVLA
+            - cell "2024" [ref=e225]
+            - cell "Open-source 7B VLA outperforming RT-2-X 55B" [ref=e226]
+          - row "Pi0 2024 Flow matching foundation model for dexterous tasks" [ref=e227]:
+            - cell "Pi0" [ref=e228]:
+              - link "Pi0" [ref=e229] [cursor=pointer]:
+                - /url: ./Papers/Pi0
+            - cell "2024" [ref=e230]
+            - cell "Flow matching foundation model for dexterous tasks" [ref=e231]
+          - row "Pi0.5 2025 Co-training across heterogeneous robot data" [ref=e232]:
+            - cell "Pi0.5" [ref=e233]:
+              - link "Pi0.5" [ref=e234] [cursor=pointer]:
+                - /url: ./Papers/Pi0.5
+            - cell "2025" [ref=e235]
+            - cell "Co-training across heterogeneous robot data" [ref=e236]
+          - row "Pi0.6 2025 RL from experience with advantage conditioning" [ref=e237]:
+            - cell "Pi0.6" [ref=e238]:
+              - link "Pi0.6" [ref=e239] [cursor=pointer]:
+                - /url: ./Papers/Pi0.6
+            - cell "2025" [ref=e240]
+            - cell "RL from experience with advantage conditioning" [ref=e241]
+          - row "LeVERB 2025 Humanoid control with latent vision-language instruction" [ref=e242]:
+            - cell "LeVERB" [ref=e243]:
+              - link "LeVERB" [ref=e244] [cursor=pointer]:
+                - /url: ./LeVERB
+            - cell "2025" [ref=e245]
+            - cell "Humanoid control with latent vision-language instruction" [ref=e246]
+          - row "GR00T 2025 Dual-system VLA for humanoid robots" [ref=e247]:
+            - cell "GR00T" [ref=e248]:
+              - link "GR00T" [ref=e249] [cursor=pointer]:
+                - /url: ./GR00T
+            - cell "2025" [ref=e250]
+            - cell "Dual-system VLA for humanoid robots" [ref=e251]
+          - row "Gemini Robotics 2025 Gemini 2.0 for embodied reasoning + action" [ref=e252]:
+            - cell "Gemini Robotics" [ref=e253]:
+              - link "Gemini Robotics" [ref=e254] [cursor=pointer]:
+                - /url: ./Gemini-Robotics
+            - cell "2025" [ref=e255]
+            - cell "Gemini 2.0 for embodied reasoning + action" [ref=e256]
+      - separator [ref=e257]
+      - heading "Video Generation / Planning" [level=2] [ref=e258]:
+        - text: Video Generation / Planning
+        - link [ref=e259] [cursor=pointer]:
+          - /url: "#video-generation--planning"
+          - img [ref=e260]
+      - paragraph [ref=e263]: Action-conditioned video generation and video-based planning for physical AI.
+      - table [ref=e265]:
+        - rowgroup [ref=e266]:
+          - row "Paper Year Key Idea" [ref=e267]:
+            - columnheader "Paper" [ref=e268]
+            - columnheader "Year" [ref=e269]
+            - columnheader "Key Idea" [ref=e270]
+        - rowgroup [ref=e271]:
+          - row "UniPi 2023 Video generation as universal planning" [ref=e272]:
+            - cell "UniPi" [ref=e273]:
+              - link "UniPi" [ref=e274] [cursor=pointer]:
+                - /url: ./UniPi
+            - cell "2023" [ref=e275]
+            - cell "Video generation as universal planning" [ref=e276]
+          - row "UniSim 2023 Universal simulator for action-conditioned video" [ref=e277]:
+            - cell "UniSim" [ref=e278]:
+              - link "UniSim" [ref=e279] [cursor=pointer]:
+                - /url: ./UniSim
+            - cell "2023" [ref=e280]
+            - cell "Universal simulator for action-conditioned video" [ref=e281]
+          - row "NVIDIA Cosmos 2025 World foundation model platform for physical AI" [ref=e282]:
+            - cell "NVIDIA Cosmos" [ref=e283]:
+              - link "NVIDIA Cosmos" [ref=e284] [cursor=pointer]:
+                - /url: ./NVIDIA-Cosmos
+            - cell "2025" [ref=e285]
+            - cell "World foundation model platform for physical AI" [ref=e286]
+          - row "Learning Latent Action World Models In The Wild 2026 Latent action discovery from internet video" [ref=e287]:
+            - cell "Learning Latent Action World Models In The Wild" [ref=e288]:
+              - link "Learning Latent Action World Models In The Wild" [ref=e289] [cursor=pointer]:
+                - /url: ./Papers/Learning-Latent-Action-World-Models-In-The-Wild
+            - cell "2026" [ref=e290]
+            - cell "Latent action discovery from internet video" [ref=e291]
+      - separator [ref=e292]
+      - heading "Robotics" [level=2] [ref=e293]:
+        - text: Robotics
+        - link [ref=e294] [cursor=pointer]:
+          - /url: "#robotics"
+          - img [ref=e295]
+      - paragraph [ref=e298]: Reward design, sim-to-real, and dexterous manipulation.
+      - table [ref=e300]:
+        - rowgroup [ref=e301]:
+          - row "Paper Year Key Idea" [ref=e302]:
+            - columnheader "Paper" [ref=e303]
+            - columnheader "Year" [ref=e304]
+            - columnheader "Key Idea" [ref=e305]
+        - rowgroup [ref=e306]:
+          - row "Eureka 2023 LLM-powered reward design for dexterous tasks" [ref=e307]:
+            - cell "Eureka" [ref=e308]:
+              - link "Eureka" [ref=e309] [cursor=pointer]:
+                - /url: ./Eureka
+            - cell "2023" [ref=e310]
+            - cell "LLM-powered reward design for dexterous tasks" [ref=e311]
+      - separator [ref=e312]
+      - heading "Metrics" [level=2] [ref=e313]:
+        - text: Metrics
+        - link [ref=e314] [cursor=pointer]:
+          - /url: "#metrics"
+          - img [ref=e315]
+      - paragraph [ref=e318]:
+        - text: See
+        - link "Metrics Index" [ref=e319] [cursor=pointer]:
+          - /url: ./Metrics-Index
+        - text: for all evaluation metrics used across papers.
+      - paragraph [ref=e320]:
+        - strong [ref=e321]: "Key metric categories:"
+      - list [ref=e322]:
+        - listitem [ref=e323]:
+          - strong [ref=e324]: Classification
+          - text: ":"
+          - link "Top-1 Accuracy" [ref=e325] [cursor=pointer]:
+            - /url: ./Metrics/Top-1-Accuracy
+          - text: ","
+          - link "Mean Average Precision (mAP)" [ref=e326] [cursor=pointer]:
+            - /url: ./Metrics/Mean-Average-Precision-(mAP)
+          - text: ","
+          - link "F1 Score" [ref=e327] [cursor=pointer]:
+            - /url: ./Metrics/F1-Score
+        - listitem [ref=e328]:
+          - strong [ref=e329]: Generation Quality
+          - text: ":"
+          - link "PSNR" [ref=e330] [cursor=pointer]:
+            - /url: ./Metrics/PSNR
+          - text: ","
+          - link "SSIM" [ref=e331] [cursor=pointer]:
+            - /url: ./Metrics/SSIM
+          - text: ","
+          - link "LPIPS" [ref=e332] [cursor=pointer]:
+            - /url: ./Metrics/LPIPS
+          - text: ","
+          - link "FVD" [ref=e333] [cursor=pointer]:
+            - /url: ./Metrics/FVD
+          - text: ","
+          - link "rFVD" [ref=e334] [cursor=pointer]:
+            - /url: ./Metrics/rFVD
+        - listitem [ref=e335]:
+          - strong [ref=e336]: Robotics
+          - text: ":"
+          - link "Success Rate" [ref=e337] [cursor=pointer]:
+            - /url: ./Metrics/Success-Rate
+          - text: ","
+          - link "Task Progress Score" [ref=e338] [cursor=pointer]:
+            - /url: ./Metrics/Task-Progress-Score
+          - text: ","
+          - link "Failure Rate" [ref=e339] [cursor=pointer]:
+            - /url: ./Metrics/Failure-Rate
+          - text: ","
+          - link "Language Following Rate" [ref=e340] [cursor=pointer]:
+            - /url: ./Metrics/Language-Following-Rate
+        - listitem [ref=e341]:
+          - strong [ref=e342]: RL
+          - text: ":"
+          - link "Episode Return" [ref=e343] [cursor=pointer]:
+            - /url: ./Metrics/Episode-Return
+          - text: ","
+          - link "Gamer Normalized Median" [ref=e344] [cursor=pointer]:
+            - /url: ./Metrics/Gamer-Normalized-Median
+          - text: ","
+          - link "Human Normalized Mean" [ref=e345] [cursor=pointer]:
+            - /url: ./Metrics/Human-Normalized-Mean
+        - listitem [ref=e346]:
+          - strong [ref=e347]: Representation
+          - text: ":"
+          - link "Linear Probe Accuracy" [ref=e348] [cursor=pointer]:
+            - /url: ./Metrics/Linear-Probe-Accuracy
+          - text: ","
+          - link "Attentive Probe Accuracy" [ref=e349] [cursor=pointer]:
+            - /url: ./Metrics/Attentive-Probe-Accuracy
+          - text: ","
+          - link "k-NN Accuracy" [ref=e350] [cursor=pointer]:
+            - /url: ./Metrics/k-NN-Accuracy
+        - listitem [ref=e351]:
+          - strong [ref=e352]: Human Evaluation
+          - text: ":"
+          - link "Human Preference Rate" [ref=e353] [cursor=pointer]:
+            - /url: ./Metrics/Human-Preference-Rate
+          - text: ","
+          - link "Motion Naturalness" [ref=e354] [cursor=pointer]:
+            - /url: ./Metrics/Motion-Naturalness
+      - separator [ref=e355]
+      - heading "Datasets" [level=2] [ref=e356]:
+        - text: Datasets
+        - link [ref=e357] [cursor=pointer]:
+          - /url: "#datasets"
+          - img [ref=e358]
+      - paragraph [ref=e361]:
+        - text: See
+        - link "Datasets Index" [ref=e362] [cursor=pointer]:
+          - /url: ./Datasets-Index
+        - text: for all datasets referenced across papers.
+      - paragraph [ref=e363]:
+        - strong [ref=e364]: "Key dataset categories:"
+      - list [ref=e365]:
+        - listitem [ref=e366]:
+          - strong [ref=e367]: Video
+          - text: ":"
+          - link "Kinetics-400" [ref=e368] [cursor=pointer]:
+            - /url: ./Datasets/Kinetics-400
+          - text: ","
+          - link "Something-Something v2" [ref=e369] [cursor=pointer]:
+            - /url: ./Something-Something-v2
+          - text: ","
+          - link "HowTo100M" [ref=e370] [cursor=pointer]:
+            - /url: ./HowTo100M
+          - text: ","
+          - link "Ego4D" [ref=e371] [cursor=pointer]:
+            - /url: ./Datasets/Ego4D
+        - listitem [ref=e372]:
+          - strong [ref=e373]: Image
+          - text: ":"
+          - link "ImageNet-1K" [ref=e374] [cursor=pointer]:
+            - /url: ./ImageNet-1K
+          - text: ","
+          - link "MS-COCO 2017" [ref=e375] [cursor=pointer]:
+            - /url: ./Datasets/MS-COCO-2017
+          - text: ","
+          - link "ADE20K" [ref=e376] [cursor=pointer]:
+            - /url: ./ADE20K
+        - listitem [ref=e377]:
+          - strong [ref=e378]: Robotics
+          - text: ":"
+          - link "Open X-Embodiment" [ref=e379] [cursor=pointer]:
+            - /url: ./Open-X-Embodiment
+          - text: ","
+          - link "DROID" [ref=e380] [cursor=pointer]:
+            - /url: ./Datasets/DROID
+          - text: ","
+          - link "BridgeData V2" [ref=e381] [cursor=pointer]:
+            - /url: ./Datasets/BridgeData-V2
+          - text: ","
+          - link "Push-T" [ref=e382] [cursor=pointer]:
+            - /url: ./Datasets/Push-T
+        - listitem [ref=e383]:
+          - strong [ref=e384]: RL Environments
+          - text: ":"
+          - link "DeepMind Control Suite" [ref=e385] [cursor=pointer]:
+            - /url: ./Datasets/DeepMind-Control-Suite
+          - text: ","
+          - link "Atari 2600 Games" [ref=e386] [cursor=pointer]:
+            - /url: ./Datasets/Atari-2600-Games
+          - text: ","
+          - link "Crafter" [ref=e387] [cursor=pointer]:
+            - /url: ./Datasets/Crafter
+        - listitem [ref=e388]:
+          - strong [ref=e389]: Egocentric
+          - text: ":"
+          - link "EPIC-KITCHENS-100" [ref=e390] [cursor=pointer]:
+            - /url: ./Datasets/EPIC-KITCHENS-100
+          - text: ","
+          - link "Ego-Exo4D" [ref=e391] [cursor=pointer]:
+            - /url: ./Datasets/Ego-Exo4D
+          - text: ","
+          - link "Assembly-101" [ref=e392] [cursor=pointer]:
+            - /url: ./Datasets/Assembly-101
+      - separator [ref=e393]
+      - heading "Research Themes" [level=2] [ref=e394]:
+        - text: Research Themes
+        - link [ref=e395] [cursor=pointer]:
+          - /url: "#research-themes"
+          - img [ref=e396]
+      - generic [ref=e399]:
+        - button "Copy source" [ref=e400]:
+          - img [ref=e401]
+        - button "Expand mermaid diagram" [ref=e404]:
+          - img [ref=e405]
+        - code [ref=e407]:
+          - img [ref=e409]
+      - paragraph [ref=e410]:
+        - strong [ref=e411]: "Cross-cutting connections:"
+      - list [ref=e412]:
+        - listitem [ref=e413]: V-JEPA 2 → Le-World-Model → TD-JEPA (JEPA for control)
+        - listitem [ref=e414]: DreamerV3 → Dream Dojo → Hierarchical Puppeteer (world model evolution)
+        - listitem [ref=e415]: Pi0 → Pi0.5 → Pi0.6 (Physical Intelligence progression)
+        - listitem [ref=e416]: NVIDIA Cosmos → GR00T (NVIDIA’s physical AI stack)
+        - listitem [ref=e417]: Gemini Robotics builds on PaLM-E / RT-2 lineage
+    - separator [ref=e418]
+  - generic [ref=e419]:
+    - generic [ref=e420]:
+      - heading "Graph View" [level=3] [ref=e421]
+      - button "Global Graph" [ref=e423] [cursor=pointer]:
+        - img [ref=e424]
+    - generic [ref=e426]:
+      - button "Table of Contents" [expanded] [ref=e427] [cursor=pointer]:
+        - heading "Table of Contents" [level=3] [ref=e428]
+        - img [ref=e429]
+      - list [ref=e431]:
+        - listitem [ref=e432]:
+          - link "Physical Intelligence Vault — Map of Content" [ref=e433] [cursor=pointer]:
+            - /url: "#physical-intelligence-vault--map-of-content"
+        - listitem [ref=e434]:
+          - link "JEPA Family" [ref=e435] [cursor=pointer]:
+            - /url: "#jepa-family"
+        - listitem [ref=e436]:
+          - link "World Models" [ref=e437] [cursor=pointer]:
+            - /url: "#world-models"
+        - listitem [ref=e438]:
+          - link "VLA Models" [ref=e439] [cursor=pointer]:
+            - /url: "#vla-models"
+        - listitem [ref=e440]:
+          - link "Video Generation / Planning" [ref=e441] [cursor=pointer]:
+            - /url: "#video-generation--planning"
+        - listitem [ref=e442]:
+          - link "Robotics" [ref=e443] [cursor=pointer]:
+            - /url: "#robotics"
+        - listitem [ref=e444]:
+          - link "Metrics" [ref=e445] [cursor=pointer]:
+            - /url: "#metrics"
+        - listitem [ref=e446]:
+          - link "Datasets" [ref=e447] [cursor=pointer]:
+            - /url: "#datasets"
+        - listitem [ref=e448]:
+          - link "Research Themes" [ref=e449] [cursor=pointer]:
+            - /url: "#research-themes"
+        - listitem [ref=e450]
+  - contentinfo [ref=e451]:
+    - paragraph [ref=e452]:
+      - text: Created with
+      - link "Quartz v4.5.2" [ref=e453] [cursor=pointer]:
+        - /url: https://quartz.jzhao.xyz/
+      - text: © 2026
+    - list [ref=e454]:
+      - listitem [ref=e455]:
+        - link "GitHub" [ref=e456] [cursor=pointer]:
+          - /url: https://github.com/git-kinetix/physical-intelligence-vault

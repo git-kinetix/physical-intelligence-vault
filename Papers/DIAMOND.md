@@ -10,7 +10,7 @@ importance:
 aliases: [DIAMOND, DIffusion As a Model Of eNvironment Dreams]
 ---
 
-![[PDFs/DIAMOND.pdf]]
+!PDFs/DIAMOND.pdf
 
 
 # Diffusion for World Modeling: Visual Details Matter in Atari
@@ -94,15 +94,15 @@ DIAMOND requires 5.3x fewer neural function evaluations per generated frame than
 
 ## Metrics Used
 
-- [[Human-Normalized Score (HNS)]] -- (agent - random) / (human - random), reported as mean and IQM across 26 games
-- [[Interquartile Mean (IQM)]] -- robust aggregate metric less sensitive to outlier games
-- [[Neural Function Evaluations (NFE)]] -- computational cost per generated frame
-- [[Superhuman Games]] -- number of games exceeding human performance
+- Human-Normalized Score (HNS) -- (agent - random) / (human - random), reported as mean and IQM across 26 games
+- Interquartile Mean (IQM) -- robust aggregate metric less sensitive to outlier games
+- Neural Function Evaluations (NFE) -- computational cost per generated frame
+- Superhuman Games -- number of games exceeding human performance
 
 ## Datasets Used
 
-- [[Atari 100K Benchmark]] -- 26 Atari 2600 games, 100K environment steps each
-- [[Counter-Strike: Global Offensive]] -- gameplay footage for neural game engine demonstration
+- Atari 100K Benchmark -- 26 Atari 2600 games, 100K environment steps each
+- Counter-Strike: Global Offensive -- gameplay footage for neural game engine demonstration
 
 ## Related Papers
 

@@ -10,7 +10,7 @@ importance:
 aliases: [V-JEPA 2.1, VJEPA2.1]
 ---
 
-![[PDFs/V-JEPA 2.1.pdf]]
+!PDFs/V-JEPA 2.1.pdf
 
 
 # [[V-JEPA 2]].1: Unlocking Dense Features in Video Self-Supervised Learning
@@ -229,8 +229,8 @@ The distance-weighted warmup scheme achieves the best dense task performance whi
 
 - [[V-JEPA 2]] — direct predecessor; [[V-JEPA 2]].1 adds dense features while maintaining global performance
 - [[V-JEPA]] — original paper establishing the [[V-JEPA]] framework
-- [[DINOv2]] — image self-supervised baseline; [[V-JEPA 2]].1 closes the dense prediction gap
-- [[DINOv3]] — state-of-the-art image SSL; [[V-JEPA 2]].1 is competitive on dense tasks at much smaller scale
-- [[InternVideo2]] — video understanding baseline
+- DINOv2 — image self-supervised baseline; [[V-JEPA 2]].1 closes the dense prediction gap
+- DINOv3 — state-of-the-art image SSL; [[V-JEPA 2]].1 is competitive on dense tasks at much smaller scale
+- InternVideo2 — video understanding baseline
 - [[LeJEPA]] — provides theoretical grounding for JEPA training objectives
 - [[LeWorldModel]] — applies JEPA principles to world modeling from pixels

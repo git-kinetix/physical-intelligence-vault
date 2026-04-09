@@ -29,4 +29,4 @@ where $\hat{\mathbf{y}}_t$ is the model's prediction at time $t$, $\mathbf{y}_t$
 Fundamental evaluation metric for world models, dynamics models, and predictive models in RL and robotics. It directly measures the quality of the model's learned dynamics, which is critical for model-based planning and imagination-based policy learning. Often reported at multiple prediction horizons to assess error accumulation.
 
 ## Papers Using This Metric
-- [[Learning Latent Action World Models]] — evaluating the accuracy of latent action world model predictions against ground-truth environment dynamics
+- Learning Latent Action World Models — evaluating the accuracy of latent action world model predictions against ground-truth environment dynamics

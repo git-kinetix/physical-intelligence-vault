@@ -10,7 +10,7 @@ importance:
 aliases: [pi0.5, pi-zero-point-five, pi_0.5]
 ---
 
-![[PDFs/Pi0.5.pdf]]
+!PDFs/Pi0.5.pdf
 
 
 # [[Pi0|pi0]].5: a Vision-Language-Action Model with Open-World Generalization
@@ -150,14 +150,14 @@ The model demonstrates consistent success across entirely unseen environments, v
 - [[Task Progress Score]] -- primary metric measuring percentage of task completion based on rubric (e.g., 50% = half of dishes placed in sink)
 - [[Success Rate]] -- percentage of successful task completions
 - [[Language Following Rate]] -- percentage of correct object selection given language instructions
-- [[In-Distribution vs OOD Performance]] -- separate evaluation on familiar and novel objects
+- In-Distribution vs OOD Performance -- separate evaluation on familiar and novel objects
 
 ## Datasets Used
 
-- [[Physical Intelligence Mobile Manipulator Dataset]] -- ~400 hours of household tasks across ~100 homes
-- [[Physical Intelligence Multi-Environment Dataset]] -- non-mobile robot demonstrations in diverse real homes
+- Physical Intelligence Mobile Manipulator Dataset -- ~400 hours of household tasks across ~100 homes
+- Physical Intelligence Multi-Environment Dataset -- non-mobile robot demonstrations in diverse real homes
 - [[Open X-Embodiment]] -- cross-embodiment robot data used as part of CE data source
-- [[Web Data (Captions, VQA, Localization)]] -- internet-scale visual and language data for grounding
+- Web Data (Captions, VQA, Localization) -- internet-scale visual and language data for grounding
 
 ## Related Papers
 

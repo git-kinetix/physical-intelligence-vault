@@ -10,7 +10,7 @@ importance:
 aliases: [Puppeteer, Hierarchical Puppeteer, RL Puppeteer]
 ---
 
-![[PDFs/Hierarchical Puppeteer.pdf]]
+!PDFs/Hierarchical Puppeteer.pdf
 
 
 # Hierarchical World Models as Visual Whole-Body Humanoid Controllers
@@ -97,18 +97,18 @@ Performance of Puppeteer is comparable to TD-MPC2 across all tasks except Stairs
 ## Metrics Used
 - [[Episode Return]] — cumulative reward per episode; primary performance metric for all 8 tasks
 - [[Human Preference Rate]] — percentage of human evaluators preferring one method's motion quality over another (n=46 participants)
-- [[Episode Length]] — number of timesteps survived; proxy for stability and task completion
-- [[Torso Height]] — average height of humanoid torso during locomotion; proxy for posture naturalness
+- Episode Length — number of timesteps survived; proxy for stability and task completion
+- Torso Height — average height of humanoid torso during locomotion; proxy for posture naturalness
 - [[Motion Naturalness]] — qualitative assessment via human evaluation comparing motion quality
 
 ## Datasets Used
 - [[CMU Motion Capture Database]] — large-scale human motion capture dataset used to pretrain the low-level tracking agent
-- [[Custom Humanoid Simulation Suite]] — 8 tasks (3 proprioceptive, 5 visual) with a 56-DoF simulated humanoid in MuJoCo
+- Custom Humanoid Simulation Suite — 8 tasks (3 proprioceptive, 5 visual) with a 56-DoF simulated humanoid in MuJoCo
 
 ## Related Papers
-- [[TD-MPC2]] — scalable world model for continuous control; primary baseline and architectural inspiration for the JEPA-style world model
+- TD-MPC2 — scalable world model for continuous control; primary baseline and architectural inspiration for the JEPA-style world model
 - [[DreamerV3]] — general-purpose world model; baseline that fails on high-dimensional humanoid control
-- [[SAC]] — model-free soft actor-critic baseline
+- SAC — model-free soft actor-critic baseline
 - [[DreamerV1]] — earlier [[DreamerV1|Dreamer]] agent
-- [[JEPA]] — Joint-Embedding Predictive Architecture proposed by LeCun; conceptual foundation for the world model design
-- [[PlaNet]] — model-based planning agent
+- JEPA — Joint-Embedding Predictive Architecture proposed by LeCun; conceptual foundation for the world model design
+- PlaNet — model-based planning agent

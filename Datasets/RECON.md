@@ -25,4 +25,4 @@ Unknown
 - BAIR blog post: https://bair.berkeley.edu/blog/2021/11/03/recon/
 
 ## Papers Using This Dataset
-- [[Learning Latent Action World Models]] — used for navigation world model training
+- Learning Latent Action World Models — used for navigation world model training

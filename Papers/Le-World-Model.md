@@ -10,7 +10,7 @@ importance: 5
 aliases: [LeWorldModel, LeWM, Le-World-Model]
 ---
 
-![[PDFs/Le-World-Model.pdf]]
+!PDFs/Le-World-Model.pdf
 
 
 # LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture from Pixels
@@ -124,24 +124,24 @@ LeWM reliably detects physically implausible events through surprise measurement
 
 - [[Success Rate]] — primary control task metric (percentage of successful task completions)
 - [[Linear Probe MSE]] — mean squared error of linear regression from latent embeddings to physical quantities
-- [[Pearson Correlation (r)]] — correlation between predicted and true physical quantities from latent probing
+- Pearson Correlation (r) — correlation between predicted and true physical quantities from latent probing
 - [[MLP Probe MSE]] — nonlinear (MLP) probing of physical quantities from latent space
 - [[Planning Time]] — wall-clock time per planning step (seconds)
 - [[Surprise Score]] — violation-of-expectation metric measuring prediction error for implausible vs. plausible events
 - [[Temporal Straightening]] — cosine similarity of velocity vectors in latent space (trajectory smoothness)
-- [[t-SNE Visualization]] — qualitative latent space structure visualization
+- t-SNE Visualization — qualitative latent space structure visualization
 
 ## Datasets Used
 
 - [[Push-T]] — 2D block pushing manipulation task (primary benchmark)
-- [[OGBench-Cube]] — 3D robotic manipulation with a robotic arm
-- [[Two-Room]] — 2D navigation environment with room transitions
-- [[Reacher]] — 2-joint robotic arm reaching task
+- OGBench-Cube — 3D robotic manipulation with a robotic arm
+- Two-Room — 2D navigation environment with room transitions
+- Reacher — 2-joint robotic arm reaching task
 
 ## Related Papers
 
 - [[LeJEPA]] — sister paper providing the SIGReg regularizer and theoretical foundations used in LeWM
-- [[DINO-WM]] — foundation-model-based world model baseline; uses pretrained DINO features; LeWM is 48x faster
+- DINO-WM — foundation-model-based world model baseline; uses pretrained DINO features; LeWM is 48x faster
 - [[PLDM]] — only other end-to-end JEPA world model; requires 6 loss coefficients vs. LeWM's 1
 - [[V-JEPA]] — video JEPA for representation learning; LeWM applies similar principles to world modeling
 - [[V-JEPA 2]] — action-conditioned variant ([[V-JEPA 2]]-AC) shares the goal of latent-space robotic planning

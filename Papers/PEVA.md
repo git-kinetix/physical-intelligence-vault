@@ -10,7 +10,7 @@ importance:
 aliases: [PEVA, Predict Egocentric Video from Human Actions]
 ---
 
-![[PDFs/PEVA.pdf]]
+!PDFs/PEVA.pdf
 
 # PEVA: Whole-Body Conditioned Egocentric Video Prediction
 
@@ -111,12 +111,12 @@ This table characterizes the kinematic statistics of the Nymeria dataset for the
 
 - [[LPIPS]] — [[LPIPS|Learned Perceptual Image Patch Similarity]]; primary metric for perceptual quality of predicted frames (lower is better)
 - [[DreamSim]] — semantic similarity metric measuring high-level visual correspondence (lower is better)
-- [[FID]] — Frechet Inception Distance; measures distributional quality of generated frames (lower is better)
+- FID — Frechet Inception Distance; measures distributional quality of generated frames (lower is better)
 - [[PSNR]] — [[PSNR|Peak Signal-to-Noise Ratio]]; pixel-level reconstruction quality (higher is better)
 
 ## Datasets Used
 
-- [[Nymeria]] — large-scale dataset of real-world egocentric video paired with synchronized XSens motion capture body pose data; sampled at 4 FPS, 224x224 resolution, 80/20 train/val split; provides the paired egocentric video and 3D body pose trajectories for training and evaluation
+- Nymeria — large-scale dataset of real-world egocentric video paired with synchronized XSens motion capture body pose data; sampled at 4 FPS, 224x224 resolution, 80/20 train/val split; provides the paired egocentric video and 3D body pose trajectories for training and evaluation
 
 ## Related Papers
 

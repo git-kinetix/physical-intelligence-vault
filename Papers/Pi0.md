@@ -10,7 +10,7 @@ importance: 5
 aliases: [pi0, pi-zero, pi_0]
 ---
 
-![[PDFs/Pi0.pdf]]
+!PDFs/Pi0.pdf
 
 
 # pi0: A Vision-Language-Action Flow Model for General Robot Control
@@ -120,7 +120,7 @@ Scores are fractional (1.0 = perfect execution, 0.5 = halfway completion) averag
 ## Datasets Used
 
 - [[Open X-Embodiment]] -- cross-embodiment dataset comprising 9.1% of the pre-training mixture ("Magic Soup" subset)
-- [[Physical Intelligence Proprietary Dataset]] -- 90.9% of pre-training mixture with 106M single-arm timesteps and 797M dual-arm timesteps across 68 tasks
+- Physical Intelligence Proprietary Dataset -- 90.9% of pre-training mixture with 106M single-arm timesteps and 797M dual-arm timesteps across 68 tasks
 
 ## Related Papers
 

@@ -10,7 +10,7 @@ importance:
 aliases: [PLDM, Planning with Latent Dynamics Models]
 ---
 
-![[PDFs/PLDM.pdf]]
+!PDFs/PLDM.pdf
 
 # Learning from Reward-Free Offline Data: A Case for Planning with Latent Dynamics Models
 

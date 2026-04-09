@@ -10,7 +10,7 @@ importance:
 aliases: [V-JEPA, Video JEPA]
 ---
 
-![[PDFs/V-JEPA.pdf]]
+!PDFs/V-JEPA.pdf
 
 
 # Revisiting Feature Prediction for Learning Visual Representations from Video
@@ -150,6 +150,6 @@ V-JEPA shows exceptional label efficiency, outperforming all baselines across al
 
 - [[I-JEPA]] — the image-based JEPA that inspired V-JEPA's approach to feature prediction
 - [[V-JEPA 2]] — successor work scaling V-JEPA to larger models and data, adding action-conditioned capabilities
-- [[VideoMAE]] — pixel-prediction baseline that V-JEPA outperforms on frozen evaluation
-- [[DINOv2]] — strong image self-supervised baseline; leads on appearance tasks but lags on motion understanding
-- [[OpenCLIP]] — image-text contrastive baseline for comparison
+- VideoMAE — pixel-prediction baseline that V-JEPA outperforms on frozen evaluation
+- DINOv2 — strong image self-supervised baseline; leads on appearance tasks but lags on motion understanding
+- OpenCLIP — image-text contrastive baseline for comparison

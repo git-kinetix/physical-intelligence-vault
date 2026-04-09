@@ -27,4 +27,4 @@ CC-BY 4.0
 ## Papers Using This Dataset
 - [[V-JEPA 2.1]] — used for robot manipulation pretraining
 - [[Dream Dojo]] — used for world model training data
-- [[Learning Latent Action World Models]] — used for learning latent action representations
+- Learning Latent Action World Models — used for learning latent action representations

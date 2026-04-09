@@ -10,7 +10,7 @@ importance:
 aliases: [OpenVLA, OpenVLA-7B]
 ---
 
-![[PDFs/OpenVLA.pdf]]
+!PDFs/OpenVLA.pdf
 
 
 # OpenVLA: An Open-Source Vision-Language-Action Model
@@ -102,8 +102,8 @@ LoRA matches full fine-tuning while using only 1.4% of trainable parameters and 
 ## Metrics Used
 
 - [[Success Rate]] -- task completion rate across 29 manipulation tasks
-- [[VRAM Usage]] -- GPU memory footprint for training and inference
-- [[Trainable Parameters]] -- efficiency of parameter-efficient fine-tuning methods
+- VRAM Usage -- GPU memory footprint for training and inference
+- Trainable Parameters -- efficiency of parameter-efficient fine-tuning methods
 
 ## Datasets Used
 

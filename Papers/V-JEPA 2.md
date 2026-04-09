@@ -10,7 +10,7 @@ importance: 5
 aliases: [V-JEPA 2, VJEPA2, V-JEPA2]
 ---
 
-![[PDFs/V-JEPA 2.pdf]]
+!PDFs/V-JEPA 2.pdf
 
 
 # [[V-JEPA]] 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning
@@ -137,10 +137,10 @@ The dataset contains over 1 million hours of video, with [[YouTube-Temporal-1B]]
 - [[Top-1 Accuracy]] — frozen probe-based classification on [[Something-Something v2|SSv2]], [[Kinetics-400|K400]], [[Diving-48]], [[Jester]], COIN, IN1K
 - [[Recall@5]] — action anticipation metric on [[EPIC-KITCHENS-100]] (verb, noun, action)
 - [[Success Rate]] — robot manipulation task completion (reach, grasp, pick-and-place)
-- [[Paired Accuracy]] — video QA metric on MVP
-- [[Test Accuracy]] — video QA metric on [[PerceptionTest]]
+- Paired Accuracy — video QA metric on MVP
+- Test Accuracy — video QA metric on [[PerceptionTest]]
 - [[Multi-choice Accuracy]] — video QA metric on [[TempCompass]]
-- [[Multi-binary Short QA Accuracy]] — video QA metric on [[TemporalBench]]
+- Multi-binary Short QA Accuracy — video QA metric on [[TemporalBench]]
 - [[TOMATO Accuracy]] — video QA metric on [[TOMATO]] benchmark
 - [[Planning Time]] — wall-clock time per planning action for robot control
 - [[Euclidean Distance to Goal]] — distance metric for robot manipulation evaluation
@@ -171,7 +171,7 @@ The dataset contains over 1 million hours of video, with [[YouTube-Temporal-1B]]
 - [[V-JEPA]] — predecessor; [[V-JEPA]] 2 scales the architecture and data by an order of magnitude
 - [[V-JEPA 2.1]] — successor focusing on dense features and multi-level prediction
 - [[I-JEPA]] — image-based JEPA that inspired the video extension
-- [[DINOv2]] — strong image self-supervised baseline; [[V-JEPA]] 2 surpasses it on motion tasks
-- [[InternVideo2]] — video understanding baseline that [[V-JEPA]] 2 outperforms on [[Something-Something v2|SSv2]]
+- DINOv2 — strong image self-supervised baseline; [[V-JEPA]] 2 surpasses it on motion tasks
+- InternVideo2 — video understanding baseline that [[V-JEPA]] 2 outperforms on [[Something-Something v2|SSv2]]
 - [[Octo]] — generalist robot policy baseline significantly outperformed by [[V-JEPA]] 2-AC
 - [[Cosmos]] — foundation world model baseline; [[V-JEPA]] 2-AC plans 15x faster with higher success

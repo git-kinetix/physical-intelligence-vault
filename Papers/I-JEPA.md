@@ -10,7 +10,7 @@ importance:
 aliases: [I-JEPA, Image JEPA]
 ---
 
-![[PDFs/I-JEPA.pdf]]
+!PDFs/I-JEPA.pdf
 
 
 # Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture
@@ -96,15 +96,15 @@ I-JEPA substantially outperforms MAE on all transfer benchmarks. iBOT and DINO a
 ## Metrics Used
 
 - [[Top-1 Accuracy]] -- ImageNet linear probing and low-shot evaluation
-- [[GPU Hours]] -- computational efficiency comparison (I-JEPA ViT-H/14: <1,200 GPU hours)
-- [[Transfer Learning Accuracy]] -- linear probe on [[CIFAR-100]], [[Places205]], iNat18
+- GPU Hours -- computational efficiency comparison (I-JEPA ViT-H/14: <1,200 GPU hours)
+- Transfer Learning Accuracy -- linear probe on [[CIFAR-100]], [[Places205]], iNat18
 
 ## Datasets Used
 
 - [[ImageNet-1K]] -- pretraining and linear evaluation
 - [[CIFAR-100]] -- transfer learning evaluation
 - [[Places205]] -- transfer learning evaluation
-- [[iNaturalist 2018]] -- transfer learning evaluation
+- iNaturalist 2018 -- transfer learning evaluation
 
 ## Related Papers
 

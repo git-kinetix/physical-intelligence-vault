@@ -10,7 +10,7 @@ importance:
 aliases: [DreamerV2, Dreamer V2]
 ---
 
-![[PDFs/DreamerV2.pdf]]
+!PDFs/DreamerV2.pdf
 
 
 # Mastering Atari with Discrete World Models
@@ -90,7 +90,7 @@ The ablation reveals the relative importance of each component. Image gradients 
 ## Related Papers
 - [[DreamerV1]] — predecessor using Gaussian latent variables and analytic value gradients
 - [[DreamerV3]] — successor achieving general cross-domain performance with a single configuration
-- [[Rainbow]] — model-free DQN variant combining multiple improvements; key baseline
-- [[IQN]] — Implicit Quantile Networks; top single-GPU model-free agent before DreamerV2
-- [[C51]] — categorical distributional RL baseline
-- [[PlaNet]] — earlier model-based agent using same RSSM but online planning
+- Rainbow — model-free DQN variant combining multiple improvements; key baseline
+- IQN — Implicit Quantile Networks; top single-GPU model-free agent before DreamerV2
+- C51 — categorical distributional RL baseline
+- PlaNet — earlier model-based agent using same RSSM but online planning

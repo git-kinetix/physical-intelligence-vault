@@ -10,7 +10,7 @@ importance:
 aliases: [DreamerV1, Dreamer]
 ---
 
-![[PDFs/DreamerV1.pdf]]
+!PDFs/DreamerV1.pdf
 
 
 # Dream to Control: Learning Behaviors by Latent Imagination
@@ -90,16 +90,16 @@ Dreamer is approximately 3.7x faster than PlaNet and 8x faster than D4PG, while 
 
 ## Metrics Used
 - [[Episode Return]] — cumulative reward over an episode, averaged over 10 evaluation episodes per task
-- [[Average Score]] — mean episode return across all 20 tasks, the primary aggregate metric
-- [[Training Computation Time]] — wall-clock time per 1M environment steps, measuring computational efficiency
+- Average Score — mean episode return across all 20 tasks, the primary aggregate metric
+- Training Computation Time — wall-clock time per 1M environment steps, measuring computational efficiency
 - [[Data Efficiency]] — performance as a function of environment steps, comparing learning speed
 
 ## Datasets Used
 - [[DeepMind Control Suite]] — 20 continuous control tasks with pixel observations (64x64 RGB), including domains such as cartpole, cheetah, walker, finger, hopper, reacher, pendulum, cup, acrobot, and quadruped
 
 ## Related Papers
-- [[PlaNet]] — predecessor model-based agent using the same RSSM world model but with online CEM planning instead of learned behaviors
+- PlaNet — predecessor model-based agent using the same RSSM world model but with online CEM planning instead of learned behaviors
 - [[DreamerV2]] — successor work introducing discrete world models and achieving human-level Atari performance
 - [[DreamerV3]] — further successor achieving general performance across diverse domains with a single configuration
-- [[D4PG]] — model-free distributed actor-critic baseline
-- [[A3C]] — model-free asynchronous advantage actor-critic baseline
+- D4PG — model-free distributed actor-critic baseline
+- A3C — model-free asynchronous advantage actor-critic baseline

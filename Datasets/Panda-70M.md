@@ -24,4 +24,4 @@ Official GitHub: https://github.com/snap-research/Panda-70M. Project page: https
 
 ## Papers Using This Dataset
 - [[NVIDIA Cosmos]] — used as a video data source for world foundation model training
-- [[Learning Latent Action World Models]] — used for learning latent actions from in-the-wild videos
+- Learning Latent Action World Models — used for learning latent actions from in-the-wild videos

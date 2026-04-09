@@ -10,7 +10,7 @@ importance:
 aliases: [UniSim, Universal Simulator]
 ---
 
-![[PDFs/UniSim.pdf]]
+!PDFs/UniSim.pdf
 
 
 # Learning Interactive Real-World Simulators
@@ -114,19 +114,19 @@ Larger models produce higher-fidelity simulations, with improvements plateauing 
 
 ## Metrics Used
 
-- [[Frechet Video Distance (FVD)]] -- measures quality and diversity of generated video against real video distributions
-- [[CLIP Score]] -- measures alignment between generated video frames and conditioning text
-- [[CIDEr]] -- captioning quality metric for video captioning transfer evaluation
+- Frechet Video Distance (FVD) -- measures quality and diversity of generated video against real video distributions
+- CLIP Score -- measures alignment between generated video frames and conditioning text
+- CIDEr -- captioning quality metric for video captioning transfer evaluation
 - [[Success Rate]] -- task completion rate for sim-to-real transfer evaluation
-- [[Reduction in Distance to Goal (RDG)]] -- planning effectiveness metric
+- Reduction in Distance to Goal (RDG) -- planning effectiveness metric
 
 ## Datasets Used
 
 - [[Ego4D]] -- first-person human activity videos for navigation and interaction dynamics
 - [[EPIC-KITCHENS]] -- kitchen activity videos for manipulation dynamics
 - [[Open X-Embodiment]] -- robot manipulation trajectories for action-conditioned generation
-- [[ActivityNet Captions]] -- video captioning benchmark for transfer evaluation
-- [[Internet Imagery]] -- diverse images for visual coverage
+- ActivityNet Captions -- video captioning benchmark for transfer evaluation
+- Internet Imagery -- diverse images for visual coverage
 
 ## Related Papers
 

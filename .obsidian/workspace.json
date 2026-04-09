@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Papers/ACT-JEPA.md",
+                "file": "Papers/Octo.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "ACT-JEPA"
+              "title": "Octo"
             }
           }
         ]
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Papers/ACT-JEPA.md",
+                "file": "Papers/Octo.md",
                 "collapseAll": false,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -105,7 +105,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for ACT-JEPA"
+              "title": "Backlinks for Octo"
             }
           },
           {
@@ -114,12 +114,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Papers/ACT-JEPA.md",
+                "file": "Papers/Octo.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from ACT-JEPA"
+              "title": "Outgoing links from Octo"
             }
           },
           {
@@ -143,7 +143,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "Papers/ACT-JEPA.md",
+                "file": "Papers/Octo.md",
                 "options": {
                   "collapse-filter": false,
                   "search": "tag:#paper  ",
@@ -171,7 +171,7 @@
                 }
               },
               "icon": "lucide-git-fork",
-              "title": "Graph of ACT-JEPA"
+              "title": "Graph of Octo"
             }
           },
           {
@@ -194,13 +194,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Papers/ACT-JEPA.md",
+                "file": "Papers/Octo.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of ACT-JEPA"
+              "title": "Outline of Octo"
             }
           }
         ],
@@ -223,6 +223,10 @@
   },
   "active": "360b1814d3a36d75",
   "lastOpenFiles": [
+    "_scripts/strip_dead_links.py",
+    "_scripts/strip_dead_links.py.tmp.1455632.1775748834085",
+    "homepage.png",
+    "Papers/ACT-JEPA.md",
     "Papers/ACT-JEPA.md.tmp.1455632.1775747815204",
     "Papers/LeVERB.md.tmp.1455632.1775747789587",
     "Papers/LeVERB.md.tmp.1455632.1775747788129",
@@ -234,14 +238,11 @@
     "Datasets/Franka Demonstration Data.md",
     "Metrics/1-shot Accuracy.md",
     "MOC.md.tmp.1455632.1775747474720",
-    "PDFs/PLDM.pdf",
     "Papers/PLDM.md",
-    "Papers/PLDM.md.tmp.1455632.1775747433497",
     "Canvases/Physical Intelligence Overview.canvas",
     "Papers/Le-World-Model.md",
     "Papers/Stable World Model.md",
     "Papers/LeVERB.md",
-    "Papers/ACT-JEPA.md",
     "Papers/PEVA.md",
     "Papers/Le-JEPA.md",
     "1-shot Accuracy.md",

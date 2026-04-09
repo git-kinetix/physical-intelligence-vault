@@ -10,7 +10,7 @@ importance:
 aliases: [Eureka]
 ---
 
-![[PDFs/Eureka.pdf]]
+!PDFs/Eureka.pdf
 
 
 # Eureka: Human-Level Reward Design via Coding Large Language Models
@@ -118,16 +118,16 @@ On harder tasks, Eureka discovers novel reward structures that are less correlat
 
 ## Metrics Used
 
-- [[Normalized Improvement]] -- performance relative to human expert reward baseline (1.0 = human-level)
+- Normalized Improvement -- performance relative to human expert reward baseline (1.0 = human-level)
 - [[Task Success Rate]] -- percentage of tasks where Eureka exceeds human expert performance
-- [[Reward Correlation]] -- correlation between Eureka-generated and human-designed reward functions
-- [[Training Return]] -- cumulative RL training return achieved with each reward function
+- Reward Correlation -- correlation between Eureka-generated and human-designed reward functions
+- Training Return -- cumulative RL training return achieved with each reward function
 
 ## Datasets Used
 
-- [[NVIDIA Isaac Gym]] -- GPU-accelerated physics simulator providing 29 RL environments across 10 robot morphologies
-- [[Dexterous Manipulation Benchmark]] -- 20 bimanual Shadow Hand manipulation tasks
-- [[Isaac Gym Locomotion/Manipulation Tasks]] -- 9 diverse locomotion and manipulation environments
+- NVIDIA Isaac Gym -- GPU-accelerated physics simulator providing 29 RL environments across 10 robot morphologies
+- Dexterous Manipulation Benchmark -- 20 bimanual Shadow Hand manipulation tasks
+- Isaac Gym Locomotion/Manipulation Tasks -- 9 diverse locomotion and manipulation environments
 
 ## Related Papers
 

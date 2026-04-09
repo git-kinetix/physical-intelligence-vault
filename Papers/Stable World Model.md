@@ -10,7 +10,7 @@ importance:
 aliases: [Stable World Model, SWM, stable-worldmodel, stable-worldmodel-v1]
 ---
 
-![[PDFs/Stable World Model.pdf]]
+!PDFs/Stable World Model.pdf
 
 # stable-worldmodel-v1: Reproducible World Modeling Research and Evaluation
 
@@ -130,18 +130,18 @@ The 16 environments span four categories: manipulation ([[Push-T]]), navigation 
 ## Metrics Used
 
 - [[Success Rate]] -- primary evaluation metric, defined as the percentage of evaluation episodes that end satisfying the goal condition; used for all robustness experiments
-- [[Zero-Shot Generalization]] -- models trained in-distribution are evaluated on shifted environments without retraining or fine-tuning
-- [[Test Coverage]] -- software engineering metric (73%) used to quantify codebase reliability
-- [[Lines of Code]] -- used as a proxy for codebase complexity and maintainability
+- Zero-Shot Generalization -- models trained in-distribution are evaluated on shifted environments without retraining or fine-tuning
+- Test Coverage -- software engineering metric (73%) used to quantify codebase reliability
+- Lines of Code -- used as a proxy for codebase complexity and maintainability
 
 ## Datasets Used
 
 - [[Push-T]] -- 2D manipulation task where agent pushes a T-shaped block to a target pose; primary environment for DINO-WM robustness analysis (16 FoVs)
-- [[Two-Room]] -- 2D navigation task with door-based room transitions; highest FoV count at 17
+- Two-Room -- 2D navigation task with door-based room transitions; highest FoV count at 17
 - [[OGBench]] -- offline goal-conditioned RL benchmark; Cube and Scene variants (11 and 12 FoVs)
 - [[DeepMind Control Suite]] -- 12 continuous control tasks (Humanoid, Cheetah, Hopper, Reacher, Walker, Acrobot, Pendulum, Cartpole, Ball-in-Cup, Finger, Manipulator, Quadruped); 6-10 FoVs each
-- [[HDF5]] -- primary dataset storage format optimized for performance
-- [[MP4]] -- alternative dataset format for visualization
+- HDF5 -- primary dataset storage format optimized for performance
+- MP4 -- alternative dataset format for visualization
 
 ## Related Papers
 

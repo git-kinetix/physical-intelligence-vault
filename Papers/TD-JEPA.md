@@ -9,7 +9,7 @@ importance:
 aliases: [TD-JEPA, Temporal Difference JEPA]
 ---
 
-![[PDFs/TD-JEPA.pdf]]
+!PDFs/TD-JEPA.pdf
 
 
 # TD-JEPA: Latent-predictive Representations for Zero-Shot Reinforcement Learning
@@ -131,9 +131,9 @@ Total: 65 tasks across 13 datasets (each domain has multiple reward functions).
 
 - [[V-JEPA]] — video JEPA that TD-JEPA extends with temporal difference learning for RL
 - [[I-JEPA]] — image-based JEPA foundation
-- [[FB (Forward-Backward)]] — strong unsupervised RL baseline using forward-backward representations
-- [[HILP]] — hierarchical implicit latent planning baseline
-- [[ICVF]] — implicit contrastive value function baseline
-- [[BYOL-Explore]] — self-supervised RL baseline adapted with discount factor (BYOL-gamma)
+- FB (Forward-Backward) — strong unsupervised RL baseline using forward-backward representations
+- HILP — hierarchical implicit latent planning baseline
+- ICVF — implicit contrastive value function baseline
+- BYOL-Explore — self-supervised RL baseline adapted with discount factor (BYOL-gamma)
 - [[LeJEPA]] — provides theoretical grounding for JEPA training, related to TD-JEPA's collapse avoidance theory
 - [[LeWorldModel]] — another JEPA-based approach to world modeling, complementary to TD-JEPA's RL focus

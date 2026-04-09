@@ -10,7 +10,7 @@ importance:
 aliases: [IRIS]
 ---
 
-![[PDFs/IRIS.pdf]]
+!PDFs/IRIS.pdf
 
 
 # Transformers are Sample-Efficient World Models
@@ -88,13 +88,13 @@ IRIS shows particularly strong performance on visually structured games where di
 
 ## Metrics Used
 
-- [[Human-Normalized Score (HNS)]] -- primary metric: (agent_score - random_score) / (human_score - random_score), evaluated as mean and median across 26 Atari games
-- [[Superhuman Games]] -- number of games where the agent exceeds human performance
+- Human-Normalized Score (HNS) -- primary metric: (agent_score - random_score) / (human_score - random_score), evaluated as mean and median across 26 Atari games
+- Superhuman Games -- number of games where the agent exceeds human performance
 - [[Sample Efficiency]] -- performance achieved within 100K environment interactions (2 hours of play)
 
 ## Datasets Used
 
-- [[Atari 100K Benchmark]] -- 26 Atari 2600 games, each limited to 100K environment steps (400K frames with action repeat of 4)
+- Atari 100K Benchmark -- 26 Atari 2600 games, each limited to 100K environment steps (400K frames with action repeat of 4)
 
 ## Related Papers
 

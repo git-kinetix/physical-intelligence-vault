@@ -9,7 +9,7 @@ importance:
 aliases: [pi0.6, pi-zero-point-six, pi_0.6, pi*0.6, RECAP]
 ---
 
-![[PDFs/Pi0.6.pdf]]
+!PDFs/Pi0.6.pdf
 
 
 # pi*0.6: a VLA That Learns From Experience
@@ -127,13 +127,13 @@ The training pipeline combines massive pre-training data with relatively modest 
 - [[Success Rate]] -- proportion of successful episodes out of total attempts
 - [[Failure Rate]] -- proportion of failed episodes, roughly halved by RECAP
 - [[Task Completion Time]] -- time to complete each task, used in throughput calculation
-- [[Advantage Value]] -- estimated advantage used for conditioning policy training via the distributional value function
+- Advantage Value -- estimated advantage used for conditioning policy training via the distributional value function
 
 ## Datasets Used
 
-- [[Physical Intelligence Pre-training Dataset]] -- tens of thousands of hours of multi-task, multi-robot demonstrations used for offline RL pre-training
-- [[RECAP On-Policy Data]] -- autonomous rollout data collected during iterative deployment (300-600 episodes per task per iteration)
-- [[RECAP Expert Corrections]] -- teleoperated intervention data collected during autonomous execution (280-360 episodes per task)
+- Physical Intelligence Pre-training Dataset -- tens of thousands of hours of multi-task, multi-robot demonstrations used for offline RL pre-training
+- RECAP On-Policy Data -- autonomous rollout data collected during iterative deployment (300-600 episodes per task per iteration)
+- RECAP Expert Corrections -- teleoperated intervention data collected during autonomous execution (280-360 episodes per task)
 
 ## Related Papers
 

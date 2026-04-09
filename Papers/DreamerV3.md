@@ -10,7 +10,7 @@ importance:
 aliases: [DreamerV3, Dreamer V3]
 ---
 
-![[PDFs/DreamerV3.pdf]]
+!PDFs/DreamerV3.pdf
 
 
 # Mastering Diverse Domains through World Models
@@ -147,8 +147,8 @@ DreamerV3 matches or exceeds IMPALA's performance on DMLab using 200x fewer envi
 
 ## Datasets Used
 - [[Atari 100K]] — 26 Atari games with budget of 100K steps (400K frames with action repeat), testing extreme data efficiency
-- [[DeepMind Control Suite (Vision)]] — continuous control tasks from pixels (64x64 RGB)
-- [[DeepMind Control Suite (Proprioceptive)]] — continuous control tasks from state observations
+- DeepMind Control Suite (Vision) — continuous control tasks from pixels (64x64 RGB)
+- DeepMind Control Suite (Proprioceptive) — continuous control tasks from state observations
 - [[BSuite]] — 23 diagnostic environments with 468 configurations testing core RL capabilities
 - [[Crafter]] — 2D open-world survival game with 22 achievements, testing diverse skill acquisition
 - [[DMLab]] — 3D first-person navigation and exploration tasks
@@ -157,10 +157,10 @@ DreamerV3 matches or exceeds IMPALA's performance on DMLab using 200x fewer envi
 ## Related Papers
 - [[DreamerV1]] — first [[DreamerV1|Dreamer]] agent with Gaussian latents and analytic value gradients
 - [[DreamerV2]] — introduced discrete representations and KL balancing for Atari mastery
-- [[DrQ-v2]] — strong model-free baseline for visual continuous control
-- [[PPO]] — widely applicable model-free policy gradient baseline
-- [[IMPALA]] — scalable distributed actor-critic; baseline for DMLab
+- DrQ-v2 — strong model-free baseline for visual continuous control
+- PPO — widely applicable model-free policy gradient baseline
+- IMPALA — scalable distributed actor-critic; baseline for DMLab
 - [[IRIS]] — transformer-based world model baseline for [[Atari 2600 Games|Atari 100K]]
-- [[SPR]] — self-predictive representations; model-free [[Atari 2600 Games|Atari 100K]] baseline
-- [[Muesli]] — strong model-based baseline for [[BSuite]]
-- [[TD-MPC2]] — scalable world model for continuous control
+- SPR — self-predictive representations; model-free [[Atari 2600 Games|Atari 100K]] baseline
+- Muesli — strong model-based baseline for [[BSuite]]
+- TD-MPC2 — scalable world model for continuous control

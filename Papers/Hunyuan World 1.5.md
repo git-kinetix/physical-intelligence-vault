@@ -10,7 +10,7 @@ importance:
 aliases: [HY-World 1.5, WorldPlay, Hunyuan World 1.5]
 ---
 
-![[PDFs/Hunyuan World 1.5.pdf]]
+!PDFs/Hunyuan World 1.5.pdf
 
 
 # WorldPlay: Towards Long-Term Geometric Consistency for Real-Time Interactive World Modeling
@@ -113,13 +113,13 @@ Temporal reframing of RoPE (the core of Reconstituted Context Memory) provides a
 - [[RealEstate10K]] — real estate walkthrough videos for training and evaluation of novel view synthesis
 - [[DL3DV]] — large-scale 3D vision dataset for diverse scene understanding
 - [[Tanks and Temples]] — benchmark for 3D reconstruction with indoor and outdoor scenes
-- [[Custom Tencent Dataset]] — proprietary video data for pre-training the video diffusion backbone
+- Custom Tencent Dataset — proprietary video data for pre-training the video diffusion backbone
 
 ## Related Papers
-- [[CameraCtrl]] — camera-conditioned video generation baseline
-- [[SEVA]] — single-image novel view synthesis baseline
-- [[ViewCrafter]] — view synthesis from single images
-- [[Gen3C]] — generative 3D-consistent video synthesis
-- [[Matrix-Game-2.0]] — real-time interactive world model baseline
-- [[GameCraft]] — game-oriented world generation
+- CameraCtrl — camera-conditioned video generation baseline
+- SEVA — single-image novel view synthesis baseline
+- ViewCrafter — view synthesis from single images
+- Gen3C — generative 3D-consistent video synthesis
+- Matrix-Game-2.0 — real-time interactive world model baseline
+- GameCraft — game-oriented world generation
 - [[DreamerV3]] — model-based RL world model (different paradigm: latent state world models for RL vs. video generation world models)

@@ -10,7 +10,7 @@ importance:
 aliases: [Cosmos, NVIDIA Cosmos, Cosmos WFM, Cosmos-Predict1, Cosmos Tokenizer]
 ---
 
-![[PDFs/NVIDIA Cosmos.pdf]]
+!PDFs/NVIDIA Cosmos.pdf
 
 
 # Cosmos World Foundation Model Platform for Physical AI
@@ -291,14 +291,14 @@ Physics alignment is evaluated across eight controlled scenarios testing gravity
 
 ## Related Papers
 
-- [[Genie]] -- Google DeepMind's generative interactive environment model using VQ latent actions; Cosmos takes a different approach with continuous tokenization
-- [[CogVideoX]] -- Video generation model whose tokenizer is compared against Cosmos Tokenizer
-- [[VideoGPT]] -- Early discrete video tokenizer baseline compared in evaluation
-- [[FLUX]] -- Image generation model whose tokenizer is compared against Cosmos image tokenizers
-- [[Open-MAGVIT2]] -- Discrete image tokenizer using LFQ, compared against Cosmos-DI
-- [[LlamaGen]] -- Image generation model with VQ tokenizer, compared against Cosmos-DI
-- [[Omni-Tokenizer]] -- Joint image-video tokenizer baseline compared against Cosmos
-- [[VideoLDM]] -- Video latent diffusion model used as baseline in 3D consistency evaluation
-- [[VILA]] -- Vision-language model used for automated video captioning in the Cosmos pipeline
+- Genie -- Google DeepMind's generative interactive environment model using VQ latent actions; Cosmos takes a different approach with continuous tokenization
+- CogVideoX -- Video generation model whose tokenizer is compared against Cosmos Tokenizer
+- VideoGPT -- Early discrete video tokenizer baseline compared in evaluation
+- FLUX -- Image generation model whose tokenizer is compared against Cosmos image tokenizers
+- Open-MAGVIT2 -- Discrete image tokenizer using LFQ, compared against Cosmos-DI
+- LlamaGen -- Image generation model with VQ tokenizer, compared against Cosmos-DI
+- Omni-Tokenizer -- Joint image-video tokenizer baseline compared against Cosmos
+- VideoLDM -- Video latent diffusion model used as baseline in 3D consistency evaluation
+- VILA -- Vision-language model used for automated video captioning in the Cosmos pipeline
 - [[Learning Latent Action World Models In The Wild]] -- FAIR work on latent action world models from uncurated videos, related approach to action-free video generation
-- [[Cosmos-Drive-Dreams]] -- Follow-up work applying Cosmos WFMs specifically to autonomous driving synthetic data generation
+- Cosmos-Drive-Dreams -- Follow-up work applying Cosmos WFMs specifically to autonomous driving synthetic data generation

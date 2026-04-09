@@ -9,7 +9,7 @@ importance:
 aliases: [UniPi, Universal Policy]
 ---
 
-![[PDFs/UniPi.pdf]]
+!PDFs/UniPi.pdf
 
 
 # Learning Universal Policies via Text-Guided Video Generation
@@ -92,15 +92,15 @@ Pretraining on internet video data improves both video generation quality and do
 ## Metrics Used
 
 - [[Success Rate]] -- task completion rate for manipulation tasks across seen and novel combinations
-- [[Frechet Video Distance (FVD)]] -- quality and diversity of generated video plans
-- [[Frechet Inception Distance (FID)]] -- per-frame image quality of generated videos
-- [[CLIP Score]] -- alignment between generated video frames and text instructions
+- Frechet Video Distance (FVD) -- quality and diversity of generated video plans
+- Frechet Inception Distance (FID) -- per-frame image quality of generated videos
+- CLIP Score -- alignment between generated video frames and text instructions
 
 ## Datasets Used
 
-- [[CLIPort Simulation]] -- simulated tabletop manipulation environments for combinatorial and multi-task evaluation
-- [[Real Robot Demonstrations]] -- real-world robot manipulation data for video generation and planning
-- [[Internet Video Data]] -- pretraining data for the video diffusion model
+- CLIPort Simulation -- simulated tabletop manipulation environments for combinatorial and multi-task evaluation
+- Real Robot Demonstrations -- real-world robot manipulation data for video generation and planning
+- Internet Video Data -- pretraining data for the video diffusion model
 
 ## Related Papers
 

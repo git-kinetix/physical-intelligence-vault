@@ -10,7 +10,7 @@ importance:
 aliases: [DreamDojo, Dream Dojo]
 ---
 
-![[PDFs/Dream Dojo.pdf]]
+!PDFs/Dream Dojo.pdf
 
 
 # DreamDojo: A Generalist Robot World Model from Large-Scale Human Videos
@@ -163,10 +163,10 @@ Model-based planning using DreamDojo as a simulator roughly doubles success rate
 - [[Epic-Kitchens]] — kitchen activity video dataset (component of pretraining mixture)
 
 ## Related Papers
-- [[Cosmos-Predict2.5]] — base video diffusion model that DreamDojo builds upon
+- Cosmos-Predict2.5 — base video diffusion model that DreamDojo builds upon
 - [[DreamerV3]] — model-based RL world model; different paradigm (latent state for RL vs. video generation for robotics)
 - [[Genie 2]] — generative interactive environment model
 - [[UniSim]] — universal simulator from real-world interaction data
-- [[AVID]] — action-conditioned video prediction for robot learning
-- [[SuSIE]] — subgoal synthesis for robot manipulation
+- AVID — action-conditioned video prediction for robot learning
+- SuSIE — subgoal synthesis for robot manipulation
 - [[RT-2]] — robotic transformer for real-world control

@@ -9,7 +9,7 @@ importance:
 aliases: [RT-2, Robotics Transformer 2]
 ---
 
-![[PDFs/RT-2.pdf]]
+!PDFs/RT-2.pdf
 
 
 # RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control
@@ -87,14 +87,14 @@ Generalization improves with model scale, with the 55B variant showing measurabl
 ## Metrics Used
 
 - [[Success Rate]] -- primary metric for robotic task completion across seen and unseen tasks
-- [[Generalization Rate]] -- success rate on novel objects and instructions not seen during robot training
-- [[Emergent Capability Score]] -- evaluation of symbol understanding, reasoning, and human recognition abilities
+- Generalization Rate -- success rate on novel objects and instructions not seen during robot training
+- Emergent Capability Score -- evaluation of symbol understanding, reasoning, and human recognition abilities
 
 ## Datasets Used
 
-- [[Robot Demonstration Data]] -- table-top pick-and-place demonstrations from a fleet of mobile manipulators
-- [[Web Vision-Language Data]] -- internet-scale image-text data used for VLM pretraining (VQA, captioning, etc.)
-- [[Language-Table]] -- simulation benchmark for language-conditioned manipulation
+- Robot Demonstration Data -- table-top pick-and-place demonstrations from a fleet of mobile manipulators
+- Web Vision-Language Data -- internet-scale image-text data used for VLM pretraining (VQA, captioning, etc.)
+- Language-Table -- simulation benchmark for language-conditioned manipulation
 
 ## Related Papers
 

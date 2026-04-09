@@ -10,7 +10,7 @@ importance:
 aliases: [LeJEPA, Le-JEPA]
 ---
 
-![[PDFs/Le-JEPA.pdf]]
+!PDFs/Le-JEPA.pdf
 
 
 # LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics
@@ -145,13 +145,13 @@ LeJEPA achieves 79% linear probe accuracy on [[ImageNet-1K]] with ViT-H/14, comp
 - [[Top-1 Accuracy]] — classification accuracy on [[ImageNet-1K]], ImageNet-100, ImageNet-10, [[Galaxy10]], [[Food101]], [[CIFAR-10]], [[CIFAR-100]]
 - [[k-NN Accuracy]] — k-nearest-neighbor evaluation of representation quality
 - [[1-shot Accuracy]] — few-shot classification with a single example per class
-- [[Training Loss Correlation]] — correlation between training loss and downstream linear probe accuracy (practical model selection metric)
+- Training Loss Correlation — correlation between training loss and downstream linear probe accuracy (practical model selection metric)
 
 ## Datasets Used
 
 - [[ImageNet-1K]] — primary benchmark for self-supervised representation learning (1.28M images, 1000 classes)
-- [[ImageNet-100]] — 100-class subset of ImageNet for ablation studies
-- [[ImageNet-10]] — 10-class subset used for architecture sweep across 50+ models
+- ImageNet-100 — 100-class subset of ImageNet for ablation studies
+- ImageNet-10 — 10-class subset used for architecture sweep across 50+ models
 - [[Galaxy10]] — astronomy dataset for domain-specific pretraining evaluation
 - [[Food101]] — food image classification dataset
 - [[CIFAR-10]] — small-scale image classification (10 classes)
@@ -161,8 +161,8 @@ LeJEPA achieves 79% linear probe accuracy on [[ImageNet-1K]] with ViT-H/14, comp
 
 - [[I-JEPA]] — the original image JEPA that LeJEPA theoretically grounds and simplifies
 - [[V-JEPA]] — video extension of JEPA; could benefit from LeJEPA's SIGReg regularizer
-- [[VICReg]] — variance-invariance-covariance regularization; SIGReg provides a more principled and efficient alternative
-- [[Barlow Twins]] — redundancy-reduction SSL method; LeJEPA eliminates the need for covariance computation
-- [[DINOv2]] — state-of-the-art image SSL baseline; LeJEPA is competitive with far simpler training
+- VICReg — variance-invariance-covariance regularization; SIGReg provides a more principled and efficient alternative
+- Barlow Twins — redundancy-reduction SSL method; LeJEPA eliminates the need for covariance computation
+- DINOv2 — state-of-the-art image SSL baseline; LeJEPA is competitive with far simpler training
 - [[LeWorldModel]] — sister paper applying LeJEPA's SIGReg to world models from pixels
-- [[SimCLR]] — contrastive learning baseline; LeJEPA avoids the need for negative examples
+- SimCLR — contrastive learning baseline; LeJEPA avoids the need for negative examples

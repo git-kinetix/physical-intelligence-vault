@@ -25,4 +25,4 @@ CC-BY 4.0
 - Download raw data as zip files (demos*.zip for demonstrations, scripted*.zip for scripted data).
 
 ## Papers Using This Dataset
-- [[Learning Latent Action World Models]] — used for learning latent action representations from manipulation data
+- Learning Latent Action World Models — used for learning latent action representations from manipulation data

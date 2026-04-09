@@ -85,14 +85,14 @@ Genie 2 was evaluated primarily through qualitative demonstrations rather than s
 
 ## Metrics Used
 
-- [[Qualitative Evaluation]] -- primary evaluation through visual demonstrations and SIMA agent interaction
-- [[Generation Duration]] -- how long the model can maintain consistent world generation (10-60 seconds)
-- [[Action Controllability]] -- fidelity of generated frames to input actions
+- Qualitative Evaluation -- primary evaluation through visual demonstrations and SIMA agent interaction
+- Generation Duration -- how long the model can maintain consistent world generation (10-60 seconds)
+- Action Controllability -- fidelity of generated frames to input actions
 
 ## Datasets Used
 
-- [[Large-Scale Video Data]] -- training data details not publicly disclosed
-- [[Imagen 3 Outputs]] -- text-to-image model used to generate initial seed images from text prompts
+- Large-Scale Video Data -- training data details not publicly disclosed
+- Imagen 3 Outputs -- text-to-image model used to generate initial seed images from text prompts
 
 ## Related Papers
 

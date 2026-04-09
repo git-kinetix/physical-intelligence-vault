@@ -10,7 +10,7 @@ importance:
 aliases: [LeVERB, Latent Vision-Language Encoded Robot Behavior]
 ---
 
-![[PDFs/LeVERB.pdf]]
+!PDFs/LeVERB.pdf
 
 # LeVERB: Humanoid Whole-Body Control with Latent Vision-Language Instruction
 
@@ -153,15 +153,15 @@ The teacher policy reward function combines Gaussian-kernel tracking rewards (to
 ## Metrics Used
 
 - [[Success Rate]] — primary metric; percentage of successful task completions over 20 evaluation runs per task/environment combination
-- [[Trajectory Reconstruction Loss]] — MSE loss for CVAE objective measuring how well latent codes reconstruct future kinematic trajectories
-- [[Validation Loss]] — used for System 2 transformer backbone architecture selection (ViT-Tiny to ViT-Base)
+- Trajectory Reconstruction Loss — MSE loss for CVAE objective measuring how well latent codes reconstruct future kinematic trajectories
+- Validation Loss — used for System 2 transformer backbone architecture selection (ViT-Tiny to ViT-Base)
 
 ## Datasets Used
 
-- [[LeVERB-Bench]] — custom benchmark with 154 vision-language tasks and 460 language-only tasks across 10 categories; 17.1 hours of photorealistic motion rollouts rendered via IsaacSim ray-tracing; 15,400 VL samples from 154 trajectories x 100 randomizations
-- [[AMASS]] — large-scale human motion capture dataset; provides 85 unique whole-body reaching and sitting trajectories for language-only training
-- [[LAFAN]] — locomotion and action dataset; provides 323 walk/run trajectories for language-only egocentric navigation training
-- [[IsaacSim]] — NVIDIA simulation platform used for physics simulation, domain randomization, and photorealistic rendering of training environments
+- LeVERB-Bench — custom benchmark with 154 vision-language tasks and 460 language-only tasks across 10 categories; 17.1 hours of photorealistic motion rollouts rendered via IsaacSim ray-tracing; 15,400 VL samples from 154 trajectories x 100 randomizations
+- AMASS — large-scale human motion capture dataset; provides 85 unique whole-body reaching and sitting trajectories for language-only training
+- LAFAN — locomotion and action dataset; provides 323 walk/run trajectories for language-only egocentric navigation training
+- IsaacSim — NVIDIA simulation platform used for physics simulation, domain randomization, and photorealistic rendering of training environments
 
 ## Related Papers
 

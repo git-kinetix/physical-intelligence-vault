@@ -9,7 +9,7 @@ importance:
 aliases: [LAWM, Latent Action World Models]
 ---
 
-![[PDFs/Learning Latent Action World Models In The Wild.pdf]]
+!PDFs/Learning Latent Action World Models In The Wild.pdf
 
 
 # Learning Latent Action World Models In The Wild
@@ -132,9 +132,9 @@ The paper evaluates video prediction quality using standard metrics ([[PSNR]], [
 
 ## Related Papers
 
-- [[Genie]] -- Google DeepMind's generative interactive environment model that uses discrete VQ latent actions; LAWM shows continuous actions outperform VQ on real-world videos
+- Genie -- Google DeepMind's generative interactive environment model that uses discrete VQ latent actions; LAWM shows continuous actions outperform VQ on real-world videos
 - [[NVIDIA Cosmos]] -- NVIDIA's world foundation model platform for Physical AI; complementary approach using explicit action-conditioning after pre-training
 - [[V-JEPA 2]] -- Meta's self-supervised video model for understanding, prediction, and planning; related FAIR work on learning from video
-- [[AdaWorld]] -- Adaptable world models with latent actions; concurrent work on latent action learning for world modeling
-- [[Hierarchical Latent Action Model]] -- HiLAM, follow-up work extending latent action models with hierarchical structure
-- [[Latent Action Pretraining]] -- LAPA, related approach to pretraining with latent actions for language-action models
+- AdaWorld -- Adaptable world models with latent actions; concurrent work on latent action learning for world modeling
+- Hierarchical Latent Action Model -- HiLAM, follow-up work extending latent action models with hierarchical structure
+- Latent Action Pretraining -- LAPA, related approach to pretraining with latent actions for language-action models

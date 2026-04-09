@@ -10,7 +10,7 @@ importance:
 aliases: [Octo, Octo-Base, Octo-Small]
 ---
 
-![[PDFs/Octo.pdf]]
+!PDFs/Octo.pdf
 
 
 # Octo: An Open-Source Generalist Robot Policy
@@ -93,14 +93,14 @@ Octo matches the 55B-parameter [[RT-2]]-X on language-conditioned WidowX tasks d
 ## Metrics Used
 
 - [[Success Rate]] -- primary metric for task completion across robot platforms
-- [[Fine-Tuning Efficiency]] -- hours to adapt to new robot setups on consumer GPUs
-- [[Cross-Embodiment Transfer]] -- zero-shot and fine-tuned performance on robots not seen during pretraining
+- Fine-Tuning Efficiency -- hours to adapt to new robot setups on consumer GPUs
+- Cross-Embodiment Transfer -- zero-shot and fine-tuned performance on robots not seen during pretraining
 
 ## Datasets Used
 
 - [[Open X-Embodiment]] -- 800K robot trajectories spanning multiple embodiments and tasks, the largest open robot manipulation dataset
-- [[WidowX data]] -- subset used for primary evaluation
-- [[Bridge V2]] -- subset of cross-embodiment data
+- WidowX data -- subset used for primary evaluation
+- Bridge V2 -- subset of cross-embodiment data
 
 ## Related Papers
 
