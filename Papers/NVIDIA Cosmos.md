@@ -76,7 +76,7 @@ The autoregressive WFM uses a GPT-style (Llama3-based) transformer operating on 
 
 ### Table 1: Shot Detection Algorithm Comparison (F1 Scores)
 
-| Dataset | PySceneDetect | [[Panda-70M|Panda70M]] | TransNetV2 | AutoShot |
+| Dataset | PySceneDetect | [[Panda-70M]] | TransNetV2 | AutoShot |
 |---------|---------------|----------|------------|----------|
 | BBC | 0.889 | 0.777 | 0.967 | 0.952 |
 | RAI | 0.831 | 0.829 | 0.919 | 0.906 |
@@ -87,7 +87,7 @@ TransNetV2 achieves the best F1 scores on most benchmarks and is adopted as the 
 
 ### Table 2: Transcoding Performance
 
-| Method | GPU | Codec | Batch | [[FPS|Throughput]] (videos/s) |
+| Method | GPU | Codec | Batch | [[FPS]] (videos/s) |
 |--------|-----|-------|-------|-----------------------|
 | ffmpeg | H100 | libx264 | 1 | 0.0574 |
 | ffmpeg | L40S | h264_nvenc | 1 | 0.0674 |
@@ -98,7 +98,7 @@ Using PyNvideoCodec with ffmpeg on L40S achieves a 6.5x throughput improvement o
 
 ### Table 3: VILA Annotation Inference [[FPS|Throughput]]
 
-| Engine | [[Precision]] | Batch Size | [[FPS|Throughput]] (clips/s) | [[FPS|Throughput]] (tokens/s) |
+| Engine | [[Precision]] | Batch Size | [[FPS]] (clips/s) | [[FPS]] (tokens/s) |
 |--------|-----------|------------|----------------------|-----------------------|
 | PyTorch | FP16 | 1 | 0.21 | 49.6 |
 | TRT-LLM | FP16 | 1 | 0.40 | 95.6 |
@@ -123,7 +123,7 @@ Cosmos Tokenizer is the only tokenizer to support all capabilities: causal, imag
 
 ### Table 5: Continuous Video Tokenizer Evaluation
 
-| Tokenizer | Frames | [[PSNR]] ([[DAVIS-2017|DAVIS]]) | [[SSIM]] ([[DAVIS-2017|DAVIS]]) | [[rFVD]] ([[DAVIS-2017|DAVIS]]) | [[PSNR]] ([[TokenBench]]) | [[SSIM]] ([[TokenBench]]) | [[rFVD]] ([[TokenBench]]) |
+| Tokenizer | Frames | [[PSNR]] ([[DAVIS-2017]]) | [[SSIM]] ([[DAVIS-2017]]) | [[rFVD]] ([[DAVIS-2017]]) | [[PSNR]] ([[TokenBench]]) | [[SSIM]] ([[TokenBench]]) | [[rFVD]] ([[TokenBench]]) |
 |-----------|--------|--------------|--------------|--------------|--------------------|--------------------|--------------------|
 | CogVideoX 4x8x8 | 17 | 29.29 | 0.864 | 19.58 | 32.06 | 0.909 | 6.97 |
 | Omni-Tokenizer 4x8x8 | 17 | 22.23 | 0.713 | 117.66 | 24.48 | 0.830 | 35.86 |
@@ -136,7 +136,7 @@ Cosmos continuous video tokenizers outperform all baselines on both [[DAVIS-2017
 
 ### Table 6: Discrete Video Tokenizer Evaluation
 
-| Tokenizer | Frames | Quantization | [[PSNR]] ([[DAVIS-2017|DAVIS]]) | [[SSIM]] ([[DAVIS-2017|DAVIS]]) | [[rFVD]] ([[DAVIS-2017|DAVIS]]) | [[PSNR]] ([[TokenBench]]) | [[SSIM]] ([[TokenBench]]) | [[rFVD]] ([[TokenBench]]) |
+| Tokenizer | Frames | Quantization | [[PSNR]] ([[DAVIS-2017]]) | [[SSIM]] ([[DAVIS-2017]]) | [[rFVD]] ([[DAVIS-2017]]) | [[PSNR]] ([[TokenBench]]) | [[SSIM]] ([[TokenBench]]) | [[rFVD]] ([[TokenBench]]) |
 |-----------|--------|--------------|--------------|--------------|--------------|--------------------|--------------------|---------------------|
 | VideoGPT 4x4x4 | - | VQ | 28.17 | 0.850 | 72.33 | 33.66 | 0.914 | 13.85 |
 | Omni-Tokenizer 4x8x8 | 17 | VQ | 20.02 | 0.703 | 188.60 | 25.31 | 0.827 | 53.55 |

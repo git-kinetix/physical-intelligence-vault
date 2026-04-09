@@ -139,12 +139,12 @@ The training data totals 5,996 demonstrations from 614 unique trajectories, with
 
 | Reward Term | Weight | Formulation | σ |
 |-------------|--------|-------------|---|
-| Global Torso Position | 0.5 | $\exp(-\|\mathbf{p}_{motion} - \mathbf{p}_{robot}\|^2 / \sigma^2)$ | $\sqrt{0.25}$ |
+| Global Torso Position | 0.5 | $\exp(-\lVert\mathbf{p}_{motion} - \mathbf{p}_{robot}\rVert^2 / \sigma^2)$ | $\sqrt{0.25}$ |
 | Global Torso Orientation | 0.3 | $\exp(-\text{quat\_error}^2 / \sigma^2)$ | $\sqrt{0.5}$ |
-| Global Body Position | 0.5 | $\exp(-\|\mathbf{x}_{motion} - \mathbf{x}_{robot}\|^2 / \sigma^2)$ | $\sqrt{0.25}$ |
-| Joint [[Tdist|Position Error]] | -1.0 | $-\|\theta_{motion} - \theta_{robot}\|$ | — |
-| Joint Velocity Error | -0.1 | $-\|\dot{\theta}_{motion} - \dot{\theta}_{robot}\|$ | — |
-| Action Rate L2 | -0.001 | $-\|\mathbf{a}_t - \mathbf{a}_{t-1}\|^2$ | — |
+| Global Body Position | 0.5 | $\exp(-\lVert\mathbf{x}_{motion} - \mathbf{x}_{robot}\rVert^2 / \sigma^2)$ | $\sqrt{0.25}$ |
+| Joint [[Tdist]] | -1.0 | $-\lVert\theta_{motion} - \theta_{robot}\rVert$ | — |
+| Joint Velocity Error | -0.1 | $-\lVert\dot{\theta}_{motion} - \dot{\theta}_{robot}\rVert$ | — |
+| Action Rate L2 | -0.001 | $-\lVert\mathbf{a}_t - \mathbf{a}_{t-1}\rVert^2$ | — |
 | Joint Limit Violation | -100.0 | $-\mathbb{1}_{\text{violate\_limit}}$ | — |
 | Termination Signal | -200.0 | $-\mathbb{1}_{\text{done}}$ | — |
 

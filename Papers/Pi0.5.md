@@ -64,7 +64,7 @@ where alpha=0 during pre-training and alpha=10.0 during post-training.
 |-------------|:----:|-------------|-------|
 | Mobile Manipulator | MM | ~400 hrs household tasks across ~100 homes | Pre-train + Post-train |
 | Multi-Environment | ME | Non-mobile robots in diverse homes | Pre-train + Post-train (filtered) |
-| Cross-Embodiment | CE | Lab tasks from multiple embodiments + [[Open X-Embodiment|OXE]] | Pre-train |
+| Cross-Embodiment | CE | Lab tasks from multiple embodiments + [[Open X-Embodiment]] | Pre-train |
 | High-Level Subtask | HL | Semantic subtask annotations | Pre-train + Post-train |
 | Web Data | WD | Captions, VQA, localization (~97.6% of pre-train) | Pre-train + Post-train |
 | Verbal Instructions | VI | Verbal instruction demonstrations (~11% of post-train HL) | Post-train |
@@ -89,7 +89,7 @@ Performance improves monotonically with the number of training locations. The 10
 
 | Model Variant | Impact |
 |---------------|--------|
-| Full [[Pi0|pi0]].5 | Best performance (baseline) |
+| Full [[Pi0]].5 | Best performance (baseline) |
 | No WD (web data) | Minimal impact on in-distribution mock tasks |
 | No ME (multi-environment) | Large degradation |
 | No CE (cross-embodiment) | Large degradation |
@@ -101,7 +101,7 @@ Multi-environment data (ME) and cross-embodiment data (CE) are both critical for
 
 | Model | In-Distribution Objects | Out-of-Distribution Objects |
 |-------|:-----------------------:|:---------------------------:|
-| Full [[Pi0|pi0]].5 | High | Moderate |
+| Full [[Pi0]].5 | High | Moderate |
 | No WD | Maintained | Significantly degraded |
 | No ME | Degraded | Degraded |
 | No CE | Degraded | Degraded |
@@ -110,11 +110,11 @@ Web data is particularly important for out-of-distribution object generalization
 
 ### Table 5: Model Comparison
 
-| Model | Relative Performance vs [[Pi0|pi0]].5 |
+| Model | Relative Performance vs [[Pi0]].5 |
 |-------|:-----------------------------:|
-| [[Pi0|pi0]].5 (full) | Best |
-| [[Pi0|pi0]]-FAST+Flow | Significantly worse |
-| [[Pi0|pi0]] (original) | Significantly worse |
+| [[Pi0]].5 (full) | Best |
+| [[Pi0]]-FAST+Flow | Significantly worse |
+| [[Pi0]] (original) | Significantly worse |
 
 [[Pi0|pi0]].5 significantly outperforms both [[Pi0|pi0]] and [[Pi0|pi0]]-FAST+Flow, demonstrating the value of the co-training recipe and two-level inference hierarchy.
 
@@ -122,7 +122,7 @@ Web data is particularly important for out-of-distribution object generalization
 
 | Method | Relative Performance |
 |--------|:--------------------:|
-| [[Pi0|pi0]].5 (explicit HL + LL) | Best (~100%) |
+| [[Pi0]].5 (explicit HL + LL) | Best (~100%) |
 | Implicit HL (no runtime HL) | ~95% |
 | No VI (verbal instructions) | Significantly degraded |
 | No WD (web data) | Significantly degraded |

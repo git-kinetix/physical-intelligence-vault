@@ -61,7 +61,7 @@ Beyond Atari, DIAMOND demonstrates that its diffusion world model can function a
 
 ### Table 1: [[Atari 2600 Games|Atari 100K]] Benchmark (Human-Normalized Scores)
 
-| Method | Type | Mean [[Human Normalized Mean|HNS]] | IQM | Superhuman Games |
+| Method | Type | Mean [[Human Normalized Mean]] | IQM | Superhuman Games |
 |--------|------|----------|-----|-----------------|
 | **DIAMOND** | Diffusion WM | **1.46** | **0.64** | **11/26** |
 | [[IRIS]] | Discrete WM | 1.05 | -- | 10/26 |

@@ -132,9 +132,9 @@ LeJEPA with in-domain pretraining on [[Galaxy10]] outperforms transfer learning 
 
 | Model | Dataset | Metric | Score |
 |-------|---------|--------|-------|
-| ViT-H/14 | [[ImageNet-1K]] | [[Linear Probe Accuracy|Linear Probe]] (frozen) | 79.0% |
-| ViT-L/14 | [[ImageNet-1K]] | [[Linear Probe Accuracy|Linear Probe]] (100 ep) | ~75% |
-| 50 timm models | ImageNet-10 | [[Linear Probe Accuracy|Linear Probe]] (frozen) | 91.5–95.0% |
+| ViT-H/14 | [[ImageNet-1K]] | [[Linear Probe Accuracy]] (frozen) | 79.0% |
+| ViT-L/14 | [[ImageNet-1K]] | [[Linear Probe Accuracy]] (100 ep) | ~75% |
+| 50 timm models | ImageNet-10 | [[Linear Probe Accuracy]] (frozen) | 91.5–95.0% |
 | ViT-g (1.8B) | — | Training stability | Stable (no divergence) |
 
 LeJEPA achieves 79% linear probe accuracy on [[ImageNet-1K]] with ViT-H/14, competitive with methods that use far more complex training pipelines. Across 50 diverse architectures from the timm library, ImageNet-10 accuracy ranges from 91.5% to 95.0%, demonstrating exceptional architecture-agnostic stability.

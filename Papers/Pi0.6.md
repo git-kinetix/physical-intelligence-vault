@@ -74,16 +74,16 @@ RECAP more than doubles task throughput and roughly halves the task failure rate
 
 | Task | Metric | Improvement with RECAP |
 |------|--------|----------------------|
-| Diverse laundry | [[FPS|Throughput]] | >2x |
-| Espresso making | [[FPS|Throughput]] | >2x |
-| T-shirt folding | [[FPS|Throughput]] | ~50% improvement across iterations |
+| Diverse laundry | [[FPS]] | >2x |
+| Espresso making | [[FPS]] | >2x |
+| T-shirt folding | [[FPS]] | ~50% improvement across iterations |
 | All hard tasks | Failure rate | Roughly halved |
 
 RECAP more than doubles task throughput on the most challenging tasks while approximately halving the failure rate.
 
 ### Table 2: Baseline Comparison ([[Pi0|pi0]].6 out-of-the-box capabilities)
 
-| Task | [[Pi0|pi0]].6 Baseline | pi*0.6 (with RECAP) |
+| Task | [[Pi0]].6 Baseline | pi*0.6 (with RECAP) |
 |------|:--------------:|:-------------------:|
 | Laundry folding in real homes | Reliable | More reliable + faster |
 | Box assembly | ~20% success | Significantly improved |
@@ -93,10 +93,10 @@ The base [[Pi0|pi0]].6 model (without RECAP) can fold laundry reliably and assem
 
 ### Table 3: RL Method Comparison
 
-| Method | Relative [[FPS|Throughput]] (Laundry) |
+| Method | Relative [[FPS]] (Laundry) |
 |--------|:----------------------------:|
-| [[Pi0.5|pi0.5]] (no RL) | Baseline |
-| [[Pi0|pi0]].6 (supervised only, no advantage) | Improved |
+| [[Pi0.5]] (no RL) | Baseline |
+| [[Pi0]].6 (supervised only, no advantage) | Improved |
 | AWR (advantage-weighted regression) | Moderate improvement |
 | PPO variant (with SPO constraints) | Moderate improvement |
 | **pi*0.6 (RECAP)** | **Highest throughput by far** |

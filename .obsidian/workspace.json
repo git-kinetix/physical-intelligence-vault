@@ -14,8 +14,8 @@
               "type": "markdown",
               "state": {
                 "file": "Papers/ACT-JEPA.md",
-                "mode": "source",
-                "source": false
+                "mode": "preview",
+                "source": true
               },
               "icon": "lucide-file",
               "title": "ACT-JEPA"
@@ -223,6 +223,14 @@
   },
   "active": "360b1814d3a36d75",
   "lastOpenFiles": [
+    "Papers/ACT-JEPA.md.tmp.1455632.1775747815204",
+    "Papers/LeVERB.md.tmp.1455632.1775747789587",
+    "Papers/LeVERB.md.tmp.1455632.1775747788129",
+    "Papers/LeVERB.md.tmp.1455632.1775747787270",
+    "Papers/LeVERB.md.tmp.1455632.1775747785892",
+    "Papers/LeVERB.md.tmp.1455632.1775747784479",
+    "_scripts/fix_table_links.py",
+    "_scripts/fix_table_links.py.tmp.1455632.1775747716084",
     "Datasets/Franka Demonstration Data.md",
     "Metrics/1-shot Accuracy.md",
     "MOC.md.tmp.1455632.1775747474720",
@@ -231,13 +239,6 @@
     "Papers/PLDM.md.tmp.1455632.1775747433497",
     "Canvases/Physical Intelligence Overview.canvas",
     "Papers/Le-World-Model.md",
-    "MOC.md.tmp.1455632.1775747030871",
-    "MOC.md.tmp.1455632.1775747027742",
-    "MOC.md.tmp.1455632.1775747025886",
-    "_scripts/inline_link.py",
-    "_scripts/inline_link.py.tmp.1455632.1775746991900",
-    "_scripts",
-    "PDFs/Stable World Model.pdf",
     "Papers/Stable World Model.md",
     "Papers/LeVERB.md",
     "Papers/ACT-JEPA.md",
@@ -258,7 +259,6 @@
     "Papers/UniPi.md",
     "Papers/UniSim.md",
     "Papers/DIAMOND.md",
-    "Papers/IRIS.md",
-    "Papers/Octo.md"
+    "Papers/IRIS.md"
   ]
 }

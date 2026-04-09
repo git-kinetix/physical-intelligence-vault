@@ -58,7 +58,7 @@ The paper also introduces the [[ERQA Benchmark|ERQA]] benchmark (400 multiple-ch
 
 | Benchmark | Gemini 1.5 Flash | Gemini 1.5 Pro | Gemini 2.0 Flash | Gemini 2.0 Pro Exp | GPT-4o mini | GPT-4o | Claude 3.5 Sonnet |
 |-----------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| [[ERQA Benchmark|ERQA]] | 42.3 | 41.8 | 46.3 | 48.3 | 37.3 | 47.0 | 35.5 |
+| [[ERQA Benchmark]] | 42.3 | 41.8 | 46.3 | 48.3 | 37.3 | 47.0 | 35.5 |
 | RealworldQA (test) | 69.0 | 64.5 | 71.6 | 74.5 | 65.0 | 71.9 | 61.4 |
 | BLINK (val) | 59.2 | 64.4 | 65.0 | 65.2 | 56.9 | 62.3 | 60.2 |
 
@@ -141,7 +141,7 @@ Gemini Robotics achieves perfect performance on the full long-horizon lunch-box 
 | Metric | Value |
 |--------|:-----:|
 | Tasks with >80% success rate | 10 out of 20 |
-| Gemini Robotics vs [[Pi0|pi0]] (reimplemented) | Significantly better on most tasks |
+| Gemini Robotics vs [[Pi0]] (reimplemented) | Significantly better on most tasks |
 | Gemini Robotics vs multi-task diffusion policy | Significantly better |
 | Only method with non-zero success on hardest tasks | Gemini Robotics |
 

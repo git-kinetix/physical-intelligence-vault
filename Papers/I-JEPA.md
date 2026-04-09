@@ -54,7 +54,7 @@ Key design choices:
 
 ### Table 1: [[ImageNet-1K]] Linear Probing ([[Top-1 Accuracy]])
 
-| Method | Architecture | Epochs | [[Top-1 Accuracy|Top-1 Acc]]. |
+| Method | Architecture | Epochs | [[Top-1 Accuracy]]. |
 |--------|-------------|--------|------------|
 | **I-JEPA** | ViT-B/16 | 600 | 72.9% |
 | **I-JEPA** | ViT-L/16 | 600 | 77.5% |
@@ -71,7 +71,7 @@ I-JEPA ViT-H/14 achieves 79.3% with only 300 epochs, outperforming MAE ViT-H/14 
 
 ### Table 2: Low-Shot [[ImageNet-1K]] (1% Labels, [[Top-1 Accuracy]])
 
-| Method | Architecture | Epochs | [[Top-1 Accuracy|Top-1 Acc]]. |
+| Method | Architecture | Epochs | [[Top-1 Accuracy]]. |
 |--------|-------------|--------|------------|
 | **I-JEPA** | ViT-L/16 | 600 | 69.4% |
 | **I-JEPA** | ViT-H/14 | 300 | 73.3% |

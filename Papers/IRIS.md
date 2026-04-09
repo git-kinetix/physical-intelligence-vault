@@ -61,7 +61,7 @@ IRIS consists of two main components:
 
 ### Table 1: [[Atari 2600 Games|Atari 100K]] Benchmark (Mean and Median Human-Normalized Scores)
 
-| Method | Type | Mean [[Human Normalized Mean|HNS]] | Median [[Human Normalized Mean|HNS]] | Superhuman Games |
+| Method | Type | Mean [[Human Normalized Mean]] | Median [[Human Normalized Mean]] | Superhuman Games |
 |--------|------|----------|------------|-----------------|
 | **IRIS** | World Model | **1.046** | 0.45 | **10/26** |
 | [[DreamerV2]] | World Model | 0.74 | 0.28 | 5/26 |

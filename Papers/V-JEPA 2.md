@@ -65,17 +65,17 @@ A major contribution is [[V-JEPA]] 2-AC (Action-Conditioned), a latent world mod
 
 | Source | Samples | Type | Total Hours | Curation | Weight |
 |--------|---------|------|-------------|----------|--------|
-| [[Something-Something v2|SSv2]] | 168K | EgoVideo | 168 | No | 0.056 |
+| [[Something-Something v2]] | 168K | EgoVideo | 168 | No | 0.056 |
 | Kinetics | 733K | ExoVideo | 614 | No | 0.188 |
 | [[HowTo100M]] | 1.1M | ExoVideo | 134K | No | 0.318 |
-| [[YouTube-Temporal-1B|YT-Temporal-1B]] | 19M | ExoVideo | 1.6M | Yes | 0.188 |
+| [[YouTube-Temporal-1B]] | 19M | ExoVideo | 1.6M | Yes | 0.188 |
 | ImageNet | 1M | Images | n/a | No | 0.250 |
 
 The dataset contains over 1 million hours of video, with [[YouTube-Temporal-1B]] providing the bulk of video hours. [[Something-Something v2|SSv2]] is upweighted relative to its size given its importance for motion understanding.
 
 ### Table 2: Frozen Video and Image Classification
 
-| Method | Params | [[Something-Something v2|SSv2]] | [[Diving-48]] | [[Jester]] | [[Kinetics-400|K400]] | COIN | IN1K | Avg. |
+| Method | Params | [[Something-Something v2]] | [[Diving-48]] | [[Jester]] | [[Kinetics-400]] | COIN | IN1K | Avg. |
 |--------|--------|------|-----------|--------|------|------|------|------|
 | DINOv2 (w/ reg) | 1.1B | 50.6 | 82.5 | — | 83.4 | — | 86.2 | — |
 | InternVideo2-1B | 1B | 69.7 | 86.4 | — | 89.4 | — | 85.8 | — |
@@ -127,7 +127,7 @@ The dataset contains over 1 million hours of video, with [[YouTube-Temporal-1B]]
 
 | Model | [[Planning Time]] per Action | Samples | Refinement Steps | Grasp | Pick-Place |
 |-------|-------------------------|---------|------------------|-------|------------|
-| [[NVIDIA Cosmos|Cosmos]] | ~4 minutes | 80 | 10 | Lower | Lower |
+| [[NVIDIA Cosmos]] | ~4 minutes | 80 | 10 | Lower | Lower |
 | [[V-JEPA]] 2-AC | ~16 seconds | 800 | 10 | 65% | 80%/65% |
 
 [[V-JEPA]] 2-AC plans 15x faster than [[NVIDIA Cosmos|Cosmos]] while achieving substantially higher manipulation success rates, demonstrating the efficiency of latent-space planning.

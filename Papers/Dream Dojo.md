@@ -97,8 +97,8 @@ The 14B model achieves strong performance across all evaluation sets, including 
 
 | Comparison | Physics Win Rate | Action Win Rate |
 |------------|-----------------|-----------------|
-| DreamDojo-2B vs. [[NVIDIA Cosmos|Cosmos]]-Predict2.5 | 62.5% | 63.45% |
-| DreamDojo-14B vs. [[NVIDIA Cosmos|Cosmos]]-Predict2.5 | 73.5% | 72.55% |
+| DreamDojo-2B vs. [[NVIDIA Cosmos]]-Predict2.5 | 62.5% | 63.45% |
+| DreamDojo-14B vs. [[NVIDIA Cosmos]]-Predict2.5 | 73.5% | 72.55% |
 | DreamDojo-14B vs. DreamDojo-2B | 72.5% | 65.53% |
 
 Human evaluators consistently prefer DreamDojo over the base [[NVIDIA Cosmos|Cosmos]]-Predict2.5 model for both physics understanding and action controllability. The 14B model is substantially preferred over the 2B model, demonstrating clear scaling benefits. The win rates of 73.5% (physics) and 72.55% (action) for DreamDojo-14B vs. [[NVIDIA Cosmos|Cosmos]] show significant improvement from the pretraining and post-training pipeline.

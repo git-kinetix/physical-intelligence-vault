@@ -90,7 +90,7 @@ Across 29 tasks spanning 10 distinct robot morphologies (including humanoids, qu
 
 ### Table 3: Comparison with Baselines
 
-| Method | Avg. [[Normalized Task Score|Normalized Score]] | Tasks > Human |
+| Method | Avg. [[Normalized Task Score]] | Tasks > Human |
 |--------|----------------------|---------------|
 | **Eureka** | 1.52 (52% improvement) | 83% |
 | **Eureka (Human Init.)** | Best across all tasks | 100% |

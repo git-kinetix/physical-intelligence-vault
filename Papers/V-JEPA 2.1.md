@@ -53,7 +53,7 @@ Scaling from ViT-g (1B) to ViT-G (2B) and applying a cool-down phase with learni
 
 ### Table 1: Ablation - Cumulative Impact of Each Component (ViT-g scale unless noted)
 
-| Component | IN1K Acc. | [[Something-Something v2|SSv2]] Acc. | NYU [[RMSE]] | [[ADE20K]] [[mIoU]] |
+| Component | IN1K Acc. | [[Something-Something v2]] Acc. | NYU [[RMSE]] | [[ADE20K]] [[mIoU]] |
 |-----------|-----------|-----------|----------|-------------|
 | [[V-JEPA 2]] baseline | 82.2 | 72.8 | 0.682 | 22.2 |
 | + Context Loss | 72.6 | 62.5 | 0.474 | 33.8 |
@@ -67,7 +67,7 @@ The context loss alone provides a massive dense prediction boost ([[ADE20K]]: 22
 
 ### Table 2: Context Loss Weighting Schemes (ViT-g)
 
-| Scheme | lambda | Warmup | [[ADE20K]] [[mIoU]] | [[Something-Something v2|SSv2]] Acc. |
+| Scheme | lambda | Warmup | [[ADE20K]] [[mIoU]] | [[Something-Something v2]] Acc. |
 |--------|--------|--------|-------------|-----------|
 | [[V-JEPA 2]] baseline | 0 | -- | 22.2 | 72.8 |
 | Fixed lambda=0.05 | 0.05 | No | 26.4 | 71.0 |
@@ -84,7 +84,7 @@ The distance-weighted warmup scheme achieves the best dense task performance whi
 
 | Source | Samples | Type | Hours | [[V-JEPA 2]] Weight | [[V-JEPA 2]].1 Weight |
 |--------|---------|------|-------|-----------------|-------------------|
-| [[Something-Something v2|SSv2]] | 168K | EgoVideo | 168 | 0.056 | 0.170 |
+| [[Something-Something v2]] | 168K | EgoVideo | 168 | 0.056 | 0.170 |
 | Kinetics | 733K | ExoVideo | 614 | 0.188 | 0.010 |
 | [[HowTo100M]] | 1.1M | ExoVideo | 134K | 0.318 | 0.100 |
 | ImageNet | 1M | Images | n/a | 0.250 | 0 |
@@ -122,7 +122,7 @@ The distance-weighted warmup scheme achieves the best dense task performance whi
 
 ### Table 6: Dense Vision Tasks ([[Linear Probe Accuracy|Linear Probe]])
 
-| Method | Params | [[NYUv2]] [[RMSE]] | [[KITTI]] [[RMSE]] | [[ADE20K]] [[mIoU]] | [[Cityscapes]] [[mIoU]] | VOC12 [[mIoU]] | [[DAVIS-2017|DAVIS]]-S | YT-VOS-S |
+| Method | Params | [[NYUv2]] [[RMSE]] | [[KITTI]] [[RMSE]] | [[ADE20K]] [[mIoU]] | [[Cityscapes]] [[mIoU]] | VOC12 [[mIoU]] | [[DAVIS-2017]]-S | YT-VOS-S |
 |--------|--------|-----------|-----------|-------------|-----------------|------------|---------|----------|
 | DINOv2 | 1B/14 | 0.372 | 2.624 | 49.5 | 75.6 | 83.1 | 63.9 | 65.6 |
 | DINOv3 ViT-H+ | 0.8B/16 | 0.352 | 2.635 | 54.8 | 79.5 | 85.8 | 71.1 | 74.0 |
@@ -136,7 +136,7 @@ The distance-weighted warmup scheme achieves the best dense task performance whi
 
 ### Table 7: Video and Image Classification (Frozen Eval)
 
-| Method | Params | [[Something-Something v2|SSv2]] | [[Diving-48]] | [[Kinetics-400|K400]] | IN1K |
+| Method | Params | [[Something-Something v2]] | [[Diving-48]] | [[Kinetics-400]] | IN1K |
 |--------|--------|------|-----------|------|------|
 | VideoMAEv2 | 1B | 56.1 | — | 82.8 | 71.4 |
 | InternVideo2-1B | 1B | 67.3 | — | 87.9 | — |
@@ -163,7 +163,7 @@ The distance-weighted warmup scheme achieves the best dense task performance whi
 
 ### Table 9: Navigation Planning Performance
 
-| Model | Time | [[TartanDrive]] [[Absolute Trajectory Error (ATE)|ATE]]/[[Relative Trajectory Error (RTE)|RTE]] | [[Scand]] [[Absolute Trajectory Error (ATE)|ATE]]/[[Relative Trajectory Error (RTE)|RTE]] | [[Sacson]] [[Absolute Trajectory Error (ATE)|ATE]]/[[Relative Trajectory Error (RTE)|RTE]] | Avg [[Absolute Trajectory Error (ATE)|ATE]] | Avg [[Relative Trajectory Error (RTE)|RTE]] |
+| Model | Time | [[TartanDrive]] [[Absolute Trajectory Error (ATE)]]/[[Relative Trajectory Error (RTE)]] | [[Scand]] [[Absolute Trajectory Error (ATE)]]/[[Relative Trajectory Error (RTE)]] | [[Sacson]] [[Absolute Trajectory Error (ATE)]]/[[Relative Trajectory Error (RTE)]] | Avg [[Absolute Trajectory Error (ATE)]] | Avg [[Relative Trajectory Error (RTE)]] |
 |-------|------|---------------------|---------------|----------------|---------|---------|
 | NWM | 103.2s | 5.831/1.219 | 1.113/0.297 | 4.037/0.928 | 3.032 | 0.696 |
 | [[V-JEPA 2]].1 ViT-g | 10.6s | 5.758/1.200 | 1.094/0.299 | 3.904/0.921 | 2.975 | 0.690 |

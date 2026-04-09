@@ -61,10 +61,10 @@ $$\mathcal{L} = \mathcal{L}_{action} + \mathcal{L}_{obs}$$
 
 ### Table 1: World Model Evaluation (Probing — Frozen Encoder + Trained Decoder for Future Proprioceptive State Prediction)
 
-| Method   | [[Push-T]] [[RMSE]] ↓ | [[Push-T]] [[Absolute Trajectory Error (ATE) | ATE]] ↓ | ManiSkill [[RMSE]] ↓ | ManiSkill [[Absolute Trajectory Error (ATE) | ATE]] ↓ | Meta-World [[RMSE]] ↓ | Meta-World [[Absolute Trajectory Error (ATE) | ATE]] ↓ |
-| -------- | --------------------- | -------------------------------------------- | ------- | -------------------- | ------------------------------------------- | ------- | --------------------- | -------------------------------------------- | ------- |
-| ACT      | 0.1424                | 0.1518                                       | 0.0531  | 0.2063               | 0.0295                                      | 0.0529  |                       |                                              |         |
-| ACT-JEPA | 0.0895                | 0.0915                                       | 0.0348  | 0.1354               | 0.0208                                      | 0.0375  |                       |                                              |         |
+| Method   | [[Push-T]] [[RMSE]] ↓ | [[Push-T]] [[Absolute Trajectory Error (ATE) ]] ↓ | ManiSkill [[RMSE]] ↓ | ManiSkill [[Absolute Trajectory Error (ATE) ]] ↓ | Meta-World [[RMSE]] ↓ | Meta-World [[Absolute Trajectory Error (ATE) ]] ↓ |
+| ------ | --------------------- | ------------------------------------------------- | -------------------- | ------------------------------------------------ | --------------------- | ------------------------------------------------- |
+| ACT      | 0.1424                | 0.1518                                            | 0.0531               | 0.2063                                           | 0.0295                | 0.0529                                            |
+| ACT-JEPA | 0.0895                | 0.0915                                            | 0.0348               | 0.1354                                           | 0.0208                | 0.0375                                            |
 
 ACT-JEPA achieves 29-40% reduction in world model prediction error across all benchmarks. The improvement is largest on [[Push-T]] (37% [[RMSE]] reduction, 40% [[Absolute Trajectory Error (ATE)|ATE]] reduction) and ManiSkill (34% [[RMSE]], 34% [[Absolute Trajectory Error (ATE)|ATE]]), demonstrating that the JEPA objective substantially enriches the learned representations with dynamics-relevant information.
 
