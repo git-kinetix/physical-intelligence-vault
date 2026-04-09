@@ -36,6 +36,7 @@ Models that learn environment dynamics for planning, imagination, and control.
 | [[Hierarchical Puppeteer]] | 2025 | Hierarchical visual humanoid control |
 | [[PLDM]] | 2025 | Planning with latent dynamics from reward-free data |
 | [[PEVA]] | 2025 | Whole-body conditioned egocentric video prediction |
+| [[TD-MPC2]] | 2024 | Scalable world models for continuous control |
 | [[DIAMOND]] | 2024 | Diffusion-based world model for visual detail |
 | [[Genie 2]] | 2024 | Generative interactive 3D environments |
 | [[DreamerV3]] | 2023 | Single algorithm across diverse domains |
