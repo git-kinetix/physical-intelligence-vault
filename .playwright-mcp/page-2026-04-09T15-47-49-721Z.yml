@@ -1,0 +1,1028 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - heading "Physical Intelligence Vault" [level=2] [ref=e5]:
+      - link "Physical Intelligence Vault" [ref=e6] [cursor=pointer]:
+        - /url: ..
+    - generic [ref=e7]:
+      - button "Search Search" [ref=e10] [cursor=pointer]:
+        - img "Search" [ref=e11]
+        - paragraph [ref=e15]: Search
+      - button "Light mode" [ref=e17] [cursor=pointer]:
+        - img "Light mode" [ref=e18]
+      - button "Reader mode" [ref=e21] [cursor=pointer]:
+        - img "Reader mode" [ref=e22]
+    - generic [ref=e25]:
+      - button "Explorer" [expanded] [ref=e26] [cursor=pointer]:
+        - heading "Explorer" [level=2] [ref=e27]
+        - img [ref=e28]
+      - group [ref=e29]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - generic [ref=e32]:
+              - img [ref=e33] [cursor=pointer]
+              - link "Datasets" [ref=e35] [cursor=pointer]:
+                - /url: ../Datasets/
+          - listitem [ref=e36]:
+            - generic [ref=e37]:
+              - img [ref=e38] [cursor=pointer]
+              - link "Metrics" [ref=e40] [cursor=pointer]:
+                - /url: ../Metrics/
+          - listitem [ref=e41]:
+            - generic [ref=e42]:
+              - img [ref=e43] [cursor=pointer]
+              - link "Papers" [ref=e45] [cursor=pointer]:
+                - /url: ../Papers/
+            - list [ref=e47]:
+              - listitem [ref=e48]:
+                - 'link "ACT-JEPA: Novel Joint-Embedding Predictive Architecture for Efficient Policy Representation Learning" [ref=e49] [cursor=pointer]':
+                  - /url: ../Papers/ACT-JEPA
+              - listitem [ref=e50]:
+                - link "Cosmos World Foundation Model Platform for Physical AI" [ref=e51] [cursor=pointer]:
+                  - /url: ../Papers/NVIDIA-Cosmos
+              - listitem [ref=e52]:
+                - 'link "Diffusion for World Modeling: Visual Details Matter in Atari" [ref=e53] [cursor=pointer]':
+                  - /url: ../Papers/DIAMOND
+              - listitem [ref=e54]:
+                - 'link "Dream to Control: Learning Behaviors by Latent Imagination" [ref=e55] [cursor=pointer]':
+                  - /url: ../Papers/DreamerV1
+              - listitem [ref=e56]:
+                - 'link "DreamDojo: A Generalist Robot World Model from Large-Scale Human Videos" [ref=e57] [cursor=pointer]':
+                  - /url: ../Papers/Dream-Dojo
+              - listitem [ref=e58]:
+                - 'link "Eureka: Human-Level Reward Design via Coding Large Language Models" [ref=e59] [cursor=pointer]':
+                  - /url: ../Papers/Eureka
+              - listitem [ref=e60]:
+                - 'link "Gemini Robotics: Bringing AI into the Physical World" [ref=e61] [cursor=pointer]':
+                  - /url: ../Papers/Gemini-Robotics
+              - listitem [ref=e62]:
+                - 'link "Genie 2: A Large-Scale Foundation World Model" [ref=e63] [cursor=pointer]':
+                  - /url: ../Papers/Genie-2
+              - listitem [ref=e64]:
+                - 'link "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots" [ref=e65] [cursor=pointer]':
+                  - /url: ../Papers/GR00T
+              - listitem [ref=e66]:
+                - link "Hierarchical World Models as Visual Whole-Body Humanoid Controllers" [ref=e67] [cursor=pointer]:
+                  - /url: ../Papers/Hierarchical-Puppeteer
+              - listitem [ref=e68]:
+                - 'link "Learning from Reward-Free Offline Data: A Case for Planning with Latent Dynamics Models" [ref=e69] [cursor=pointer]':
+                  - /url: ../Papers/PLDM
+              - listitem [ref=e70]:
+                - link "Learning Interactive Real-World Simulators" [ref=e71] [cursor=pointer]:
+                  - /url: ../Papers/UniSim
+              - listitem [ref=e72]:
+                - link "Learning Latent Action World Models In The Wild" [ref=e73] [cursor=pointer]:
+                  - /url: ../Papers/Learning-Latent-Action-World-Models-In-The-Wild
+              - listitem [ref=e74]:
+                - link "Learning Universal Policies via Text-Guided Video Generation" [ref=e75] [cursor=pointer]:
+                  - /url: ../Papers/UniPi
+              - listitem [ref=e76]:
+                - 'link "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics" [ref=e77] [cursor=pointer]':
+                  - /url: ../Papers/Le-JEPA
+              - listitem [ref=e78]:
+                - 'link "LeVERB: Humanoid Whole-Body Control with Latent Vision-Language Instruction" [ref=e79] [cursor=pointer]':
+                  - /url: ../Papers/LeVERB
+              - listitem [ref=e80]:
+                - 'link "LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture from Pixels" [ref=e81] [cursor=pointer]':
+                  - /url: ../Papers/Le-World-Model
+              - listitem [ref=e82]:
+                - link "Mastering Atari with Discrete World Models" [ref=e83] [cursor=pointer]:
+                  - /url: ../Papers/DreamerV2
+              - listitem [ref=e84]:
+                - link "Mastering Diverse Domains through World Models" [ref=e85] [cursor=pointer]:
+                  - /url: ../Papers/DreamerV3
+              - listitem [ref=e86]:
+                - 'link "Octo: An Open-Source Generalist Robot Policy" [ref=e87] [cursor=pointer]':
+                  - /url: ../Papers/Octo
+              - listitem [ref=e88]:
+                - 'link "OpenVLA: An Open-Source Vision-Language-Action Model" [ref=e89] [cursor=pointer]':
+                  - /url: ../Papers/OpenVLA
+              - listitem [ref=e90]:
+                - 'link "PEVA: Whole-Body Conditioned Egocentric Video Prediction" [ref=e91] [cursor=pointer]':
+                  - /url: ../Papers/PEVA
+              - listitem [ref=e92]:
+                - 'link "pi*0.6: a VLA That Learns From Experience" [ref=e93] [cursor=pointer]':
+                  - /url: ../Papers/Pi0.6
+              - listitem [ref=e94]:
+                - 'link "pi0: A Vision-Language-Action Flow Model for General Robot Control" [ref=e95] [cursor=pointer]':
+                  - /url: ../Papers/Pi0
+              - listitem [ref=e96]:
+                - 'link "pi0.5: a Vision-Language-Action Model with Open-World Generalization" [ref=e97] [cursor=pointer]':
+                  - /url: ../Papers/Pi0.5
+              - listitem [ref=e98]:
+                - link "Revisiting Feature Prediction for Learning Visual Representations from Video" [ref=e99] [cursor=pointer]:
+                  - /url: ../Papers/V-JEPA
+              - listitem [ref=e100]:
+                - 'link "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control" [ref=e101] [cursor=pointer]':
+                  - /url: ../Papers/RT-2
+              - listitem [ref=e102]:
+                - link "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture" [ref=e103] [cursor=pointer]:
+                  - /url: ../Papers/I-JEPA
+              - listitem [ref=e104]:
+                - 'link "stable-worldmodel-v1: Reproducible World Modeling Research and Evaluation" [ref=e105] [cursor=pointer]':
+                  - /url: ../Papers/Stable-World-Model
+              - listitem [ref=e106]:
+                - 'link "TD-JEPA: Latent-predictive Representations for Zero-Shot Reinforcement Learning" [ref=e107] [cursor=pointer]':
+                  - /url: ../Papers/TD-JEPA
+              - listitem [ref=e108]:
+                - link "Transformers are Sample-Efficient World Models" [ref=e109] [cursor=pointer]:
+                  - /url: ../Papers/IRIS
+              - listitem [ref=e110]:
+                - 'link "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning" [ref=e111] [cursor=pointer]':
+                  - /url: ../Papers/V-JEPA-2
+              - listitem [ref=e112]:
+                - 'link "V-JEPA 2.1: Unlocking Dense Features in Video Self-Supervised Learning" [ref=e113] [cursor=pointer]':
+                  - /url: ../Papers/V-JEPA-2.1
+              - listitem [ref=e114]:
+                - 'link "WorldPlay: Towards Long-Term Geometric Consistency for Real-Time Interactive World Modeling" [ref=e115] [cursor=pointer]':
+                  - /url: ../Papers/Hunyuan-World-1.5
+          - listitem [ref=e116]:
+            - link "Datasets Index" [ref=e117] [cursor=pointer]:
+              - /url: ../Datasets-Index
+          - listitem [ref=e118]:
+            - link "Metrics Index" [ref=e119] [cursor=pointer]:
+              - /url: ../Metrics-Index
+          - listitem [ref=e120]
+  - generic [ref=e121]:
+    - generic [ref=e123]:
+      - navigation "breadcrumbs" [ref=e124]:
+        - generic [ref=e125]:
+          - link "Home" [ref=e126] [cursor=pointer]:
+            - /url: ../
+          - paragraph [ref=e127]: ❯
+        - generic [ref=e128]:
+          - link "Papers" [ref=e129] [cursor=pointer]:
+            - /url: ../Papers/
+          - paragraph [ref=e130]: ❯
+        - 'link "V JEPA 2: Self Supervised Video Models Enable Understanding, Prediction and Planning" [ref=e132] [cursor=pointer]':
+          - /url: ""
+      - 'heading "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning" [level=1] [ref=e133]'
+      - paragraph [ref=e134]:
+        - time [ref=e135]: Apr 09, 2026,
+        - text: 6 min read
+      - list [ref=e136]:
+        - listitem [ref=e137]:
+          - link "#paper" [ref=e138] [cursor=pointer]:
+            - /url: ../tags/paper
+        - listitem [ref=e139]:
+          - link "#jepa" [ref=e140] [cursor=pointer]:
+            - /url: ../tags/jepa
+    - article [ref=e141]:
+      - iframe [ref=e142]:
+        
+      - 'heading "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning" [level=1] [ref=e143]':
+        - link "V-JEPA" [ref=e144] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: "2: Self-Supervised Video Models Enable Understanding, Prediction and Planning"
+        - link [ref=e145] [cursor=pointer]:
+          - /url: "#v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning"
+          - img [ref=e146]
+      - heading "Summary" [level=2] [ref=e149]:
+        - text: Summary
+        - link [ref=e150] [cursor=pointer]:
+          - /url: "#summary"
+          - img [ref=e151]
+      - paragraph [ref=e154]:
+        - link "V-JEPA" [ref=e155] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2 scales the original
+        - link "V-JEPA" [ref=e156] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: framework to significantly larger models and datasets, pretraining on
+        - link "VideoMix22M" [ref=e157] [cursor=pointer]:
+          - /url: ../Datasets/VideoMix22M
+        - text: — a dataset comprising over 1 million hours of internet video and images (22M samples across
+        - link "SSv2" [ref=e158] [cursor=pointer]:
+          - /url: ../Something-Something-v2
+        - text: ", Kinetics,"
+        - link "HowTo100M" [ref=e159] [cursor=pointer]:
+          - /url: ../HowTo100M
+        - text: ","
+        - link "YT-Temporal-1B" [ref=e160] [cursor=pointer]:
+          - /url: ../Datasets/YouTube-Temporal-1B
+        - text: ", and ImageNet). The paper demonstrates that self-supervised video models can serve as versatile visual encoders for understanding, prediction, and robotic planning."
+        - link "V-JEPA" [ref=e161] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2 achieves strong performance on motion understanding (77.3% top-1 on
+        - link "SSv2" [ref=e162] [cursor=pointer]:
+          - /url: ../Something-Something-v2
+        - text: ), state-of-the-art action anticipation (39.7
+        - link "Recall@5" [ref=e163] [cursor=pointer]:
+          - /url: ../Metrics/Recall@5
+        - text: "on"
+        - link "Epic-Kitchens" [ref=e164] [cursor=pointer]:
+          - /url: ../Datasets/EPIC-KITCHENS-100
+        - text: "-100), and competitive video question-answering when aligned with an LLM."
+      - paragraph [ref=e165]:
+        - text: A major contribution is
+        - link "V-JEPA" [ref=e166] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2-AC (Action-Conditioned), a latent world model variant trained on less than 62 hours of unlabeled robot videos from the Droid dataset.
+        - link "V-JEPA" [ref=e167] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2-AC enables zero-shot robotic manipulation (reaching, grasping, pick-and-place) on Franka arms through planning with image goals — without collecting any task-specific data, training, or reward signals. The system plans in latent space, achieving 80% success on pick-and-place tasks for cups and 65% for boxes, substantially outperforming baselines like
+        - link "Octo" [ref=e168] [cursor=pointer]:
+          - /url: ../Octo
+        - text: and
+        - link "Cosmos" [ref=e169] [cursor=pointer]:
+          - /url: ../NVIDIA-Cosmos
+        - text: .
+      - heading "Key Contributions" [level=2] [ref=e170]:
+        - text: Key Contributions
+        - link [ref=e171] [cursor=pointer]:
+          - /url: "#key-contributions"
+          - img [ref=e172]
+      - list [ref=e175]:
+        - listitem [ref=e176]:
+          - text: Scales
+          - link "V-JEPA" [ref=e177] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: to ViT-g with 1B+ parameters pretrained on 1M+ hours of video (
+          - link "VideoMix22M" [ref=e178] [cursor=pointer]:
+            - /url: ../Datasets/VideoMix22M
+          - text: )
+        - listitem [ref=e179]:
+          - text: Achieves state-of-the-art on motion understanding (
+          - link "SSv2" [ref=e180] [cursor=pointer]:
+            - /url: ../Something-Something-v2
+          - text: ": 77.3%) and action anticipation (EK100: 39.7"
+          - link "R@5" [ref=e181] [cursor=pointer]:
+            - /url: ../Metrics/Recall@5
+          - text: )
+        - listitem [ref=e182]:
+          - text: Introduces
+          - link "V-JEPA" [ref=e183] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2-AC, an action-conditioned world model for zero-shot robotic planning from latent features
+        - listitem [ref=e184]: Demonstrates zero-shot robotic manipulation using only 62 hours of unlabeled robot video, no task-specific training
+        - listitem [ref=e185]: "Shows systematic scaling benefits: +4.0 points average from scaling data, model, training, and resolution"
+        - listitem [ref=e186]: Achieves state-of-the-art Video QA at 8B parameter scale when combined with Llama 3.1 8B
+      - heading "Architecture / Method" [level=2] [ref=e187]:
+        - text: Architecture / Method
+        - link [ref=e188] [cursor=pointer]:
+          - /url: "#architecture--method"
+          - img [ref=e189]
+      - paragraph [ref=e192]:
+        - link "V-JEPA" [ref=e193] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2 builds on the
+        - link "V-JEPA" [ref=e194] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: "framework with several scaling improvements:"
+      - paragraph [ref=e195]:
+        - strong [ref=e196]: "Self-Supervised Pretraining:"
+      - list [ref=e197]:
+        - listitem [ref=e198]:
+          - strong [ref=e199]: Encoder
+          - text: ": ViT-g/16 (1B parameters) processes visible video patches"
+        - listitem [ref=e200]:
+          - strong [ref=e201]: Predictor
+          - text: ": A transformer predicts latent representations of masked spatiotemporal regions"
+        - listitem [ref=e202]:
+          - strong [ref=e203]: Target Encoder
+          - text: ": EMA of the encoder provides prediction targets"
+        - listitem [ref=e204]:
+          - strong [ref=e205]: Multi-block masking
+          - text: ": Samples target blocks at large spatiotemporal scales for semantic feature learning"
+      - paragraph [ref=e206]:
+        - strong [ref=e207]: "Scaling Recipe (cumulative improvements):"
+      - list [ref=e208]:
+        - listitem [ref=e209]:
+          - text: "Data scaling:"
+          - link "VideoMix2M" [ref=e210] [cursor=pointer]:
+            - /url: ../Datasets/VideoMix2M
+          - text: to
+          - link "VideoMix22M" [ref=e211] [cursor=pointer]:
+            - /url: ../Datasets/VideoMix22M
+          - text: (+1.0 pt avg)
+        - listitem [ref=e212]: "Model scaling: ViT-L to ViT-g (+1.5 pt avg)"
+        - listitem [ref=e213]: "Training scaling: Extended schedule and optimization (+0.8 pt avg)"
+        - listitem [ref=e214]: "Resolution scaling: 256px to 384px (+0.7 pt avg)"
+      - paragraph [ref=e215]:
+        - strong [ref=e216]: "Frozen Evaluation Protocol:"
+      - list [ref=e217]:
+        - listitem [ref=e218]: Encoder weights are frozen; a task-specific 4-layer attentive probe is trained on top of representations
+      - paragraph [ref=e219]:
+        - strong [ref=e220]:
+          - link "V-JEPA" [ref=e221] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: "2-AC (Action-Conditioned):"
+      - list [ref=e222]:
+        - listitem [ref=e223]:
+          - text: Trains an action-conditioned latent predictor on top of frozen
+          - link "V-JEPA" [ref=e224] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2 features
+        - listitem [ref=e225]: Uses <62 hours of unlabeled robot videos from the Droid dataset
+        - listitem [ref=e226]: Plans via sampling-based optimization (800 samples, 10 refinement steps) in latent space
+        - listitem [ref=e227]:
+          - text: Achieves ~16 seconds planning time per action versus ~4 minutes for
+          - link "Cosmos" [ref=e228] [cursor=pointer]:
+            - /url: ../NVIDIA-Cosmos
+      - paragraph [ref=e229]:
+        - strong [ref=e230]: "LLM Alignment:"
+      - list [ref=e231]:
+        - listitem [ref=e232]:
+          - link "V-JEPA" [ref=e233] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2 encoder is aligned with Llama 3.1 8B for video question answering
+        - listitem [ref=e234]: Uses a learned projection layer between the frozen video encoder and the LLM
+      - heading "Results" [level=2] [ref=e235]:
+        - text: Results
+        - link [ref=e236] [cursor=pointer]:
+          - /url: "#results"
+          - img [ref=e237]
+      - 'heading "Table 1: VideoMix22M Pretraining Dataset Composition" [level=3] [ref=e240]':
+        - text: "Table 1:"
+        - link "VideoMix22M" [ref=e241] [cursor=pointer]:
+          - /url: ../Datasets/VideoMix22M
+        - text: Pretraining Dataset Composition
+        - link [ref=e242] [cursor=pointer]:
+          - /url: "#table-1-videomix22m-pretraining-dataset-composition"
+          - img [ref=e243]
+      - table [ref=e247]:
+        - rowgroup [ref=e248]:
+          - row "Source Samples Type Total Hours Curation Weight" [ref=e249]:
+            - columnheader "Source" [ref=e250]
+            - columnheader "Samples" [ref=e251]
+            - columnheader "Type" [ref=e252]
+            - columnheader "Total Hours" [ref=e253]
+            - columnheader "Curation" [ref=e254]
+            - columnheader "Weight" [ref=e255]
+        - rowgroup [ref=e256]:
+          - row "Something-Something v2 168K EgoVideo 168 No 0.056" [ref=e257]:
+            - cell "Something-Something v2" [ref=e258]:
+              - link "Something-Something v2" [ref=e259] [cursor=pointer]:
+                - /url: ../Something-Something-v2
+            - cell "168K" [ref=e260]
+            - cell "EgoVideo" [ref=e261]
+            - cell "168" [ref=e262]
+            - cell "No" [ref=e263]
+            - cell "0.056" [ref=e264]
+          - row "Kinetics 733K ExoVideo 614 No 0.188" [ref=e265]:
+            - cell "Kinetics" [ref=e266]
+            - cell "733K" [ref=e267]
+            - cell "ExoVideo" [ref=e268]
+            - cell "614" [ref=e269]
+            - cell "No" [ref=e270]
+            - cell "0.188" [ref=e271]
+          - row "HowTo100M 1.1M ExoVideo 134K No 0.318" [ref=e272]:
+            - cell "HowTo100M" [ref=e273]:
+              - link "HowTo100M" [ref=e274] [cursor=pointer]:
+                - /url: ../HowTo100M
+            - cell "1.1M" [ref=e275]
+            - cell "ExoVideo" [ref=e276]
+            - cell "134K" [ref=e277]
+            - cell "No" [ref=e278]
+            - cell "0.318" [ref=e279]
+          - row "YouTube-Temporal-1B 19M ExoVideo 1.6M Yes 0.188" [ref=e280]:
+            - cell "YouTube-Temporal-1B" [ref=e281]:
+              - link "YouTube-Temporal-1B" [ref=e282] [cursor=pointer]:
+                - /url: ../Datasets/YouTube-Temporal-1B
+            - cell "19M" [ref=e283]
+            - cell "ExoVideo" [ref=e284]
+            - cell "1.6M" [ref=e285]
+            - cell "Yes" [ref=e286]
+            - cell "0.188" [ref=e287]
+          - row "ImageNet 1M Images n/a No 0.250" [ref=e288]:
+            - cell "ImageNet" [ref=e289]
+            - cell "1M" [ref=e290]
+            - cell "Images" [ref=e291]
+            - cell "n/a" [ref=e292]
+            - cell "No" [ref=e293]
+            - cell "0.250" [ref=e294]
+      - paragraph [ref=e295]:
+        - text: The dataset contains over 1 million hours of video, with
+        - link "YouTube-Temporal-1B" [ref=e296] [cursor=pointer]:
+          - /url: ../Datasets/YouTube-Temporal-1B
+        - text: providing the bulk of video hours.
+        - link "SSv2" [ref=e297] [cursor=pointer]:
+          - /url: ../Something-Something-v2
+        - text: is upweighted relative to its size given its importance for motion understanding.
+      - 'heading "Table 2: Frozen Video and Image Classification" [level=3] [ref=e298]':
+        - text: "Table 2: Frozen Video and Image Classification"
+        - link [ref=e299] [cursor=pointer]:
+          - /url: "#table-2-frozen-video-and-image-classification"
+          - img [ref=e300]
+      - table [ref=e304]:
+        - rowgroup [ref=e305]:
+          - row "Method Params Something-Something v2 Diving-48 Jester Kinetics-400 COIN IN1K Avg." [ref=e306]:
+            - columnheader "Method" [ref=e307]
+            - columnheader "Params" [ref=e308]
+            - columnheader "Something-Something v2" [ref=e309]:
+              - link "Something-Something v2" [ref=e310] [cursor=pointer]:
+                - /url: ../Something-Something-v2
+            - columnheader "Diving-48" [ref=e311]:
+              - link "Diving-48" [ref=e312] [cursor=pointer]:
+                - /url: ../Diving-48
+            - columnheader "Jester" [ref=e313]:
+              - link "Jester" [ref=e314] [cursor=pointer]:
+                - /url: ../Datasets/Jester
+            - columnheader "Kinetics-400" [ref=e315]:
+              - link "Kinetics-400" [ref=e316] [cursor=pointer]:
+                - /url: ../Datasets/Kinetics-400
+            - columnheader "COIN" [ref=e317]
+            - columnheader "IN1K" [ref=e318]
+            - columnheader "Avg." [ref=e319]
+        - rowgroup [ref=e320]:
+          - row "DINOv2 (w/ reg) 1.1B 50.6 82.5 — 83.4 — 86.2 —" [ref=e321]:
+            - cell "DINOv2 (w/ reg)" [ref=e322]
+            - cell "1.1B" [ref=e323]
+            - cell "50.6" [ref=e324]
+            - cell "82.5" [ref=e325]
+            - cell "—" [ref=e326]
+            - cell "83.4" [ref=e327]
+            - cell "—" [ref=e328]
+            - cell "86.2" [ref=e329]
+            - cell "—" [ref=e330]
+          - row "InternVideo2-1B 1B 69.7 86.4 — 89.4 — 85.8 —" [ref=e331]:
+            - cell "InternVideo2-1B" [ref=e332]
+            - cell "1B" [ref=e333]
+            - cell "69.7" [ref=e334]
+            - cell "86.4" [ref=e335]
+            - cell "—" [ref=e336]
+            - cell "89.4" [ref=e337]
+            - cell "—" [ref=e338]
+            - cell "85.8" [ref=e339]
+            - cell "—" [ref=e340]
+          - row "SigLIP2 — — — — — — — —" [ref=e341]:
+            - cell "SigLIP2" [ref=e342]
+            - cell "—" [ref=e343]
+            - cell "—" [ref=e344]
+            - cell "—" [ref=e345]
+            - cell "—" [ref=e346]
+            - cell "—" [ref=e347]
+            - cell "—" [ref=e348]
+            - cell "—" [ref=e349]
+            - cell "—" [ref=e350]
+          - row "V-JEPA 630M 72.2 — — 81.9 — 77.4 84.2" [ref=e351]:
+            - cell "V-JEPA" [ref=e352]:
+              - link "V-JEPA" [ref=e353] [cursor=pointer]:
+                - /url: ../V-JEPA
+            - cell "630M" [ref=e354]
+            - cell "72.2" [ref=e355]
+            - cell "—" [ref=e356]
+            - cell "—" [ref=e357]
+            - cell "81.9" [ref=e358]
+            - cell "—" [ref=e359]
+            - cell "77.4" [ref=e360]
+            - cell "84.2" [ref=e361]
+          - row "V-JEPA 2 ViT-L/16 300M 73.7 89.0 — — — — —" [ref=e362]:
+            - cell "V-JEPA 2 ViT-L/16" [ref=e363]:
+              - link "V-JEPA" [ref=e364] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2 ViT-L/16
+            - cell "300M" [ref=e365]
+            - cell "73.7" [ref=e366]
+            - cell "89.0" [ref=e367]
+            - cell "—" [ref=e368]
+            - cell "—" [ref=e369]
+            - cell "—" [ref=e370]
+            - cell "—" [ref=e371]
+            - cell "—" [ref=e372]
+          - row "V-JEPA 2 ViT-g/16 1B 75.3 — — — — 84.6 —" [ref=e373]:
+            - cell "V-JEPA 2 ViT-g/16" [ref=e374]:
+              - link "V-JEPA" [ref=e375] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2 ViT-g/16
+            - cell "1B" [ref=e376]
+            - cell "75.3" [ref=e377]
+            - cell "—" [ref=e378]
+            - cell "—" [ref=e379]
+            - cell "—" [ref=e380]
+            - cell "—" [ref=e381]
+            - cell "84.6" [ref=e382]
+            - cell "—" [ref=e383]
+          - row "V-JEPA 2 ViT-g/16_384 1B 77.3 90.2 — — — — 88.2" [ref=e384]:
+            - cell "V-JEPA 2 ViT-g/16_384" [ref=e385]:
+              - link "V-JEPA" [ref=e386] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2 ViT-g/16_384
+            - cell "1B" [ref=e387]
+            - cell "77.3" [ref=e388]
+            - cell "90.2" [ref=e389]
+            - cell "—" [ref=e390]
+            - cell "—" [ref=e391]
+            - cell "—" [ref=e392]
+            - cell "—" [ref=e393]
+            - cell "88.2" [ref=e394]
+      - paragraph [ref=e395]:
+        - link "V-JEPA" [ref=e396] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2 achieves the best average performance (88.2%) across all six classification tasks.
+        - link "SSv2" [ref=e397] [cursor=pointer]:
+          - /url: ../Something-Something-v2
+        - text: accuracy of 77.3% represents a +7.6 point improvement over InternVideo2-1B, demonstrating exceptional motion understanding.
+      - 'heading "Table 3: Action Anticipation on EPIC-KITCHENS-100 (Recall@5)" [level=3] [ref=e398]':
+        - text: "Table 3: Action Anticipation on"
+        - link "EPIC-KITCHENS-100" [ref=e399] [cursor=pointer]:
+          - /url: ../Datasets/EPIC-KITCHENS-100
+        - text: (
+        - link "Recall@5" [ref=e400] [cursor=pointer]:
+          - /url: ../Metrics/Recall@5
+        - text: )
+        - link [ref=e401] [cursor=pointer]:
+          - /url: "#table-3-action-anticipation-on-epic-kitchens-100-recall5"
+          - img [ref=e402]
+      - table [ref=e406]:
+        - rowgroup [ref=e407]:
+          - row "Method Params Verb Noun Action" [ref=e408]:
+            - columnheader "Method" [ref=e409]
+            - columnheader "Params" [ref=e410]
+            - columnheader "Verb" [ref=e411]
+            - columnheader "Noun" [ref=e412]
+            - columnheader "Action" [ref=e413]
+        - rowgroup [ref=e414]:
+          - row "InAViT 160M 51.9 52.0 25.8" [ref=e415]:
+            - cell "InAViT" [ref=e416]
+            - cell "160M" [ref=e417]
+            - cell "51.9" [ref=e418]
+            - cell "52.0" [ref=e419]
+            - cell "25.8" [ref=e420]
+          - row "Video-LLaMA 7B 52.9 52.0 26.0" [ref=e421]:
+            - cell "Video-LLaMA" [ref=e422]
+            - cell "7B" [ref=e423]
+            - cell "52.9" [ref=e424]
+            - cell "52.0" [ref=e425]
+            - cell "26.0" [ref=e426]
+          - row "PlausiVL 8B 55.6 54.2 27.6" [ref=e427]:
+            - cell "PlausiVL" [ref=e428]
+            - cell "8B" [ref=e429]
+            - cell "55.6" [ref=e430]
+            - cell "54.2" [ref=e431]
+            - cell "27.6" [ref=e432]
+          - row "V-JEPA 2 ViT-L 300M — — 32.7" [ref=e433]:
+            - cell "V-JEPA 2 ViT-L" [ref=e434]:
+              - link "V-JEPA" [ref=e435] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2 ViT-L
+            - cell "300M" [ref=e436]
+            - cell "—" [ref=e437]
+            - cell "—" [ref=e438]
+            - cell "32.7" [ref=e439]
+          - row "V-JEPA 2 ViT-g_384 1B 63.6 57.1 39.7" [ref=e440]:
+            - cell "V-JEPA 2 ViT-g_384" [ref=e441]:
+              - link "V-JEPA" [ref=e442] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2 ViT-g_384
+            - cell "1B" [ref=e443]
+            - cell "63.6" [ref=e444]
+            - cell "57.1" [ref=e445]
+            - cell "39.7" [ref=e446]:
+              - strong [ref=e447]: "39.7"
+      - paragraph [ref=e448]:
+        - link "V-JEPA" [ref=e449] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2 achieves 39.7 action
+        - link "Recall@5" [ref=e450] [cursor=pointer]:
+          - /url: ../Metrics/Recall@5
+        - text: on EK100, a 44% relative improvement over PlausiVL (27.6), the previous state of the art. The model shows strong scaling behavior from ViT-L (32.7) to ViT-g (39.7).
+      - 'heading "Table 4: Video Question Answering (V-JEPA 2 + Llama 3.1 8B)" [level=3] [ref=e451]':
+        - text: "Table 4: Video Question Answering ("
+        - link "V-JEPA" [ref=e452] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2 + Llama 3.1 8B)
+        - link [ref=e453] [cursor=pointer]:
+          - /url: "#table-4-video-question-answering-v-jepa-2--llama-31-8b"
+          - img [ref=e454]
+      - table [ref=e458]:
+        - rowgroup [ref=e459]:
+          - row "Method Encoder/LLM Params PerceptionTest MVP TempCompass TemporalBench TOMATO Avg." [ref=e460]:
+            - columnheader "Method" [ref=e461]
+            - columnheader "Encoder/LLM Params" [ref=e462]
+            - columnheader "PerceptionTest" [ref=e463]:
+              - link "PerceptionTest" [ref=e464] [cursor=pointer]:
+                - /url: ../Datasets/PerceptionTest
+            - columnheader "MVP" [ref=e465]
+            - columnheader "TempCompass" [ref=e466]:
+              - link "TempCompass" [ref=e467] [cursor=pointer]:
+                - /url: ../Datasets/TempCompass
+            - columnheader "TemporalBench" [ref=e468]:
+              - link "TemporalBench" [ref=e469] [cursor=pointer]:
+                - /url: ../Datasets/TemporalBench
+            - columnheader "TOMATO" [ref=e470]:
+              - link "TOMATO" [ref=e471] [cursor=pointer]:
+                - /url: ../Datasets/TOMATO
+            - columnheader "Avg." [ref=e472]
+        - rowgroup [ref=e473]:
+          - row "InternVL-2.5 —/7B 68.9 39.9 68.3 24.3 29.4 —" [ref=e474]:
+            - cell "InternVL-2.5" [ref=e475]
+            - cell "—/7B" [ref=e476]
+            - cell "68.9" [ref=e477]
+            - cell "39.9" [ref=e478]
+            - cell "68.3" [ref=e479]
+            - cell "24.3" [ref=e480]
+            - cell "29.4" [ref=e481]
+            - cell "—" [ref=e482]
+          - row "Qwen2VL 675M/7B 66.9 29.2 67.9 20.4 31.5 —" [ref=e483]:
+            - cell "Qwen2VL" [ref=e484]
+            - cell "675M/7B" [ref=e485]
+            - cell "66.9" [ref=e486]
+            - cell "29.2" [ref=e487]
+            - cell "67.9" [ref=e488]
+            - cell "20.4" [ref=e489]
+            - cell "31.5" [ref=e490]
+            - cell "—" [ref=e491]
+          - row "Tarsier 2 —/7B — — 75.3 — — —" [ref=e492]:
+            - cell "Tarsier 2" [ref=e493]
+            - cell "—/7B" [ref=e494]
+            - cell "—" [ref=e495]
+            - cell "—" [ref=e496]
+            - cell "75.3" [ref=e497]
+            - cell "—" [ref=e498]
+            - cell "—" [ref=e499]
+            - cell "—" [ref=e500]
+          - row "V-JEPA 2 ViT-g_384 1B/8B 84.0 44.5 76.9 36.7 40.3 —" [ref=e501]:
+            - cell "V-JEPA 2 ViT-g_384" [ref=e502]:
+              - link "V-JEPA" [ref=e503] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2 ViT-g_384
+            - cell "1B/8B" [ref=e504]
+            - cell "84.0" [ref=e505]:
+              - strong [ref=e506]: "84.0"
+            - cell "44.5" [ref=e507]:
+              - strong [ref=e508]: "44.5"
+            - cell "76.9" [ref=e509]:
+              - strong [ref=e510]: "76.9"
+            - cell "36.7" [ref=e511]:
+              - strong [ref=e512]: "36.7"
+            - cell "40.3" [ref=e513]:
+              - strong [ref=e514]: "40.3"
+            - cell "—" [ref=e515]
+      - paragraph [ref=e516]:
+        - link "V-JEPA" [ref=e517] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2 combined with Llama 3.1 8B achieves state-of-the-art on all five Video QA benchmarks at the 8B scale, with a +15.1 point lead on
+        - link "PerceptionTest" [ref=e518] [cursor=pointer]:
+          - /url: ../Datasets/PerceptionTest
+        - text: and +12.4 points on
+        - link "TemporalBench" [ref=e519] [cursor=pointer]:
+          - /url: ../Datasets/TemporalBench
+        - text: vs. InternVL-2.5.
+      - 'heading "Table 5: Zero-Shot Robot Manipulation Success Rates (%)" [level=3] [ref=e520]':
+        - text: "Table 5: Zero-Shot Robot Manipulation Success Rates (%)"
+        - link [ref=e521] [cursor=pointer]:
+          - /url: "#table-5-zero-shot-robot-manipulation-success-rates-"
+          - img [ref=e522]
+      - table [ref=e526]:
+        - rowgroup [ref=e527]:
+          - row "Method Location Reach Grasp Cup Grasp Box Reach w/ Obj Cup Reach w/ Obj Box Pick-Place Cup Pick-Place Box" [ref=e528]:
+            - columnheader "Method" [ref=e529]
+            - columnheader "Location" [ref=e530]
+            - columnheader "Reach" [ref=e531]
+            - columnheader "Grasp Cup" [ref=e532]
+            - columnheader "Grasp Box" [ref=e533]
+            - columnheader "Reach w/ Obj Cup" [ref=e534]
+            - columnheader "Reach w/ Obj Box" [ref=e535]
+            - columnheader "Pick-Place Cup" [ref=e536]
+            - columnheader "Pick-Place Box" [ref=e537]
+        - rowgroup [ref=e538]:
+          - row "Octo Lab 1 100 20 0 20 70 20 10" [ref=e539]:
+            - cell "Octo" [ref=e540]:
+              - link "Octo" [ref=e541] [cursor=pointer]:
+                - /url: ../Octo
+            - cell "Lab 1" [ref=e542]
+            - cell "100" [ref=e543]
+            - cell "20" [ref=e544]
+            - cell "0" [ref=e545]
+            - cell "20" [ref=e546]
+            - cell "70" [ref=e547]
+            - cell "20" [ref=e548]
+            - cell "10" [ref=e549]
+          - row "Octo Lab 2 100 10 0 10 70 10 10" [ref=e550]:
+            - cell "Octo" [ref=e551]:
+              - link "Octo" [ref=e552] [cursor=pointer]:
+                - /url: ../Octo
+            - cell "Lab 2" [ref=e553]
+            - cell "100" [ref=e554]
+            - cell "10" [ref=e555]
+            - cell "0" [ref=e556]
+            - cell "10" [ref=e557]
+            - cell "70" [ref=e558]
+            - cell "10" [ref=e559]
+            - cell "10" [ref=e560]
+          - row "Octo Average 100 15 0 15 70 15 10" [ref=e561]:
+            - cell "Octo" [ref=e562]:
+              - link "Octo" [ref=e563] [cursor=pointer]:
+                - /url: ../Octo
+            - cell "Average" [ref=e564]
+            - cell "100" [ref=e565]
+            - cell "15" [ref=e566]
+            - cell "0" [ref=e567]
+            - cell "15" [ref=e568]
+            - cell "70" [ref=e569]
+            - cell "15" [ref=e570]
+            - cell "10" [ref=e571]
+          - row "V-JEPA 2-AC Lab 1 100 70 30 90 80 80 80" [ref=e572]:
+            - cell "V-JEPA 2-AC" [ref=e573]:
+              - link "V-JEPA" [ref=e574] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2-AC
+            - cell "Lab 1" [ref=e575]
+            - cell "100" [ref=e576]
+            - cell "70" [ref=e577]
+            - cell "30" [ref=e578]
+            - cell "90" [ref=e579]
+            - cell "80" [ref=e580]
+            - cell "80" [ref=e581]
+            - cell "80" [ref=e582]
+          - row "V-JEPA 2-AC Lab 2 100 60 20 60 70 80 50" [ref=e583]:
+            - cell "V-JEPA 2-AC" [ref=e584]:
+              - link "V-JEPA" [ref=e585] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2-AC
+            - cell "Lab 2" [ref=e586]
+            - cell "100" [ref=e587]
+            - cell "60" [ref=e588]
+            - cell "20" [ref=e589]
+            - cell "60" [ref=e590]
+            - cell "70" [ref=e591]
+            - cell "80" [ref=e592]
+            - cell "50" [ref=e593]
+          - row "V-JEPA 2-AC Average 100 65 25 75 75 80 65" [ref=e594]:
+            - cell "V-JEPA 2-AC" [ref=e595]:
+              - link "V-JEPA" [ref=e596] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2-AC
+            - cell "Average" [ref=e597]
+            - cell "100" [ref=e598]
+            - cell "65" [ref=e599]
+            - cell "25" [ref=e600]
+            - cell "75" [ref=e601]
+            - cell "75" [ref=e602]
+            - cell "80" [ref=e603]
+            - cell "65" [ref=e604]
+      - paragraph [ref=e605]:
+        - link "V-JEPA" [ref=e606] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2-AC dramatically outperforms
+        - link "Octo" [ref=e607] [cursor=pointer]:
+          - /url: ../Octo
+        - text: across all manipulation tasks. Pick-and-place success is 80% (cup) and 65% (box) vs. 15% and 10% for
+        - link "Octo" [ref=e608] [cursor=pointer]:
+          - /url: ../Octo
+        - text: . These results are achieved zero-shot — without any task-specific data or training from the deployment environments.
+      - 'heading "Table 6: Planning Comparison (V-JEPA 2-AC vs. Cosmos)" [level=3] [ref=e609]':
+        - text: "Table 6: Planning Comparison ("
+        - link "V-JEPA" [ref=e610] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2-AC vs.
+        - link "Cosmos" [ref=e611] [cursor=pointer]:
+          - /url: ../NVIDIA-Cosmos
+        - text: )
+        - link [ref=e612] [cursor=pointer]:
+          - /url: "#table-6-planning-comparison-v-jepa-2-ac-vs-cosmos"
+          - img [ref=e613]
+      - table [ref=e617]:
+        - rowgroup [ref=e618]:
+          - row "Model Planning Time per Action Samples Refinement Steps Grasp Pick-Place" [ref=e619]:
+            - columnheader "Model" [ref=e620]
+            - columnheader "Planning Time per Action" [ref=e621]:
+              - link "Planning Time" [ref=e622] [cursor=pointer]:
+                - /url: ../Metrics/Planning-Time
+              - text: per Action
+            - columnheader "Samples" [ref=e623]
+            - columnheader "Refinement Steps" [ref=e624]
+            - columnheader "Grasp" [ref=e625]
+            - columnheader "Pick-Place" [ref=e626]
+        - rowgroup [ref=e627]:
+          - row "NVIDIA Cosmos ~4 minutes 80 10 Lower Lower" [ref=e628]:
+            - cell "NVIDIA Cosmos" [ref=e629]:
+              - link "NVIDIA Cosmos" [ref=e630] [cursor=pointer]:
+                - /url: ../NVIDIA-Cosmos
+            - cell "~4 minutes" [ref=e631]
+            - cell "80" [ref=e632]
+            - cell "10" [ref=e633]
+            - cell "Lower" [ref=e634]
+            - cell "Lower" [ref=e635]
+          - row "V-JEPA 2-AC ~16 seconds 800 10 65% 80%/65%" [ref=e636]:
+            - cell "V-JEPA 2-AC" [ref=e637]:
+              - link "V-JEPA" [ref=e638] [cursor=pointer]:
+                - /url: ../V-JEPA
+              - text: 2-AC
+            - cell "~16 seconds" [ref=e639]
+            - cell "800" [ref=e640]
+            - cell "10" [ref=e641]
+            - cell "65%" [ref=e642]
+            - cell "80%/65%" [ref=e643]
+      - paragraph [ref=e644]:
+        - link "V-JEPA" [ref=e645] [cursor=pointer]:
+          - /url: ../V-JEPA
+        - text: 2-AC plans 15x faster than
+        - link "Cosmos" [ref=e646] [cursor=pointer]:
+          - /url: ../NVIDIA-Cosmos
+        - text: while achieving substantially higher manipulation success rates, demonstrating the efficiency of latent-space planning.
+      - heading "Metrics Used" [level=2] [ref=e647]:
+        - text: Metrics Used
+        - link [ref=e648] [cursor=pointer]:
+          - /url: "#metrics-used"
+          - img [ref=e649]
+      - list [ref=e652]:
+        - listitem [ref=e653]:
+          - link "Top-1 Accuracy" [ref=e654] [cursor=pointer]:
+            - /url: ../Metrics/Top-1-Accuracy
+          - text: — frozen probe-based classification on
+          - link "SSv2" [ref=e655] [cursor=pointer]:
+            - /url: ../Something-Something-v2
+          - text: ","
+          - link "K400" [ref=e656] [cursor=pointer]:
+            - /url: ../Datasets/Kinetics-400
+          - text: ","
+          - link "Diving-48" [ref=e657] [cursor=pointer]:
+            - /url: ../Diving-48
+          - text: ","
+          - link "Jester" [ref=e658] [cursor=pointer]:
+            - /url: ../Datasets/Jester
+          - text: ", COIN, IN1K"
+        - listitem [ref=e659]:
+          - link "Recall@5" [ref=e660] [cursor=pointer]:
+            - /url: ../Metrics/Recall@5
+          - text: — action anticipation metric on
+          - link "EPIC-KITCHENS-100" [ref=e661] [cursor=pointer]:
+            - /url: ../Datasets/EPIC-KITCHENS-100
+          - text: (verb, noun, action)
+        - listitem [ref=e662]:
+          - link "Success Rate" [ref=e663] [cursor=pointer]:
+            - /url: ../Metrics/Success-Rate
+          - text: — robot manipulation task completion (reach, grasp, pick-and-place)
+        - listitem [ref=e664]: Paired Accuracy — video QA metric on MVP
+        - listitem [ref=e665]:
+          - text: Test Accuracy — video QA metric on
+          - link "PerceptionTest" [ref=e666] [cursor=pointer]:
+            - /url: ../Datasets/PerceptionTest
+        - listitem [ref=e667]:
+          - link "Multi-choice Accuracy" [ref=e668] [cursor=pointer]:
+            - /url: ../Multi-choice-Accuracy
+          - text: — video QA metric on
+          - link "TempCompass" [ref=e669] [cursor=pointer]:
+            - /url: ../Datasets/TempCompass
+        - listitem [ref=e670]:
+          - text: Multi-binary Short QA Accuracy — video QA metric on
+          - link "TemporalBench" [ref=e671] [cursor=pointer]:
+            - /url: ../Datasets/TemporalBench
+        - listitem [ref=e672]:
+          - link "TOMATO Accuracy" [ref=e673] [cursor=pointer]:
+            - /url: ../TOMATO-Accuracy
+          - text: — video QA metric on
+          - link "TOMATO" [ref=e674] [cursor=pointer]:
+            - /url: ../Datasets/TOMATO
+          - text: benchmark
+        - listitem [ref=e675]:
+          - link "Planning Time" [ref=e676] [cursor=pointer]:
+            - /url: ../Metrics/Planning-Time
+          - text: — wall-clock time per planning action for robot control
+        - listitem [ref=e677]:
+          - link "Euclidean Distance to Goal" [ref=e678] [cursor=pointer]:
+            - /url: ../Metrics/Euclidean-Distance-to-Goal
+          - text: — distance metric for robot manipulation evaluation
+      - heading "Datasets Used" [level=2] [ref=e679]:
+        - text: Datasets Used
+        - link [ref=e680] [cursor=pointer]:
+          - /url: "#datasets-used"
+          - img [ref=e681]
+      - list [ref=e684]:
+        - listitem [ref=e685]:
+          - link "VideoMix22M" [ref=e686] [cursor=pointer]:
+            - /url: ../Datasets/VideoMix22M
+          - text: "— pretraining dataset (22M samples:"
+          - link "SSv2" [ref=e687] [cursor=pointer]:
+            - /url: ../Something-Something-v2
+          - text: ", Kinetics,"
+          - link "HowTo100M" [ref=e688] [cursor=pointer]:
+            - /url: ../HowTo100M
+          - text: ","
+          - link "YT-Temporal-1B" [ref=e689] [cursor=pointer]:
+            - /url: ../Datasets/YouTube-Temporal-1B
+          - text: ", ImageNet)"
+        - listitem [ref=e690]:
+          - link "Something-Something v2" [ref=e691] [cursor=pointer]:
+            - /url: ../Something-Something-v2
+          - text: — fine-grained motion understanding (168K videos)
+        - listitem [ref=e692]:
+          - link "Kinetics-400" [ref=e693] [cursor=pointer]:
+            - /url: ../Datasets/Kinetics-400
+          - text: — action recognition benchmark
+        - listitem [ref=e694]:
+          - link "Kinetics-700" [ref=e695] [cursor=pointer]:
+            - /url: ../Datasets/Kinetics-700
+          - text: — extended action recognition dataset
+        - listitem [ref=e696]:
+          - link "HowTo100M" [ref=e697] [cursor=pointer]:
+            - /url: ../HowTo100M
+          - text: — instructional video dataset
+        - listitem [ref=e698]:
+          - link "YT-Temporal-1B" [ref=e699] [cursor=pointer]:
+            - /url: ../YT-Temporal-1B
+          - text: — large-scale curated YouTube video dataset
+        - listitem [ref=e700]:
+          - link "ImageNet-1K" [ref=e701] [cursor=pointer]:
+            - /url: ../ImageNet-1K
+          - text: — image classification benchmark
+        - listitem [ref=e702]:
+          - link "Diving-48" [ref=e703] [cursor=pointer]:
+            - /url: ../Diving-48
+          - text: — fine-grained diving motion classification
+        - listitem [ref=e704]:
+          - link "Jester" [ref=e705] [cursor=pointer]:
+            - /url: ../Datasets/Jester
+          - text: — hand gesture recognition dataset
+        - listitem [ref=e706]:
+          - link "COIN" [ref=e707] [cursor=pointer]:
+            - /url: ../Datasets/COIN
+          - text: — instructional video classification
+        - listitem [ref=e708]:
+          - link "EPIC-KITCHENS-100" [ref=e709] [cursor=pointer]:
+            - /url: ../Datasets/EPIC-KITCHENS-100
+          - text: — egocentric kitchen action anticipation benchmark
+        - listitem [ref=e710]:
+          - link "PerceptionTest" [ref=e711] [cursor=pointer]:
+            - /url: ../Datasets/PerceptionTest
+          - text: — video QA benchmark
+        - listitem [ref=e712]:
+          - link "MVP" [ref=e713] [cursor=pointer]:
+            - /url: ../Datasets/MVP
+          - text: — video QA benchmark
+        - listitem [ref=e714]:
+          - link "TempCompass" [ref=e715] [cursor=pointer]:
+            - /url: ../Datasets/TempCompass
+          - text: — temporal reasoning video QA benchmark
+        - listitem [ref=e716]:
+          - link "TemporalBench" [ref=e717] [cursor=pointer]:
+            - /url: ../Datasets/TemporalBench
+          - text: — temporal understanding benchmark
+        - listitem [ref=e718]:
+          - link "TOMATO" [ref=e719] [cursor=pointer]:
+            - /url: ../Datasets/TOMATO
+          - text: — video QA benchmark
+        - listitem [ref=e720]:
+          - link "Droid Dataset" [ref=e721] [cursor=pointer]:
+            - /url: ../Droid-Dataset
+          - text: — robot manipulation trajectories (~62 hours of unlabeled video)
+        - listitem [ref=e722]:
+          - link "Open-X Embodiment" [ref=e723] [cursor=pointer]:
+            - /url: ../Open-X-Embodiment
+          - text: — multi-robot dataset (used by
+          - link "Octo" [ref=e724] [cursor=pointer]:
+            - /url: ../Octo
+          - text: baseline)
+      - heading "Related Papers" [level=2] [ref=e725]:
+        - text: Related Papers
+        - link [ref=e726] [cursor=pointer]:
+          - /url: "#related-papers"
+          - img [ref=e727]
+      - list [ref=e730]:
+        - listitem [ref=e731]:
+          - link "V-JEPA" [ref=e732] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: — predecessor;
+          - link "V-JEPA" [ref=e733] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2 scales the architecture and data by an order of magnitude
+        - listitem [ref=e734]:
+          - link "V-JEPA 2.1" [ref=e735] [cursor=pointer]:
+            - /url: ../V-JEPA-2.1
+          - text: — successor focusing on dense features and multi-level prediction
+        - listitem [ref=e736]:
+          - link "I-JEPA" [ref=e737] [cursor=pointer]:
+            - /url: ../I-JEPA
+          - text: — image-based JEPA that inspired the video extension
+        - listitem [ref=e738]:
+          - text: DINOv2 — strong image self-supervised baseline;
+          - link "V-JEPA" [ref=e739] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2 surpasses it on motion tasks
+        - listitem [ref=e740]:
+          - text: InternVideo2 — video understanding baseline that
+          - link "V-JEPA" [ref=e741] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2 outperforms on
+          - link "SSv2" [ref=e742] [cursor=pointer]:
+            - /url: ../Something-Something-v2
+        - listitem [ref=e743]:
+          - link "Octo" [ref=e744] [cursor=pointer]:
+            - /url: ../Octo
+          - text: — generalist robot policy baseline significantly outperformed by
+          - link "V-JEPA" [ref=e745] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2-AC
+        - listitem [ref=e746]:
+          - link "Cosmos" [ref=e747] [cursor=pointer]:
+            - /url: ../Cosmos
+          - text: — foundation world model baseline;
+          - link "V-JEPA" [ref=e748] [cursor=pointer]:
+            - /url: ../V-JEPA
+          - text: 2-AC plans 15x faster with higher success
+    - separator [ref=e749]
+  - generic [ref=e751]:
+    - heading "Graph View" [level=3] [ref=e752]
+    - button "Global Graph" [ref=e754] [cursor=pointer]:
+      - img [ref=e755]
+  - contentinfo [ref=e757]:
+    - paragraph [ref=e758]:
+      - text: Created with
+      - link "Quartz v4.5.2" [ref=e759] [cursor=pointer]:
+        - /url: https://quartz.jzhao.xyz/
+      - text: © 2026
+    - list [ref=e760]:
+      - listitem [ref=e761]:
+        - link "GitHub" [ref=e762] [cursor=pointer]:
+          - /url: https://github.com/git-kinetix/physical-intelligence-vault

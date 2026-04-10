@@ -10,7 +10,7 @@ importance:
 aliases: [SuperPADL, Super PADL]
 ---
 
-![[PDFs/SuperPADL.pdf]]
+!PDFs/SuperPADL.pdf
 
 # SuperPADL: Scaling Language-Directed Physics-Based Control with Progressive Supervised Distillation
 

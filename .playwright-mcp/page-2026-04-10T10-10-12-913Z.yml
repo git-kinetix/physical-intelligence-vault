@@ -1,0 +1,933 @@
+- generic [ref=e1]:
+  - dialog "This website uses cookies" [ref=e2]:
+    - generic [ref=e3]:
+      - link "Cookiebot by Usercentrics - opens in a new window" [ref=e6] [cursor=pointer]:
+        - /url: https://www.cookiebot.com/en/what-is-behind-powered-by-cookiebot/?utm_source=banner_cb&utm_medium=referral&utm_content=v2
+        - img [ref=e7]
+      - tablist [ref=e1620]:
+        - tab "Consent" [ref=e1621] [cursor=pointer]
+        - tab "Details" [active] [selected] [ref=e1622] [cursor=pointer]
+        - tab "About" [ref=e1623] [cursor=pointer]
+      - tabpanel "Details" [ref=e1625]:
+        - heading "Details" [level=2] [ref=e1626]
+        - generic [ref=e1627]:
+          - list [ref=e1631]:
+            - listitem [ref=e1632]:
+              - generic [ref=e1633]:
+                - generic [ref=e1634]:
+                  - button "Necessary (7)" [ref=e1635] [cursor=pointer]:
+                    - text: Necessary
+                    - generic [ref=e1636]: "7"
+                  - group [ref=e1638]:
+                    - checkbox "Necessary" [checked] [disabled]
+                - paragraph [ref=e1640]: Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies. These cookies do not gather information about you that could be used for marketing purposes and do not remember where you have been on the internet.
+            - listitem [ref=e1641]:
+              - generic [ref=e1642]:
+                - generic [ref=e1643]:
+                  - button "Preferences (5)" [ref=e1644] [cursor=pointer]:
+                    - text: Preferences
+                    - generic [ref=e1645]: "5"
+                  - group [ref=e1647]:
+                    - checkbox "Preferences" [ref=e1648] [cursor=pointer]
+                - paragraph [ref=e1650]: Preference cookies enable a website to remember information that changes the way the website behaves or looks, like your preferred language or the region that you are in.
+            - listitem [ref=e1651]:
+              - generic [ref=e1652]:
+                - generic [ref=e1653]:
+                  - button "Statistics (7)" [ref=e1654] [cursor=pointer]:
+                    - text: Statistics
+                    - generic [ref=e1655]: "7"
+                  - group [ref=e1657]:
+                    - checkbox "Statistics" [ref=e1658] [cursor=pointer]
+                - paragraph [ref=e1660]: Statistic cookies help website owners understand how visitors interact with websites by collecting and reporting information anonymously.
+            - listitem [ref=e1661]:
+              - generic [ref=e1662]:
+                - generic [ref=e1663]:
+                  - button "Marketing (33)" [ref=e1664] [cursor=pointer]:
+                    - text: Marketing
+                    - generic [ref=e1665]: "33"
+                  - group [ref=e1667]:
+                    - checkbox "Marketing" [ref=e1668] [cursor=pointer]
+                - paragraph [ref=e1670]: Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers.
+            - listitem [ref=e1671]:
+              - generic [ref=e1672]:
+                - button "Unclassified (22)" [ref=e1673] [cursor=pointer]:
+                  - text: Unclassified
+                  - generic [ref=e1674]: "22"
+                - paragraph [ref=e1676]: Unclassified cookies are cookies that we are in the process of classifying, together with the providers of individual cookies.
+          - generic [ref=e1677]:
+            - link "Cross-domain consent 1" [ref=e1678] [cursor=pointer]:
+              - /url: "#"
+              - text: Cross-domain consent
+              - generic [ref=e1679]: "1"
+            - text: "Your consent applies to the following domains:"
+          - generic [ref=e1680]:
+            - text: Cookie declaration last updated on 3/11/26 by
+            - link "Cookiebot" [ref=e1681] [cursor=pointer]:
+              - /url: https://www.cookiebot.com
+      - generic [ref=e73]:
+        - button "Use necessary cookies only" [ref=e74] [cursor=pointer]
+        - button "Allow selected cookies" [ref=e75] [cursor=pointer]
+        - button "Allow all cookies" [ref=e76] [cursor=pointer]
+  - link "skip to main content" [ref=e77] [cursor=pointer]:
+    - /url: "#skip-to-main-content"
+  - generic [ref=e79]:
+    - dialog "ACM is now Open Access" [ref=e1491]:
+      - generic [ref=e1492]:
+        - generic [ref=e1493]:
+          - heading "ACM is now Open Access" [level=2] [ref=e1494]
+          - button "Close modal" [ref=e1495] [cursor=pointer]:
+            - generic [ref=e1496]: ×
+        - generic [ref=e1497]:
+          - paragraph [ref=e1498]:
+            - text: As part of the Digital Library's transition to
+            - link "Open Access" [ref=e1499] [cursor=pointer]:
+              - /url: /action/clickThrough?id=108180&url=%2Fopenaccess&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101025&productId=108179
+            - text: ", new features for researchers are available in the"
+            - emphasis [ref=e1500]: Premium Edition
+            - text: .
+            - link "Click here to learn more" [ref=e1501] [cursor=pointer]:
+              - /url: /action/clickThrough?id=108180&url=%2Fpremium&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101025&productId=108179
+            - text: .
+          - paragraph [ref=e1502]:
+            - generic [ref=e1503]: You are currently in the Basic Edition. Features requiring a subscription appear in grey.
+          - generic [ref=e1504]:
+            - link "Sign In" [ref=e1505] [cursor=pointer]:
+              - /url: /action/clickThrough?id=108180&url=%2Faction%2FshowLogin%3FredirectUri%3Dhttps%253A%252F%252Fdl.acm.org%252Fdoi%252Fabs%252F10.1145%252F3592408&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101025&productId=108179
+            - link "Upgrade" [ref=e1506] [cursor=pointer]:
+              - /url: /action/clickThrough?id=108180&url=%2Fabout%2Fupgrade&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101025&productId=108179
+    - banner [ref=e80]:
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - navigation [ref=e83]:
+            - list [ref=e84]:
+              - listitem [ref=e85]:
+                - link "ACM Digital Library home" [ref=e86] [cursor=pointer]:
+                  - /url: /
+                  - img "ACM Digital Library home" [ref=e87]
+              - listitem [ref=e88]:
+                - link "ACM Association for Computing Machinery corporate logo" [ref=e89] [cursor=pointer]:
+                  - /url: https://www.acm.org
+                  - img "ACM Association for Computing Machinery corporate logo" [ref=e90]
+          - generic [ref=e91]:
+            - link "Basic Edition, Upgrade" [ref=e96] [cursor=pointer]:
+              - /url: /premium
+              - img [ref=e97]
+            - navigation [ref=e98]:
+              - list [ref=e101]:
+                - listitem [ref=e102]:
+                  - link "Sign in" [ref=e103] [cursor=pointer]:
+                    - /url: /action/showLogin?redirectUri=%2Fdoi%2Fabs%2F10.1145%2F3592408
+                - listitem [ref=e104]:
+                  - link "Register" [ref=e105] [cursor=pointer]:
+                    - /url: https://accounts.acm.org?redirectUri=%2Fdoi%2Fabs%2F10.1145%2F3592408
+        - generic [ref=e107]:
+          - generic [ref=e1508]:
+            - navigation "Main Navigation" [ref=e1509]:
+              - list [ref=e1510]:
+                - text: 
+                - listitem [ref=e1511]:
+                  - link "Journals" [ref=e1512] [cursor=pointer]:
+                    - /url: /journals
+                - listitem [ref=e1513]:
+                  - link "Magazines" [ref=e1514] [cursor=pointer]:
+                    - /url: /magazines
+                - listitem [ref=e1515]:
+                  - link "Proceedings" [ref=e1516] [cursor=pointer]:
+                    - /url: /proceedings
+                - listitem [ref=e1517]:
+                  - link "Books" [ref=e1518] [cursor=pointer]:
+                    - /url: /acmbooks
+                - listitem [ref=e1519]:
+                  - link "SIGs" [ref=e1520] [cursor=pointer]:
+                    - /url: /sigs
+                - listitem "More" [ref=e1521]:
+                  - link "More" [ref=e1522] [cursor=pointer]:
+                    - /url: "#"
+                    - text: More
+                    - generic [ref=e1523]: 
+            - text: 
+          - generic [ref=e110]:
+            - generic "Quick Search" [ref=e113]:
+              - generic [ref=e115]:
+                - generic [ref=e116]: Search ACM Digital Library
+                - combobox "Enter a text or select an option" [ref=e1524]:
+                  - searchbox "Search ACM Digital Library" [ref=e117]
+              - button "Search" [ref=e119] [cursor=pointer]: 
+            - generic "Advanced Search (Premium feature)" [ref=e120]:
+              - link "Advanced Search" [ref=e122] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e123]:
+          - link "ACM Transactions on Graphics " [ref=e124] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e125]: ACM Transactions on Graphics
+            - text: 
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:         
+          - navigation "Sticky Navigation" [ref=e1391]
+    - generic [ref=e127]:
+      - main [ref=e128]:
+        - generic [ref=e129]:
+          - generic [ref=e130]: Several features on this page require Premium Access.
+          - generic [ref=e131]:
+            - link "Learn more" [ref=e132] [cursor=pointer]:
+              - /url: /about/upgrade
+            - link "Sign in" [ref=e133] [cursor=pointer]:
+              - /url: /action/showLogin?redirectUri=%2Fdoi%2F10.1145%2F3592408
+        - article [ref=e134]:
+          - generic [ref=e136]:
+            - navigation "Breadcrumbs" [ref=e137]:
+              - list [ref=e138]:
+                - listitem [ref=e139]:
+                  - link "Home" [ref=e140] [cursor=pointer]:
+                    - /url: https://dl.acm.org/
+                - listitem [ref=e141]:
+                  - text: ">"
+                  - link "ACM Journals" [ref=e142] [cursor=pointer]:
+                    - /url: /journals
+                - listitem [ref=e143]:
+                  - text: ">"
+                  - link "ACM Transactions on Graphics" [ref=e144] [cursor=pointer]:
+                    - /url: /journal/tog
+                - listitem [ref=e145]:
+                  - text: ">"
+                  - link "Vol. 42, No. 4" [ref=e146] [cursor=pointer]:
+                    - /url: /toc/tog/2023/42/4
+                - listitem [ref=e147]:
+                  - text: ">"
+                  - link "Learning Physically Simulated Tennis Skills from Broadcast Videos" [ref=e148] [cursor=pointer]:
+                    - /url: /doi/abs/10.1145/3592408
+            - generic [ref=e149]:
+              - generic [ref=e151]: i
+              - generic [ref=e153]:
+                - link "Click here" [ref=e154] [cursor=pointer]:
+                  - /url: /action/clickThrough?id=108253&url=https%3A%2F%2Fwww.acm.org%2Fabout-acm%2Facm-pres-on-oa-transition-and-dl-changes&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101024&productId=108184
+                - text: to read ACM President Yannis Ioannidis’ statement on recent changes to the Digital Library
+            - generic [ref=e155]:
+              - generic [ref=e156]:
+                - generic [ref=e158]: research-article
+                - generic [ref=e159]:
+                  - generic [ref=e160]: 
+                  - generic [ref=e161]: Free access
+              - generic [ref=e165]:
+                - generic "shareBlock"
+                - generic [ref=e166]: Share on
+                - list [ref=e167]:
+                  - listitem [ref=e168]:
+                    - link "share on X" [ref=e169] [cursor=pointer]:
+                      - /url: /#x
+                      - generic [ref=e170]: 
+                  - listitem [ref=e171]:
+                    - link "share on LinkedIn" [ref=e172] [cursor=pointer]:
+                      - /url: /#linkedin
+                      - generic [ref=e173]: 
+                  - listitem [ref=e174]:
+                    - link "share on Reddit" [ref=e175] [cursor=pointer]:
+                      - /url: /#reddit
+                      - generic [ref=e176]: 
+                  - listitem [ref=e177]:
+                    - link "share on Facebook" [ref=e178] [cursor=pointer]:
+                      - /url: /#facebook
+                      - generic [ref=e179]: 
+                  - listitem [ref=e180]:
+                    - link "share via email" [ref=e181] [cursor=pointer]:
+                      - /url: /#email
+                      - generic [ref=e182]: 
+            - heading "Learning Physically Simulated Tennis Skills from Broadcast Videos" [level=1] [ref=e183]
+            - generic [ref=e184]:
+              - generic [ref=e185]:
+                - text: "Authors:"
+                - list [ref=e186]:
+                  - listitem [ref=e187]:
+                    - generic [ref=e1525]:
+                      - button "Haotian Zhang" [ref=e1526] [cursor=pointer]
+                      - text: 
+                  - text: ","
+                  - listitem [ref=e189]:
+                    - generic [ref=e1527]:
+                      - button "Ye Yuan" [ref=e1528] [cursor=pointer]
+                      - text: 
+                  - text: ","
+                  - listitem [ref=e191]:
+                    - generic [ref=e1529]:
+                      - button "Viktor Makoviychuk" [ref=e1530] [cursor=pointer]
+                      - text: 
+                  - text: ","
+                  - listitem [ref=e193]:
+                    - generic [ref=e1531]:
+                      - button "Yunrong Guo" [ref=e1532] [cursor=pointer]
+                      - text: 
+                  - generic [ref=e195]:
+                    - text: ","
+                    - listitem [ref=e196]:
+                      - generic [ref=e1533]:
+                        - button "Sanja Fidler" [ref=e1534] [cursor=pointer]
+                        - text: 
+                  - generic [ref=e198]:
+                    - text: ","
+                    - listitem [ref=e199]:
+                      - generic [ref=e1535]:
+                        - button "Xue Bin Peng" [ref=e1536] [cursor=pointer]
+                        - text: 
+                  - generic [ref=e201]:
+                    - text: ","
+                    - listitem [ref=e202]:
+                      - generic [ref=e1537]:
+                        - button "Kayvon Fatahalian" [ref=e1538] [cursor=pointer]
+                        - text: 
+              - link "Authors Info & Claims" [ref=e204] [cursor=pointer]:
+                - /url: "#tab-contributors"
+            - generic [ref=e205]:
+              - link "ACM Transactions on Graphics (TOG), Volume 42, Issue 4" [ref=e207] [cursor=pointer]:
+                - /url: /toc/tog/2023/42/4
+                - generic [ref=e208]: ACM Transactions on Graphics (TOG)
+                - text: ","
+                - generic [ref=e209]: Volume 42
+                - text: ","
+                - generic [ref=e210]: Issue 4
+              - generic [ref=e211]: "Article No.: 95, Pages 1 - 14"
+              - link "https://doi.org/10.1145/3592408" [ref=e213] [cursor=pointer]:
+                - /url: https://doi.org/10.1145/3592408
+            - generic [ref=e214]:
+              - text: "Published: 26 July 2023"
+              - link "Publication History" [ref=e215] [cursor=pointer]:
+                - /url: "#core-history"
+              - link "Check for updates on crossmark" [ref=e216] [cursor=pointer]:
+                - /url: "#"
+            - generic [ref=e224]:
+              - generic "Additional metrics (Premium feature)" [ref=e227]:
+                - button "43 citation 718 Downloads" [ref=e231] [cursor=pointer]:
+                  - generic [ref=e232]:
+                    - generic [ref=e233]: 
+                    - generic [ref=e234]: "43"
+                    - generic [ref=e235]: citation
+                  - generic [ref=e236]:
+                    - generic [ref=e237]: 
+                    - generic [ref=e238]: "718"
+                    - generic [ref=e239]: Downloads
+              - generic [ref=e240]:
+                - generic [ref=e1539]:
+                  - button "Get Citation Alerts (Premium feature)" [ref=e242] [cursor=pointer]:
+                    - generic [ref=e243]: 
+                  - text: 
+                - generic [ref=e1540]:
+                  - button "Save to Binder (Premium feature)" [ref=e1541] [cursor=pointer]:
+                    - generic [ref=e246]: 
+                  - text: 
+                - button "Export Citation" [ref=e248] [cursor=pointer]:
+                  - generic [ref=e249]: 
+                - link "View online with eReader" [ref=e251] [cursor=pointer]:
+                  - /url: /doi/epdf/10.1145/3592408
+                  - generic [ref=e252]: 
+                  - generic [ref=e253]: PDF/eReader
+          - generic:
+            - generic "Article navigation":
+              - generic:
+                - button "Toggle section navigation menu" [ref=e254] [cursor=pointer]:
+                  - generic [ref=e255]: 
+                - navigation "Contents":   
+              - navigation [ref=e256]:
+                - list [ref=e257]:
+                  - listitem [ref=e258]:
+                    - link "Information & Contributors" [ref=e1542] [cursor=pointer]:
+                      - /url: "#core-collateral-info"
+                      - generic [ref=e1543]: 
+                      - generic [ref=e1544]: Information & Contributors
+                  - listitem [ref=e259]:
+                    - link "Bibliometrics & Citations" [ref=e1545] [cursor=pointer]:
+                      - /url: "#core-collateral-metrics"
+                      - generic [ref=e1546]: 
+                      - generic [ref=e1547]: Bibliometrics & Citations
+                  - listitem [ref=e260]:
+                    - generic [ref=e1548]:
+                      - button "Reading Options (Premium feature)" [ref=e1549] [cursor=pointer]:
+                        - generic [ref=e1550]: 
+                        - generic [ref=e1551]: Reading Options
+                      - text: 
+                  - listitem [ref=e261]:
+                    - generic [ref=e1552]:
+                      - button "References (Premium feature)" [ref=e1553] [cursor=pointer]:
+                        - generic [ref=e1554]: 
+                        - generic [ref=e1555]: References
+                      - text: 
+                  - listitem [ref=e262]:
+                    - generic [ref=e1556]:
+                      - button "Figures (Premium feature)" [ref=e1557] [cursor=pointer]:
+                        - generic [ref=e1558]: 
+                        - generic [ref=e1559]: Figures
+                      - text: 
+                  - listitem [ref=e263]:
+                    - generic [ref=e1560]:
+                      - button "Tables (Premium feature)" [ref=e1561] [cursor=pointer]:
+                        - generic [ref=e1562]: 
+                        - generic [ref=e1563]: Tables
+                      - text: 
+                  - listitem [ref=e264]:
+                    - generic [ref=e1564]:
+                      - button "Media (Premium feature)" [ref=e1565] [cursor=pointer]:
+                        - generic [ref=e1566]: 
+                        - generic [ref=e1567]: Media
+                      - text: 
+                  - listitem [ref=e265]:
+                    - link "Share" [ref=e1568] [cursor=pointer]:
+                      - /url: "#core-collateral-share"
+                      - generic [ref=e1569]: 
+                      - generic [ref=e1570]: Share
+          - generic [ref=e266]:
+            - generic [ref=e269]:
+              - tablist [ref=e1571]:
+                - tab "Abstract" [selected]
+                - tab "AI Summary (Premium feature)" [ref=e1572] [cursor=pointer]:
+                  - generic [ref=e1573]: 󩿂
+                  - text: AI Summary
+                - text: 
+              - tabpanel "Abstract" [ref=e1574]:
+                - paragraph [ref=e273]: We present a system that learns diverse, physically simulated tennis skills from large-scale demonstrations of tennis play harvested from broadcast videos. Our approach is built upon hierarchical models, combining a low-level imitation policy and a high-level motion planning policy to steer the character in a motion embedding learned from broadcast videos. When deployed at scale on large video collections that encompass a vast set of examples of real-world tennis play, our approach can learn complex tennis shotmaking skills and realistically chain together multiple shots into extended rallies, using only simple rewards and without explicit annotations of stroke types. To address the low quality of motions extracted from broadcast videos, we correct estimated motion with physics-based imitation, and use a hybrid control policy that overrides erroneous aspects of the learned motion embedding with corrections predicted by the high-level policy. We demonstrate that our system produces controllers for physically-simulated tennis players that can hit the incoming ball to target positions accurately using a diverse array of strokes (serves, forehands, and backhands), spins (topspins and slices), and playing styles (one/two-handed backhands, left/right-handed play). Overall, our system can synthesize two physically simulated characters playing extended tennis rallies with simulated racket and ball dynamics. Code and data for this work is available at https://research.nvidia.com/labs/toronto-ai/vid2player3d/.
+              - text: 󩿂
+            - region "Formats available" [ref=e284]:
+              - heading "Formats available" [level=2] [ref=e285]
+              - paragraph [ref=e286]: "You can view the full content in the following formats:"
+              - link "PDF/eReader" [ref=e288] [cursor=pointer]:
+                - /url: /doi/epdf/10.1145/3592408
+                - generic [ref=e289]: 
+                - generic [ref=e290]: PDF/eReader
+            - generic [ref=e292]:
+              - generic [ref=e293]:
+                - heading "Supplementary Material" [level=2] [ref=e294]
+                - list [ref=e295]:
+                  - listitem [ref=e296]:
+                    - generic [ref=e297]:
+                      - generic [ref=e298]: ZIP File (papers_533-supplemental.zip)
+                      - generic [ref=e299]: supplemental material
+                    - list [ref=e301]:
+                      - listitem [ref=e302]:
+                        - link "Download" [ref=e303] [cursor=pointer]:
+                          - /url: /doi/suppl/10.1145/3592408/suppl_file/papers_533-supplemental.zip
+                      - listitem [ref=e304]: 386.49 MB
+                  - listitem [ref=e305]:
+                    - generic [ref=e306]:
+                      - generic [ref=e307]: MP4 File (papers_533_VOD.mp4)
+                      - generic [ref=e309]: presentation
+                    - generic [ref=e311]:
+                      - figure [ref=e313]:
+                        - iframe [ref=e314]:
+                          - generic [ref=f15e6]:
+                            - button "Play Video" [ref=f15e12] [cursor=pointer]:
+                              - img [ref=f15e13]
+                              - generic [ref=f15e15]: Play Video
+                            - generic [ref=f15e17]:
+                              - button "Play" [ref=f15e18] [cursor=pointer]:
+                                - img [ref=f15e19]
+                                - generic [ref=f15e21]: Play
+                              - generic [ref=f15e22]:
+                                - button "Currently unmuted. Volume set to 100 percent. Click to mute." [ref=f15e23] [cursor=pointer]:
+                                  - img [ref=f15e24]
+                                  - generic [ref=f15e26]: Currently unmuted. Volume set to 100 percent. Click to mute.
+                                - slider "volume" [ref=f15e27] [cursor=pointer]: "1"
+                              - button "Settings" [ref=f15e28] [cursor=pointer]:
+                                - generic [ref=f15e29]: Settings
+                                - img [ref=f15e30]
+                              - button "Enable Picture in Picture" [ref=f15e32] [cursor=pointer]:
+                                - img [ref=f15e33]
+                                - generic [ref=f15e37]: Enable Picture in Picture
+                              - button "Enable Fullscreen" [ref=f15e38] [cursor=pointer]:
+                                - img [ref=f15e39]
+                                - generic [ref=f15e41]: Enable Fullscreen
+                      - list [ref=e315]:
+                        - listitem [ref=e316]:
+                          - link "Download" [ref=e317] [cursor=pointer]:
+                            - /url: /doi/suppl/10.1145/3592408/suppl_file/papers_533_VOD.mp4
+                        - listitem [ref=e318]: 596.20 MB
+              - generic [ref=e319]:
+                - heading "References" [level=2] [ref=e320]
+                - list [ref=e321]:
+                  - listitem [ref=e322]:
+                    - generic [ref=e323]: "[1]"
+                    - generic [ref=e325]:
+                      - generic [ref=e326]: Anurag Arnab, Carl Doersch, and Andrew Zisserman. 2019. Exploiting temporal context for 3D human pose estimation in the wild. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 3395--3404.
+                      - generic [ref=e327]:
+                        - link "Crossref" [ref=e329] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/CVPR.2019.00351
+                        - generic [ref=e330]:
+                          - text: "|"
+                          - link "Google Scholar" [ref=e331] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2019.00351
+                  - listitem [ref=e332]:
+                    - generic [ref=e333]: "[2]"
+                    - generic [ref=e335]:
+                      - generic [ref=e336]: Samy Bengio, Oriol Vinyals, Navdeep Jaitly, and Noam Shazeer. 2015. Scheduled sampling for sequence prediction with recurrent neural networks. Advances in neural information processing systems 28 (2015).
+                      - link "Google Scholar" [ref=e339] [cursor=pointer]:
+                        - /url: https://scholar.google.com/scholar?q=Samy+Bengio%2C+Oriol+Vinyals%2C+Navdeep+Jaitly%2C+and+Noam+Shazeer.+2015.+Scheduled+sampling+for+sequence+prediction+with+recurrent+neural+networks.+Advances+in+neural+information+processing+systems+28+%282015%29.
+                  - listitem [ref=e340]:
+                    - generic [ref=e341]: "[3]"
+                    - generic [ref=e343]:
+                      - generic [ref=e344]: "Kevin Bergamin, Simon Clavet, Daniel Holden, and James Richard Forbes. 2019. DReCon: Data-Driven Responsive Control of Physics-Based Characters. ACM Trans. Graph. 38, 6, Article 206 (nov 2019), 11 pages."
+                      - generic [ref=e345]:
+                        - link "Digital Library" [ref=e347] [cursor=pointer]:
+                          - /url: /doi/10.1145/3355089.3356536
+                        - generic [ref=e348]:
+                          - text: "|"
+                          - link "Google Scholar" [ref=e349] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3355089.3356536
+                  - listitem [ref=e350]:
+                    - generic [ref=e351]: "[4]"
+                    - generic [ref=e353]:
+                      - generic [ref=e354]: "Alexey Bochkovskiy, Chien-Yao Wang, and Hong-Yuan Mark Liao. 2020. Yolov4: Optimal speed and accuracy of object detection. arXiv preprint arXiv:2004.10934 (2020)."
+                      - link "Google Scholar" [ref=e357] [cursor=pointer]:
+                        - /url: https://scholar.google.com/scholar?q=Alexey+Bochkovskiy%2C+Chien-Yao+Wang%2C+and+Hong-Yuan+Mark+Liao.+2020.+Yolov4%3A+Optimal+speed+and+accuracy+of+object+detection.+arXiv+preprint+arXiv%3A2004.10934+%282020%29.
+                  - text: "| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |"
+                - button "Show all references - 77 references remaining" [expanded] [ref=e1576] [cursor=pointer]: Show all references
+              - generic [ref=e1091]:
+                - generic [ref=e1095]:
+                  - generic [ref=e1096]:
+                    - heading "Cited By" [level=2] [ref=e1097]
+                    - link "View all " [ref=e1098] [cursor=pointer]:
+                      - /url: /action/ajaxShowCitedBy?doi=10.1145/3592408
+                      - text: View all
+                      - generic [ref=e1099]: 
+                  - list [ref=e1100]:
+                    - listitem [ref=e1101]:
+                      - generic [ref=e1102]: Yao J, Feng J, Tian X, Xu K, Amirkhanova G and Chen S.
+                      - text: "(2026). Beyond the Broadcast: Enhancing VR Tennis Broadcasting Through Embedded Visualizations and Camera Techniques. IEEE Transactions on Visualization and Computer Graphics. 10.1109/TVCG.2025.3634638."
+                      - generic [ref=e1103]: 32:1.
+                      - text: "(802-812). Online publication date: Jan-2026."
+                      - link "https://doi.org/10.1109/TVCG.2025.3634638" [ref=e1105] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/TVCG.2025.3634638
+                    - listitem [ref=e1106]:
+                      - generic [ref=e1107]: Kim M and Lee Y.
+                      - text: "(2025). FreeMusco: Motion-Free Learning of Latent Control for Morphology-Adaptive Locomotion in Musculoskeletal Characters. Proceedings of the SIGGRAPH Asia 2025 Conference Papers. 10.1145/3757377.3764002. (1-11). Online publication date: 15-Dec-2025."
+                      - link "https://dl.acm.org/doi/10.1145/3757377.3764002" [ref=e1109] [cursor=pointer]:
+                        - /url: https://dl.acm.org/doi/10.1145/3757377.3764002
+                    - listitem [ref=e1110]:
+                      - generic [ref=e1111]: Mu Y, Ling H, Shi Y, Ojeda I, Xi P, Shu C, Zinno F and Peng X.
+                      - text: "(2025). StableMotion: Training Motion Cleanup Models with Unpaired Corrupted Data. Proceedings of the SIGGRAPH Asia 2025 Conference Papers. 10.1145/3757377.3763817. (1-12). Online publication date: 15-Dec-2025."
+                      - link "https://dl.acm.org/doi/10.1145/3757377.3763817" [ref=e1113] [cursor=pointer]:
+                        - /url: https://dl.acm.org/doi/10.1145/3757377.3763817
+                    - listitem [ref=e1114]:
+                      - link "Show More Cited By" [ref=e1115] [cursor=pointer]:
+                        - /url: javascript:void(0)
+                - generic [ref=e1118]:
+                  - heading "Index Terms" [level=2] [ref=e1119]
+                  - generic "Index Terms (Premium feature)" [ref=e1120]:
+                    - list [ref=e1122]:
+                      - listitem [ref=e1123]:
+                        - generic [ref=e1124]: Learning Physically Simulated Tennis Skills from Broadcast Videos
+                        - list [ref=e1125]:
+                          - listitem [ref=e1126]:
+                            - paragraph [ref=e1128]:
+                              - link "Computing methodologies" [ref=e1129] [cursor=pointer]:
+                                - /url: "#"
+                            - list [ref=e1130]:
+                              - listitem [ref=e1131]:
+                                - paragraph [ref=e1133]:
+                                  - link "Computer graphics" [ref=e1134] [cursor=pointer]:
+                                    - /url: "#"
+                                - list [ref=e1135]:
+                                  - listitem [ref=e1136]:
+                                    - paragraph [ref=e1138]:
+                                      - link "Animation" [ref=e1139] [cursor=pointer]:
+                                        - /url: "#"
+                                    - list
+                - generic [ref=e1141]:
+                  - heading "Recommendations" [level=2] [ref=e1142]
+                  - generic "Recommendations (Premium feature)" [ref=e1144]:
+                    - list [ref=e1147]:
+                      - listitem [ref=e1148]:
+                        - generic [ref=e1149]:
+                          - 'link "DeepMimic: example-guided deep reinforcement learning of physics-based character skills" [ref=e1150] [cursor=pointer]':
+                            - /url: "#"
+                            - 'heading "DeepMimic: example-guided deep reinforcement learning of physics-based character skills" [level=3] [ref=e1151]'
+                          - paragraph [ref=e1154]: A longstanding goal in character animation is to combine data-driven specification of behavior with a system that can execute a similar behavior in a physical simulation, thus enabling realistic responses to perturbations and environmental variation. We ...
+                          - link [ref=e1156] [cursor=pointer]:
+                            - /url: "#"
+                            - text: Read More
+                      - listitem [ref=e1157]:
+                        - generic [ref=e1158]:
+                          - link "Motion In-betweening for Physically Simulated Characters" [ref=e1159] [cursor=pointer]:
+                            - /url: "#"
+                            - heading "Motion In-betweening for Physically Simulated Characters" [level=3] [ref=e1160]
+                          - generic [ref=e1161]: "SA '22: SIGGRAPH Asia 2022 Posters"
+                          - paragraph [ref=e1164]: We present a motion in-betweening framework to generate high quality, physically plausible character animation when we are given temporally sparse keyframes as soft animation constraints. More specifically, we learn imitation policies for physically ...
+                          - link [ref=e1166] [cursor=pointer]:
+                            - /url: "#"
+                            - text: Read More
+                      - listitem [ref=e1167]:
+                        - generic [ref=e1168]:
+                          - 'link "Skeleton2Humanoid: Animating Simulated Characters for Physically-plausible Motion In-betweening" [ref=e1169] [cursor=pointer]':
+                            - /url: "#"
+                            - 'heading "Skeleton2Humanoid: Animating Simulated Characters for Physically-plausible Motion In-betweening" [level=3] [ref=e1170]'
+                          - generic [ref=e1171]: "MM '22: Proceedings of the 30th ACM International Conference on Multimedia"
+                          - paragraph [ref=e1174]: Human motion synthesis is a long-standing problem with various applications in digital twins and the Metaverse. However, modern deep learning based motion synthesis approaches barely consider the physical plausibility of synthesized motions and ...
+                          - link [ref=e1176] [cursor=pointer]:
+                            - /url: "#"
+                            - text: Read More
+                - generic [ref=e1178]:
+                  - heading "Comments" [level=2] [ref=e1179]
+                  - generic "Comments (Premium feature)" [ref=e1577]:
+                    - iframe [ref=e1682]:
+                      - generic [active] [ref=f22e1]:
+                        - status [ref=f22e2]
+                        - generic [ref=f22e7]:
+                          - generic [ref=f22e8]:
+                            - generic [ref=f22e9]:
+                              - heading "DL Comment Policy" [level=2] [ref=f22e10]
+                              - paragraph [ref=f22e11]:
+                                - text: Comments should be relevant to the contents of this article, (sign in required).
+                                - paragraph
+                            - button "Got it" [ref=f22e12] [cursor=pointer]
+                          - banner [ref=f22e13]:
+                            - navigation [ref=f22e15]:
+                              - list:
+                                - listitem [ref=f22e16]:
+                                  - generic [ref=f22e18]: 0 comments
+                                - listitem:
+                                  - list:
+                                    - listitem
+                          - generic [ref=f22e20]:
+                            - list [ref=f22e23]:
+                              - listitem [ref=f22e24]:
+                                - link "Share" [ref=f22e29] [cursor=pointer]:
+                                  - /url: "#"
+                              - listitem [ref=f22e30]:
+                                - list [ref=f22e31]:
+                                  - listitem [ref=f22e32]:
+                                    - link "Best" [ref=f22e33] [cursor=pointer]:
+                                      - /url: "#"
+                                  - listitem [ref=f22e34]:
+                                    - link "Newest" [ref=f22e35] [cursor=pointer]:
+                                      - /url: "#"
+                                  - listitem [ref=f22e36]:
+                                    - link "Oldest" [ref=f22e37] [cursor=pointer]:
+                                      - /url: "#"
+                            - generic [ref=f22e38]: Nothing in this discussion yet.
+                            - list
+                          - contentinfo [ref=f22e39]:
+                            - list [ref=f22e42]:
+                              - listitem [ref=f22e43]:
+                                - link "Privacy" [ref=f22e44] [cursor=pointer]:
+                                  - /url: https://disqus.com/privacy-policy
+                                  - generic [ref=f22e47]: Privacy
+                              - listitem [ref=f22e48]:
+                                - link "Do Not Sell My Data" [ref=f22e49] [cursor=pointer]:
+                                  - /url: https://disqus.com/data-sharing-settings/
+                                  - generic [ref=f22e52]: Do Not Sell My Data
+          - dialog [ref=e1180]:
+            - generic "Information & Contributors" [ref=e1580]:
+              - generic [ref=e1182]:
+                - heading "Information & Contributors" [level=2] [ref=e1183]:
+                  - generic [ref=e1184]: 
+                  - text: Information & Contributors
+                - button "Close" [ref=e1581] [cursor=pointer]:
+                  - generic [ref=e1582]: 
+              - tablist [ref=e1583]:
+                - tab "Information" [selected] [ref=e1584]
+                - tab "Contributors" [ref=e1585] [cursor=pointer]
+              - tabpanel "Information" [ref=e1586]:
+                - heading "Information" [level=3] [ref=e1186]
+                - generic [ref=e1187]:
+                  - heading "Published In" [level=4] [ref=e1188]
+                  - generic [ref=e1189]:
+                    - img "cover image ACM Transactions on Graphics" [ref=e1191]
+                    - generic [ref=e1192]:
+                      - generic [ref=e1193]:
+                        - generic [ref=e1194]: ACM Transactions on Graphics
+                        - generic [ref=e1195]: Volume 42, Issue 4
+                      - generic [ref=e1196]: August 2023
+                      - generic [ref=e1197]: 1912 pages
+                      - generic [ref=e1198]:
+                        - generic [ref=e1199]:
+                          - generic [ref=e1200]: "ISSN:"
+                          - generic [ref=e1201]: 0730-0301
+                        - generic [ref=e1202]:
+                          - generic [ref=e1203]: "EISSN:"
+                          - generic [ref=e1204]: 1557-7368
+                        - generic [ref=e1205]:
+                          - generic [ref=e1206]: "DOI:"
+                          - generic [ref=e1207]: 10.1145/3609020
+                        - link "Issue’s Table of Contents" [ref=e1208] [cursor=pointer]:
+                          - /url: /toc/tog/2023/42/4
+                      - generic "metadataDisplayExtra"
+                  - paragraph [ref=e1209]: Copyright © 2023 ACM.
+                  - generic [ref=e1210]: Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.
+                - generic [ref=e1211]:
+                  - heading "Publisher" [level=4] [ref=e1212]
+                  - generic [ref=e1214]:
+                    - paragraph [ref=e1215]: Association for Computing Machinery
+                    - paragraph [ref=e1216]: New York, NY, United States
+                - generic [ref=e1217]:
+                  - heading "Publication History" [level=4] [ref=e1218]
+                  - generic [ref=e1219]: "Published: 26 July 2023"
+                  - generic [ref=e1220]:
+                    - text: Published in TOG
+                    - generic [ref=e1221]: Volume 42
+                    - text: ","
+                    - generic [ref=e1222]: Issue 4
+                - generic [ref=e1223]:
+                  - heading "Permissions" [level=4] [ref=e1224]
+                  - generic [ref=e1225]: Request permissions for this article.
+                  - link "Request permissions" [ref=e1587] [cursor=pointer]:
+                    - /url: https://marketplace.copyright.com/rs-ui-web/mp/search/all/10.1145%2F3592408
+                    - generic [ref=e1588]: Request permissions
+                - generic [ref=e1228]:
+                  - heading "Check for updates" [level=4] [ref=e1229]
+                  - link "Check for updates on crossmark" [ref=e1230] [cursor=pointer]:
+                    - /url: "#"
+                - generic [ref=e1236]:
+                  - heading "Author Tags" [level=4] [ref=e1237]
+                  - list [ref=e1238]:
+                    - listitem [ref=e1239]:
+                      - link "physics-based character animation" [ref=e1240] [cursor=pointer]:
+                        - /url: /keyword/physics-based+character+animation?expand=all
+                    - listitem [ref=e1241]:
+                      - link "imitation learning" [ref=e1242] [cursor=pointer]:
+                        - /url: /keyword/imitation+learning?expand=all
+                    - listitem [ref=e1243]:
+                      - link "reinforcement learning" [ref=e1244] [cursor=pointer]:
+                        - /url: /keyword/reinforcement+learning?expand=all
+                - generic [ref=e1245]:
+                  - heading "Qualifiers" [level=4] [ref=e1246]
+                  - list [ref=e1247]:
+                    - listitem [ref=e1248]: Research-article
+            - generic "Bibliometrics & Citations" [ref=e1589]:
+              - generic [ref=e1260]:
+                - heading "Bibliometrics & Citations" [level=2] [ref=e1261]:
+                  - generic [ref=e1262]: 
+                  - text: Bibliometrics & Citations
+                - button "Close" [ref=e1590] [cursor=pointer]:
+                  - generic [ref=e1591]: 
+              - tablist [ref=e1592]:
+                - tab "Bibliometrics" [selected] [ref=e1593]
+                - tab "Citations 43" [ref=e1594] [cursor=pointer]:
+                  - text: Citations
+                  - generic [ref=e1595]: "43"
+              - tabpanel "Bibliometrics" [ref=e1596]:
+                - heading "Bibliometrics" [level=3] [ref=e1264]
+                - generic [ref=e1265]:
+                  - heading "Article Metrics" [level=4] [ref=e1266]
+                  - generic [ref=e1268]:
+                    - list [ref=e1269]:
+                      - listitem [ref=e1270]:
+                        - generic [ref=e1271]:
+                          - generic [ref=e1272]: "43"
+                          - text: Total Citations
+                        - link "View Citations" [ref=e1273] [cursor=pointer]:
+                          - /url: "#tab-citations"
+                      - listitem [ref=e1274]:
+                        - generic [ref=e1275]:
+                          - generic [ref=e1276]: "718"
+                          - text: Total Downloads
+                    - list [ref=e1277]:
+                      - listitem [ref=e1278]:
+                        - generic [ref=e1279]: Downloads (Last 12 months)
+                        - generic "Advanced metrics (Premium feature)" [ref=e1280]: ...
+                      - listitem [ref=e1281]:
+                        - generic [ref=e1282]: Downloads (Last 6 weeks)
+                        - generic "Advanced metrics (Premium feature)" [ref=e1283]: ...
+                    - generic [ref=e1284]: Reflects downloads up to 07 Apr 2026
+                - generic "Altmetrics (Premium feature)" [ref=e1600]:
+                  - link "Article has an altmetric score of 14" [ref=e1603] [cursor=pointer]:
+                    - /url: "#"
+                    - img "Article has an altmetric score of 14" [ref=e1604]
+                - generic [ref=e1286]:
+                  - heading "Other Metrics" [level=4] [ref=e1287]
+                  - link "View Author Metrics" [ref=e1289] [cursor=pointer]:
+                    - /url: "#tab-contributors"
+              - text:  , , , , and . . . . . . . . and . . . . . . . , , , , , , and . . . . . . . , and . . . . . . . , and . . . . . . . . , , , , , , , and . . . . . . . . , , , , , , , and . . . . . . . , , , , and . . . . . . . . , , , , , and . . . . . . . , , and . . . . . . .
+            - generic "Share" [ref=e1605]:
+              - generic [ref=e1347]:
+                - heading "Share" [level=2] [ref=e1348]:
+                  - generic [ref=e1349]: 
+                  - text: Share
+                - button "Close" [ref=e1606] [cursor=pointer]:
+                  - generic [ref=e1607]: 
+              - heading "Share" [level=3] [ref=e1350]
+              - generic [ref=e1351]:
+                - generic [ref=e1352]:
+                  - heading "Share this Publication link" [level=4] [ref=e1353]
+                  - generic [ref=e1354]:
+                    - paragraph [ref=e1608]: https://dl.acm.org/doi/abs/10.1145/3592408
+                    - button "Copy the content Link" [ref=e1355] [cursor=pointer]:
+                      - generic [ref=e1356]: 
+                      - generic [ref=e1357]: Copy Link
+                    - generic: 
+                - generic [ref=e1358]:
+                  - heading "Share on social media" [level=4] [ref=e1359]
+                  - generic [ref=e1360]:
+                    - link "Share on X" [ref=e1361] [cursor=pointer]:
+                      - /url: /#twitter
+                      - generic [ref=e1362]: 
+                      - generic [ref=e1363]: X
+                    - link "Share on LinkedIn" [ref=e1364] [cursor=pointer]:
+                      - /url: /#linkedin
+                      - generic [ref=e1365]: 
+                      - generic [ref=e1366]: LinkedIn
+                    - link "Share on Reddit" [ref=e1367] [cursor=pointer]:
+                      - /url: /#reddit
+                      - generic [ref=e1368]: 
+                      - generic [ref=e1369]: Reddit
+                    - link "Share on Facebook" [ref=e1370] [cursor=pointer]:
+                      - /url: /#facebook
+                      - generic [ref=e1371]: 
+                      - generic [ref=e1372]: Facebook
+                    - link "Share on email" [ref=e1373] [cursor=pointer]:
+                      - /url: /#email
+                      - generic [ref=e1374]: 
+                      - generic [ref=e1375]: email
+            - generic "Reading Options" [ref=e1609]:
+              - generic [ref=e1610]:
+                - heading "Reading Options" [level=2] [ref=e1611]:
+                  - generic [ref=e1612]: 
+                  - text: Reading Options
+                - button "Close" [ref=e1613] [cursor=pointer]:
+                  - generic [ref=e1614]: 
+              - heading "Reading Options" [level=3] [ref=e1615]
+          - complementary [ref=e1376]:
+            - generic [ref=e1377]:
+              - link "Preferred Employer Sky Add" [ref=e1379] [cursor=pointer]:
+                - /url: /action/clickThrough?id=108229&url=https%3A%2F%2Fwww.acm.org%2Fmembership%2Fpreferred-employer&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101020&productId=108184
+                - img "Preferred Employer Sky Add" [ref=e1380]
+              - link "TOCS Ad" [ref=e1382] [cursor=pointer]:
+                - /url: /action/clickThrough?id=108216&url=https%3A%2F%2Fdl.acm.org%2Fjournal%2Ftocs&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101021&productId=108184
+                - img "TOCS Ad" [ref=e1383]
+              - link "ACM Books Chang Ad" [ref=e1385] [cursor=pointer]:
+                - /url: /action/clickThrough?id=108237&url=https%3A%2F%2Fdl.acm.org%2Fdoi%2Fbook%2F10.1145%2F3749421&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101022&productId=108184
+                - img "ACM Books Chang Ad" [ref=e1386]
+        - link [ref=e1390] [cursor=pointer]:
+          - /url: /doi/pdf/10.1145/3592408?download=true
+          - text: Download PDF
+        - link "View Issue’s Table of Contents" [ref=e1394] [cursor=pointer]:
+          - /url: /toc/tog/2023/42/4
+      - dialog "Export Citations":   
+      - dialog "New Citation Alert added!":  
+    - contentinfo [ref=e1395]:
+      - heading "Footer" [level=2] [ref=e1396]
+      - generic [ref=e1399]:
+        - generic [ref=e1401]:
+          - heading "Categories" [level=3] [ref=e1402]
+          - list [ref=e1403]:
+            - listitem [ref=e1404]:
+              - link "Journals" [ref=e1405] [cursor=pointer]:
+                - /url: /journals
+            - listitem [ref=e1406]:
+              - link "Magazines" [ref=e1407] [cursor=pointer]:
+                - /url: /magazines
+            - listitem [ref=e1408]:
+              - link "Books" [ref=e1409] [cursor=pointer]:
+                - /url: /acmbooks
+            - listitem [ref=e1410]:
+              - link "Proceedings" [ref=e1411] [cursor=pointer]:
+                - /url: /proceedings
+            - listitem [ref=e1412]:
+              - link "SIGs" [ref=e1413] [cursor=pointer]:
+                - /url: /sigs
+            - listitem [ref=e1414]:
+              - link "Conferences" [ref=e1415] [cursor=pointer]:
+                - /url: /conferences
+            - listitem [ref=e1416]:
+              - link "Collections" [ref=e1417] [cursor=pointer]:
+                - /url: /collections
+            - listitem [ref=e1418]:
+              - link "People" [ref=e1419] [cursor=pointer]:
+                - /url: /people
+        - generic [ref=e1421]:
+          - heading "About" [level=3] [ref=e1422]
+          - list [ref=e1423]:
+            - listitem [ref=e1424]:
+              - link "About ACM Digital Library" [ref=e1425] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e1426]:
+              - link "ACM Digital Library Board" [ref=e1427] [cursor=pointer]:
+                - /url: /about/dlboard
+            - listitem [ref=e1428]:
+              - link "Author Guidelines" [ref=e1429] [cursor=pointer]:
+                - /url: https://www.acm.org/publications/authors/information-for-authors
+            - listitem [ref=e1430]:
+              - link "All Holdings within the ACM Digital Library" [ref=e1431] [cursor=pointer]:
+                - /url: /about/content#sec2
+            - listitem [ref=e1432]:
+              - link "ACM Computing Classification System" [ref=e1433] [cursor=pointer]:
+                - /url: /ccs
+            - listitem [ref=e1434]:
+              - link "Accessibility Statement" [ref=e1435] [cursor=pointer]:
+                - /url: /about/accessibility
+        - generic [ref=e1437]:
+          - heading "Join" [level=3] [ref=e1438]
+          - list [ref=e1439]:
+            - listitem [ref=e1440]:
+              - link "Join ACM" [ref=e1441] [cursor=pointer]:
+                - /url: https://www.acm.org/membership/join
+            - listitem [ref=e1442]:
+              - link "Join SIGs" [ref=e1443] [cursor=pointer]:
+                - /url: https://www.acm.org/special-interest-groups/join
+            - listitem [ref=e1444]:
+              - link "Subscribe to Publications" [ref=e1445] [cursor=pointer]:
+                - /url: https://www.acm.org/publications/subscribe
+            - listitem [ref=e1446]:
+              - link "Institutions and Libraries" [ref=e1447] [cursor=pointer]:
+                - /url: https://libraries.acm.org/
+        - generic [ref=e1449]:
+          - heading "Connect" [level=3] [ref=e1450]
+          - list [ref=e1451]:
+            - listitem [ref=e1452]:
+              - link "Contact us via email" [ref=e1453] [cursor=pointer]:
+                - /url: mailto:dl-team@hq.acm.org
+                - generic [ref=e1454]: 
+                - text: Contact us via email
+            - listitem [ref=e1455]:
+              - link "ACM on Facebook" [ref=e1456] [cursor=pointer]:
+                - /url: https://www.facebook.com/AssociationForComputingMachinery/
+                - generic [ref=e1457]: 
+                - text: ACM on Facebook
+            - listitem [ref=e1458]:
+              - link "ACM DL on X" [ref=e1459] [cursor=pointer]:
+                - /url: https://x.com/acmdl
+                - generic [ref=e1460]: 
+                - text: ACM DL on X
+            - listitem [ref=e1461]:
+              - link "ACM on Linkedin" [ref=e1462] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/association-for-computing-machinery/
+                - generic [ref=e1463]: 
+                - text: ACM on Linkedin
+            - listitem [ref=e1464]:
+              - generic [ref=e1465] [cursor=pointer]:
+                - generic [ref=e1466]: 
+                - text: Send Feedback
+            - listitem [ref=e1467]:
+              - generic [ref=e1468] [cursor=pointer]:
+                - generic [ref=e1469]: 
+                - text: Submit a Bug Report
+      - generic [ref=e1472]:
+        - generic [ref=e1473]:
+          - generic [ref=e1474]: The ACM Digital Library is published by the Association for Computing Machinery. Copyright © 2026 ACM, Inc.
+          - list [ref=e1475]:
+            - listitem [ref=e1476]:
+              - link "Terms of Usage" [ref=e1477] [cursor=pointer]:
+                - /url: https://libraries.acm.org/digital-library/policies#anchor3
+            - listitem [ref=e1478]:
+              - link "Privacy Policy" [ref=e1479] [cursor=pointer]:
+                - /url: https://www.acm.org/about-acm/privacy-policy
+            - listitem [ref=e1480]:
+              - link "Code of Ethics" [ref=e1481] [cursor=pointer]:
+                - /url: https://www.acm.org/code-of-ethics
+        - generic [ref=e1483]:
+          - link "ACM Digital Library home" [ref=e1485] [cursor=pointer]:
+            - /url: /
+            - img "ACM Digital Library home" [ref=e1486]
+          - link "ACM Association for Computing Machinery corporate logo" [ref=e1488] [cursor=pointer]:
+            - /url: https://www.acm.org
+            - img "ACM Association for Computing Machinery corporate logo" [ref=e1489]
+    - region "notification"
+    - text:      
+  - iframe [ref=e1490]:
+    
+  - button "Feedback" [ref=e1616] [cursor=pointer]:
+    - img [ref=e1617]
+    - text: Feedback
+  - generic:
+    - link:
+      - /url: https://mopinion.com/form-referral-landing/?track=FormReferral
+      - generic: Powered by
+      - generic:
+        - img

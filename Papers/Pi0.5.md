@@ -10,7 +10,7 @@ importance:
 aliases: [pi0.5, pi-zero-point-five, pi_0.5]
 ---
 
-!PDFs/[[Pi0]].5.pdf
+!PDFs/Pi0.5.pdf
 
 
 # [[Pi0|pi0]].5: a Vision-Language-Action Model with Open-World Generalization
@@ -89,7 +89,7 @@ Performance improves monotonically with the number of training locations. The 10
 
 | Model Variant | Impact |
 |---------------|--------|
-| Full [[Pi0]].5 | Best performance (baseline) |
+| Full Pi0.5 | Best performance (baseline) |
 | No WD (web data) | Minimal impact on in-distribution mock tasks |
 | No ME (multi-environment) | Large degradation |
 | No CE (cross-embodiment) | Large degradation |
@@ -101,7 +101,7 @@ Multi-environment data (ME) and cross-embodiment data (CE) are both critical for
 
 | Model | In-Distribution Objects | Out-of-Distribution Objects |
 |-------|:-----------------------:|:---------------------------:|
-| Full [[Pi0]].5 | High | Moderate |
+| Full Pi0.5 | High | Moderate |
 | No WD | Maintained | Significantly degraded |
 | No ME | Degraded | Degraded |
 | No CE | Degraded | Degraded |
@@ -110,9 +110,9 @@ Web data is particularly important for out-of-distribution object generalization
 
 ### Table 5: Model Comparison
 
-| Model | Relative Performance vs [[Pi0]].5 |
+| Model | Relative Performance vs Pi0.5 |
 |-------|:-----------------------------:|
-| [[Pi0]].5 (full) | Best |
+| Pi0.5 (full) | Best |
 | [[Pi0]]-FAST+Flow | Significantly worse |
 | [[Pi0]] (original) | Significantly worse |
 
@@ -122,7 +122,7 @@ Web data is particularly important for out-of-distribution object generalization
 
 | Method | Relative Performance |
 |--------|:--------------------:|
-| [[Pi0]].5 (explicit HL + LL) | Best (~100%) |
+| Pi0.5 (explicit HL + LL) | Best (~100%) |
 | Implicit HL (no runtime HL) | ~95% |
 | No VI (verbal instructions) | Significantly degraded |
 | No WD (web data) | Significantly degraded |

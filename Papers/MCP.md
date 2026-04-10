@@ -10,7 +10,7 @@ importance:
 aliases: [MCP, Multiplicative Compositional Policies, Composable Hierarchical Control]
 ---
 
-![[PDFs/MCP.pdf]]
+!PDFs/MCP.pdf
 
 # MCP: Learning Composable Hierarchical Control with Multiplicative Compositional Policies
 

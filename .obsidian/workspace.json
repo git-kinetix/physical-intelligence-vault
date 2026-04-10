@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Papers/Octo.md",
+                "file": "Papers/V-JEPA 2.1.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Octo"
+              "title": "V-JEPA 2.1"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "429601aaebd8ae2d",
@@ -95,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Papers/Octo.md",
+                "file": "Papers/V-JEPA 2.1.md",
                 "collapseAll": false,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -105,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Octo"
+              "title": "Backlinks for V-JEPA 2.1"
             }
           },
           {
@@ -114,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Papers/Octo.md",
+                "file": "Papers/V-JEPA 2.1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Octo"
+              "title": "Outgoing links from V-JEPA 2.1"
             }
           },
           {
@@ -143,7 +142,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "Papers/Octo.md",
+                "file": "Papers/V-JEPA 2.1.md",
                 "options": {
                   "collapse-filter": false,
                   "search": "tag:#paper  ",
@@ -171,7 +170,7 @@
                 }
               },
               "icon": "lucide-git-fork",
-              "title": "Graph of Octo"
+              "title": "Graph of V-JEPA 2.1"
             }
           },
           {
@@ -194,13 +193,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Papers/Octo.md",
+                "file": "Papers/V-JEPA 2.1.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Octo"
+              "title": "Outline of V-JEPA 2.1"
             }
           }
         ],
@@ -223,18 +222,21 @@
   },
   "active": "360b1814d3a36d75",
   "lastOpenFiles": [
+    "_scripts/inline_link.py.tmp.3016615.1775831844371",
+    "_scripts/inline_link.py.tmp.3016615.1775831836287",
+    "Papers/V-JEPA 2.md.tmp.3016615.1775831791254",
+    "_scripts/fix_dotted_names.py",
+    "_scripts/fix_dotted_names.py.tmp.3016615.1775831762677",
+    "Papers/V-JEPA 2.md",
+    "Papers/V-JEPA 2.1.md",
+    "Papers/Octo.md",
     "MOC.md.tmp.3016615.1775829905630",
     "PDFs/DeepLoco.pdf",
     "PDFs/CLoSD.pdf",
     "PDFs/SuperPADL.pdf",
     "PDFs/PADL.pdf",
     "PDFs/AMP.pdf",
-    "PDFs/Learning Agile Robotic Locomotion.pdf",
-    "PDFs/Sim-to-Real Transfer.pdf",
-    "PDFs/MCP.pdf",
-    "PDFs/SFV.pdf",
     "Papers/MCP.md",
-    "Papers/MCP.md.tmp.3016615.1775829688512",
     "Papers/CLoSD.md",
     "Papers/SFV.md",
     "Papers/AMP.md",
@@ -261,9 +263,6 @@
     "paper-page.png",
     "homepage.png",
     "Papers/ACT-JEPA.md",
-    "Datasets/Franka Demonstration Data.md",
-    "Metrics/1-shot Accuracy.md",
-    "Papers/PLDM.md",
     "Canvases/Physical Intelligence Overview.canvas"
   ]
 }

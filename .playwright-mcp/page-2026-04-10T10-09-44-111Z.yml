@@ -1,0 +1,1579 @@
+- generic [active] [ref=e1]:
+  - dialog "This website uses cookies" [ref=e2]:
+    - generic [ref=e3]:
+      - link "Cookiebot by Usercentrics - opens in a new window" [ref=e6] [cursor=pointer]:
+        - /url: https://www.cookiebot.com/en/what-is-behind-powered-by-cookiebot/?utm_source=banner_cb&utm_medium=referral&utm_content=v2
+        - img [ref=e7]
+      - tabpanel "Consent" [ref=e34]:
+        - generic [ref=e36]:
+          - heading "This website uses cookies" [level=2] [ref=e37]
+          - paragraph [ref=e39]: We occasionally run membership recruitment campaigns on social media channels and use cookies to track post-clicks. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services. Use the check boxes below to choose the types of cookies you consent to have stored on your device.
+        - generic [ref=e40]:
+          - group "Consent Selection" [ref=e46]:
+            - generic [ref=e47]: Consent Selection
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - strong [ref=e51]: Necessary
+                - generic [ref=e52]:
+                  - checkbox "Necessary" [checked] [disabled]
+              - generic [ref=e53]:
+                - strong [ref=e55] [cursor=pointer]: Preferences
+                - checkbox "Preferences" [ref=e57] [cursor=pointer]
+              - generic [ref=e58]:
+                - strong [ref=e60] [cursor=pointer]: Statistics
+                - checkbox "Statistics" [ref=e62] [cursor=pointer]
+              - generic [ref=e63]:
+                - strong [ref=e65] [cursor=pointer]: Marketing
+                - checkbox "Marketing" [ref=e67] [cursor=pointer]
+          - link "Show details" [ref=e69] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e73]:
+        - button "Use necessary cookies only" [ref=e74] [cursor=pointer]
+        - button "Allow selected cookies" [ref=e75] [cursor=pointer]
+        - button "Allow all cookies" [ref=e76] [cursor=pointer]
+  - link "skip to main content" [ref=e77] [cursor=pointer]:
+    - /url: "#skip-to-main-content"
+  - generic [ref=e79]:
+    - banner [ref=e80]:
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - navigation [ref=e83]:
+            - list [ref=e84]:
+              - listitem [ref=e85]:
+                - link "ACM Digital Library home" [ref=e86] [cursor=pointer]:
+                  - /url: /
+                  - img "ACM Digital Library home" [ref=e87]
+              - listitem [ref=e88]:
+                - link "ACM Association for Computing Machinery corporate logo" [ref=e89] [cursor=pointer]:
+                  - /url: https://www.acm.org
+                  - img "ACM Association for Computing Machinery corporate logo" [ref=e90]
+          - generic [ref=e91]:
+            - link "Basic Edition, Upgrade" [ref=e96] [cursor=pointer]:
+              - /url: /premium
+              - img [ref=e97]
+            - navigation [ref=e98]:
+              - list [ref=e101]:
+                - listitem [ref=e102]:
+                  - link "Sign in" [ref=e103] [cursor=pointer]:
+                    - /url: /action/showLogin?redirectUri=%2Fdoi%2Fabs%2F10.1145%2F3592408
+                - listitem [ref=e104]:
+                  - link "Register" [ref=e105] [cursor=pointer]:
+                    - /url: https://accounts.acm.org?redirectUri=%2Fdoi%2Fabs%2F10.1145%2F3592408
+        - generic [ref=e107]:
+          - generic:  
+          - generic [ref=e110]:
+            - generic "Quick Search" [ref=e113]:
+              - generic [ref=e115]:
+                - generic [ref=e116]: Search ACM Digital Library
+                - searchbox "Search ACM Digital Library" [ref=e117]
+              - button "Search" [ref=e119] [cursor=pointer]: 
+            - generic "Advanced Search (Premium feature)" [ref=e120]:
+              - link "Advanced Search" [ref=e122] [cursor=pointer]:
+                - /url: /search/advanced
+        - generic [ref=e123]:
+          - link "ACM Transactions on Graphics " [ref=e124] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e125]: ACM Transactions on Graphics
+            - text: 
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:         
+    - main [ref=e128]:
+      - dialog "Export Citations":   
+      - generic [ref=e129]:
+        - generic [ref=e130]: Several features on this page require Premium Access.
+        - generic [ref=e131]:
+          - link "Learn more" [ref=e132] [cursor=pointer]:
+            - /url: /about/upgrade
+          - link "Sign in" [ref=e133] [cursor=pointer]:
+            - /url: /action/showLogin?redirectUri=%2Fdoi%2F10.1145%2F3592408
+      - article [ref=e134]:
+        - generic [ref=e136]:
+          - navigation "Breadcrumbs" [ref=e137]:
+            - list [ref=e138]:
+              - listitem [ref=e139]:
+                - link "Home" [ref=e140] [cursor=pointer]:
+                  - /url: https://dl.acm.org/
+              - listitem [ref=e141]:
+                - text: ">"
+                - link "ACM Journals" [ref=e142] [cursor=pointer]:
+                  - /url: /journals
+              - listitem [ref=e143]:
+                - text: ">"
+                - link "ACM Transactions on Graphics" [ref=e144] [cursor=pointer]:
+                  - /url: /journal/tog
+              - listitem [ref=e145]:
+                - text: ">"
+                - link "Vol. 42, No. 4" [ref=e146] [cursor=pointer]:
+                  - /url: /toc/tog/2023/42/4
+              - listitem [ref=e147]:
+                - text: ">"
+                - link "Learning Physically Simulated Tennis Skills from Broadcast Videos" [ref=e148] [cursor=pointer]:
+                  - /url: /doi/abs/10.1145/3592408
+          - generic [ref=e149]:
+            - generic [ref=e151]: i
+            - generic [ref=e153]:
+              - link "Click here" [ref=e154] [cursor=pointer]:
+                - /url: /action/clickThrough?id=108253&url=https%3A%2F%2Fwww.acm.org%2Fabout-acm%2Facm-pres-on-oa-transition-and-dl-changes&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101024&productId=108184
+              - text: to read ACM President Yannis Ioannidis’ statement on recent changes to the Digital Library
+          - generic [ref=e155]:
+            - generic [ref=e156]:
+              - generic [ref=e158]: research-article
+              - generic [ref=e159]:
+                - generic [ref=e160]: 
+                - generic [ref=e161]: Free access
+            - generic [ref=e165]:
+              - generic "shareBlock"
+              - generic [ref=e166]: Share on
+              - list [ref=e167]:
+                - listitem [ref=e168]:
+                  - link "share on X" [ref=e169]:
+                    - generic [ref=e170]: 
+                - listitem [ref=e171]:
+                  - link "share on LinkedIn" [ref=e172]:
+                    - generic [ref=e173]: 
+                - listitem [ref=e174]:
+                  - link "share on Reddit" [ref=e175]:
+                    - generic [ref=e176]: 
+                - listitem [ref=e177]:
+                  - link "share on Facebook" [ref=e178]:
+                    - generic [ref=e179]: 
+                - listitem [ref=e180]:
+                  - link "share via email" [ref=e181]:
+                    - generic [ref=e182]: 
+          - heading "Learning Physically Simulated Tennis Skills from Broadcast Videos" [level=1] [ref=e183]
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - text: "Authors:"
+              - list [ref=e186]:
+                - listitem [ref=e187]:
+                  - link "Haotian Zhang" [ref=e188] [cursor=pointer]:
+                    - /url: "#artseq-00001"
+                - text: ","
+                - listitem [ref=e189]:
+                  - link "Ye Yuan" [ref=e190] [cursor=pointer]:
+                    - /url: "#artseq-00002"
+                - text: ","
+                - listitem [ref=e191]:
+                  - link "Viktor Makoviychuk" [ref=e192] [cursor=pointer]:
+                    - /url: "#artseq-00003"
+                - text: ","
+                - listitem [ref=e193]:
+                  - link "Yunrong Guo" [ref=e194] [cursor=pointer]:
+                    - /url: "#artseq-00004"
+                - generic [ref=e195]:
+                  - text: ","
+                  - listitem [ref=e196]:
+                    - link "Sanja Fidler" [ref=e197] [cursor=pointer]:
+                      - /url: "#artseq-00005"
+                - generic [ref=e198]:
+                  - text: ","
+                  - listitem [ref=e199]:
+                    - link "Xue Bin Peng" [ref=e200] [cursor=pointer]:
+                      - /url: "#artseq-00006"
+                - generic [ref=e201]:
+                  - text: ","
+                  - listitem [ref=e202]:
+                    - link "Kayvon Fatahalian" [ref=e203] [cursor=pointer]:
+                      - /url: "#artseq-00007"
+            - link "Authors Info & Claims" [ref=e204] [cursor=pointer]:
+              - /url: "#tab-contributors"
+          - generic [ref=e205]:
+            - link "ACM Transactions on Graphics (TOG), Volume 42, Issue 4" [ref=e207] [cursor=pointer]:
+              - /url: /toc/tog/2023/42/4
+              - generic [ref=e208]: ACM Transactions on Graphics (TOG)
+              - text: ","
+              - generic [ref=e209]: Volume 42
+              - text: ","
+              - generic [ref=e210]: Issue 4
+            - generic [ref=e211]: "Article No.: 95, Pages 1 - 14"
+            - link "https://doi.org/10.1145/3592408" [ref=e213] [cursor=pointer]:
+              - /url: https://doi.org/10.1145/3592408
+          - generic [ref=e214]:
+            - text: "Published: 26 July 2023"
+            - link "Publication History" [ref=e215] [cursor=pointer]:
+              - /url: "#core-history"
+            - link "Check for updates on crossmark" [ref=e216] [cursor=pointer]:
+              - /url: "#"
+          - generic [ref=e224]:
+            - generic "Additional metrics (Premium feature)" [ref=e227]:
+              - button "43 citation 718 Downloads" [ref=e231] [cursor=pointer]:
+                - generic [ref=e232]:
+                  - generic [ref=e233]: 
+                  - generic [ref=e234]: "43"
+                  - generic [ref=e235]: citation
+                - generic [ref=e236]:
+                  - generic [ref=e237]: 
+                  - generic [ref=e238]: "718"
+                  - generic [ref=e239]: Downloads
+            - generic [ref=e240]:
+              - generic [ref=e241]:
+                - button "Get Citation Alerts (Premium feature)" [ref=e242] [cursor=pointer]:
+                  - generic [ref=e243]: 
+                - dialog "New Citation Alert added!":  
+              - link "Save to Binder (Premium feature)" [ref=e245] [cursor=pointer]:
+                - /url: "#get-premium-access"
+                - generic [ref=e246]: 
+              - button "Export Citation" [ref=e248] [cursor=pointer]:
+                - generic [ref=e249]: 
+              - link "View online with eReader" [ref=e251] [cursor=pointer]:
+                - /url: /doi/epdf/10.1145/3592408
+                - generic [ref=e252]: 
+                - generic [ref=e253]: PDF/eReader
+        - generic:
+          - generic "Article navigation":
+            - generic:
+              - button "Toggle section navigation menu" [ref=e254] [cursor=pointer]:
+                - generic [ref=e255]: 
+              - navigation "Contents":  
+            - navigation [ref=e256]:
+              - list [ref=e257]:
+                - listitem [ref=e258]:
+                  - link "Information & Contributors" [disabled]:
+                    - /url: "#core-collateral-info"
+                    - generic: 
+                    - generic: Information & Contributors
+                - listitem [ref=e259]:
+                  - link "Bibliometrics & Citations" [disabled]:
+                    - /url: "#core-collateral-metrics"
+                    - generic: 
+                    - generic: Bibliometrics & Citations
+                - listitem [ref=e260]:
+                  - link "Reading Options" [disabled]:
+                    - /url: "#get-premium-access"
+                    - generic: 
+                    - generic: Reading Options
+                - listitem [ref=e261]:
+                  - link "References" [disabled]:
+                    - /url: "#get-premium-access"
+                    - generic: 
+                    - generic: References
+                - listitem [ref=e262]:
+                  - link "Figures" [disabled]:
+                    - /url: "#get-premium-access"
+                    - generic: 
+                    - generic: Figures
+                - listitem [ref=e263]:
+                  - link "Tables" [disabled]:
+                    - /url: "#get-premium-access"
+                    - generic: 
+                    - generic: Tables
+                - listitem [ref=e264]:
+                  - link "Media" [disabled]:
+                    - /url: "#get-premium-access"
+                    - generic: 
+                    - generic: Media
+                - listitem [ref=e265]:
+                  - link "Share" [disabled]:
+                    - /url: "#core-collateral-share"
+                    - generic: 
+                    - generic: Share
+        - generic [ref=e266]:
+          - generic [ref=e269]:
+            - heading "Abstract" [level=2] [ref=e270]
+            - generic [ref=e271]:
+              - heading "Abstract" [level=3] [ref=e272]
+              - paragraph [ref=e273]: We present a system that learns diverse, physically simulated tennis skills from large-scale demonstrations of tennis play harvested from broadcast videos. Our approach is built upon hierarchical models, combining a low-level imitation policy and a high-level motion planning policy to steer the character in a motion embedding learned from broadcast videos. When deployed at scale on large video collections that encompass a vast set of examples of real-world tennis play, our approach can learn complex tennis shotmaking skills and realistically chain together multiple shots into extended rallies, using only simple rewards and without explicit annotations of stroke types. To address the low quality of motions extracted from broadcast videos, we correct estimated motion with physics-based imitation, and use a hybrid control policy that overrides erroneous aspects of the learned motion embedding with corrections predicted by the high-level policy. We demonstrate that our system produces controllers for physically-simulated tennis players that can hit the incoming ball to target positions accurately using a diverse array of strokes (serves, forehands, and backhands), spins (topspins and slices), and playing styles (one/two-handed backhands, left/right-handed play). Overall, our system can synthesize two physically simulated characters playing extended tennis rallies with simulated racket and ball dynamics. Code and data for this work is available at https://research.nvidia.com/labs/toronto-ai/vid2player3d/.
+            - generic [ref=e274]:
+              - heading "AI Summary" [level=3] [ref=e275]
+              - generic [ref=e276]:
+                - heading "AI-Generated Summary (Experimental)" [level=3] [ref=e277]
+                - paragraph [ref=e278]:
+                  - text: This summary was generated using automated tools and was not authored or reviewed by the article's author(s). It is provided to support discovery, help readers assess relevance, and assist readers from adjacent research areas in understanding the work. It is intended to complement the author-supplied abstract, which remains the primary summary of the paper. The full article remains the authoritative version of record.
+                  - link "Click here to learn more" [ref=e279] [cursor=pointer]:
+                    - /url: /generative-ai/summarizations
+                  - text: .
+                - paragraph [ref=e280]: Click here to comment on the accuracy, clarity, and usefulness of this summary. Doing so will help inform refinements and future regenerated versions.
+              - paragraph [ref=e281]: To view this AI-generated plain language summary, you must have Premium access.
+          - region "Formats available" [ref=e284]:
+            - heading "Formats available" [level=2] [ref=e285]
+            - paragraph [ref=e286]: "You can view the full content in the following formats:"
+            - link "PDF/eReader" [ref=e288] [cursor=pointer]:
+              - /url: /doi/epdf/10.1145/3592408
+              - generic [ref=e289]: 
+              - generic [ref=e290]: PDF/eReader
+          - generic [ref=e292]:
+            - generic [ref=e293]:
+              - heading "Supplementary Material" [level=2] [ref=e294]
+              - list [ref=e295]:
+                - listitem [ref=e296]:
+                  - generic [ref=e297]:
+                    - generic [ref=e298]: ZIP File (papers_533-supplemental.zip)
+                    - generic [ref=e299]: supplemental material
+                  - list [ref=e301]:
+                    - listitem [ref=e302]:
+                      - link "Download" [ref=e303] [cursor=pointer]:
+                        - /url: /doi/suppl/10.1145/3592408/suppl_file/papers_533-supplemental.zip
+                    - listitem [ref=e304]: 386.49 MB
+                - listitem [ref=e305]:
+                  - generic [ref=e306]:
+                    - generic [ref=e307]: MP4 File (papers_533_VOD.mp4)
+                    - generic [ref=e309]: presentation
+                  - generic [ref=e311]:
+                    - figure [ref=e313]:
+                      - iframe [ref=e314]:
+                        - generic [ref=f15e6]:
+                          - button "Play Video" [ref=f15e12] [cursor=pointer]:
+                            - img [ref=f15e13]
+                            - generic [ref=f15e15]: Play Video
+                          - generic [ref=f15e17]:
+                            - button "Play" [ref=f15e18] [cursor=pointer]:
+                              - img [ref=f15e19]
+                              - generic [ref=f15e21]: Play
+                            - generic [ref=f15e22]:
+                              - button "Currently unmuted. Volume set to 100 percent. Click to mute." [ref=f15e23] [cursor=pointer]:
+                                - img [ref=f15e24]
+                                - generic [ref=f15e26]: Currently unmuted. Volume set to 100 percent. Click to mute.
+                              - slider "volume" [ref=f15e27] [cursor=pointer]: "1"
+                            - button "Settings" [ref=f15e28] [cursor=pointer]:
+                              - generic [ref=f15e29]: Settings
+                              - img [ref=f15e30]
+                            - button "Enable Picture in Picture" [ref=f15e32] [cursor=pointer]:
+                              - img [ref=f15e33]
+                              - generic [ref=f15e37]: Enable Picture in Picture
+                            - button "Enable Fullscreen" [ref=f15e38] [cursor=pointer]:
+                              - img [ref=f15e39]
+                              - generic [ref=f15e41]: Enable Fullscreen
+                    - list [ref=e315]:
+                      - listitem [ref=e316]:
+                        - link "Download" [ref=e317] [cursor=pointer]:
+                          - /url: /doi/suppl/10.1145/3592408/suppl_file/papers_533_VOD.mp4
+                      - listitem [ref=e318]: 596.20 MB
+            - generic [ref=e319]:
+              - heading "References" [level=2] [ref=e320]
+              - list [ref=e321]:
+                - listitem [ref=e322]:
+                  - generic [ref=e323]: "[1]"
+                  - generic [ref=e325]:
+                    - generic [ref=e326]: Anurag Arnab, Carl Doersch, and Andrew Zisserman. 2019. Exploiting temporal context for 3D human pose estimation in the wild. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 3395--3404.
+                    - generic [ref=e327]:
+                      - link "Crossref" [ref=e329] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR.2019.00351
+                      - generic [ref=e330]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e331] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2019.00351
+                - listitem [ref=e332]:
+                  - generic [ref=e333]: "[2]"
+                  - generic [ref=e335]:
+                    - generic [ref=e336]: Samy Bengio, Oriol Vinyals, Navdeep Jaitly, and Noam Shazeer. 2015. Scheduled sampling for sequence prediction with recurrent neural networks. Advances in neural information processing systems 28 (2015).
+                    - link "Google Scholar" [ref=e339] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Samy+Bengio%2C+Oriol+Vinyals%2C+Navdeep+Jaitly%2C+and+Noam+Shazeer.+2015.+Scheduled+sampling+for+sequence+prediction+with+recurrent+neural+networks.+Advances+in+neural+information+processing+systems+28+%282015%29.
+                - listitem [ref=e340]:
+                  - generic [ref=e341]: "[3]"
+                  - generic [ref=e343]:
+                    - generic [ref=e344]: "Kevin Bergamin, Simon Clavet, Daniel Holden, and James Richard Forbes. 2019. DReCon: Data-Driven Responsive Control of Physics-Based Characters. ACM Trans. Graph. 38, 6, Article 206 (nov 2019), 11 pages."
+                    - generic [ref=e345]:
+                      - link "Digital Library" [ref=e347] [cursor=pointer]:
+                        - /url: /doi/10.1145/3355089.3356536
+                      - generic [ref=e348]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e349] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3355089.3356536
+                - listitem [ref=e350]:
+                  - generic [ref=e351]: "[4]"
+                  - generic [ref=e353]:
+                    - generic [ref=e354]: "Alexey Bochkovskiy, Chien-Yao Wang, and Hong-Yuan Mark Liao. 2020. Yolov4: Optimal speed and accuracy of object detection. arXiv preprint arXiv:2004.10934 (2020)."
+                    - link "Google Scholar" [ref=e357] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Alexey+Bochkovskiy%2C+Chien-Yao+Wang%2C+and+Hong-Yuan+Mark+Liao.+2020.+Yolov4%3A+Optimal+speed+and+accuracy+of+object+detection.+arXiv+preprint+arXiv%3A2004.10934+%282020%29.
+                - listitem [ref=e358]:
+                  - generic [ref=e359]: "[5]"
+                  - generic [ref=e361]:
+                    - generic [ref=e362]: "Federica Bogo, Angjoo Kanazawa, Christoph Lassner, Peter Gehler, Javier Romero, and Michael J Black. 2016. Keep it SMPL: Automatic estimation of 3D human pose and shape from a single image. In European conference on computer vision. Springer, 561--578."
+                    - generic [ref=e363]:
+                      - link "Crossref" [ref=e365] [cursor=pointer]:
+                        - /url: https://doi.org/10.1007/978-3-319-46454-1_34
+                      - generic [ref=e366]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e367] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1007%2F978-3-319-46454-1_34
+                - listitem [ref=e368]:
+                  - generic [ref=e369]: "[6]"
+                  - generic [ref=e371]:
+                    - generic [ref=e372]: H. Brody, R. Cross, and C. Lindsey. 2004. The Physics and Technology of Tennis. Racquet Tech Publishing.
+                    - link "Google Scholar" [ref=e375] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=H.+Brody%2C+R.+Cross%2C+and+C.+Lindsey.+2004.+The+Physics+and+Technology+of+Tennis.+Racquet+Tech+Publishing.
+                - listitem [ref=e376]:
+                  - generic [ref=e377]: "[7]"
+                  - generic [ref=e379]:
+                    - generic [ref=e380]: Marcus A Brubaker, Leonid Sigal, and David J Fleet. 2009. Estimating contact dynamics. In 2009 IEEE 12th International Conference on Computer Vision. IEEE, 2389--2396.
+                    - generic [ref=e381]:
+                      - link "Crossref" [ref=e383] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/ICCV.2009.5459407
+                      - generic [ref=e384]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e385] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FICCV.2009.5459407
+                - listitem [ref=e386]:
+                  - generic [ref=e387]: "[8]"
+                  - generic [ref=e389]:
+                    - generic [ref=e390]: "Alexander Clegg, Wenhao Yu, Jie Tan, C Karen Liu, and Greg Turk. 2018. Learning to dress: Synthesizing human dressing motion via deep reinforcement learning. ACM Transactions on Graphics (TOG) 37, 6 (2018), 1--10."
+                    - generic [ref=e391]:
+                      - link "Digital Library" [ref=e393] [cursor=pointer]:
+                        - /url: /doi/10.1145/3272127.3275048
+                      - generic [ref=e394]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e395] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3272127.3275048
+                - listitem [ref=e396]:
+                  - generic [ref=e397]: "[9]"
+                  - generic [ref=e399]:
+                    - generic [ref=e400]: Stelian Coros, Philippe Beaudoin, and Michiel Van de Panne. 2010. Generalized biped walking control. ACM Transactions On Graphics (TOG) 29, 4 (2010), 1--9.
+                    - generic [ref=e401]:
+                      - link "Digital Library" [ref=e403] [cursor=pointer]:
+                        - /url: /doi/10.1145/1778765.1781156
+                      - generic [ref=e404]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e405] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F1778765.1781156
+                - listitem [ref=e406]:
+                  - generic [ref=e407]: "[10]"
+                  - generic [ref=e409]:
+                    - generic [ref=e410]: Rishabh Dabral, Anurag Mundhada, Uday Kusupati, Safeer Afaque, Abhishek Sharma, and Arjun Jain. 2018. Learning 3d human pose from structure and motion. In Proceedings of the European Conference on Computer Vision (ECCV). 668--683.
+                    - generic [ref=e411]:
+                      - link "Digital Library" [ref=e413] [cursor=pointer]:
+                        - /url: /doi/10.1007/978-3-030-01240-3_41
+                      - generic [ref=e414]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e415] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1007%2F978-3-030-01240-3_41
+                - listitem [ref=e416]:
+                  - generic [ref=e417]: "[11]"
+                  - generic [ref=e419]:
+                    - generic [ref=e420]: Martin De Lasa, Igor Mordatch, and Aaron Hertzmann. 2010. Feature-based locomotion controllers. ACM transactions on graphics (TOG) 29, 4 (2010), 1--10.
+                    - link "Google Scholar" [ref=e423] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Martin+De+Lasa%2C+Igor+Mordatch%2C+and+Aaron+Hertzmann.+2010.+Feature-based+locomotion+controllers.+ACM+transactions+on+graphics+%28TOG%29+29%2C+4+%282010%29%2C+1--10.
+                - listitem [ref=e424]:
+                  - generic [ref=e425]: "[12]"
+                  - generic [ref=e427]:
+                    - generic [ref=e428]: Dirk Farin, Susanne Krabbe, Wolfgang Effelsberg, et al. 2003. Robust camera calibration for sport videos using court models. In Storage and Retrieval Methods and Applications for Multimedia 2004, Vol. 5307. International Society for Optics and Photonics, 80--91.
+                    - link "Google Scholar" [ref=e431] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Dirk+Farin%2C+Susanne+Krabbe%2C+Wolfgang+Effelsberg%2C+et+al.+2003.+Robust+camera+calibration+for+sport+videos+using+court+models.+In+Storage+and+Retrieval+Methods+and+Applications+for+Multimedia+2004%2C+Vol.+5307.+International+Society+for+Optics+and+Photonics%2C+80--91.
+                - listitem [ref=e432]:
+                  - generic [ref=e433]: "[13]"
+                  - generic [ref=e435]:
+                    - generic [ref=e436]: "Riza Alp Guler and Iasonas Kokkinos. 2019. Holopose: Holistic 3d human reconstruction in-the-wild. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 10884--10894."
+                    - generic [ref=e437]:
+                      - link "Crossref" [ref=e439] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR.2019.01114
+                      - generic [ref=e440]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e441] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2019.01114
+                - listitem [ref=e442]:
+                  - generic [ref=e443]: "[14]"
+                  - generic [ref=e445]:
+                    - generic [ref=e446]: Jessica K Hodgins, Wayne L Wooten, David C Brogan, and James F O'Brien. 1995. Animating human athletics. In Proceedings of the 22nd annual conference on Computer graphics and interactive techniques. 71--78.
+                    - generic [ref=e447]:
+                      - link "Digital Library" [ref=e449] [cursor=pointer]:
+                        - /url: /doi/10.1145/218380.218414
+                      - generic [ref=e450]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e451] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F218380.218414
+                - listitem [ref=e452]:
+                  - generic [ref=e453]: "[15]"
+                  - generic [ref=e455]:
+                    - generic [ref=e456]: James Hong, Haotian Zhang, Michaël Gharbi, Matthew Fisher, and Kayvon Fatahalian. 2022. Spotting Temporally Precise, Fine-Grained Events in Video. In European Conference on Computer Vision. Springer, 33--51.
+                    - link "Google Scholar" [ref=e459] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=James+Hong%2C+Haotian+Zhang%2C+Micha%C3%ABl+Gharbi%2C+Matthew+Fisher%2C+and+Kayvon+Fatahalian.+2022.+Spotting+Temporally+Precise%2C+Fine-Grained+Events+in+Video.+In+European+Conference+on+Computer+Vision.+Springer%2C+33--51.
+                - listitem [ref=e460]:
+                  - generic [ref=e461]: "[16]"
+                  - generic [ref=e463]:
+                    - generic [ref=e464]: Seokpyo Hong, Daseong Han, Kyungmin Cho, Joseph S Shin, and Junyong Noh. 2019. Physics-based full-body soccer motion control for dribbling and shooting. ACM Transactions on Graphics (TOG) 38, 4 (2019), 1--12.
+                    - generic [ref=e465]:
+                      - link "Digital Library" [ref=e467] [cursor=pointer]:
+                        - /url: /doi/10.1145/3306346.3322963
+                      - generic [ref=e468]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e469] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3306346.3322963
+                - listitem [ref=e470]:
+                  - generic [ref=e471]: "[17]"
+                  - generic [ref=e473]:
+                    - generic [ref=e474]: Mir Rayat Imtiaz Hossain and James J Little. 2018. Exploiting temporal information for 3d human pose estimation. In Proceedings of the European Conference on Computer Vision (ECCV). 68--84.
+                    - link "Google Scholar" [ref=e477] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Mir+Rayat+Imtiaz+Hossain+and+James+J+Little.+2018.+Exploiting+temporal+information+for+3d+human+pose+estimation.+In+Proceedings+of+the+European+Conference+on+Computer+Vision+%28ECCV%29.+68--84.
+                - listitem [ref=e478]:
+                  - generic [ref=e479]: "[18]"
+                  - generic [ref=e481]:
+                    - generic [ref=e482]: Yinghao Huang, Federica Bogo, Christoph Lassner, Angjoo Kanazawa, Peter V Gehler, Javier Romero, Ijaz Akhter, and Michael J Black. 2017. Towards accurate marker-less human shape and pose estimation over time. In 2017 international conference on 3D vision (3DV). IEEE, 421--430.
+                    - generic [ref=e483]:
+                      - link "Crossref" [ref=e485] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/3DV.2017.00055
+                      - generic [ref=e486]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e487] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2F3DV.2017.00055
+                - listitem [ref=e488]:
+                  - generic [ref=e489]: "[19]"
+                  - generic [ref=e491]:
+                    - generic [ref=e492]: Angjoo Kanazawa, Michael J Black, David W Jacobs, and Jitendra Malik. 2018. End-to-end recovery of human shape and pose. In Proceedings of the IEEE conference on computer vision and pattern recognition. 7122--7131.
+                    - generic [ref=e493]:
+                      - link "Crossref" [ref=e495] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR.2018.00744
+                      - generic [ref=e496]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e497] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2018.00744
+                - listitem [ref=e498]:
+                  - generic [ref=e499]: "[20]"
+                  - generic [ref=e501]:
+                    - generic [ref=e502]: Angjoo Kanazawa, Jason Y Zhang, Panna Felsen, and Jitendra Malik. 2019. Learning 3d human dynamics from video. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 5614--5623.
+                    - generic [ref=e503]:
+                      - link "Crossref" [ref=e505] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR.2019.00576
+                      - generic [ref=e506]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e507] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2019.00576
+                - listitem [ref=e508]:
+                  - generic [ref=e509]: "[21]"
+                  - generic [ref=e511]:
+                    - generic [ref=e512]: "Diederik P Kingma and Jimmy Ba. 2014. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980 (2014)."
+                    - link "Google Scholar" [ref=e515] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Diederik+P+Kingma+and+Jimmy+Ba.+2014.+Adam%3A+A+method+for+stochastic+optimization.+arXiv+preprint+arXiv%3A1412.6980+%282014%29.
+                - listitem [ref=e516]:
+                  - generic [ref=e517]: "[22]"
+                  - generic [ref=e519]:
+                    - generic [ref=e520]: "Muhammed Kocabas, Nikos Athanasiou, and Michael J Black. 2020. Vibe: Video inference for human body pose and shape estimation. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 5253--5263."
+                    - generic [ref=e521]:
+                      - link "Crossref" [ref=e523] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR42600.2020.00530
+                      - generic [ref=e524]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e525] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR42600.2020.00530
+                - listitem [ref=e526]:
+                  - generic [ref=e527]: "[23]"
+                  - generic [ref=e529]:
+                    - generic [ref=e530]: "Christoph Lassner, Javier Romero, Martin Kiefel, Federica Bogo, Michael J Black, and Peter V Gehler. 2017. Unite the people: Closing the loop between 3d and 2d human representations. In Proceedings of the IEEE conference on computer vision and pattern recognition. 6050--6059."
+                    - generic [ref=e531]:
+                      - link "Crossref" [ref=e533] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR.2017.500
+                      - generic [ref=e534]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e535] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2017.500
+                - listitem [ref=e536]:
+                  - generic [ref=e537]: "[24]"
+                  - generic [ref=e539]:
+                    - generic [ref=e540]: Yoonsang Lee, Sungeun Kim, and Jehee Lee. 2010. Data-driven biped control. In ACM SIGGRAPH 2010 papers. 1--8.
+                    - generic [ref=e541]:
+                      - link "Digital Library" [ref=e543] [cursor=pointer]:
+                        - /url: /doi/10.1145/1833349.1781155
+                      - generic [ref=e544]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e545] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F1833349.1781155
+                - listitem [ref=e546]:
+                  - generic [ref=e547]: "[25]"
+                  - generic [ref=e549]:
+                    - generic [ref=e550]: Sergey Levine and Vladlen Koltun. 2013. Guided policy search. In International conference on machine learning. PMLR, 1--9.
+                    - link "Google Scholar" [ref=e553] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Sergey+Levine+and+Vladlen+Koltun.+2013.+Guided+policy+search.+In+International+conference+on+machine+learning.+PMLR%2C+1--9.
+                - listitem [ref=e554]:
+                  - generic [ref=e555]: "[26]"
+                  - generic [ref=e557]:
+                    - generic [ref=e558]: "Jiefeng Li, Chao Xu, Zhicun Chen, Siyuan Bian, Lixin Yang, and Cewu Lu. 2021. Hybrik: A hybrid analytical-neural inverse kinematics solution for 3d human pose and shape estimation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 3383--3393."
+                    - generic [ref=e559]:
+                      - link "Crossref" [ref=e561] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR46437.2021.00339
+                      - generic [ref=e562]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e563] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR46437.2021.00339
+                - listitem [ref=e564]:
+                  - generic [ref=e565]: "[27]"
+                  - generic [ref=e567]:
+                    - generic [ref=e568]: Hung Yu Ling, Fabio Zinno, George Cheng, and Michiel Van De Panne. 2020. Character controllers using motion vaes. ACM Transactions on Graphics (TOG) 39, 4 (2020), 40--1.
+                    - generic [ref=e569]:
+                      - link "Digital Library" [ref=e571] [cursor=pointer]:
+                        - /url: /doi/10.1145/3386569.3392422
+                      - generic [ref=e572]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e573] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3386569.3392422
+                - listitem [ref=e574]:
+                  - generic [ref=e575]: "[28]"
+                  - generic [ref=e577]:
+                    - generic [ref=e578]: Libin Liu and Jessica Hodgins. 2018. Learning basketball dribbling skills using trajectory optimization and deep reinforcement learning. ACM Transactions on Graphics (TOG) 37, 4 (2018), 1--14.
+                    - generic [ref=e579]:
+                      - link "Digital Library" [ref=e581] [cursor=pointer]:
+                        - /url: /doi/10.1145/3197517.3201315
+                      - generic [ref=e582]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e583] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3197517.3201315
+                - listitem [ref=e584]:
+                  - generic [ref=e585]: "[29]"
+                  - generic [ref=e587]:
+                    - generic [ref=e588]: Libin Liu, Michiel Van De Panne, and KangKang Yin. 2016. Guided learning of control graphs for physics-based characters. ACM Transactions on Graphics (TOG) 35, 3 (2016), 1--14.
+                    - generic [ref=e589]:
+                      - link "Digital Library" [ref=e591] [cursor=pointer]:
+                        - /url: /doi/10.1145/2980179.2982424
+                      - generic [ref=e592]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e593] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F2980179.2982424
+                - listitem [ref=e594]:
+                  - generic [ref=e595]: "[30]"
+                  - generic [ref=e597]:
+                    - generic [ref=e598]: "Libin Liu, KangKang Yin, Michiel van de Panne, and Baining Guo. 2012. Terrain runner: control, parameterization, composition, and planning for highly dynamic motions. ACM Trans. Graph. 31, 6 (2012), 154--1."
+                    - generic [ref=e599]:
+                      - link "Digital Library" [ref=e601] [cursor=pointer]:
+                        - /url: /doi/10.1145/2366145.2366173
+                      - generic [ref=e602]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e603] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F2366145.2366173
+                - listitem [ref=e604]:
+                  - generic [ref=e605]: "[31]"
+                  - generic [ref=e607]:
+                    - generic [ref=e608]: Libin Liu, KangKang Yin, Michiel Van de Panne, Tianjia Shao, and Weiwei Xu. 2010. Sampling-based contact-rich motion control. In ACM SIGGRAPH 2010 papers. 1--10.
+                    - generic [ref=e609]:
+                      - link "Digital Library" [ref=e611] [cursor=pointer]:
+                        - /url: /doi/10.1145/1833349.1778865
+                      - generic [ref=e612]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e613] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F1833349.1778865
+                - listitem [ref=e614]:
+                  - generic [ref=e615]: "[32]"
+                  - generic [ref=e617]:
+                    - generic [ref=e618]: Siqi Liu, Guy Lever, Zhe Wang, Josh Merel, SM Eslami, Daniel Hennes, Wojciech M Czarnecki, Yuval Tassa, Shayegan Omidshafiei, Abbas Abdolmaleki, et al. 2021. From motor control to team play in simulated humanoid football. arXiv preprint arXiv:2105.12196 (2021).
+                    - link "Google Scholar" [ref=e621] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Siqi+Liu%2C+Guy+Lever%2C+Zhe+Wang%2C+Josh+Merel%2C+SM+Eslami%2C+Daniel+Hennes%2C+Wojciech+M+Czarnecki%2C+Yuval+Tassa%2C+Shayegan+Omidshafiei%2C+Abbas+Abdolmaleki%2C+et+al.+2021.+From+motor+control+to+team+play+in+simulated+humanoid+football.+arXiv+preprint+arXiv%3A2105.12196+%282021%29.
+                - listitem [ref=e622]:
+                  - generic [ref=e623]: "[33]"
+                  - generic [ref=e625]:
+                    - generic [ref=e626]: "Matthew Loper, Naureen Mahmood, Javier Romero, Gerard Pons-Moll, and Michael J Black. 2015. SMPL: A skinned multi-person linear model. ACM transactions on graphics (TOG) 34, 6 (2015), 1--16."
+                    - generic [ref=e627]:
+                      - link "Digital Library" [ref=e629] [cursor=pointer]:
+                        - /url: /doi/10.1145/2816795.2818013
+                      - generic [ref=e630]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e631] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F2816795.2818013
+                - listitem [ref=e632]:
+                  - generic [ref=e633]: "[34]"
+                  - generic [ref=e635]:
+                    - generic [ref=e636]: "Naureen Mahmood, Nima Ghorbani, Nikolaus F Troje, Gerard Pons-Moll, and Michael J Black. 2019. AMASS: Archive of motion capture as surface shapes. In Proceedings of the IEEE/CVF international conference on computer vision. 5442--5451."
+                    - generic [ref=e637]:
+                      - link "Crossref" [ref=e639] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/ICCV.2019.00554
+                      - generic [ref=e640]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e641] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FICCV.2019.00554
+                - listitem [ref=e642]:
+                  - generic [ref=e643]: "[35]"
+                  - generic [ref=e645]:
+                    - generic [ref=e646]: "Viktor Makoviychuk, Lukasz Wawrzyniak, Yunrong Guo, Michelle Lu, Kier Storey, Miles Macklin, David Hoeller, Nikita Rudin, Arthur Allshire, Ankur Handa, et al. 2021. Isaac gym: High performance gpu-based physics simulation for robot learning. arXiv preprint arXiv:2108.10470 (2021)."
+                    - link "Google Scholar" [ref=e649] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Viktor+Makoviychuk%2C+Lukasz+Wawrzyniak%2C+Yunrong+Guo%2C+Michelle+Lu%2C+Kier+Storey%2C+Miles+Macklin%2C+David+Hoeller%2C+Nikita+Rudin%2C+Arthur+Allshire%2C+Ankur+Handa%2C+et+al.+2021.+Isaac+gym%3A+High+performance+gpu-based+physics+simulation+for+robot+learning.+arXiv+preprint+arXiv%3A2108.10470+%282021%29.
+                - listitem [ref=e650]:
+                  - generic [ref=e651]: "[36]"
+                  - generic [ref=e653]:
+                    - generic [ref=e654]: Dushyant Mehta, Oleksandr Sotnychenko, Franziska Mueller, Weipeng Xu, Srinath Sridhar, Gerard Pons-Moll, and Christian Theobalt. 2018. Single-shot multi-person 3d pose estimation from monocular rgb. In 2018 International Conference on 3D Vision (3DV). IEEE, 120--130.
+                    - generic [ref=e655]:
+                      - link "Crossref" [ref=e657] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/3DV.2018.00024
+                      - generic [ref=e658]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e659] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2F3DV.2018.00024
+                - listitem [ref=e660]:
+                  - generic [ref=e661]: "[37]"
+                  - generic [ref=e663]:
+                    - generic [ref=e664]: "Dushyant Mehta, Srinath Sridhar, Oleksandr Sotnychenko, Helge Rhodin, Mohammad Shafiei, Hans-Peter Seidel, Weipeng Xu, Dan Casas, and Christian Theobalt. 2017. Vnect: Real-time 3d human pose estimation with a single rgb camera. Acm transactions on graphics (tog) 36, 4 (2017), 1--14."
+                    - generic [ref=e665]:
+                      - link "Digital Library" [ref=e667] [cursor=pointer]:
+                        - /url: /doi/10.1145/3072959.3073596
+                      - generic [ref=e668]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e669] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3072959.3073596
+                - listitem [ref=e670]:
+                  - generic [ref=e671]: "[38]"
+                  - generic [ref=e673]:
+                    - generic [ref=e674]: "Josh Merel, Saran Tunyasuvunakool, Arun Ahuja, Yuval Tassa, Leonard Hasenclever, Vu Pham, Tom Erez, Greg Wayne, and Nicolas Heess. 2020. Catch & Carry: reusable neural controllers for vision-guided whole-body tasks. ACM Transactions on Graphics (TOG) 39, 4 (2020), 39--1."
+                    - generic [ref=e675]:
+                      - link "Digital Library" [ref=e677] [cursor=pointer]:
+                        - /url: /doi/10.1145/3386569.3392474
+                      - generic [ref=e678]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e679] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3386569.3392474
+                - listitem [ref=e680]:
+                  - generic [ref=e681]: "[39]"
+                  - generic [ref=e683]:
+                    - generic [ref=e684]: Igor Mordatch, Emanuel Todorov, and Zoran Popović. 2012. Discovery of complex behaviors through contact-invariant optimization. ACM Transactions on Graphics (TOG) 31, 4 (2012), 1--8.
+                    - generic [ref=e685]:
+                      - link "Digital Library" [ref=e687] [cursor=pointer]:
+                        - /url: /doi/10.1145/2185520.2185539
+                      - generic [ref=e688]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e689] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F2185520.2185539
+                - listitem [ref=e690]:
+                  - generic [ref=e691]: "[40]"
+                  - generic [ref=e693]:
+                    - generic [ref=e694]: "Mohamed Omran, Christoph Lassner, Gerard Pons-Moll, Peter Gehler, and Bernt Schiele. 2018. Neural body fitting: Unifying deep learning and model based human pose and shape estimation. In 2018 international conference on 3D vision (3DV). IEEE, 484--494."
+                    - generic [ref=e695]:
+                      - link "Crossref" [ref=e697] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/3DV.2018.00062
+                      - generic [ref=e698]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e699] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2F3DV.2018.00062
+                - listitem [ref=e700]:
+                  - generic [ref=e701]: "[41]"
+                  - generic [ref=e703]:
+                    - generic [ref=e704]: Soohwan Park, Hoseok Ryu, Seyoung Lee, Sunmin Lee, and Jehee Lee. 2019. Learning Predict-and-Simulate Policies from Unorganized Human Motion Data. ACM Trans. Graph. 38, 6, Article 205 (nov 2019), 11 pages.
+                    - generic [ref=e705]:
+                      - link "Digital Library" [ref=e707] [cursor=pointer]:
+                        - /url: /doi/10.1145/3355089.3356501
+                      - generic [ref=e708]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e709] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3355089.3356501
+                - listitem [ref=e710]:
+                  - generic [ref=e711]: "[42]"
+                  - generic [ref=e713]:
+                    - generic [ref=e714]: Georgios Pavlakos, Luyang Zhu, Xiaowei Zhou, and Kostas Daniilidis. 2018. Learning to estimate 3D human pose and shape from a single color image. In Proceedings of the IEEE conference on computer vision and pattern recognition. 459--468.
+                    - generic [ref=e715]:
+                      - link "Crossref" [ref=e717] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR.2018.00055
+                      - generic [ref=e718]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e719] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2018.00055
+                - listitem [ref=e720]:
+                  - generic [ref=e721]: "[43]"
+                  - generic [ref=e723]:
+                    - generic [ref=e724]: Dario Pavllo, Christoph Feichtenhofer, David Grangier, and Michael Auli. 2019. 3d human pose estimation in video with temporal convolutions and semi-supervised training. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 7753--7762.
+                    - generic [ref=e725]:
+                      - link "Crossref" [ref=e727] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR.2019.00794
+                      - generic [ref=e728]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e729] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR.2019.00794
+                - listitem [ref=e730]:
+                  - generic [ref=e731]: "[44]"
+                  - generic [ref=e733]:
+                    - generic [ref=e734]: "Xue Bin Peng, Pieter Abbeel, Sergey Levine, and Michiel Van de Panne. 2018a. Deepmimic: Example-guided deep reinforcement learning of physics-based character skills. ACM Transactions On Graphics (TOG) 37, 4 (2018), 1--14."
+                    - generic [ref=e735]:
+                      - link "Digital Library" [ref=e737] [cursor=pointer]:
+                        - /url: /doi/10.1145/3197517.3201311
+                      - generic [ref=e738]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e739] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3197517.3201311
+                - listitem [ref=e740]:
+                  - generic [ref=e741]: "[45]"
+                  - generic [ref=e743]:
+                    - generic [ref=e744]: "Xue Bin Peng, Glen Berseth, Kangkang Yin, and Michiel Van De Panne. 2017. DeepLoco: Dynamic Locomotion Skills Using Hierarchical Deep Reinforcement Learning. ACM Trans. Graph. 36, 4, Article 41 (July 2017), 13 pages."
+                    - generic [ref=e745]:
+                      - link "Digital Library" [ref=e747] [cursor=pointer]:
+                        - /url: /doi/10.1145/3072959.3073602
+                      - generic [ref=e748]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e749] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3072959.3073602
+                - listitem [ref=e750]:
+                  - generic [ref=e751]: "[46]"
+                  - generic [ref=e753]:
+                    - generic [ref=e754]: "Xue Bin Peng, Yunrong Guo, Lina Halper, Sergey Levine, and Sanja Fidler. 2022. ASE: Large-scale Reusable Adversarial Skill Embeddings for Physically Simulated Characters. ACM Trans. Graph. 41, 4, Article 94 (July 2022)."
+                    - generic [ref=e755]:
+                      - link "Digital Library" [ref=e757] [cursor=pointer]:
+                        - /url: /doi/10.1145/3528223.3530110
+                      - generic [ref=e758]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e759] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3528223.3530110
+                - listitem [ref=e760]:
+                  - generic [ref=e761]: "[47]"
+                  - generic [ref=e763]:
+                    - generic [ref=e764]: "Xue Bin Peng, Angjoo Kanazawa, Jitendra Malik, Pieter Abbeel, and Sergey Levine. 2018b. Sfv: Reinforcement learning of physical skills from videos. ACM Transactions On Graphics (TOG) 37, 6 (2018), 1--14."
+                    - generic [ref=e765]:
+                      - link "Digital Library" [ref=e767] [cursor=pointer]:
+                        - /url: /doi/10.1145/3197517.3201311
+                      - generic [ref=e768]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e769] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3197517.3201311
+                - listitem [ref=e770]:
+                  - generic [ref=e771]: "[48]"
+                  - generic [ref=e773]:
+                    - generic [ref=e774]: "Xue Bin Peng, Ze Ma, Pieter Abbeel, Sergey Levine, and Angjoo Kanazawa. 2021. Amp: Adversarial motion priors for stylized physics-based character control. ACM Transactions on Graphics (TOG) 40, 4 (2021), 1--20."
+                    - generic [ref=e775]:
+                      - link "Digital Library" [ref=e777] [cursor=pointer]:
+                        - /url: /doi/10.1145/3450626.3459670
+                      - generic [ref=e778]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e779] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3450626.3459670
+                - listitem [ref=e780]:
+                  - generic [ref=e781]: "[49]"
+                  - generic [ref=e783]:
+                    - generic [ref=e784]: Marc H Raibert and Jessica K Hodgins. 1991. Animation of dynamic legged locomotion. In Proceedings of the 18th annual conference on Computer graphics and interactive techniques. 349--358.
+                    - generic [ref=e785]:
+                      - link "Digital Library" [ref=e787] [cursor=pointer]:
+                        - /url: /doi/10.1145/122718.122755
+                      - generic [ref=e788]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e789] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F122718.122755
+                - listitem [ref=e790]:
+                  - generic [ref=e791]: "[50]"
+                  - generic [ref=e793]:
+                    - generic [ref=e794]: Davis Rempe, Leonidas J Guibas, Aaron Hertzmann, Bryan Russell, Ruben Villegas, and Jimei Yang. 2020. Contact and human dynamics from monocular video. In European conference on computer vision. Springer, 71--87.
+                    - generic [ref=e795]:
+                      - link "Digital Library" [ref=e797] [cursor=pointer]:
+                        - /url: /doi/10.1007/978-3-030-58558-7_5
+                      - generic [ref=e798]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e799] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1007%2F978-3-030-58558-7_5
+                - listitem [ref=e800]:
+                  - generic [ref=e801]: "[51]"
+                  - generic [ref=e803]:
+                    - generic [ref=e804]: John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. 2015. High-dimensional continuous control using generalized advantage estimation. arXiv preprint arXiv:1506.02438 (2015).
+                    - link "Google Scholar" [ref=e807] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=John+Schulman%2C+Philipp+Moritz%2C+Sergey+Levine%2C+Michael+Jordan%2C+and+Pieter+Abbeel.+2015.+High-dimensional+continuous+control+using+generalized+advantage+estimation.+arXiv+preprint+arXiv%3A1506.02438+%282015%29.
+                - listitem [ref=e808]:
+                  - generic [ref=e809]: "[52]"
+                  - generic [ref=e811]:
+                    - generic [ref=e812]: John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. 2017. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347 (2017).
+                    - link "Google Scholar" [ref=e815] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=John+Schulman%2C+Filip+Wolski%2C+Prafulla+Dhariwal%2C+Alec+Radford%2C+and+Oleg+Klimov.+2017.+Proximal+policy+optimization+algorithms.+arXiv+preprint+arXiv%3A1707.06347+%282017%29.
+                - listitem [ref=e816]:
+                  - generic [ref=e817]: "[53]"
+                  - generic [ref=e819]:
+                    - generic [ref=e820]: Soshi Shimada, Vladislav Golyanik, Weipeng Xu, Patrick Pérez, and Christian Theobalt. 2021. Neural monocular 3d human motion capture with physical awareness. ACM Transactions on Graphics (ToG) 40, 4 (2021), 1--15.
+                    - generic [ref=e821]:
+                      - link "Digital Library" [ref=e823] [cursor=pointer]:
+                        - /url: /doi/10.1145/3450626.3459825
+                      - generic [ref=e824]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e825] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3450626.3459825
+                - listitem [ref=e826]:
+                  - generic [ref=e827]: "[54]"
+                  - generic [ref=e829]:
+                    - generic [ref=e830]: "Soshi Shimada, Vladislav Golyanik, Weipeng Xu, and Christian Theobalt. 2020. Physcap: Physically plausible monocular 3d motion capture in real time. ACM Transactions on Graphics (ToG) 39, 6 (2020), 1--16."
+                    - generic [ref=e831]:
+                      - link "Digital Library" [ref=e833] [cursor=pointer]:
+                        - /url: /doi/10.1145/3414685.3417877
+                      - generic [ref=e834]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e835] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3414685.3417877
+                - listitem [ref=e836]:
+                  - generic [ref=e837]: "[55]"
+                  - generic [ref=e839]:
+                    - generic [ref=e840]: Yu Sun, Yun Ye, Wu Liu, Wenpeng Gao, Yili Fu, and Tao Mei. 2019. Human mesh recovery from monocular images via a skeleton-disentangled representation. In Proceedings of the IEEE/CVF International Conference on Computer Vision. 5349--5358.
+                    - generic [ref=e841]:
+                      - link "Crossref" [ref=e843] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/ICCV.2019.00545
+                      - generic [ref=e844]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e845] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FICCV.2019.00545
+                - listitem [ref=e846]:
+                  - generic [ref=e847]: "[56]"
+                  - generic [ref=e849]:
+                    - generic [ref=e850]: Jie Tan, Yuting Gu, C Karen Liu, and Greg Turk. 2014. Learning bicycle stunts. ACM Transactions on Graphics (TOG) 33, 4 (2014), 1--12.
+                    - generic [ref=e851]:
+                      - link "Digital Library" [ref=e853] [cursor=pointer]:
+                        - /url: /doi/10.1145/2601097.2601121
+                      - generic [ref=e854]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e855] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F2601097.2601121
+                - listitem [ref=e856]:
+                  - generic [ref=e857]: "[57]"
+                  - generic [ref=e859]:
+                    - generic [ref=e860]: Tianxin Tao, Matthew Wilson, Ruiyu Gou, and Michiel van de Panne. 2022. Learning to Get Up. In ACM SIGGRAPH 2022 Conference Proceedings (Vancouver, BC, Canada) (SIGGRAPH '22). Association for Computing Machinery, New York, NY, USA, Article 47, 10 pages.
+                    - generic [ref=e861]:
+                      - link "Digital Library" [ref=e863] [cursor=pointer]:
+                        - /url: /doi/10.1145/3528233.3530697
+                      - generic [ref=e864]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e865] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3528233.3530697
+                - listitem [ref=e866]:
+                  - generic [ref=e867]: "[58]"
+                  - generic [ref=e869]:
+                    - generic [ref=e870]: TennisChannel. 2023. Tennis Channel. https://tennischannel.com
+                    - link "Google Scholar" [ref=e873] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=TennisChannel.+2023.+Tennis+Channel.+https%3A%2F%2Ftennischannel.com
+                - listitem [ref=e874]:
+                  - generic [ref=e875]: "[59]"
+                  - generic [ref=e877]:
+                    - generic [ref=e878]: Hsiao-Yu Tung, Hsiao-Wei Tung, Ersin Yumer, and Katerina Fragkiadaki. 2017. Self-supervised learning of motion capture. Advances in Neural Information Processing Systems 30 (2017).
+                    - link "Google Scholar" [ref=e881] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Hsiao-Yu+Tung%2C+Hsiao-Wei+Tung%2C+Ersin+Yumer%2C+and+Katerina+Fragkiadaki.+2017.+Self-supervised+learning+of+motion+capture.+Advances+in+Neural+Information+Processing+Systems+30+%282017%29.
+                - listitem [ref=e882]:
+                  - generic [ref=e883]: "[60]"
+                  - generic [ref=e885]:
+                    - generic [ref=e886]: "M Van de Panne and C Lee. 2003. Ski stunt simulator: Experiments with interactive dynamics. In Proceedings of the 14th Western Computer Graphics Symposium, Vol. 13. ACM Banff, AB, Canada."
+                    - link "Google Scholar" [ref=e889] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=M+Van+de+Panne+and+C+Lee.+2003.+Ski+stunt+simulator%3A+Experiments+with+interactive+dynamics.+In+Proceedings+of+the+14th+Western+Computer+Graphics+Symposium%2C+Vol.+13.+ACM+Banff%2C+AB%2C+Canada.
+                - listitem [ref=e890]:
+                  - generic [ref=e891]: "[61]"
+                  - generic [ref=e893]:
+                    - generic [ref=e894]: Marek Vondrak, Leonid Sigal, Jessica Hodgins, and Odest Jenkins. 2012a. Video-based 3D motion capture through biped control. ACM Transactions On Graphics (TOG) 31, 4 (2012), 1--12.
+                    - generic [ref=e895]:
+                      - link "Digital Library" [ref=e897] [cursor=pointer]:
+                        - /url: /doi/10.1145/2185520.2185523
+                      - generic [ref=e898]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e899] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F2185520.2185523
+                - listitem [ref=e900]:
+                  - generic [ref=e901]: "[62]"
+                  - generic [ref=e903]:
+                    - generic [ref=e904]: Marek Vondrak, Leonid Sigal, Jessica Hodgins, and Odest Jenkins. 2012b. Video-Based 3D Motion Capture through Biped Control. ACM Trans. Graph. 31, 4, Article 27 (jul 2012), 12 pages.
+                    - generic [ref=e905]:
+                      - link "Digital Library" [ref=e907] [cursor=pointer]:
+                        - /url: /doi/10.1145/2185520.2185523
+                      - generic [ref=e908]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e909] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F2185520.2185523
+                - listitem [ref=e910]:
+                  - generic [ref=e911]: "[63]"
+                  - generic [ref=e913]:
+                    - generic [ref=e914]: "Xiaolin Wei and Jinxiang Chai. 2010. Videomocap: Modeling physically realistic human motion from monocular video sequences. In ACM SIGGRAPH 2010 papers. 1--10."
+                    - generic [ref=e915]:
+                      - link "Digital Library" [ref=e917] [cursor=pointer]:
+                        - /url: /doi/10.1145/1833349.1778779
+                      - generic [ref=e918]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e919] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F1833349.1778779
+                - listitem [ref=e920]:
+                  - generic [ref=e921]: "[64]"
+                  - generic [ref=e923]:
+                    - generic [ref=e924]: Jungdam Won, Deepak Gopinath, and Jessica Hodgins. 2021. Control strategies for physically simulated characters performing two-player competitive sports. ACM Transactions on Graphics (TOG) 40, 4 (2021), 1--11.
+                    - generic [ref=e925]:
+                      - link "Digital Library" [ref=e927] [cursor=pointer]:
+                        - /url: /doi/10.1145/3450626.3459761
+                      - generic [ref=e928]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e929] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3450626.3459761
+                - listitem [ref=e930]:
+                  - generic [ref=e931]: "[65]"
+                  - generic [ref=e933]:
+                    - generic [ref=e934]: Jungdam Won, Deepak Gopinath, and Jessica Hodgins. 2022. Physics-based character controllers using conditional VAEs. ACM Transactions on Graphics (TOG) 41, 4 (2022), 1--12.
+                    - generic [ref=e935]:
+                      - link "Digital Library" [ref=e937] [cursor=pointer]:
+                        - /url: /doi/10.1145/3528223.3530067
+                      - generic [ref=e938]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e939] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3528223.3530067
+                - listitem [ref=e940]:
+                  - generic [ref=e941]: "[66]"
+                  - generic [ref=e943]:
+                    - generic [ref=e944]: "Zhaoming Xie, Hung Yu Ling, Nam Hee Kim, and Michiel van de Panne. 2020. Allsteps: curriculum-driven learning of stepping stone skills. In Computer Graphics Forum, Vol. 39. Wiley Online Library, 213--224."
+                    - link "Google Scholar" [ref=e947] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Zhaoming+Xie%2C+Hung+Yu+Ling%2C+Nam+Hee+Kim%2C+and+Michiel+van+de+Panne.+2020.+Allsteps%3A+curriculum-driven+learning+of+stepping+stone+skills.+In+Computer+Graphics+Forum%2C+Vol.+39.+Wiley+Online+Library%2C+213--224.
+                - listitem [ref=e948]:
+                  - generic [ref=e949]: "[67]"
+                  - generic [ref=e951]:
+                    - generic [ref=e952]: Zhaoming Xie, Sebastian Starke, Hung Yu Ling, and Michiel van de Panne. 2022. Learning Soccer Juggling Skills with Layer-wise Mixture-of-Experts. In ACM SIGGRAPH 2022 Conference Proceedings. 1--9.
+                    - link "Google Scholar" [ref=e955] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Zhaoming+Xie%2C+Sebastian+Starke%2C+Hung+Yu+Ling%2C+and+Michiel+van+de+Panne.+2022.+Learning+Soccer+Juggling+Skills+with+Layer-wise+Mixture-of-Experts.+In+ACM+SIGGRAPH+2022+Conference+Proceedings.+1--9.
+                - listitem [ref=e956]:
+                  - generic [ref=e957]: "[68]"
+                  - generic [ref=e959]:
+                    - generic [ref=e960]: "Yufei Xu, Jing Zhang, Qiming Zhang, and Dacheng Tao. 2022. ViTPose: Simple Vision Transformer Baselines for Human Pose Estimation. arXiv preprint arXiv:2204.12484 (2022)."
+                    - link "Google Scholar" [ref=e963] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Yufei+Xu%2C+Jing+Zhang%2C+Qiming+Zhang%2C+and+Dacheng+Tao.+2022.+ViTPose%3A+Simple+Vision+Transformer+Baselines+for+Human+Pose+Estimation.+arXiv+preprint+arXiv%3A2204.12484+%282022%29.
+                - listitem [ref=e964]:
+                  - generic [ref=e965]: "[69]"
+                  - generic [ref=e967]:
+                    - generic [ref=e968]: "Heyuan Yao, Zhenhua Song, Baoquan Chen, and Libin Liu. 2022. ControlVAE: ModelBased Learning of Generative Controllers for Physics-Based Characters. ACM Transactions on Graphics (TOG) 41, 6 (2022), 1--16."
+                    - generic [ref=e969]:
+                      - link "Digital Library" [ref=e971] [cursor=pointer]:
+                        - /url: /doi/10.1145/3550454.3555434
+                      - generic [ref=e972]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e973] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3550454.3555434
+                - listitem [ref=e974]:
+                  - generic [ref=e975]: "[70]"
+                  - generic [ref=e977]:
+                    - generic [ref=e978]: "Xinyu Yi, Yuxiao Zhou, and Feng Xu. 2021. TransPose: real-time 3D human translation and pose estimation with six inertial sensors. ACM Transactions on Graphics (TOG) 40, 4 (2021), 1--13."
+                    - generic [ref=e979]:
+                      - link "Digital Library" [ref=e981] [cursor=pointer]:
+                        - /url: /doi/10.1145/3478513.3480498
+                      - generic [ref=e982]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e983] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3478513.3480498
+                - listitem [ref=e984]:
+                  - generic [ref=e985]: "[71]"
+                  - generic [ref=e987]:
+                    - generic [ref=e988]: KangKang Yin, Stelian Coros, Philippe Beaudoin, and Michiel Van de Panne. 2008. Continuation methods for adapting simulated skills. In ACM SIGGRAPH 2008 papers. 1--7.
+                    - generic [ref=e989]:
+                      - link "Digital Library" [ref=e991] [cursor=pointer]:
+                        - /url: /doi/10.1145/1399504.1360680
+                      - generic [ref=e992]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e993] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F1399504.1360680
+                - listitem [ref=e994]:
+                  - generic [ref=e995]: "[72]"
+                  - generic [ref=e997]:
+                    - generic [ref=e998]: "KangKang Yin, Kevin Loken, and Michiel Van de Panne. 2007. Simbicon: Simple biped locomotion control. ACM Transactions on Graphics (TOG) 26, 3 (2007), 105--es."
+                    - generic [ref=e999]:
+                      - link "Digital Library" [ref=e1001] [cursor=pointer]:
+                        - /url: /doi/10.1145/1276377.1276509
+                      - generic [ref=e1002]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1003] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F1276377.1276509
+                - listitem [ref=e1004]:
+                  - generic [ref=e1005]: "[73]"
+                  - generic [ref=e1007]:
+                    - generic [ref=e1008]: Ri Yu, Hwangpil Park, and Jehee Lee. 2019. Figure skating simulation from video. In Computer graphics forum, Vol. 38. Wiley Online Library, 225--234.
+                    - link "Google Scholar" [ref=e1011] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Ri+Yu%2C+Hwangpil+Park%2C+and+Jehee+Lee.+2019.+Figure+skating+simulation+from+video.+In+Computer+graphics+forum%2C+Vol.+38.+Wiley+Online+Library%2C+225--234.
+                - listitem [ref=e1012]:
+                  - generic [ref=e1013]: "[74]"
+                  - generic [ref=e1015]:
+                    - generic [ref=e1016]: Ri Yu, Hwangpil Park, and Jehee Lee. 2021. Human dynamics from monocular video with dynamic camera movements. ACM Transactions on Graphics (TOG) 40, 6 (2021), 1--14.
+                    - generic [ref=e1017]:
+                      - link "Digital Library" [ref=e1019] [cursor=pointer]:
+                        - /url: /doi/10.1145/3478513.3480504
+                      - generic [ref=e1020]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1021] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3478513.3480504
+                - listitem [ref=e1022]:
+                  - generic [ref=e1023]: "[75]"
+                  - generic [ref=e1025]:
+                    - generic [ref=e1026]: Wenhao Yu, Greg Turk, and C Karen Liu. 2018. Learning symmetric and low-energy locomotion. ACM Transactions on Graphics (TOG) 37, 4 (2018), 1--12.
+                    - generic [ref=e1027]:
+                      - link "Digital Library" [ref=e1029] [cursor=pointer]:
+                        - /url: /doi/10.1145/3197517.3201397
+                      - generic [ref=e1030]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1031] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3197517.3201397
+                - listitem [ref=e1032]:
+                  - generic [ref=e1033]: "[76]"
+                  - generic [ref=e1035]:
+                    - generic [ref=e1036]: "Ye Yuan, Umar Iqbal, Pavlo Molchanov, Kris Kitani, and Jan Kautz. 2022. GLAMR: Global occlusion-aware human mesh recovery with dynamic cameras. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 11038--11049."
+                    - generic [ref=e1037]:
+                      - link "Crossref" [ref=e1039] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR52688.2022.01076
+                      - generic [ref=e1040]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1041] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR52688.2022.01076
+                - listitem [ref=e1042]:
+                  - generic [ref=e1043]: "[77]"
+                  - generic [ref=e1045]:
+                    - generic [ref=e1046]: Ye Yuan and Kris Kitani. 2020. Residual force control for agile human behavior imitation and extended motion synthesis. Advances in Neural Information Processing Systems 33 (2020), 21763--21774.
+                    - link "Google Scholar" [ref=e1049] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar?q=Ye+Yuan+and+Kris+Kitani.+2020.+Residual+force+control+for+agile+human+behavior+imitation+and+extended+motion+synthesis.+Advances+in+Neural+Information+Processing+Systems+33+%282020%29%2C+21763--21774.
+                - listitem [ref=e1050]:
+                  - generic [ref=e1051]: "[78]"
+                  - generic [ref=e1053]:
+                    - generic [ref=e1054]: "Ye Yuan, Shih-En Wei, Tomas Simon, Kris Kitani, and Jason Saragih. 2021. Simpoe: Simulated character control for 3d human pose estimation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 7159--7169."
+                    - generic [ref=e1055]:
+                      - link "Crossref" [ref=e1057] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPR46437.2021.00708
+                      - generic [ref=e1058]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1059] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPR46437.2021.00708
+                - listitem [ref=e1060]:
+                  - generic [ref=e1061]: "[79]"
+                  - generic [ref=e1063]:
+                    - generic [ref=e1064]: Petrissa Zell, Bastian Wandt, and Bodo Rosenhahn. 2017. Joint 3d human motion capture and physical analysis from monocular videos. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition Workshops. 17--26.
+                    - generic [ref=e1065]:
+                      - link "Crossref" [ref=e1067] [cursor=pointer]:
+                        - /url: https://doi.org/10.1109/CVPRW.2017.9
+                      - generic [ref=e1068]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1069] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1109%2FCVPRW.2017.9
+                - listitem [ref=e1070]:
+                  - generic [ref=e1071]: "[80]"
+                  - generic [ref=e1073]:
+                    - generic [ref=e1074]: "Haotian Zhang, Cristobal Sciutto, Maneesh Agrawala, and Kayvon Fatahalian. 2021. Vid2player: Controllable video sprites that behave and appear like professional tennis players. ACM Transactions on Graphics (TOG) 40, 3 (2021), 1--16."
+                    - generic [ref=e1075]:
+                      - link "Digital Library" [ref=e1077] [cursor=pointer]:
+                        - /url: /doi/10.1145/3478513.3480500
+                      - generic [ref=e1078]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1079] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F3478513.3480500
+                - listitem [ref=e1080]:
+                  - generic [ref=e1081]: "[81]"
+                  - generic [ref=e1083]:
+                    - generic [ref=e1084]: Victor Brian Zordan and Jessica K Hodgins. 2002. Motion capture-driven simulations that hit and react. In Proceedings of the 2002 ACM SIGGRAPH/Eurographics symposium on Computer animation. 89--96.
+                    - generic [ref=e1085]:
+                      - link "Digital Library" [ref=e1087] [cursor=pointer]:
+                        - /url: /doi/10.1145/545261.545276
+                      - generic [ref=e1088]:
+                        - text: "|"
+                        - link "Google Scholar" [ref=e1089] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?doi=10.1145%2F545261.545276
+            - generic [ref=e1091]:
+              - generic [ref=e1095]:
+                - generic [ref=e1096]:
+                  - heading "Cited By" [level=2] [ref=e1097]
+                  - link "View all " [ref=e1098] [cursor=pointer]:
+                    - /url: /action/ajaxShowCitedBy?doi=10.1145/3592408
+                    - text: View all
+                    - generic [ref=e1099]: 
+                - list [ref=e1100]:
+                  - listitem [ref=e1101]:
+                    - generic [ref=e1102]: Yao J, Feng J, Tian X, Xu K, Amirkhanova G and Chen S.
+                    - text: "(2026). Beyond the Broadcast: Enhancing VR Tennis Broadcasting Through Embedded Visualizations and Camera Techniques. IEEE Transactions on Visualization and Computer Graphics. 10.1109/TVCG.2025.3634638."
+                    - generic [ref=e1103]: 32:1.
+                    - text: "(802-812). Online publication date: Jan-2026."
+                    - link "https://doi.org/10.1109/TVCG.2025.3634638" [ref=e1105] [cursor=pointer]:
+                      - /url: https://doi.org/10.1109/TVCG.2025.3634638
+                  - listitem [ref=e1106]:
+                    - generic [ref=e1107]: Kim M and Lee Y.
+                    - text: "(2025). FreeMusco: Motion-Free Learning of Latent Control for Morphology-Adaptive Locomotion in Musculoskeletal Characters. Proceedings of the SIGGRAPH Asia 2025 Conference Papers. 10.1145/3757377.3764002. (1-11). Online publication date: 15-Dec-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3757377.3764002" [ref=e1109] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3757377.3764002
+                  - listitem [ref=e1110]:
+                    - generic [ref=e1111]: Mu Y, Ling H, Shi Y, Ojeda I, Xi P, Shu C, Zinno F and Peng X.
+                    - text: "(2025). StableMotion: Training Motion Cleanup Models with Unpaired Corrupted Data. Proceedings of the SIGGRAPH Asia 2025 Conference Papers. 10.1145/3757377.3763817. (1-12). Online publication date: 15-Dec-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3757377.3763817" [ref=e1113] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3757377.3763817
+                  - listitem [ref=e1114]:
+                    - link "Show More Cited By" [ref=e1115] [cursor=pointer]:
+                      - /url: javascript:void(0)
+              - generic [ref=e1118]:
+                - heading "Index Terms" [level=2] [ref=e1119]
+                - generic "Index Terms (Premium feature)" [ref=e1120]:
+                  - list [ref=e1122]:
+                    - listitem [ref=e1123]:
+                      - generic [ref=e1124]: Learning Physically Simulated Tennis Skills from Broadcast Videos
+                      - list [ref=e1125]:
+                        - listitem [ref=e1126]:
+                          - paragraph [ref=e1128]:
+                            - link "Computing methodologies" [ref=e1129] [cursor=pointer]:
+                              - /url: /topic/ccs2012/10010147?SeriesKey=tog&expand=all
+                          - list [ref=e1130]:
+                            - listitem [ref=e1131]:
+                              - paragraph [ref=e1133]:
+                                - link "Computer graphics" [ref=e1134] [cursor=pointer]:
+                                  - /url: /topic/ccs2012/10010147.10010371?SeriesKey=tog&expand=all
+                              - list [ref=e1135]:
+                                - listitem [ref=e1136]:
+                                  - paragraph [ref=e1138]:
+                                    - link "Animation" [ref=e1139] [cursor=pointer]:
+                                      - /url: /topic/ccs2012/10010147.10010371.10010352?SeriesKey=tog&expand=all
+                                  - list
+              - generic [ref=e1141]:
+                - heading "Recommendations" [level=2] [ref=e1142]
+                - generic "Recommendations (Premium feature)" [ref=e1144]:
+                  - list [ref=e1147]:
+                    - listitem [ref=e1148]:
+                      - generic [ref=e1149]:
+                        - 'link "DeepMimic: example-guided deep reinforcement learning of physics-based character skills" [ref=e1150] [cursor=pointer]':
+                          - /url: /doi/10.1145/3197517.3201311
+                          - 'heading "DeepMimic: example-guided deep reinforcement learning of physics-based character skills" [level=3] [ref=e1151]'
+                        - paragraph [ref=e1154]: A longstanding goal in character animation is to combine data-driven specification of behavior with a system that can execute a similar behavior in a physical simulation, thus enabling realistic responses to perturbations and environmental variation. We ...
+                        - link [ref=e1156] [cursor=pointer]:
+                          - /url: /doi/10.1145/3197517.3201311
+                          - text: Read More
+                    - listitem [ref=e1157]:
+                      - generic [ref=e1158]:
+                        - link "Motion In-betweening for Physically Simulated Characters" [ref=e1159] [cursor=pointer]:
+                          - /url: /doi/10.1145/3550082.3564186
+                          - heading "Motion In-betweening for Physically Simulated Characters" [level=3] [ref=e1160]
+                        - generic [ref=e1161]: "SA '22: SIGGRAPH Asia 2022 Posters"
+                        - paragraph [ref=e1164]: We present a motion in-betweening framework to generate high quality, physically plausible character animation when we are given temporally sparse keyframes as soft animation constraints. More specifically, we learn imitation policies for physically ...
+                        - link [ref=e1166] [cursor=pointer]:
+                          - /url: /doi/10.1145/3550082.3564186
+                          - text: Read More
+                    - listitem [ref=e1167]:
+                      - generic [ref=e1168]:
+                        - 'link "Skeleton2Humanoid: Animating Simulated Characters for Physically-plausible Motion In-betweening" [ref=e1169] [cursor=pointer]':
+                          - /url: /doi/10.1145/3503161.3548093
+                          - 'heading "Skeleton2Humanoid: Animating Simulated Characters for Physically-plausible Motion In-betweening" [level=3] [ref=e1170]'
+                        - generic [ref=e1171]: "MM '22: Proceedings of the 30th ACM International Conference on Multimedia"
+                        - paragraph [ref=e1174]: Human motion synthesis is a long-standing problem with various applications in digital twins and the Metaverse. However, modern deep learning based motion synthesis approaches barely consider the physical plausibility of synthesized motions and ...
+                        - link [ref=e1176] [cursor=pointer]:
+                          - /url: /doi/10.1145/3503161.3548093
+                          - text: Read More
+              - generic [ref=e1178]:
+                - heading "Comments" [level=2] [ref=e1179]
+                - generic "Comments (Premium feature)"
+        - dialog [ref=e1180]:
+          - generic [ref=e1181]:
+            - heading "Information & Contributors" [level=2] [ref=e1183]:
+              - generic [ref=e1184]: 
+              - text: Information & Contributors
+            - tabpanel [ref=e1185]:
+              - heading "Information" [level=3] [ref=e1186]
+              - generic [ref=e1187]:
+                - heading "Published In" [level=4] [ref=e1188]
+                - generic [ref=e1189]:
+                  - img "cover image ACM Transactions on Graphics" [ref=e1191]
+                  - generic [ref=e1192]:
+                    - generic [ref=e1193]:
+                      - generic [ref=e1194]: ACM Transactions on Graphics
+                      - generic [ref=e1195]: Volume 42, Issue 4
+                    - generic [ref=e1196]: August 2023
+                    - generic [ref=e1197]: 1912 pages
+                    - generic [ref=e1198]:
+                      - generic [ref=e1199]:
+                        - generic [ref=e1200]: "ISSN:"
+                        - generic [ref=e1201]: 0730-0301
+                      - generic [ref=e1202]:
+                        - generic [ref=e1203]: "EISSN:"
+                        - generic [ref=e1204]: 1557-7368
+                      - generic [ref=e1205]:
+                        - generic [ref=e1206]: "DOI:"
+                        - generic [ref=e1207]: 10.1145/3609020
+                      - link "Issue’s Table of Contents" [ref=e1208] [cursor=pointer]:
+                        - /url: /toc/tog/2023/42/4
+                    - generic "metadataDisplayExtra"
+                - paragraph [ref=e1209]: Copyright © 2023 ACM.
+                - generic [ref=e1210]: Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.
+              - generic [ref=e1211]:
+                - heading "Publisher" [level=4] [ref=e1212]
+                - generic [ref=e1214]:
+                  - paragraph [ref=e1215]: Association for Computing Machinery
+                  - paragraph [ref=e1216]: New York, NY, United States
+              - generic [ref=e1217]:
+                - heading "Publication History" [level=4] [ref=e1218]
+                - generic [ref=e1219]: "Published: 26 July 2023"
+                - generic [ref=e1220]:
+                  - text: Published in TOG
+                  - generic [ref=e1221]: Volume 42
+                  - text: ","
+                  - generic [ref=e1222]: Issue 4
+              - generic [ref=e1223]:
+                - heading "Permissions" [level=4] [ref=e1224]
+                - generic [ref=e1225]: Request permissions for this article.
+                - link "Request Permissions" [ref=e1227] [cursor=pointer]:
+                  - /url: https://marketplace.copyright.com/rs-ui-web/mp/search/all/10.1145%2F3592408
+              - generic [ref=e1228]:
+                - heading "Check for updates" [level=4] [ref=e1229]
+                - link "Check for updates on crossmark" [ref=e1230] [cursor=pointer]:
+                  - /url: "#"
+              - generic [ref=e1236]:
+                - heading "Author Tags" [level=4] [ref=e1237]
+                - list [ref=e1238]:
+                  - listitem [ref=e1239]:
+                    - link "physics-based character animation" [ref=e1240] [cursor=pointer]:
+                      - /url: /keyword/physics-based+character+animation?expand=all
+                  - listitem [ref=e1241]:
+                    - link "imitation learning" [ref=e1242] [cursor=pointer]:
+                      - /url: /keyword/imitation+learning?expand=all
+                  - listitem [ref=e1243]:
+                    - link "reinforcement learning" [ref=e1244] [cursor=pointer]:
+                      - /url: /keyword/reinforcement+learning?expand=all
+              - generic [ref=e1245]:
+                - heading "Qualifiers" [level=4] [ref=e1246]
+                - list [ref=e1247]:
+                  - listitem [ref=e1248]: Research-article
+            - tabpanel [ref=e1249]:
+              - heading "Contributors" [level=3] [ref=e1250]
+              - img [ref=e1254]
+              - generic [ref=e1255]:
+                - heading "Other Metrics" [level=4] [ref=e1256]
+                - link "View Article Metrics" [ref=e1258] [cursor=pointer]:
+                  - /url: "#tab-metrics-inner"
+          - generic [ref=e1259]:
+            - heading "Bibliometrics & Citations" [level=2] [ref=e1261]:
+              - generic [ref=e1262]: 
+              - text: Bibliometrics & Citations
+            - tabpanel [ref=e1263]:
+              - heading "Bibliometrics" [level=3] [ref=e1264]
+              - generic [ref=e1265]:
+                - heading "Article Metrics" [level=4] [ref=e1266]
+                - generic [ref=e1268]:
+                  - list [ref=e1269]:
+                    - listitem [ref=e1270]:
+                      - generic [ref=e1271]:
+                        - generic [ref=e1272]: "43"
+                        - text: Total Citations
+                      - link "View Citations" [ref=e1273] [cursor=pointer]:
+                        - /url: "#tab-citations"
+                    - listitem [ref=e1274]:
+                      - generic [ref=e1275]:
+                        - generic [ref=e1276]: "718"
+                        - text: Total Downloads
+                  - list [ref=e1277]:
+                    - listitem [ref=e1278]:
+                      - generic [ref=e1279]: Downloads (Last 12 months)
+                      - generic "Advanced metrics (Premium feature)" [ref=e1280]: ...
+                    - listitem [ref=e1281]:
+                      - generic [ref=e1282]: Downloads (Last 6 weeks)
+                      - generic "Advanced metrics (Premium feature)" [ref=e1283]: ...
+                  - generic [ref=e1284]: Reflects downloads up to 07 Apr 2026
+              - generic [ref=e1285]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic "Altmetrics (Premium feature)"
+              - generic [ref=e1286]:
+                - heading "Other Metrics" [level=4] [ref=e1287]
+                - link "View Author Metrics" [ref=e1289] [cursor=pointer]:
+                  - /url: "#tab-contributors"
+            - tabpanel [ref=e1290]:
+              - heading "Citations" [level=3] [ref=e1291]
+              - generic [ref=e1294]:
+                - generic [ref=e1295]:
+                  - heading "Cited By" [level=2] [ref=e1296]
+                  - link "View all " [ref=e1297] [cursor=pointer]:
+                    - /url: /action/ajaxShowCitedBy?doi=10.1145/3592408
+                    - text: View all
+                    - generic [ref=e1298]: 
+                - list [ref=e1299]:
+                  - listitem [ref=e1300]:
+                    - generic [ref=e1301]: Yao J, Feng J, Tian X, Xu K, Amirkhanova G and Chen S.
+                    - text: "(2026). Beyond the Broadcast: Enhancing VR Tennis Broadcasting Through Embedded Visualizations and Camera Techniques. IEEE Transactions on Visualization and Computer Graphics. 10.1109/TVCG.2025.3634638."
+                    - generic [ref=e1302]: 32:1.
+                    - text: "(802-812). Online publication date: Jan-2026."
+                    - link "https://doi.org/10.1109/TVCG.2025.3634638" [ref=e1304] [cursor=pointer]:
+                      - /url: https://doi.org/10.1109/TVCG.2025.3634638
+                  - listitem [ref=e1305]:
+                    - generic [ref=e1306]: Kim M and Lee Y.
+                    - text: "(2025). FreeMusco: Motion-Free Learning of Latent Control for Morphology-Adaptive Locomotion in Musculoskeletal Characters. Proceedings of the SIGGRAPH Asia 2025 Conference Papers. 10.1145/3757377.3764002. (1-11). Online publication date: 15-Dec-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3757377.3764002" [ref=e1308] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3757377.3764002
+                  - listitem [ref=e1309]:
+                    - generic [ref=e1310]: Mu Y, Ling H, Shi Y, Ojeda I, Xi P, Shu C, Zinno F and Peng X.
+                    - text: "(2025). StableMotion: Training Motion Cleanup Models with Unpaired Corrupted Data. Proceedings of the SIGGRAPH Asia 2025 Conference Papers. 10.1145/3757377.3763817. (1-12). Online publication date: 15-Dec-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3757377.3763817" [ref=e1312] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3757377.3763817
+                  - listitem [ref=e1313]:
+                    - generic [ref=e1314]: Tao T, Liu H and Ling H.
+                    - text: "(2025). The Last Mile to Production Readiness: Physics-Based Motion Refinement for Video-Based Capture. Proceedings of the SIGGRAPH Asia 2025 Technical Communications. 10.1145/3757376.3771379. (1-4). Online publication date: 15-Dec-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3757376.3771379" [ref=e1316] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3757376.3771379
+                  - listitem [ref=e1317]:
+                    - generic [ref=e1318]: Gou R, van de Panne M and Holden D.
+                    - text: (2025). Control Operators for Interactive Character Animation. ACM Transactions on Graphics. 10.1145/3763319.
+                    - generic [ref=e1319]: 44:6.
+                    - text: "(1-20). Online publication date: 4-Dec-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3763319" [ref=e1321] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3763319
+                  - listitem [ref=e1322]:
+                    - generic [ref=e1323]: Zhao Z, Chai W, Hao S, Hu W, Wang G, Cao S, Song M, Hwang J and Wang G.
+                    - text: "(2025). A Survey of Deep Learning in Sports Applications: Perception, Comprehension, and Decision. IEEE Transactions on Visualization and Computer Graphics. 10.1109/TVCG.2025.3554801."
+                    - generic [ref=e1324]: 31:10.
+                    - text: "(9368-9386). Online publication date: Oct-2025."
+                    - link "https://doi.org/10.1109/TVCG.2025.3554801" [ref=e1326] [cursor=pointer]:
+                      - /url: https://doi.org/10.1109/TVCG.2025.3554801
+                  - listitem [ref=e1327]:
+                    - generic [ref=e1328]: Cheng L, Xie X, Peng Y, Feng M, He Y, Cao A, Wu Y, Zhang H and Wu Y.
+                    - text: "(2025). VisMimic: Integrating Motion Chain in Feedback Video Generation for Motor Coaching. Proceedings of the 38th Annual ACM Symposium on User Interface Software and Technology. 10.1145/3746059.3747794. (1-17). Online publication date: 28-Sep-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3746059.3747794" [ref=e1330] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3746059.3747794
+                  - listitem [ref=e1331]:
+                    - generic [ref=e1332]: Javadiha M, Andujar C, Lacasa E, Shirato G, Andrienko N and Andrienko G.
+                    - text: "(2025). Visualizing game dynamics at a specific time: Influence of the players’ poses for tactical analyses in padel. Visual Informatics. 10.1016/j.visinf.2025.100256."
+                    - generic [ref=e1333]: 9:3.
+                    - text: "(100256). Online publication date: Sep-2025."
+                    - link "https://doi.org/10.1016/j.visinf.2025.100256" [ref=e1335] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/j.visinf.2025.100256
+                  - listitem [ref=e1336]:
+                    - generic [ref=e1337]: Yu R, Wang Y, Zhao Q, Tsui H, Wang J, Tan P and Chen Q.
+                    - text: "(2025). SkillMimic-V2: Learning Robust and Generalizable Interaction Skills from Sparse and Noisy Demonstrations. Proceedings of the Special Interest Group on Computer Graphics and Interactive Techniques Conference Conference Papers. 10.1145/3721238.3730640. (1-11). Online publication date: 10-Aug-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3721238.3730640" [ref=e1339] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3721238.3730640
+                  - listitem [ref=e1340]:
+                    - generic [ref=e1341]: Bae J, Lee Y, Lim D and Kim Y.
+                    - text: "(2025). PLT: Part-Wise Latent Tokens as Adaptable Motion Priors for Physically Simulated Characters. Proceedings of the Special Interest Group on Computer Graphics and Interactive Techniques Conference Conference Papers. 10.1145/3721238.3730637. (1-10). Online publication date: 10-Aug-2025."
+                    - link "https://dl.acm.org/doi/10.1145/3721238.3730637" [ref=e1343] [cursor=pointer]:
+                      - /url: https://dl.acm.org/doi/10.1145/3721238.3730637
+                  - listitem [ref=e1344]:
+                    - link "Show More Cited By" [ref=e1345] [cursor=pointer]:
+                      - /url: javascript:void(0)
+          - generic [ref=e1346]:
+            - heading "Share" [level=2] [ref=e1348]:
+              - generic [ref=e1349]: 
+              - text: Share
+            - heading "Share" [level=3] [ref=e1350]
+            - generic [ref=e1351]:
+              - generic [ref=e1352]:
+                - heading "Share this Publication link" [level=4] [ref=e1353]
+                - generic [ref=e1354]:
+                  - paragraph
+                  - button "Copy the content Link" [ref=e1355] [cursor=pointer]:
+                    - generic [ref=e1356]: 
+                    - generic [ref=e1357]: Copy Link
+                  - generic: 
+              - generic [ref=e1358]:
+                - heading "Share on social media" [level=4] [ref=e1359]
+                - generic [ref=e1360]:
+                  - link "Share on X" [ref=e1361] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e1362]: 
+                    - generic [ref=e1363]: X
+                  - link "Share on LinkedIn" [ref=e1364] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e1365]: 
+                    - generic [ref=e1366]: LinkedIn
+                  - link "Share on Reddit" [ref=e1367] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e1368]: 
+                    - generic [ref=e1369]: Reddit
+                  - link "Share on Facebook" [ref=e1370] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e1371]: 
+                    - generic [ref=e1372]: Facebook
+                  - link "Share on email" [ref=e1373] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e1374]: 
+                    - generic [ref=e1375]: email
+        - complementary [ref=e1376]:
+          - generic [ref=e1377]:
+            - link "Preferred Employer Sky Add" [ref=e1379] [cursor=pointer]:
+              - /url: /action/clickThrough?id=108229&url=https%3A%2F%2Fwww.acm.org%2Fmembership%2Fpreferred-employer&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101020&productId=108184
+              - img "Preferred Employer Sky Add" [ref=e1380]
+            - link "TOCS Ad" [ref=e1382] [cursor=pointer]:
+              - /url: /action/clickThrough?id=108216&url=https%3A%2F%2Fdl.acm.org%2Fjournal%2Ftocs&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101021&productId=108184
+              - img "TOCS Ad" [ref=e1383]
+            - link "ACM Books Chang Ad" [ref=e1385] [cursor=pointer]:
+              - /url: /action/clickThrough?id=108237&url=https%3A%2F%2Fdl.acm.org%2Fdoi%2Fbook%2F10.1145%2F3749421&loc=%2Fdoi%2Fabs%2F10.1145%2F3592408&pubId=60496833&placeholderId=101022&productId=108184
+              - img "ACM Books Chang Ad" [ref=e1386]
+      - link [ref=e1390] [cursor=pointer]:
+        - /url: /doi/pdf/10.1145/3592408?download=true
+        - text: Download PDF
+      - navigation "Sticky Navigation" [ref=e1391]
+      - link "View Issue’s Table of Contents" [ref=e1394] [cursor=pointer]:
+        - /url: /toc/tog/2023/42/4
+    - contentinfo [ref=e1395]:
+      - heading "Footer" [level=2] [ref=e1396]
+      - generic [ref=e1399]:
+        - generic [ref=e1401]:
+          - heading "Categories" [level=3] [ref=e1402]
+          - list [ref=e1403]:
+            - listitem [ref=e1404]:
+              - link "Journals" [ref=e1405] [cursor=pointer]:
+                - /url: /journals
+            - listitem [ref=e1406]:
+              - link "Magazines" [ref=e1407] [cursor=pointer]:
+                - /url: /magazines
+            - listitem [ref=e1408]:
+              - link "Books" [ref=e1409] [cursor=pointer]:
+                - /url: /acmbooks
+            - listitem [ref=e1410]:
+              - link "Proceedings" [ref=e1411] [cursor=pointer]:
+                - /url: /proceedings
+            - listitem [ref=e1412]:
+              - link "SIGs" [ref=e1413] [cursor=pointer]:
+                - /url: /sigs
+            - listitem [ref=e1414]:
+              - link "Conferences" [ref=e1415] [cursor=pointer]:
+                - /url: /conferences
+            - listitem [ref=e1416]:
+              - link "Collections" [ref=e1417] [cursor=pointer]:
+                - /url: /collections
+            - listitem [ref=e1418]:
+              - link "People" [ref=e1419] [cursor=pointer]:
+                - /url: /people
+        - generic [ref=e1421]:
+          - heading "About" [level=3] [ref=e1422]
+          - list [ref=e1423]:
+            - listitem [ref=e1424]:
+              - link "About ACM Digital Library" [ref=e1425] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e1426]:
+              - link "ACM Digital Library Board" [ref=e1427] [cursor=pointer]:
+                - /url: /about/dlboard
+            - listitem [ref=e1428]:
+              - link "Author Guidelines" [ref=e1429] [cursor=pointer]:
+                - /url: https://www.acm.org/publications/authors/information-for-authors
+            - listitem [ref=e1430]:
+              - link "All Holdings within the ACM Digital Library" [ref=e1431] [cursor=pointer]:
+                - /url: /about/content#sec2
+            - listitem [ref=e1432]:
+              - link "ACM Computing Classification System" [ref=e1433] [cursor=pointer]:
+                - /url: /ccs
+            - listitem [ref=e1434]:
+              - link "Accessibility Statement" [ref=e1435] [cursor=pointer]:
+                - /url: /about/accessibility
+        - generic [ref=e1437]:
+          - heading "Join" [level=3] [ref=e1438]
+          - list [ref=e1439]:
+            - listitem [ref=e1440]:
+              - link "Join ACM" [ref=e1441] [cursor=pointer]:
+                - /url: https://www.acm.org/membership/join
+            - listitem [ref=e1442]:
+              - link "Join SIGs" [ref=e1443] [cursor=pointer]:
+                - /url: https://www.acm.org/special-interest-groups/join
+            - listitem [ref=e1444]:
+              - link "Subscribe to Publications" [ref=e1445] [cursor=pointer]:
+                - /url: https://www.acm.org/publications/subscribe
+            - listitem [ref=e1446]:
+              - link "Institutions and Libraries" [ref=e1447] [cursor=pointer]:
+                - /url: https://libraries.acm.org/
+        - generic [ref=e1449]:
+          - heading "Connect" [level=3] [ref=e1450]
+          - list [ref=e1451]:
+            - listitem [ref=e1452]:
+              - link "Contact us via email" [ref=e1453] [cursor=pointer]:
+                - /url: mailto:dl-team@hq.acm.org
+                - generic [ref=e1454]: 
+                - text: Contact us via email
+            - listitem [ref=e1455]:
+              - link "ACM on Facebook" [ref=e1456] [cursor=pointer]:
+                - /url: https://www.facebook.com/AssociationForComputingMachinery/
+                - generic [ref=e1457]: 
+                - text: ACM on Facebook
+            - listitem [ref=e1458]:
+              - link "ACM DL on X" [ref=e1459] [cursor=pointer]:
+                - /url: https://x.com/acmdl
+                - generic [ref=e1460]: 
+                - text: ACM DL on X
+            - listitem [ref=e1461]:
+              - link "ACM on Linkedin" [ref=e1462] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/association-for-computing-machinery/
+                - generic [ref=e1463]: 
+                - text: ACM on Linkedin
+            - listitem [ref=e1464]:
+              - generic [ref=e1465] [cursor=pointer]:
+                - generic [ref=e1466]: 
+                - text: Send Feedback
+            - listitem [ref=e1467]:
+              - generic [ref=e1468] [cursor=pointer]:
+                - generic [ref=e1469]: 
+                - text: Submit a Bug Report
+      - generic [ref=e1472]:
+        - generic [ref=e1473]:
+          - generic [ref=e1474]: The ACM Digital Library is published by the Association for Computing Machinery. Copyright © 2026 ACM, Inc.
+          - list [ref=e1475]:
+            - listitem [ref=e1476]:
+              - link "Terms of Usage" [ref=e1477] [cursor=pointer]:
+                - /url: https://libraries.acm.org/digital-library/policies#anchor3
+            - listitem [ref=e1478]:
+              - link "Privacy Policy" [ref=e1479] [cursor=pointer]:
+                - /url: https://www.acm.org/about-acm/privacy-policy
+            - listitem [ref=e1480]:
+              - link "Code of Ethics" [ref=e1481] [cursor=pointer]:
+                - /url: https://www.acm.org/code-of-ethics
+        - generic [ref=e1483]:
+          - link "ACM Digital Library home" [ref=e1485] [cursor=pointer]:
+            - /url: /
+            - img "ACM Digital Library home" [ref=e1486]
+          - link "ACM Association for Computing Machinery corporate logo" [ref=e1488] [cursor=pointer]:
+            - /url: https://www.acm.org
+            - img "ACM Association for Computing Machinery corporate logo" [ref=e1489]
+    - region "notification"
+    - text:      
+  - iframe [ref=e1490]:
+    

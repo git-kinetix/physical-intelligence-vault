@@ -10,7 +10,7 @@ importance:
 aliases: [DeepLoco, Deep Loco, Dynamic Locomotion Skills]
 ---
 
-![[PDFs/DeepLoco.pdf]]
+!PDFs/DeepLoco.pdf
 
 # DeepLoco: Dynamic Locomotion Skills Using Hierarchical Deep Reinforcement Learning
 

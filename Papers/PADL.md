@@ -10,7 +10,7 @@ importance:
 aliases: [PADL, Physics-based Animation Directed with Language]
 ---
 
-![[PDFs/PADL.pdf]]
+!PDFs/PADL.pdf
 
 # PADL: Language-Directed Physics-Based Character Control
 
@@ -86,7 +86,7 @@ PADL successfully demonstrates:
 
 ## Metrics Used
 
-- [[Coverage]] — fraction of motion dataset states within a threshold distance in the embedding space
+- Coverage — fraction of motion dataset states within a threshold distance in the embedding space
 - [[Episode Return]] — cumulative reward combining task and skill objectives
 - Adversarial skill reward — discriminator-based measure of motion naturalness relative to reference clips
 

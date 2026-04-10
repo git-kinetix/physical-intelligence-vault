@@ -1,0 +1,6 @@
+[     201ms] [INFO] WebGPU is experimental on this platform. See https://github.com/gpuweb/gpuweb/wiki/Implementation-Status#implementation-status @ https://dxlrak3ky5x8b.cloudfront.net/postscript.js:1188
+[     202ms] [WARNING] Failed to create WebGPU Context Provider @ https://dxlrak3ky5x8b.cloudfront.net/postscript.js:1188
+[     308ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://dxlrak3ky5x8b.cloudfront.net/PDFs/V-JEPA-2.pdf:0
+[   17757ms] [INFO] WebGPU is experimental on this platform. See https://github.com/gpuweb/gpuweb/wiki/Implementation-Status#implementation-status @ https://dxlrak3ky5x8b.cloudfront.net/postscript.js:1188
+[   17758ms] [WARNING] Failed to create WebGPU Context Provider @ https://dxlrak3ky5x8b.cloudfront.net/postscript.js:1188
+[   17891ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://dxlrak3ky5x8b.cloudfront.net/PDFs/V-JEPA-2.pdf:0

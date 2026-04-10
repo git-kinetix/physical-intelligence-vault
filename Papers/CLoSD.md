@@ -10,7 +10,7 @@ importance:
 aliases: [CLoSD, Closing the Loop between Simulation and Diffusion]
 ---
 
-![[PDFs/CLoSD.pdf]]
+!PDFs/CLoSD.pdf
 
 # CLoSD: Closing the Loop between Simulation and Diffusion for Multi-Task Character Control
 

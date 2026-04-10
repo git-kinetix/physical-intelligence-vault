@@ -73,8 +73,8 @@ SKIP_NAMES = {"AVA", "COIN", "MVP", "FPS", "DMLab"}  # Too short / common
 
 def process_line(line, own_paper_name):
     """Replace plain-text mentions with [[links]] in a single line."""
-    # Skip lines that are frontmatter, embeds, or headers with the paper's own name
-    if line.startswith('![[') or line.startswith('---'):
+    # Skip lines that are frontmatter, embeds, or PDF embed lines
+    if line.startswith('![[') or line.startswith('---') or line.startswith('!PDFs/'):
         return line
 
     for name in sorted_names:
@@ -92,7 +92,8 @@ def process_line(line, own_paper_name):
 
         # Pattern: name not preceded by [[ and not followed by ]]
         # Also not inside an existing [[ ... ]] block
-        pattern = r'(?<!\[\[)(?<!\|)\b' + escaped + r'\b(?!\]\])(?!\|)'
+        # (?!\.\d) prevents matching "V-JEPA 2" inside "V-JEPA 2.1" etc.
+        pattern = r'(?<!\[\[)(?<!\|)\b' + escaped + r'\b(?!\]\])(?!\|)(?!\.\d)'
 
         def replacer(m):
             # Check if we're inside a [[ ]] block by scanning backwards

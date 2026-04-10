@@ -9,7 +9,7 @@ importance:
 aliases: [pi0.6, pi-zero-point-six, pi_0.6, pi*0.6, RECAP]
 ---
 
-!PDFs/[[Pi0]].6.pdf
+!PDFs/Pi0.6.pdf
 
 
 # pi*0.6: a VLA That Learns From Experience
@@ -83,7 +83,7 @@ RECAP more than doubles task throughput on the most challenging tasks while appr
 
 ### Table 2: Baseline Comparison ([[Pi0|pi0]].6 out-of-the-box capabilities)
 
-| Task | [[Pi0]].6 Baseline | pi*0.6 (with RECAP) |
+| Task | Pi0.6 Baseline | pi*0.6 (with RECAP) |
 |------|:--------------:|:-------------------:|
 | Laundry folding in real homes | Reliable | More reliable + faster |
 | Box assembly | ~20% success | Significantly improved |
@@ -96,7 +96,7 @@ The base [[Pi0|pi0]].6 model (without RECAP) can fold laundry reliably and assem
 | Method | Relative [[FPS]] (Laundry) |
 |--------|:----------------------------:|
 | [[Pi0.5]] (no RL) | Baseline |
-| [[Pi0]].6 (supervised only, no advantage) | Improved |
+| Pi0.6 (supervised only, no advantage) | Improved |
 | AWR (advantage-weighted regression) | Moderate improvement |
 | PPO variant (with SPO constraints) | Moderate improvement |
 | **pi*0.6 (RECAP)** | **Highest throughput by far** |

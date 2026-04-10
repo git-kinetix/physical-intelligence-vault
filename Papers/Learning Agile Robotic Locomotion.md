@@ -10,7 +10,7 @@ importance:
 aliases: [Learning Agile Robotic Locomotion, Robotic Imitation, Imitating Animals]
 ---
 
-![[PDFs/Learning Agile Robotic Locomotion.pdf]]
+!PDFs/Learning Agile Robotic Locomotion.pdf
 
 # Learning Agile Robotic Locomotion Skills by Imitating Animals
 

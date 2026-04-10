@@ -10,7 +10,7 @@ importance:
 aliases: [Sim-to-Real Transfer, Dynamics Randomization, SimToReal]
 ---
 
-![[PDFs/Sim-to-Real Transfer.pdf]]
+!PDFs/Sim-to-Real Transfer.pdf
 
 # Sim-to-Real Transfer of Robotic Control with Dynamics Randomization
 

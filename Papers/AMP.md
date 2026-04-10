@@ -10,7 +10,7 @@ importance:
 aliases: [AMP, Adversarial Motion Priors]
 ---
 
-![[PDFs/AMP.pdf]]
+!PDFs/AMP.pdf
 
 # AMP: Adversarial Motion Priors for Stylized Physics-Based Character Control
 

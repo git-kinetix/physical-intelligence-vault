@@ -10,7 +10,7 @@ importance:
 aliases: [SFV, Skills from Videos, Reinforcement Learning of Physical Skills from Videos]
 ---
 
-![[PDFs/SFV.pdf]]
+!PDFs/SFV.pdf
 
 # SFV: Reinforcement Learning of Physical Skills from Videos
 
