@@ -1,0 +1,98 @@
+{
+	"nodes":[
+		{"id":"group-peng","type":"group","x":-1200,"y":-900,"width":1800,"height":800,"color":"1","label":"Peng Lineage"},
+		{"id":"group-vae","type":"group","x":700,"y":-900,"width":700,"height":500,"color":"6","label":"VAE Controllers"},
+		{"id":"group-jepa","type":"group","x":-1200,"y":100,"width":1100,"height":700,"color":"0","label":"JEPA Family"},
+		{"id":"group-dreamer","type":"group","x":0,"y":100,"width":900,"height":700,"color":"4","label":"Dreamer Series"},
+		{"id":"group-pi","type":"group","x":-1200,"y":900,"width":600,"height":500,"color":"3","label":"PI Progression"},
+		{"id":"group-video","type":"group","x":-400,"y":900,"width":1000,"height":500,"color":"5","label":"Video Planning"},
+
+		{"id":"deeploco","type":"file","file":"Papers/DeepLoco.md","x":-1150,"y":-840,"width":250,"height":60},
+		{"id":"deepmimic","type":"file","file":"Papers/DeepMimic.md","x":-850,"y":-840,"width":250,"height":60},
+		{"id":"sfv","type":"file","file":"Papers/SFV.md","x":-550,"y":-840,"width":250,"height":60},
+		{"id":"simtoreal","type":"file","file":"Papers/Sim-to-Real Transfer.md","x":-250,"y":-840,"width":250,"height":60},
+		{"id":"mcp","type":"file","file":"Papers/MCP.md","x":50,"y":-840,"width":250,"height":60},
+		{"id":"learningagile","type":"file","file":"Papers/Learning Agile Robotic Locomotion.md","x":350,"y":-840,"width":250,"height":60},
+		{"id":"amp","type":"file","file":"Papers/AMP.md","x":-1150,"y":-720,"width":250,"height":60},
+		{"id":"ase","type":"file","file":"Papers/ASE.md","x":-850,"y":-720,"width":250,"height":60},
+		{"id":"padl","type":"file","file":"Papers/PADL.md","x":-550,"y":-720,"width":250,"height":60},
+		{"id":"calm","type":"file","file":"Papers/CALM.md","x":-250,"y":-720,"width":250,"height":60},
+		{"id":"maskedmimic","type":"file","file":"Papers/MaskedMimic.md","x":50,"y":-720,"width":250,"height":60},
+		{"id":"superpadl","type":"file","file":"Papers/SuperPADL.md","x":350,"y":-720,"width":250,"height":60},
+		{"id":"closd","type":"file","file":"Papers/CLoSD.md","x":50,"y":-600,"width":250,"height":60},
+		{"id":"parc","type":"file","file":"Papers/PARC.md","x":-1150,"y":-600,"width":250,"height":60},
+		{"id":"vid2player","type":"file","file":"Papers/Vid2Player3D.md","x":-550,"y":-600,"width":250,"height":60},
+
+		{"id":"mvae","type":"file","file":"Papers/MVAE.md","x":750,"y":-840,"width":250,"height":60},
+		{"id":"musclevae","type":"file","file":"Papers/MuscleVAE.md","x":750,"y":-720,"width":250,"height":60},
+		{"id":"physicsvae","type":"file","file":"Papers/PhysicsVAE.md","x":1050,"y":-720,"width":250,"height":60},
+		{"id":"controlvae","type":"file","file":"Papers/ControlVAE.md","x":1050,"y":-600,"width":250,"height":60},
+
+		{"id":"ijepa","type":"file","file":"Papers/I-JEPA.md","x":-1150,"y":160,"width":250,"height":60},
+		{"id":"vjepa","type":"file","file":"Papers/V-JEPA.md","x":-1150,"y":270,"width":250,"height":60},
+		{"id":"vjepa2","type":"file","file":"Papers/V-JEPA 2.md","x":-1150,"y":380,"width":250,"height":60},
+		{"id":"vjepa21","type":"file","file":"Papers/V-JEPA 2.1.md","x":-1150,"y":490,"width":250,"height":60},
+		{"id":"lejepa","type":"file","file":"Papers/Le-JEPA.md","x":-850,"y":270,"width":250,"height":60},
+		{"id":"lewm","type":"file","file":"Papers/Le-World-Model.md","x":-850,"y":380,"width":250,"height":60},
+		{"id":"tdjepa","type":"file","file":"Papers/TD-JEPA.md","x":-550,"y":160,"width":250,"height":60},
+		{"id":"actjepa","type":"file","file":"Papers/ACT-JEPA.md","x":-550,"y":270,"width":250,"height":60},
+		{"id":"puppet","type":"file","file":"Papers/Hierarchical Puppeteer.md","x":-250,"y":380,"width":250,"height":60},
+		{"id":"pldm","type":"file","file":"Papers/PLDM.md","x":-250,"y":490,"width":250,"height":60},
+
+		{"id":"dreamer1","type":"file","file":"Papers/DreamerV1.md","x":50,"y":160,"width":250,"height":60},
+		{"id":"dreamer2","type":"file","file":"Papers/DreamerV2.md","x":50,"y":270,"width":250,"height":60},
+		{"id":"dreamer3","type":"file","file":"Papers/DreamerV3.md","x":50,"y":380,"width":250,"height":60},
+		{"id":"stablewm","type":"file","file":"Papers/Stable World Model.md","x":50,"y":490,"width":250,"height":60},
+		{"id":"iris","type":"file","file":"Papers/IRIS.md","x":350,"y":270,"width":250,"height":60},
+		{"id":"diamond","type":"file","file":"Papers/DIAMOND.md","x":350,"y":380,"width":250,"height":60},
+		{"id":"tdmpc2","type":"file","file":"Papers/TD-MPC2.md","x":650,"y":160,"width":250,"height":60},
+
+		{"id":"pi0","type":"file","file":"Papers/Pi0.md","x":-1150,"y":960,"width":250,"height":60},
+		{"id":"pi05","type":"file","file":"Papers/Pi0.5.md","x":-1150,"y":1070,"width":250,"height":60},
+		{"id":"pi06","type":"file","file":"Papers/Pi0.6.md","x":-1150,"y":1180,"width":250,"height":60},
+
+		{"id":"rt2","type":"file","file":"Papers/RT-2.md","x":-350,"y":960,"width":250,"height":60},
+		{"id":"gemini","type":"file","file":"Papers/Gemini Robotics.md","x":-350,"y":1070,"width":250,"height":60}
+	],
+	"edges":[
+		{"id":"e-deeploco-deepmimic","fromNode":"deeploco","fromSide":"right","toNode":"deepmimic","toSide":"left","label":"extends"},
+		{"id":"e-deepmimic-sfv","fromNode":"deepmimic","fromSide":"right","toNode":"sfv","toSide":"left","label":"from-video"},
+		{"id":"e-deepmimic-simtoreal","fromNode":"deepmimic","fromSide":"right","toNode":"simtoreal","toSide":"left","label":"applies-to-real"},
+		{"id":"e-deepmimic-mcp","fromNode":"deepmimic","fromSide":"right","toNode":"mcp","toSide":"left","label":"inspires"},
+		{"id":"e-deepmimic-learningagile","fromNode":"deepmimic","fromSide":"right","toNode":"learningagile","toSide":"left","label":"applies-to-real"},
+		{"id":"e-deepmimic-amp","fromNode":"deepmimic","fromSide":"bottom","toNode":"amp","toSide":"top","label":"inspires"},
+		{"id":"e-sfv-vid2player","fromNode":"sfv","fromSide":"bottom","toNode":"vid2player","toSide":"top","label":"extends"},
+		{"id":"e-amp-ase","fromNode":"amp","fromSide":"right","toNode":"ase","toSide":"left","label":"extends"},
+		{"id":"e-amp-parc","fromNode":"amp","fromSide":"bottom","toNode":"parc","toSide":"top","label":"inspires"},
+		{"id":"e-ase-calm","fromNode":"ase","fromSide":"right","toNode":"calm","toSide":"left","label":"extends"},
+		{"id":"e-ase-padl","fromNode":"ase","fromSide":"bottom","toNode":"padl","toSide":"top","label":"adds-language"},
+		{"id":"e-calm-maskedmimic","fromNode":"calm","fromSide":"right","toNode":"maskedmimic","toSide":"left","label":"extends"},
+		{"id":"e-padl-superpadl","fromNode":"padl","fromSide":"right","toNode":"superpadl","toSide":"left","label":"scales"},
+		{"id":"e-maskedmimic-closd","fromNode":"maskedmimic","fromSide":"bottom","toNode":"closd","toSide":"top","label":"adds-diffusion"},
+
+		{"id":"e-mvae-musclevae","fromNode":"mvae","fromSide":"bottom","toNode":"musclevae","toSide":"top","label":"extends"},
+		{"id":"e-mvae-physicsvae","fromNode":"mvae","fromSide":"right","toNode":"physicsvae","toSide":"left","label":"extends"},
+		{"id":"e-physicsvae-controlvae","fromNode":"physicsvae","fromSide":"bottom","toNode":"controlvae","toSide":"top","label":"extends"},
+
+		{"id":"e-ijepa-vjepa","fromNode":"ijepa","fromSide":"bottom","toNode":"vjepa","toSide":"top","label":"extends"},
+		{"id":"e-vjepa-vjepa2","fromNode":"vjepa","fromSide":"bottom","toNode":"vjepa2","toSide":"top","label":"extends"},
+		{"id":"e-vjepa2-vjepa21","fromNode":"vjepa2","fromSide":"bottom","toNode":"vjepa21","toSide":"top","label":"extends"},
+		{"id":"e-ijepa-lejepa","fromNode":"ijepa","fromSide":"right","toNode":"lejepa","toSide":"left","label":"inspires"},
+		{"id":"e-lejepa-lewm","fromNode":"lejepa","fromSide":"bottom","toNode":"lewm","toSide":"top","label":"inspires"},
+		{"id":"e-vjepa2-lewm","fromNode":"vjepa2","fromSide":"right","toNode":"lewm","toSide":"left","label":"inspires"},
+		{"id":"e-ijepa-tdjepa","fromNode":"ijepa","fromSide":"right","toNode":"tdjepa","toSide":"left","label":"inspires"},
+		{"id":"e-ijepa-actjepa","fromNode":"ijepa","fromSide":"right","toNode":"actjepa","toSide":"left","label":"inspires"},
+		{"id":"e-vjepa2-puppet","fromNode":"vjepa2","fromSide":"right","toNode":"puppet","toSide":"left","label":"inspires"},
+
+		{"id":"e-dreamer1-dreamer2","fromNode":"dreamer1","fromSide":"bottom","toNode":"dreamer2","toSide":"top","label":"extends"},
+		{"id":"e-dreamer2-dreamer3","fromNode":"dreamer2","fromSide":"bottom","toNode":"dreamer3","toSide":"top","label":"extends"},
+		{"id":"e-dreamer3-stablewm","fromNode":"dreamer3","fromSide":"bottom","toNode":"stablewm","toSide":"top","label":"inspires"},
+		{"id":"e-dreamer2-iris","fromNode":"dreamer2","fromSide":"right","toNode":"iris","toSide":"left","label":"inspires"},
+		{"id":"e-iris-diamond","fromNode":"iris","fromSide":"bottom","toNode":"diamond","toSide":"top","label":"inspires"},
+
+		{"id":"e-pi0-pi05","fromNode":"pi0","fromSide":"bottom","toNode":"pi05","toSide":"top","label":"extends"},
+		{"id":"e-pi05-pi06","fromNode":"pi05","fromSide":"bottom","toNode":"pi06","toSide":"top","label":"extends"},
+
+		{"id":"e-rt2-gemini","fromNode":"rt2","fromSide":"bottom","toNode":"gemini","toSide":"top","label":"inspires"}
+	]
+}
