@@ -41,9 +41,11 @@ Models that learn environment dynamics for planning, imagination, and control.
 | [[Genie 2]] | 2024 | Generative interactive 3D environments |
 | [[DreamerV3]] | 2023 | Single algorithm across diverse domains |
 | [[IRIS]] | 2023 | Transformer world model with discrete tokens |
+| [[Vid2Player3D]] | 2023 | Tennis skills from broadcast video via hierarchical control |
 | [[DreamerV2]] | 2021 | Discrete world models for Atari |
 | [[MVAE]] | 2020 | Motion VAE for character control in latent space |
 | [[DreamerV1]] | 2020 | Latent imagination for behavior learning |
+| [[DeepMimic]] | 2018 | Example-guided RL for physics-based character skills |
 
 ---
 
