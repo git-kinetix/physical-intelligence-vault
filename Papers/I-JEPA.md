@@ -1,12 +1,17 @@
 ---
-tags: [paper, jepa, motion]
+tags: [paper, domain/ssl, method/masked-prediction, lineage/jepa, lineage/fair]
 title: "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture"
 authors: [Mahmoud Assran, Quentin Duval, Ishan Misra, Piotr Bojanowski, Pascal Vincent, Michael Rabbat, Yann LeCun, Nicolas Ballas]
 year: 2023
 arxiv: "https://arxiv.org/abs/2301.08243"
 repo: "https://github.com/facebookresearch/ijepa"
 group: "JEPA Family"
-importance: 
+venue: "CVPR 2023"
+domain: [ssl]
+method: [masked-prediction]
+lineage: [jepa, fair]
+predecessor: []
+importance: 5
 aliases: [I-JEPA, Image JEPA]
 ---
 

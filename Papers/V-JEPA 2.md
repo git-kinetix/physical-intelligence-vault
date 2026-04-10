@@ -1,11 +1,16 @@
 ---
-tags: [paper, jepa, motion]
+tags: [paper, domain/ssl, domain/robotics, method/masked-prediction, lineage/jepa, lineage/fair]
 title: "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning"
 authors: [Mido Assran, Adrien Bardes, David Fan, Quentin Garrido, Russell Howes, Mojtaba Komeili, Matthew Muckley, Ammar Rizvi, Claire Roberts, Koustuv Sinha, Artem Zholus, Sergio Arnaud, Abha Gejji, Ada Martin, Francois Robert Hogan, Daniel Dugas, Piotr Bojanowski, Vasil Khalidov, Patrick Labatut, Francisco Massa, Marc Szafraniec, Kapil Krishnakumar, Yong Li, Xiaodong Ma, Sarath Chandar, Franziska Meier, Yann LeCun, Michael Rabbat, Nicolas Ballas]
 year: 2025
 arxiv: "https://arxiv.org/abs/2506.09985"
 repo: "https://github.com/facebookresearch/vjepa2"
 group: "JEPA Family"
+venue: "arXiv 2025"
+domain: [ssl, robotics]
+method: [masked-prediction]
+lineage: [jepa, fair]
+predecessor: ["[[V-JEPA]]"]
 importance: 5
 aliases: [V-JEPA 2, VJEPA2, V-JEPA2]
 ---

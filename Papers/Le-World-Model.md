@@ -1,12 +1,17 @@
 ---
-tags: [paper, jepa, physics-simulation]
+tags: [paper, domain/ssl, domain/robotics, method/masked-prediction, method/rl, lineage/jepa]
 title: "LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture from Pixels"
 authors: [Lucas Maes, Quentin Le Lidec, Damien Scieur, Yann LeCun, Randall Balestriero]
 year: 2026
 arxiv: "https://arxiv.org/abs/2603.19312"
 repo: "https://github.com/lucas-maes/le-wm"
 group: "JEPA Family"
-importance: 5
+venue: "arXiv 2026"
+domain: [ssl, robotics]
+method: [masked-prediction, rl]
+lineage: [jepa]
+predecessor: ["[[Le-JEPA]]", "[[V-JEPA 2]]"]
+importance: 4
 aliases: [LeWorldModel, LeWM, Le-World-Model]
 ---
 

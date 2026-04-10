@@ -1,12 +1,17 @@
 ---
-tags: [paper, jepa, physics-simulation]
+tags: [paper, domain/robotics, method/masked-prediction, method/imitation-learning, lineage/jepa]
 title: "ACT-JEPA: Novel Joint-Embedding Predictive Architecture for Efficient Policy Representation Learning"
 authors: [Aleksandar Vujinovic, Aleksandar Kovacevic]
 year: 2025
 arxiv: "https://arxiv.org/abs/2501.14622"
 repo: ""
 group: "JEPA Family"
-importance: 
+venue: "arXiv 2025"
+domain: [robotics]
+method: [masked-prediction, imitation-learning]
+lineage: [jepa]
+predecessor: ["[[I-JEPA]]"]
+importance: 3
 aliases: [ACT-JEPA, Action JEPA]
 ---
 

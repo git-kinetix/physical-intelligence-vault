@@ -1,12 +1,17 @@
 ---
-tags: [paper, jepa, motion]
+tags: [paper, domain/ssl, method/masked-prediction, lineage/jepa, lineage/fair]
 title: "V-JEPA 2.1: Unlocking Dense Features in Video Self-Supervised Learning"
 authors: [Lorenzo Mur-Labadia, Matthew Muckley, Amir Bar, Mido Assran, Koustuv Sinha, Mike Rabbat, Yann LeCun, Nicolas Ballas, Adrien Bardes]
 year: 2026
 arxiv: "https://arxiv.org/abs/2603.14482"
 repo: "https://github.com/facebookresearch/vjepa2"
 group: "JEPA Family"
-importance: 
+venue: "arXiv 2026"
+domain: [ssl]
+method: [masked-prediction]
+lineage: [jepa, fair]
+predecessor: ["[[V-JEPA 2]]"]
+importance: 3
 aliases: [V-JEPA 2.1, VJEPA2.1]
 ---
 

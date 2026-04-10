@@ -1,12 +1,17 @@
 ---
-tags: [paper, jepa, motion]
+tags: [paper, domain/ssl, method/masked-prediction, lineage/jepa, lineage/fair]
 title: "Revisiting Feature Prediction for Learning Visual Representations from Video"
 authors: [Adrien Bardes, Quentin Garrido, Jean Ponce, Xinlei Chen, Michael Rabbat, Yann LeCun, Mahmoud Assran, Nicolas Ballas]
 year: 2024
 arxiv: "https://arxiv.org/abs/2404.08471"
 repo: "https://github.com/facebookresearch/jepa"
 group: "JEPA Family"
-importance: 
+venue: "arXiv 2024"
+domain: [ssl]
+method: [masked-prediction]
+lineage: [jepa, fair]
+predecessor: ["[[I-JEPA]]"]
+importance: 4
 aliases: [V-JEPA, Video JEPA]
 ---
 

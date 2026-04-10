@@ -1,12 +1,17 @@
 ---
-tags: [paper, jepa, motion]
+tags: [paper, domain/ssl, method/masked-prediction, lineage/jepa]
 title: "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics"
 authors: [Randall Balestriero, Yann LeCun]
 year: 2025
 arxiv: "https://arxiv.org/abs/2511.08544"
 repo: "https://github.com/galilai-group/lejepa"
 group: "JEPA Family"
-importance: 
+venue: "arXiv 2025"
+domain: [ssl]
+method: [masked-prediction]
+lineage: [jepa]
+predecessor: ["[[I-JEPA]]"]
+importance: 3
 aliases: [LeJEPA, Le-JEPA]
 ---
 

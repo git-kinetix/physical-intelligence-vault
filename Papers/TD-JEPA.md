@@ -1,11 +1,16 @@
 ---
-tags: [paper, jepa, physics-simulation]
+tags: [paper, domain/ssl, method/masked-prediction, method/rl, lineage/jepa]
 title: "TD-JEPA: Latent-predictive Representations for Zero-Shot Reinforcement Learning"
 authors: [Marco Bagatella, Matteo Pirotta, Ahmed Touati, Alessandro Lazaric, Andrea Tirinzoni]
 year: 2025
 arxiv: "https://arxiv.org/abs/2510.00739"
 group: "JEPA Family"
-importance: 
+venue: "arXiv 2025"
+domain: [ssl]
+method: [masked-prediction, rl]
+lineage: [jepa]
+predecessor: ["[[I-JEPA]]"]
+importance: 3
 aliases: [TD-JEPA, Temporal Difference JEPA]
 ---
 
