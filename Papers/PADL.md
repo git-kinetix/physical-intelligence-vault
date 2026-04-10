@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, method/language-conditioned, lineage/peng]
 title: "PADL: Language-Directed Physics-Based Character Control"
 authors: [Jordan Juravsky, Yunrong Guo, Sanja Fidler, Xue Bin Peng]
 year: 2022
 arxiv: "https://arxiv.org/abs/2301.13868"
 repo: "https://github.com/nv-tlabs/PADL"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH Asia 2022"
+domain: [character-animation]
+method: [rl, language-conditioned]
+lineage: [peng]
+predecessor: ["[[ASE]]"]
+importance: 3
 aliases: [PADL, Physics-based Animation Directed with Language]
 ---
 

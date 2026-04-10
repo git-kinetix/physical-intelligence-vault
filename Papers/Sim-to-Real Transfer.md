@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/robotics, method/rl, lineage/peng]
 title: "Sim-to-Real Transfer of Robotic Control with Dynamics Randomization"
 authors: [Xue Bin Peng, Marcin Andrychowicz, Wojciech Zaremba, Pieter Abbeel]
 year: 2018
 arxiv: "https://arxiv.org/abs/1710.06537"
 repo: ""
 group: "World Models"
-importance: 
+venue: "ICRA 2018"
+domain: [robotics]
+method: [rl]
+lineage: [peng]
+predecessor: ["[[DeepMimic]]"]
+importance: 1
 aliases: [Sim-to-Real Transfer, Dynamics Randomization, SimToReal]
 ---
 

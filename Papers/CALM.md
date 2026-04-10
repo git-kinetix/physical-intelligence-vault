@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/adversarial, method/rl, lineage/peng]
 title: "CALM: Conditional Adversarial Latent Models for Directable Virtual Characters"
 authors: [Chen Tessler, Yoni Kasten, Yunrong Guo, Shie Mannor, Gal Chechik, Xue Bin Peng]
 year: 2023
 arxiv: "https://arxiv.org/abs/2305.02195"
 repo: "https://github.com/NVlabs/CALM"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2023"
+domain: [character-animation]
+method: [adversarial, rl]
+lineage: [peng]
+predecessor: ["[[ASE]]"]
+importance: 4
 aliases: [CALM, Conditional Adversarial Latent Models]
 ---
 

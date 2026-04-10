@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, method/imitation-learning, lineage/peng]
 title: "SFV: Reinforcement Learning of Physical Skills from Videos"
 authors: [Xue Bin Peng, Angjoo Kanazawa, Jitendra Malik, Pieter Abbeel, Sergey Levine]
 year: 2018
 arxiv: "https://arxiv.org/abs/1810.03599"
 repo: "https://github.com/akanazawa/motion_reconstruction"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH Asia 2018"
+domain: [character-animation]
+method: [rl, imitation-learning]
+lineage: [peng]
+predecessor: ["[[DeepMimic]]"]
+importance: 4
 aliases: [SFV, Skills from Videos, Reinforcement Learning of Physical Skills from Videos]
 ---
 

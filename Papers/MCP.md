@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, lineage/peng]
 title: "MCP: Learning Composable Hierarchical Control with Multiplicative Compositional Policies"
 authors: [Xue Bin Peng, Michael Chang, Grace Zhang, Pieter Abbeel, Sergey Levine]
 year: 2019
 arxiv: "https://arxiv.org/abs/1905.09808"
 repo: "https://github.com/xbpeng/mcp"
 group: "World Models"
-importance: 
+venue: "NeurIPS 2019"
+domain: [character-animation]
+method: [rl]
+lineage: [peng]
+predecessor: ["[[DeepMimic]]"]
+importance: 3
 aliases: [MCP, Multiplicative Compositional Policies, Composable Hierarchical Control]
 ---
 

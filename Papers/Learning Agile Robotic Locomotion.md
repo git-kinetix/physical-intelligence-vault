@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/robotics, domain/character-animation, method/rl, method/imitation-learning, lineage/peng]
 title: "Learning Agile Robotic Locomotion Skills by Imitating Animals"
 authors: [Xue Bin Peng, Erwin Coumans, Tingnan Zhang, Tsang-Wei Edward Lee, Jie Tan, Sergey Levine]
 year: 2020
 arxiv: "https://arxiv.org/abs/2004.00784"
 repo: "https://github.com/erwincoumans/motion_imitation"
 group: "World Models"
-importance: 
+venue: "RSS 2020"
+domain: [robotics, character-animation]
+method: [rl, imitation-learning]
+lineage: [peng]
+predecessor: ["[[DeepMimic]]"]
+importance: 4
 aliases: [Learning Agile Robotic Locomotion, Robotic Imitation, Imitating Animals]
 ---
 

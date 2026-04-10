@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, lineage/peng]
 title: "DeepLoco: Dynamic Locomotion Skills Using Hierarchical Deep Reinforcement Learning"
 authors: [Xue Bin Peng, Glen Berseth, KangKang Yin, Michiel van de Panne]
 year: 2017
 arxiv: ""
 repo: "https://github.com/xbpeng/DeepLoco"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2017"
+domain: [character-animation]
+method: [rl]
+lineage: [peng]
+predecessor: []
+importance: 3
 aliases: [DeepLoco, Deep Loco, Dynamic Locomotion Skills]
 ---
 

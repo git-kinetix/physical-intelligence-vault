@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/adversarial, method/rl, lineage/peng]
 title: "AMP: Adversarial Motion Priors for Stylized Physics-Based Character Control"
 authors: [Xue Bin Peng, Ze Ma, Pieter Abbeel, Sergey Levine, Angjoo Kanazawa]
 year: 2021
 arxiv: "https://arxiv.org/abs/2104.02180"
 repo: "https://github.com/nv-tlabs/ASE"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2021"
+domain: [character-animation]
+method: [adversarial, rl]
+lineage: [peng]
+predecessor: ["[[DeepMimic]]"]
+importance: 5
 aliases: [AMP, Adversarial Motion Priors]
 ---
 

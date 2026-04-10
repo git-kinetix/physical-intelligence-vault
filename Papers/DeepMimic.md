@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, method/imitation-learning, lineage/peng]
 title: "DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills"
 authors: [Xue Bin Peng, Pieter Abbeel, Sergey Levine, Michiel van de Panne]
 year: 2018
 arxiv: "https://arxiv.org/abs/1804.02717"
 repo: "https://github.com/xbpeng/DeepMimic"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2018"
+domain: [character-animation]
+method: [rl, imitation-learning]
+lineage: [peng]
+predecessor: ["[[DeepLoco]]"]
+importance: 5
 aliases: [DeepMimic, Deep Mimic]
 ---
 

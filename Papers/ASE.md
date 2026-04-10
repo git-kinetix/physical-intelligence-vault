@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/adversarial, method/rl, lineage/peng]
 title: "ASE: Large-Scale Reusable Adversarial Skill Embeddings for Physically Simulated Characters"
 authors: [Xue Bin Peng, Yunrong Guo, Lina Halper, Sergey Levine, Sanja Fidler]
 year: 2022
 arxiv: "https://arxiv.org/abs/2205.01906"
 repo: "https://github.com/nv-tlabs/ASE"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2022"
+domain: [character-animation]
+method: [adversarial, rl]
+lineage: [peng]
+predecessor: ["[[AMP]]"]
+importance: 4
 aliases: [ASE, Adversarial Skill Embeddings]
 ---
 
