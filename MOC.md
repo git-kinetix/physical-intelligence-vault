@@ -42,17 +42,26 @@ Models that learn environment dynamics for planning, imagination, and control.
 | [[DreamerV3]] | 2023 | Single algorithm across diverse domains |
 | [[IRIS]] | 2023 | Transformer world model with discrete tokens |
 | [[Vid2Player3D]] | 2023 | Tennis skills from broadcast video via hierarchical control |
+| [[PARC]] | 2025 | Physics-based augmentation with RL for character controllers |
+| [[CLoSD]] | 2025 | Closing the loop between simulation and diffusion |
+| [[SuperPADL]] | 2024 | Scaling language-directed physics-based control |
 | [[MaskedMimic]] | 2024 | Unified character control via masked motion inpainting |
 | [[CALM]] | 2023 | Conditional adversarial latent models for directable characters |
 | [[MuscleVAE]] | 2023 | Muscle-actuated character control with fatigue dynamics |
 | [[PhysicsVAE]] | 2022 | Conditional VAEs for physics-based character control |
 | [[ControlVAE]] | 2022 | Model-based generative controllers via learned world model |
 | [[ASE]] | 2022 | Adversarial skill embeddings at scale |
+| [[PADL]] | 2022 | Language-directed physics-based character control |
 | [[DreamerV2]] | 2021 | Discrete world models for Atari |
+| [[AMP]] | 2021 | Adversarial motion priors for stylized character control |
 | [[MVAE]] | 2020 | Motion VAE for character control in latent space |
 | [[DreamerV1]] | 2020 | Latent imagination for behavior learning |
+| [[Learning Agile Robotic Locomotion]] | 2020 | Sim-to-real quadruped by imitating animals (RSS Best Paper) |
+| [[MCP]] | 2019 | Multiplicative compositional policies for complex behaviors |
 | [[DeepMimic]] | 2018 | Example-guided RL for physics-based character skills |
-| [[PARC]] | 2025 | Physics-based augmentation with RL for character controllers |
+| [[SFV]] | 2018 | RL of physical skills from monocular video |
+| [[Sim-to-Real Transfer]] | 2018 | Dynamics randomization for sim-to-real |
+| [[DeepLoco]] | 2017 | Hierarchical DRL for terrain locomotion |
 
 ---
 

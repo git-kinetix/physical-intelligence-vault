@@ -65,7 +65,7 @@ For each downstream task, an HLC pi^H(z | s, g) is trained via RL to select late
 | Location | **0.67 +/- 0.01** | 0.22 +/- 0.04 | 0.25 +/- 0.06 | 0.47 +/- 0.01 | 0.45 +/- 0.01 |
 | Strike | **0.87 +/- 0.01** | 0.21 +/- 0.13 | 0.50 +/- 0.07 | 0.80 +/- 0.02 | 0.82 +/- 0.01 |
 
-Performance is normalized return (0 = minimum, 1 = maximum), averaged across 3 seeds with 4096 episodes per model. "Scratch" trains a separate policy per task from scratch with AMP-style rewards. ASE matches or approaches Scratch on most tasks while using a single reusable pre-trained LLC. Ablation variants show that removing skill discovery (No SD) and/or diversity (No Div.) significantly degrades performance, particularly on Reach and Strike where behavioral diversity is critical.
+Performance is normalized return (0 = minimum, 1 = maximum), averaged across 3 seeds with 4096 episodes per model. "Scratch" trains a separate policy per task from scratch with [[AMP]]-style rewards. ASE matches or approaches Scratch on most tasks while using a single reusable pre-trained LLC. Ablation variants show that removing skill discovery (No SD) and/or diversity (No Div.) significantly degrades performance, particularly on Reach and Strike where behavioral diversity is critical.
 
 **Additional Quantitative Results:**
 
@@ -92,3 +92,5 @@ Performance is normalized return (0 = minimum, 1 = maximum), averaged across 3 s
 - [[Vid2Player3D]] — Peng's tennis simulation work using similar physics-based character skills for sports applications
 - [[Eureka]] — automated reward design for manipulation and locomotion; ASE instead uses a fixed adversarial style reward but allows simple hand-crafted task rewards for downstream transfer
 - [[DreamerV3]] — general-purpose model-based RL; ASE is model-free but both share the principle of learning compact latent representations that enable efficient downstream task learning
+- [[AMP]] — direct predecessor by the same lead author; ASE extends [[AMP]]'s adversarial motion prior with latent skill embeddings and unsupervised skill discovery for reusable multi-task controllers
+- [[Learning Agile Robotic Locomotion]] — same lead author's sim-to-real quadruped locomotion work; uses hand-designed imitation rewards that [[AMP]]/ASE's adversarial approach replaces with learned discriminators

@@ -74,7 +74,7 @@ UniSim is trained jointly on diverse data sources, each providing complementary 
 
 Conditioning on 4 recent frames and using the full 5.6B model provides the best generation quality.
 
-### Table 2: Zero-Shot Sim-to-Real Transfer (RL Policy)
+### Table 2: Zero-Shot [[Sim-to-Real Transfer]] (RL Policy)
 
 | Method | Overall Success |
 |--------|----------------|

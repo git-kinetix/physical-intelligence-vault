@@ -182,3 +182,6 @@ The learned policies exhibit substantial robustness to external perturbations de
 - [[Eureka]] — automated reward design for locomotion using LLMs; DeepMimic's manually designed multi-component imitation reward is exactly the kind of reward engineering that [[Eureka]] aims to automate
 - [[TD-MPC2]] — scalable model-based RL for continuous control; used as a baseline in [[Hierarchical Puppeteer]], where it achieves comparable task performance but produces unnatural motions unlike DeepMimic-style imitation approaches
 - [[GR00T]] — foundation model for humanoid robots that uses motion imitation for real-world deployment; conceptually extends DeepMimic's approach from simulation to physical hardware
+- [[AMP]] — direct successor by the same lead author; replaces DeepMimic's hand-designed multi-component imitation reward with a learned adversarial discriminator, eliminating the need for explicit pose matching and phase variables
+- [[Learning Agile Robotic Locomotion]] — same lead author's work extending DeepMimic's motion imitation from simulated characters to real quadruped robots via sim-to-real transfer with domain adaptation
+- [[Sim-to-Real Transfer]] — same lead author's foundational dynamics randomization paper (also 2018); addresses the orthogonal problem of bridging the sim-to-real gap for robotic control

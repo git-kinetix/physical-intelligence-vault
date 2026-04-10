@@ -109,3 +109,4 @@ Removing negative samples from discriminator training reduces Inception Score fr
 - [[Vid2Player3D]] — Peng's tennis simulation using similar physics-based skills; CALM's directable latent space could enable style-conditioned athletic movements
 - [[Eureka]] — automated reward design for locomotion and manipulation; CALM demonstrates that complex behaviors emerge from simple task rewards when combined with a pre-trained directable skill space
 - [[DreamerV3]] — general model-based RL; both learn latent representations, but CALM's is specifically structured for physics-based character animation with adversarial motion priors
+- [[AMP]] — foundational predecessor in the [[DeepMimic]] -> [[AMP]] -> [[ASE]] -> CALM lineage; introduces the adversarial motion prior that CALM's conditional discriminator extends with latent code conditioning
