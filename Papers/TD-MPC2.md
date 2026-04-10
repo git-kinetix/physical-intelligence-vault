@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/robotics, method/rl, method/transformer, lineage/dreamer]
 title: "TD-MPC2: Scalable, Robust World Models for Continuous Control"
 authors: [Nicklas Hansen, Hao Su, Xiaolong Wang]
 year: 2024
 arxiv: "https://arxiv.org/abs/2310.16828"
 repo: "https://github.com/nicklashansen/tdmpc2"
 group: "World Models"
-importance: 
+venue: "arXiv 2024"
+domain: [robotics]
+method: [rl, transformer]
+lineage: [dreamer]
+predecessor: []
+importance: 3
 aliases: [TD-MPC2, TDMPC2]
 ---
 

@@ -1,11 +1,16 @@
 ---
-tags: [paper, world-model, video-planning, motion]
+tags: [paper, domain/video-generation, method/diffusion, method/transformer]
 title: "Genie 2: A Large-Scale Foundation World Model"
 authors: [Google DeepMind]
 year: 2024
 arxiv: "https://deepmind.google/blog/genie-2-a-large-scale-foundation-world-model/"
 group: "World Models"
-importance: 
+venue: "DeepMind Blog 2024"
+domain: [video-generation]
+method: [diffusion, transformer]
+lineage: []
+predecessor: []
+importance: 4
 aliases: [Genie 2, Genie2]
 ---
 

@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/atari, method/rl, method/vae, lineage/dreamer]
 title: "Dream to Control: Learning Behaviors by Latent Imagination"
 authors: [Danijar Hafner, Timothy Lillicrap, Jimmy Ba, Mohammad Norouzi]
 year: 2020
 arxiv: "https://arxiv.org/abs/1912.01603"
 repo: "https://github.com/danijar/dreamer"
 group: "World Models"
-importance: 
+venue: "arXiv 2020"
+domain: [atari]
+method: [rl, vae]
+lineage: [dreamer]
+predecessor: []
+importance: 4
 aliases: [DreamerV1, Dreamer]
 ---
 

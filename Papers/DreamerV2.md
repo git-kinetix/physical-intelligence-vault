@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/atari, method/rl, method/vae, lineage/dreamer]
 title: "Mastering Atari with Discrete World Models"
 authors: [Danijar Hafner, Timothy Lillicrap, Mohammad Norouzi, Jimmy Ba]
 year: 2021
 arxiv: "https://arxiv.org/abs/2010.02193"
 repo: "https://github.com/danijar/dreamerv2"
 group: "World Models"
-importance: 
+venue: "arXiv 2021"
+domain: [atari]
+method: [rl, vae]
+lineage: [dreamer]
+predecessor: ["[[DreamerV1]]"]
+importance: 4
 aliases: [DreamerV2, Dreamer V2]
 ---
 

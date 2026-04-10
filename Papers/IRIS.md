@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/atari, method/transformer, method/rl, lineage/dreamer]
 title: "Transformers are Sample-Efficient World Models"
 authors: [Vincent Micheli, Eloi Alonso, Francois Fleuret]
 year: 2023
 arxiv: "https://arxiv.org/abs/2209.00588"
 repo: "https://github.com/eloialonso/iris"
 group: "World Models"
-importance: 
+venue: "arXiv 2023"
+domain: [atari]
+method: [transformer, rl]
+lineage: [dreamer]
+predecessor: ["[[DreamerV2]]"]
+importance: 3
 aliases: [IRIS]
 ---
 

@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/atari, method/diffusion, method/rl, lineage/dreamer]
 title: "Diffusion for World Modeling: Visual Details Matter in Atari"
 authors: [Eloi Alonso, Adam Jelley, Vincent Micheli, Anssi Kanervisto, Amos Storkey, Tim Pearce, Francois Fleuret]
 year: 2024
 arxiv: "https://arxiv.org/abs/2405.12399"
 repo: "https://github.com/eloialonso/diamond"
 group: "World Models"
-importance: 
+venue: "NeurIPS 2024 Spotlight"
+domain: [atari]
+method: [diffusion, rl]
+lineage: [dreamer]
+predecessor: ["[[IRIS]]"]
+importance: 4
 aliases: [DIAMOND, DIffusion As a Model Of eNvironment Dreams]
 ---
 

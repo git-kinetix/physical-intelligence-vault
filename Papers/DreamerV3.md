@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/atari, method/rl, method/vae, lineage/dreamer]
 title: "Mastering Diverse Domains through World Models"
 authors: [Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, Timothy Lillicrap]
 year: 2023
 arxiv: "https://arxiv.org/abs/2301.04104"
 repo: "https://github.com/danijar/dreamerv3"
 group: "World Models"
-importance: 
+venue: "arXiv 2023"
+domain: [atari]
+method: [rl, vae]
+lineage: [dreamer]
+predecessor: ["[[DreamerV2]]"]
+importance: 5
 aliases: [DreamerV3, Dreamer V3]
 ---
 

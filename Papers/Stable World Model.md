@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/atari, method/rl, lineage/dreamer]
 title: "stable-worldmodel-v1: Reproducible World Modeling Research and Evaluation"
 authors: [Lucas Maes, Quentin Le Lidec, Dan Haramati, Nassim Massaudi, Damien Scieur, Yann LeCun, Randall Balestriero]
 year: 2026
 arxiv: "https://arxiv.org/abs/2602.08968"
 repo: "https://github.com/galilai-group/stable-worldmodel"
 group: "World Models"
-importance: 
+venue: "arXiv 2026"
+domain: [atari]
+method: [rl]
+lineage: [dreamer]
+predecessor: ["[[DreamerV3]]"]
+importance: 2
 aliases: [Stable World Model, SWM, stable-worldmodel, stable-worldmodel-v1]
 ---
 
