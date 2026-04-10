@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le-JEPA &mdash; Interactive Explorations</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #faf9f6;
+    --bg-alt: #f3f0eb;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-muted: #8888a0;
+    --accent: #c2402a;
+    --accent-hover: #a03520;
+    --link: #2563eb;
+    --link-hover: #1d4ed8;
+    --border: #e0ddd5;
+    --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+    --card-hover-shadow: 0 8px 24px rgba(26,26,46,0.10), 0 2px 6px rgba(26,26,46,0.06);
+
+    --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+    --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+    --font-mono: 'Source Code Pro', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Article Container ── */
+  .article {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── Header ── */
+  header {
+    padding: 80px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .overline {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 600px;
+  }
+
+  .byline {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .byline a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .byline a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── Introduction ── */
+  .intro {
+    margin-bottom: 56px;
+  }
+
+  .intro p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .intro strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ── Visualization Cards ── */
+  .grid-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .viz-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 72px;
+  }
+
+  .viz-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: var(--card-shadow);
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+  }
+
+  .viz-card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+  }
+
+  .viz-card:active {
+    transform: translateY(0);
+  }
+
+  .viz-preview {
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .viz-preview canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .viz-body {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .viz-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .viz-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .viz-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .viz-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--bg-alt);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .viz-card {
+      grid-template-columns: 1fr;
+    }
+    .viz-preview {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      min-height: 120px;
+    }
+  }
+
+  /* ── Equation Block ── */
+  .equation-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 28px;
+    margin: 24px 0;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .equation-block .var { color: var(--accent); }
+
+  /* ── Stats ── */
+  .stat-row {
+    display: flex;
+    gap: 16px;
+    margin: 32px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-pill strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 56px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  footer a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── Animations ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <header>
+    <span class="overline">Interactive Explorations</span>
+    <h1>Understanding Le-JEPA's<br>Self-Supervised Learning</h1>
+    <p class="subtitle">
+      A collection of interactive visualizations exploring Le-JEPA&thinsp;&mdash;&thinsp;a
+      provably stable, scalable approach to self-supervised learning that replaces
+      heuristics with a single principled regularizer.
+    </p>
+    <div class="byline">
+      Based on <a href="https://arxiv.org/abs/2511.08544">Balestriero &amp; LeCun (2025)</a>
+      &ensp;&middot;&ensp;
+      <a href="https://github.com/galilai-group/lejepa">Code</a>
+    </div>
+  </header>
+
+  <div class="intro">
+    <p>
+      Le-JEPA provides the first comprehensive theoretical framework for Joint-Embedding
+      Predictive Architectures. It identifies the <strong>isotropic Gaussian</strong> as the
+      optimal target distribution for JEPA embeddings and introduces <strong>SIGReg</strong>
+      (Sketched Isotropic Gaussian Regularization) to enforce it.
+    </p>
+    <p>
+      The result is a method so simple it fits in approximately <strong>50 lines of code</strong>,
+      requires only <strong>one hyperparameter</strong>, and trains stably from 22M to
+      1.8B parameters without any tuning. Each visualization below isolates one key idea.
+    </p>
+
+    <div class="equation-block">
+      <span class="var">L</span> = <span class="var">L</span><sub>pred</sub> + <span class="var">&lambda;</span> &middot; <span class="var">L</span><sub>SIGReg</sub>
+      &emsp;&emsp;
+      <span class="var">&lambda;</span> &asymp; 0.5
+    </div>
+
+    <div class="stat-row">
+      <span class="stat-pill"><strong>79%</strong> ImageNet top-1 (ViT-H)</span>
+      <span class="stat-pill"><strong>60+</strong> architectures tested</span>
+      <span class="stat-pill"><strong>1</strong> hyperparameter</span>
+      <span class="stat-pill"><strong>1.8B</strong> param stable training</span>
+    </div>
+  </div>
+
+  <span class="grid-label">Explorations</span>
+
+  <div class="viz-grid">
+
+    <a href="01-sigreg-loss.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-1"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">01</div>
+        <div class="viz-title">The SIGReg Loss Landscape</div>
+        <div class="viz-desc">
+          Explore the loss surface that prevents collapse. Rotate a 3D landscape,
+          adjust &lambda;, and compare SIGReg with VICReg and Barlow Twins.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">SIGReg</span>
+          <span class="tag">Loss Surface</span>
+          <span class="tag">3D Interactive</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="02-view-augmentation.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-2"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">02</div>
+        <div class="viz-title">Multi-View Augmentation</div>
+        <div class="viz-desc">
+          See how input images are transformed into global and local views.
+          Drag sliders to control augmentations, and visualize the shared-weight
+          architecture that eliminates EMA.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">Views</span>
+          <span class="tag">No EMA</span>
+          <span class="tag">Augmentation</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="03-scaling-behavior.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-3"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">03</div>
+        <div class="viz-title">Scaling Behavior</div>
+        <div class="viz-desc">
+          Toggle model sizes from ViT-S to ViT-g and watch training curves
+          remain stable. Compare with methods that destabilize at scale and
+          explore 50+ architecture results.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">Scaling</span>
+          <span class="tag">Stability</span>
+          <span class="tag">60+ Architectures</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+
+<footer>
+  <a href="https://arxiv.org/abs/2511.08544">Paper</a> &ensp;&middot;&ensp;
+  <a href="https://github.com/galilai-group/lejepa">Code</a>
+</footer>
+
+<script>
+// ── Card Preview Animations ──
+
+// Preview 1: Loss landscape contours + characteristic function
+(function() {
+  const c = document.getElementById('preview-1');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  let frame = 0;
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const cx = rw / 2, cy = rh / 2;
+
+    // Animated contour rings
+    for (let ring = 0; ring < 5; ring++) {
+      const baseR = 15 + ring * 16;
+      const pulse = 1 + 0.05 * Math.sin(frame * 0.03 + ring * 0.8);
+      const r = baseR * pulse;
+      ctx.beginPath();
+
+      // Elliptical contours
+      for (let a = 0; a <= Math.PI * 2; a += 0.05) {
+        const px = cx + r * Math.cos(a) * (1 + 0.3 * Math.sin(a * 2 + frame * 0.02));
+        const py = cy + r * Math.sin(a) * 0.7;
+        a === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+
+      const val = ring / 5;
+      const red = Math.round(40 + 154 * val);
+      const green = Math.round(150 - 100 * val);
+      ctx.strokeStyle = `rgba(${red},${green},80,${0.3 + 0.1 * ring})`;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+
+    // Gradient descent dot
+    const t = (frame * 0.008) % 1;
+    const trajX = cx - 50 + t * 60;
+    const trajY = cy + 30 - t * 35 + 5 * Math.sin(t * 10);
+    ctx.beginPath();
+    ctx.arc(trajX, trajY, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#c2402a';
+    ctx.fill();
+
+    // Trail
+    for (let i = 0; i < 8; i++) {
+      const tt = Math.max(0, t - i * 0.02);
+      const tx = cx - 50 + tt * 60;
+      const ty = cy + 30 - tt * 35 + 5 * Math.sin(tt * 10);
+      ctx.beginPath();
+      ctx.arc(tx, ty, 2 - i * 0.2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(194,64,42,${0.4 - i * 0.05})`;
+      ctx.fill();
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Preview 2: Multi-view augmentation thumbnails
+(function() {
+  const c = document.getElementById('preview-2');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  let frame = 0;
+  const cols = ['#2563eb', '#c2402a', '#059669', '#d97706'];
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const cx = rw / 2, cy = rh / 2;
+
+    // Central "image"
+    const imgS = 30;
+    ctx.fillStyle = '#e0ddd5';
+    ctx.fillRect(cx - imgS / 2, cy - imgS / 2, imgS, imgS);
+    ctx.strokeStyle = '#1a1a2e30';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(cx - imgS / 2, cy - imgS / 2, imgS, imgS);
+
+    // Small shapes inside
+    ctx.fillStyle = '#2563eb40';
+    ctx.beginPath();
+    ctx.arc(cx - 4, cy - 4, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#c2402a40';
+    ctx.fillRect(cx + 1, cy + 1, 10, 8);
+
+    // Augmented views orbiting
+    for (let i = 0; i < 4; i++) {
+      const angle = (i / 4) * Math.PI * 2 + frame * 0.01;
+      const radius = 48 + 5 * Math.sin(frame * 0.03 + i);
+      const vx = cx + Math.cos(angle) * radius;
+      const vy = cy + Math.sin(angle) * radius * 0.6;
+      const vs = i < 2 ? 22 : 16;
+
+      // Connection line
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(vx, vy);
+      ctx.strokeStyle = cols[i] + '30';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // View box
+      const jitter = 2 * Math.sin(frame * 0.05 + i * 2);
+      ctx.save();
+      ctx.translate(vx, vy);
+      ctx.rotate(jitter * 0.03);
+      ctx.fillStyle = cols[i] + '15';
+      ctx.fillRect(-vs / 2, -vs / 2, vs, vs);
+      ctx.strokeStyle = cols[i];
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(-vs / 2, -vs / 2, vs, vs);
+      ctx.restore();
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Preview 3: Scaling loss curves
+(function() {
+  const c = document.getElementById('preview-3');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, frame = 0;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  const colors = ['#2563eb', '#059669', '#d97706', '#c2402a', '#7c3aed'];
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const pad = 20;
+    const plotW = rw - pad * 2;
+    const plotH = rh - pad * 2;
+
+    // Multiple converging loss curves
+    colors.forEach((color, idx) => {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.globalAlpha = 0.6 + 0.1 * idx;
+
+      const finalLoss = 0.2 + (4 - idx) * 0.08;
+      const animT = Math.min(1, frame / 100);
+
+      for (let i = 0; i <= 80; i++) {
+        const t = i / 80;
+        if (t > animT) break;
+        const x = pad + t * plotW;
+        const base = finalLoss + (0.85 - finalLoss) * Math.exp(-4 * t);
+        const jitter = 0.01 * Math.sin(t * 40 + idx * 3);
+        const y = pad + plotH * (1 - (base + jitter));
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+
+    // "Stable" label with pulse
+    const pulse = 0.5 + 0.5 * Math.sin(frame * 0.04);
+    ctx.fillStyle = `rgba(5,150,105,${0.3 + pulse * 0.3})`;
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('STABLE', rw / 2, rh - 8);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

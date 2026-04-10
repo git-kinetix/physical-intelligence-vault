@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 &mdash; The SIGReg Loss Landscape</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #faf9f6;
+    --bg-alt: #f3f0eb;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-muted: #8888a0;
+    --accent: #c2402a;
+    --accent-hover: #a03520;
+    --blue: #2563eb;
+    --green: #059669;
+    --orange: #d97706;
+    --purple: #7c3aed;
+    --border: #e0ddd5;
+    --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+    --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+    --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+    --font-mono: 'Source Code Pro', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  header {
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .overline {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 620px;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 56px 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 32px 0 12px;
+  }
+
+  p { margin-bottom: 20px; color: var(--text-secondary); }
+  p strong { color: var(--text); font-weight: 500; }
+
+  .figure {
+    margin: 32px 0;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+  }
+
+  .figure-wide {
+    margin-left: -60px;
+    margin-right: -60px;
+  }
+  @media (max-width: 860px) { .figure-wide { margin-left: 0; margin-right: 0; } }
+
+  .figure-canvas-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  .figure-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .figure-caption {
+    padding: 12px 20px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    background: var(--bg-alt);
+  }
+
+  .controls {
+    padding: 16px 20px;
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .control-group label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 140px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    outline: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .value-display {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 40px;
+  }
+
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: white;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .equation-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 28px;
+    margin: 24px 0;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 2;
+  }
+  .equation-block .var { color: var(--accent); font-weight: 500; }
+  .equation-block .fn { color: var(--blue); }
+  .equation-block .note {
+    display: block;
+    font-size: 0.85rem;
+    font-style: normal;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 12px 20px;
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+
+  .side-note {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    margin: 24px 0;
+    background: white;
+    border-radius: 0 4px 4px 0;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 56px;
+    margin-top: 72px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+  footer a:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+<a href="index.html" class="back-link">&larr; All Explorations</a>
+
+<header>
+  <span class="overline">Exploration 01</span>
+  <h1>The SIGReg Loss Landscape</h1>
+  <p class="subtitle">
+    Visualizing the Sketched Isotropic Gaussian Regularization that keeps Le-JEPA
+    from collapsing&thinsp;&mdash;&thinsp;and why it works where VICReg and Barlow Twins struggle.
+  </p>
+</header>
+
+<h2>Why Regularize?</h2>
+
+<p>
+  Every self-supervised method faces the same nemesis: <strong>representation collapse</strong>.
+  Without supervision, a network can minimize its loss by simply mapping every input to the
+  same constant vector&thinsp;&mdash;&thinsp;a degenerate solution that is useless for downstream tasks.
+</p>
+
+<p>
+  Prior methods fight collapse with increasingly complex heuristics: stop-gradient (BYOL),
+  EMA teacher-student (DINO, I-JEPA), covariance regularization (VICReg), cross-correlation
+  constraints (Barlow Twins). Le-JEPA replaces <em>all</em> of these with a single, principled
+  regularizer: <strong>SIGReg</strong>.
+</p>
+
+<div class="equation-block">
+  <span class="var">L</span> = <span class="var">L</span><sub>pred</sub> + <span class="var">&lambda;</span> &middot; <span class="var">L</span><sub>SIGReg</sub>
+  <span class="note">Only one hyperparameter: &lambda;</span>
+</div>
+
+<h2>The Characteristic Function Test</h2>
+
+<p>
+  SIGReg enforces that the embedding distribution matches an isotropic Gaussian N(0, I) by comparing
+  their <strong>characteristic functions</strong>. The characteristic function of a distribution is
+  its Fourier transform&thinsp;&mdash;&thinsp;if two distributions have the same characteristic function,
+  they are identical.
+</p>
+
+<div class="equation-block">
+  <span class="var">L</span><sub>SIGReg</sub> = &Sigma;<sub>k</sub> |
+  <span class="fn">&phi;&#770;</span>(<span class="var">&omega;</span><sub>k</sub>) &minus;
+  exp(&minus;||<span class="var">&omega;</span><sub>k</sub>||&sup2;/2) |&sup2;
+  <span class="note">Empirical char. func. vs. Gaussian char. func. at random frequencies &omega;<sub>k</sub></span>
+</div>
+
+<p>
+  The figure below shows the characteristic function for the current embedding distribution
+  (estimated empirically) versus the target Gaussian. When they match, SIGReg loss is zero
+  and the embeddings are well-distributed.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 340px;">
+    <canvas id="charFuncCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>&lambda;</label>
+      <input type="range" id="cfLambda" min="0" max="2" step="0.01" value="0.5">
+      <span class="value-display" id="cfLambdaVal">0.50</span>
+    </div>
+    <div class="control-group">
+      <label>Collapse</label>
+      <input type="range" id="cfCollapse" min="0" max="1" step="0.01" value="0">
+      <span class="value-display" id="cfCollapseVal">0.00</span>
+    </div>
+    <button class="btn" id="cfReset">Reset</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>Target Gaussian</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Empirical (embeddings)</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:rgba(194,64,42,0.15)"></span>Mismatch region (loss)</span>
+  </div>
+  <div class="figure-caption">
+    Characteristic function comparison. Increase "Collapse" to simulate degenerate embeddings
+    and watch the empirical curve deviate from the Gaussian target. &lambda; controls regularization strength.
+  </div>
+</div>
+
+<h2>The 3D Loss Surface</h2>
+
+<p>
+  To build intuition for how SIGReg shapes learning, we can visualize the combined loss
+  <strong>L = L<sub>pred</sub> + &lambda; &middot; L<sub>SIGReg</sub></strong> as a surface over
+  two abstract representation dimensions: <em>diversity</em> (how spread-out the embeddings are)
+  and <em>alignment</em> (how well the predictor reconstructs targets).
+</p>
+
+<p>
+  Drag to rotate the surface. The red ball traces a gradient-descent training trajectory.
+  Notice how higher &lambda; deepens the well around the good solution and raises the collapse barrier.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 440px;">
+    <canvas id="surfaceCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>&lambda;</label>
+      <input type="range" id="surfLambda" min="0" max="2" step="0.01" value="0.5">
+      <span class="value-display" id="surfLambdaVal">0.50</span>
+    </div>
+    <div class="control-group">
+      <label>Speed</label>
+      <input type="range" id="surfSpeed" min="0.2" max="3" step="0.1" value="1">
+      <span class="value-display" id="surfSpeedVal">1.0</span>
+    </div>
+    <button class="btn" id="surfReset">Reset</button>
+    <button class="btn" id="surfToggleTrajectory">Show Trajectory</button>
+  </div>
+  <div class="figure-caption">
+    Drag to rotate. The loss surface combines prediction error (alignment axis) with SIGReg penalty (diversity axis).
+    Higher &lambda; makes the collapse region (low diversity) more expensive.
+  </div>
+</div>
+
+<h2>Collapse vs. Diversity Trade-off</h2>
+
+<p>
+  The &lambda; hyperparameter controls the balance between prediction quality and embedding
+  diversity. Too low and the model collapses; too high and it ignores the prediction objective
+  altogether. Le-JEPA's key finding is that <strong>a single fixed &lambda; works across
+  60+ architectures</strong>&thinsp;&mdash;&thinsp;no scheduling or tuning needed.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 360px;">
+    <canvas id="tradeoffCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>&lambda;</label>
+      <input type="range" id="tradeoffLambda" min="0" max="3" step="0.01" value="0.5">
+      <span class="value-display" id="tradeoffLambdaVal">0.50</span>
+    </div>
+    <button class="btn" id="tradeoffAnimate">Animate</button>
+    <button class="btn" id="tradeoffReset">Reset</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>SIGReg Loss</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>Prediction Loss</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span>Total Loss</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--orange)"></span>Downstream Acc.</span>
+  </div>
+  <div class="figure-caption">
+    As &lambda; sweeps from 0 to 3, observe how the prediction loss, SIGReg loss, total loss,
+    and downstream accuracy respond. The sweet spot is a broad plateau around &lambda; = 0.3&ndash;1.0.
+  </div>
+</div>
+
+<div class="side-note">
+  The broad plateau in downstream accuracy means Le-JEPA is <strong>not sensitive</strong> to &lambda;.
+  This is a direct consequence of using a principled regularizer derived from the characteristic function
+  rather than ad-hoc heuristics.
+</div>
+
+<h2>Comparison: SIGReg vs. VICReg vs. Barlow Twins</h2>
+
+<p>
+  To see why SIGReg matters, compare the loss landscapes of three regularization approaches.
+  VICReg penalizes variance/covariance/invariance with separate terms (3 hyperparameters).
+  Barlow Twins constrains the cross-correlation matrix. SIGReg uses a single characteristic
+  function match. The key advantage: <strong>SIGReg has linear complexity</strong> O(BK) while
+  both VICReg and Barlow Twins require the full covariance matrix at O(Bd&sup2;).
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 380px;">
+    <canvas id="comparisonCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <button class="btn active" id="compSigreg">SIGReg</button>
+      <button class="btn" id="compVicreg">VICReg</button>
+      <button class="btn" id="compBarlow">Barlow Twins</button>
+    </div>
+    <button class="btn" id="compAnimate">Animate All</button>
+    <button class="btn" id="compReset">Reset</button>
+  </div>
+  <div class="figure-caption">
+    Click each method to see its loss landscape. "Animate All" shows training trajectories
+    simultaneously. Notice SIGReg's smooth, single-basin landscape vs. the more complex surfaces.
+  </div>
+</div>
+
+<h2>Linear Complexity</h2>
+
+<p>
+  A crucial practical advantage of SIGReg is its computational cost. Computing the full covariance
+  matrix of a d-dimensional embedding across B samples costs O(Bd&sup2;), which becomes
+  prohibitive for large embedding dimensions. SIGReg instead evaluates the characteristic function
+  at K random frequency slices, costing only O(BKd)&thinsp;&mdash;&thinsp;linear in all dimensions.
+</p>
+
+<div class="figure">
+  <div class="figure-canvas-wrap" style="height: 260px;">
+    <canvas id="complexityCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>Embed dim</label>
+      <input type="range" id="complexDim" min="64" max="4096" step="64" value="1024">
+      <span class="value-display" id="complexDimVal">1024</span>
+    </div>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>SIGReg O(BKd)</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>VICReg O(Bd&sup2;)</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--purple)"></span>Barlow Twins O(Bd&sup2;)</span>
+  </div>
+  <div class="figure-caption">
+    Computational cost as embedding dimension grows. SIGReg scales linearly while covariance-based methods grow quadratically.
+  </div>
+</div>
+
+<footer>
+  <a href="index.html">&larr; Index</a>
+  <span>Le-JEPA &middot; Balestriero &amp; LeCun, 2025</span>
+  <a href="02-view-augmentation.html">Next: View Augmentation &rarr;</a>
+</footer>
+
+</div>
+
+<script>
+// ─── Utility ───
+function dpr() { return window.devicePixelRatio || 1; }
+function setupCanvas(canvas, wrap) {
+  const r = (wrap || canvas.parentElement).getBoundingClientRect();
+  const d = dpr();
+  canvas.width = r.width * d;
+  canvas.height = r.height * d;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(d, d);
+  return { ctx, w: r.width, h: r.height };
+}
+
+// ─── Figure 1: Characteristic Function ───
+(function() {
+  const canvas = document.getElementById('charFuncCanvas');
+  const lambdaSlider = document.getElementById('cfLambda');
+  const collapseSlider = document.getElementById('cfCollapse');
+  const lambdaVal = document.getElementById('cfLambdaVal');
+  const collapseVal = document.getElementById('cfCollapseVal');
+  const resetBtn = document.getElementById('cfReset');
+
+  let lambda = 0.5, collapse = 0;
+  let frame = 0;
+
+  function gaussianCF(w) { return Math.exp(-w * w / 2); }
+
+  function empiricalCF(w, col) {
+    // Simulate: with collapse, empirical CF stays near 1 (delta function)
+    // Without collapse, it matches the Gaussian
+    const match = 1 - col;
+    const target = gaussianCF(w);
+    const collapsed = Math.exp(-w * w * 0.02); // nearly constant
+    return match * target + (1 - match) * collapsed;
+  }
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    const pad = { l: 60, r: 30, t: 30, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t + ph);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.moveTo(pad.l, pad.t);
+    ctx.lineTo(pad.l, pad.t + ph);
+    ctx.stroke();
+
+    // Axis labels
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('\u03C9 (frequency)', pad.l + pw / 2, h - 8);
+    ctx.save();
+    ctx.translate(16, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('\u03C6(\u03C9)', 0, 0);
+    ctx.restore();
+
+    // Tick marks on x-axis
+    for (let v = -3; v <= 3; v++) {
+      const x = pad.l + (v + 3) / 6 * pw;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.toString(), x, pad.t + ph + 18);
+      ctx.strokeStyle = '#e0ddd580';
+      ctx.beginPath();
+      ctx.moveTo(x, pad.t);
+      ctx.lineTo(x, pad.t + ph);
+      ctx.stroke();
+    }
+
+    // Y-axis ticks
+    for (let v = 0; v <= 1; v += 0.25) {
+      const y = pad.t + ph - v * ph;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'right';
+      ctx.fillText(v.toFixed(2), pad.l - 8, y + 4);
+      ctx.strokeStyle = '#e0ddd580';
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y);
+      ctx.lineTo(pad.l + pw, y);
+      ctx.stroke();
+    }
+
+    const omegaRange = 6; // -3 to 3
+    const steps = 200;
+
+    // Mismatch fill
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const omega = -3 + (i / steps) * omegaRange;
+      const x = pad.l + (i / steps) * pw;
+      const g = gaussianCF(omega);
+      const e = empiricalCF(omega, collapse);
+      const yTop = pad.t + ph - Math.max(g, e) * ph;
+      const yBot = pad.t + ph - Math.min(g, e) * ph;
+      if (i === 0) ctx.moveTo(x, yTop);
+      else ctx.lineTo(x, yTop);
+    }
+    for (let i = steps; i >= 0; i--) {
+      const omega = -3 + (i / steps) * omegaRange;
+      const x = pad.l + (i / steps) * pw;
+      const g = gaussianCF(omega);
+      const e = empiricalCF(omega, collapse);
+      const yBot = pad.t + ph - Math.min(g, e) * ph;
+      ctx.lineTo(x, yBot);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(194,64,42,0.1)';
+    ctx.fill();
+
+    // Target Gaussian CF
+    ctx.beginPath();
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2.5;
+    for (let i = 0; i <= steps; i++) {
+      const omega = -3 + (i / steps) * omegaRange;
+      const x = pad.l + (i / steps) * pw;
+      const y = pad.t + ph - gaussianCF(omega) * ph;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Empirical CF
+    ctx.beginPath();
+    ctx.strokeStyle = '#c2402a';
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([6, 4]);
+    for (let i = 0; i <= steps; i++) {
+      const omega = -3 + (i / steps) * omegaRange;
+      const x = pad.l + (i / steps) * pw;
+      const noise = 0.01 * Math.sin(omega * 12 + frame * 0.03);
+      const y = pad.t + ph - (empiricalCF(omega, collapse) + noise) * ph;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Frequency sample points
+    const numSlices = 16;
+    for (let k = 0; k < numSlices; k++) {
+      const omega = -3 + (k + 0.5) / numSlices * omegaRange;
+      const x = pad.l + ((omega + 3) / omegaRange) * pw;
+      const gVal = gaussianCF(omega);
+      const eVal = empiricalCF(omega, collapse);
+      const yg = pad.t + ph - gVal * ph;
+      const ye = pad.t + ph - eVal * ph;
+
+      // Connecting line
+      ctx.strokeStyle = 'rgba(194,64,42,0.3)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, yg);
+      ctx.lineTo(x, ye);
+      ctx.stroke();
+
+      // Dot on empirical
+      ctx.beginPath();
+      ctx.arc(x, ye, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#c2402a';
+      ctx.fill();
+    }
+
+    // Loss value annotation
+    let totalLoss = 0;
+    for (let k = 0; k < numSlices; k++) {
+      const omega = -3 + (k + 0.5) / numSlices * omegaRange;
+      const diff = gaussianCF(omega) - empiricalCF(omega, collapse);
+      totalLoss += diff * diff;
+    }
+    totalLoss *= lambda;
+
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '600 14px "Newsreader", serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('\u03BB \u00B7 L_SIGReg = ' + totalLoss.toFixed(3), pad.l + pw - 8, pad.t + 20);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  lambdaSlider.oninput = () => { lambda = +lambdaSlider.value; lambdaVal.textContent = lambda.toFixed(2); };
+  collapseSlider.oninput = () => { collapse = +collapseSlider.value; collapseVal.textContent = collapse.toFixed(2); };
+  resetBtn.onclick = () => {
+    lambdaSlider.value = 0.5; collapseSlider.value = 0;
+    lambda = 0.5; collapse = 0;
+    lambdaVal.textContent = '0.50'; collapseVal.textContent = '0.00';
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 2: 3D Loss Surface ───
+(function() {
+  const canvas = document.getElementById('surfaceCanvas');
+  const lambdaSlider = document.getElementById('surfLambda');
+  const speedSlider = document.getElementById('surfSpeed');
+  const lambdaVal = document.getElementById('surfLambdaVal');
+  const speedVal = document.getElementById('surfSpeedVal');
+  const resetBtn = document.getElementById('surfReset');
+  const trajBtn = document.getElementById('surfToggleTrajectory');
+
+  let lambda = 0.5, speed = 1, showTrajectory = false;
+  let rotX = -0.6, rotZ = 0.3;
+  let dragging = false, lastMX, lastMY;
+  let frame = 0;
+
+  const gridN = 40;
+  let trajectory = [];
+  let trajT = 0;
+
+  // Loss function
+  function lossFn(align, divers, lam) {
+    // Prediction loss decreases with alignment
+    const pred = (1 - align) * (1 - align);
+    // SIGReg loss increases when diversity is low (collapse)
+    const sig = Math.exp(-3 * divers * divers);
+    return pred + lam * sig + 0.05;
+  }
+
+  // Gradient for trajectory
+  function gradient(align, divers, lam) {
+    const eps = 0.01;
+    const dA = (lossFn(align + eps, divers, lam) - lossFn(align - eps, divers, lam)) / (2 * eps);
+    const dD = (lossFn(align, divers + eps, lam) - lossFn(align, divers - eps, lam)) / (2 * eps);
+    return [dA, dD];
+  }
+
+  function project(x, y, z) {
+    // Simple rotation + isometric projection
+    const cz = Math.cos(rotZ), sz = Math.sin(rotZ);
+    const cx = Math.cos(rotX), sx = Math.sin(rotX);
+    let rx = x * cz - y * sz;
+    let ry = x * sz + y * cz;
+    let rz = z;
+    let py = ry * cx - rz * sx;
+    let pz = ry * sx + rz * cx;
+    return [rx, py, pz];
+  }
+
+  canvas.onmousedown = (e) => { dragging = true; lastMX = e.clientX; lastMY = e.clientY; };
+  window.onmouseup = () => { dragging = false; };
+  canvas.onmousemove = (e) => {
+    if (!dragging) return;
+    rotZ += (e.clientX - lastMX) * 0.005;
+    rotX += (e.clientY - lastMY) * 0.005;
+    rotX = Math.max(-1.2, Math.min(-0.1, rotX));
+    lastMX = e.clientX; lastMY = e.clientY;
+  };
+
+  canvas.ontouchstart = (e) => { dragging = true; lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY; e.preventDefault(); };
+  canvas.ontouchend = () => { dragging = false; };
+  canvas.ontouchmove = (e) => {
+    if (!dragging) return;
+    rotZ += (e.touches[0].clientX - lastMX) * 0.005;
+    rotX += (e.touches[0].clientY - lastMY) * 0.005;
+    rotX = Math.max(-1.2, Math.min(-0.1, rotX));
+    lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+    e.preventDefault();
+  };
+
+  function resetTrajectory() {
+    trajT = 0;
+    trajectory = [{ a: 0.1, d: 0.1 }]; // start near collapse
+  }
+  resetTrajectory();
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const scale = Math.min(w, h) * 0.3;
+    const cx = w * 0.5, cy = h * 0.55;
+
+    // Generate surface quads
+    const quads = [];
+    for (let i = 0; i < gridN; i++) {
+      for (let j = 0; j < gridN; j++) {
+        const a1 = i / gridN, a2 = (i + 1) / gridN;
+        const d1 = j / gridN, d2 = (j + 1) / gridN;
+        const loss = lossFn(a1 + 0.5 / gridN, d1 + 0.5 / gridN, lambda);
+
+        const corners = [
+          [a1 - 0.5, d1 - 0.5, -lossFn(a1, d1, lambda)],
+          [a2 - 0.5, d1 - 0.5, -lossFn(a2, d1, lambda)],
+          [a2 - 0.5, d2 - 0.5, -lossFn(a2, d2, lambda)],
+          [a1 - 0.5, d2 - 0.5, -lossFn(a1, d2, lambda)]
+        ].map(p => project(p[0], p[1], p[2] * 0.6));
+
+        const avgZ = corners.reduce((s, c) => s + c[2], 0) / 4;
+        quads.push({ corners, avgZ, loss });
+      }
+    }
+
+    // Sort by depth
+    quads.sort((a, b) => a.avgZ - b.avgZ);
+
+    // Draw quads
+    quads.forEach(q => {
+      ctx.beginPath();
+      q.corners.forEach((c, i) => {
+        const sx = cx + c[0] * scale;
+        const sy = cy - c[1] * scale;
+        i === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      });
+      ctx.closePath();
+
+      const val = Math.min(q.loss / 1.5, 1);
+      // Color: green (low loss) to red (high loss)
+      const r = Math.round(40 + 154 * val);
+      const g = Math.round(150 - 100 * val);
+      const b = Math.round(100 - 60 * val);
+      ctx.fillStyle = `rgba(${r},${g},${b},0.8)`;
+      ctx.fill();
+      ctx.strokeStyle = `rgba(${r},${g},${b},0.4)`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    });
+
+    // Trajectory
+    if (showTrajectory) {
+      trajT += 0.003 * speed;
+      if (trajectory.length < 300 && trajectory.length > 0) {
+        const last = trajectory[trajectory.length - 1];
+        const [gA, gD] = gradient(last.a, last.d, lambda);
+        const lr = 0.15 * speed;
+        const newA = Math.max(0, Math.min(1, last.a - gA * lr * 0.016));
+        const newD = Math.max(0, Math.min(1, last.d - gD * lr * 0.016));
+        if (Math.abs(gA) + Math.abs(gD) > 0.001) {
+          trajectory.push({ a: newA, d: newD });
+        }
+      }
+
+      // Draw trajectory path
+      ctx.beginPath();
+      ctx.strokeStyle = '#c2402a';
+      ctx.lineWidth = 2;
+      trajectory.forEach((pt, idx) => {
+        const z = -lossFn(pt.a, pt.d, lambda) * 0.6;
+        const [px, py] = project(pt.a - 0.5, pt.d - 0.5, z);
+        const sx = cx + px * scale;
+        const sy = cy - py * scale;
+        idx === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      });
+      ctx.stroke();
+
+      // Current position ball
+      if (trajectory.length > 0) {
+        const pt = trajectory[trajectory.length - 1];
+        const z = -lossFn(pt.a, pt.d, lambda) * 0.6;
+        const [px, py] = project(pt.a - 0.5, pt.d - 0.5, z);
+        const sx = cx + px * scale;
+        const sy = cy - py * scale;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#c2402a';
+        ctx.fill();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
+
+    // Axis labels
+    const axisLen = 0.6;
+    const labels = [
+      { dir: [axisLen, 0, 0], text: 'Alignment \u2192', color: '#2563eb' },
+      { dir: [0, axisLen, 0], text: 'Diversity \u2192', color: '#059669' }
+    ];
+    labels.forEach(l => {
+      const [px, py] = project(l.dir[0], l.dir[1], l.dir[2]);
+      const sx = cx + px * scale;
+      const sy = cy - py * scale;
+      ctx.fillStyle = l.color;
+      ctx.font = '500 13px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(l.text, sx, sy + 16);
+    });
+
+    // Info text
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('Drag to rotate', 16, h - 12);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  lambdaSlider.oninput = () => { lambda = +lambdaSlider.value; lambdaVal.textContent = lambda.toFixed(2); resetTrajectory(); };
+  speedSlider.oninput = () => { speed = +speedSlider.value; speedVal.textContent = speed.toFixed(1); };
+  resetBtn.onclick = () => {
+    lambdaSlider.value = 0.5; speedSlider.value = 1;
+    lambda = 0.5; speed = 1;
+    lambdaVal.textContent = '0.50'; speedVal.textContent = '1.0';
+    rotX = -0.6; rotZ = 0.3;
+    showTrajectory = false;
+    trajBtn.classList.remove('active');
+    resetTrajectory();
+  };
+  trajBtn.onclick = () => {
+    showTrajectory = !showTrajectory;
+    trajBtn.classList.toggle('active');
+    if (showTrajectory) resetTrajectory();
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 3: Collapse vs Diversity Trade-off ───
+(function() {
+  const canvas = document.getElementById('tradeoffCanvas');
+  const lambdaSlider = document.getElementById('tradeoffLambda');
+  const lambdaVal = document.getElementById('tradeoffLambdaVal');
+  const animBtn = document.getElementById('tradeoffAnimate');
+  const resetBtn = document.getElementById('tradeoffReset');
+
+  let lambdaParam = 0.5;
+  let animating = false;
+  let animT = 0;
+  let frame = 0;
+
+  // Simulated curves as functions of lambda
+  function predLoss(lam) { return 0.1 + 0.5 / (1 + 2 * lam); }
+  function sigregLoss(lam) { return lam < 0.05 ? 0.8 : 0.15 * Math.exp(-0.5 * lam) + 0.05; }
+  function totalLoss(lam) { return predLoss(lam) + lam * sigregLoss(lam); }
+  function accuracy(lam) {
+    // Peaks around 0.5-1.0, drops if too low (collapse) or too high
+    if (lam < 0.05) return 20 + lam * 400;
+    return 78 - 25 * Math.exp(-3 * lam) - 8 * Math.max(0, lam - 1.5);
+  }
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 60, r: 60, t: 30, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+
+    if (animating) {
+      animT += 0.005;
+      if (animT > 1) { animT = 0; animating = false; animBtn.classList.remove('active'); }
+      lambdaParam = animT * 3;
+      lambdaSlider.value = lambdaParam;
+      lambdaVal.textContent = lambdaParam.toFixed(2);
+    }
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t + ph);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.moveTo(pad.l, pad.t);
+    ctx.lineTo(pad.l, pad.t + ph);
+    ctx.moveTo(pad.l + pw, pad.t);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.stroke();
+
+    // X-axis label
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('\u03BB (regularization strength)', pad.l + pw / 2, h - 8);
+
+    // Left Y-axis
+    ctx.save();
+    ctx.translate(14, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Loss', 0, 0);
+    ctx.restore();
+
+    // Right Y-axis
+    ctx.save();
+    ctx.translate(w - 8, pad.t + ph / 2);
+    ctx.rotate(Math.PI / 2);
+    ctx.fillText('Accuracy (%)', 0, 0);
+    ctx.restore();
+
+    // X-axis ticks
+    for (let v = 0; v <= 3; v += 0.5) {
+      const x = pad.l + (v / 3) * pw;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.toFixed(1), x, pad.t + ph + 18);
+    }
+
+    const steps = 200;
+    const maxLoss = 1.5;
+
+    // Curves
+    function drawCurve(fn, color, maxVal, rightAxis) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      for (let i = 0; i <= steps; i++) {
+        const lam = (i / steps) * 3;
+        const x = pad.l + (i / steps) * pw;
+        const val = fn(lam);
+        const y = rightAxis
+          ? pad.t + ph - ((val - 10) / 80) * ph
+          : pad.t + ph - (val / maxVal) * ph;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+
+    drawCurve(predLoss, '#2563eb', maxLoss, false);
+    drawCurve(sigregLoss, '#c2402a', maxLoss, false);
+    drawCurve(totalLoss, '#059669', maxLoss, false);
+    drawCurve(accuracy, '#d97706', 0, true);
+
+    // Current lambda marker
+    const markerX = pad.l + (lambdaParam / 3) * pw;
+    ctx.strokeStyle = 'rgba(26,26,46,0.3)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(markerX, pad.t);
+    ctx.lineTo(markerX, pad.t + ph);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Value readouts at marker
+    const curAcc = accuracy(lambdaParam);
+    const curPred = predLoss(lambdaParam);
+    const curSig = sigregLoss(lambdaParam);
+
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.textAlign = 'left';
+    const readoutX = markerX + 8;
+    const readouts = [
+      { label: 'Acc: ' + curAcc.toFixed(1) + '%', color: '#d97706' },
+      { label: 'Pred: ' + curPred.toFixed(3), color: '#2563eb' },
+      { label: 'SIG: ' + curSig.toFixed(3), color: '#c2402a' }
+    ];
+    readouts.forEach((r, i) => {
+      const ry = pad.t + 20 + i * 18;
+      ctx.fillStyle = r.color;
+      ctx.fillText(r.label, Math.min(readoutX, pad.l + pw - 100), ry);
+    });
+
+    // Sweet spot region
+    const ssLeft = pad.l + (0.3 / 3) * pw;
+    const ssRight = pad.l + (1.0 / 3) * pw;
+    ctx.fillStyle = 'rgba(5,150,105,0.06)';
+    ctx.fillRect(ssLeft, pad.t, ssRight - ssLeft, ph);
+    ctx.fillStyle = '#059669';
+    ctx.font = '11px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('sweet spot', (ssLeft + ssRight) / 2, pad.t + 14);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  lambdaSlider.oninput = () => {
+    lambdaParam = +lambdaSlider.value;
+    lambdaVal.textContent = lambdaParam.toFixed(2);
+    animating = false;
+    animBtn.classList.remove('active');
+  };
+  animBtn.onclick = () => {
+    animating = !animating;
+    animBtn.classList.toggle('active');
+    if (animating) animT = 0;
+  };
+  resetBtn.onclick = () => {
+    lambdaSlider.value = 0.5; lambdaParam = 0.5;
+    lambdaVal.textContent = '0.50';
+    animating = false; animBtn.classList.remove('active');
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 4: Method Comparison ───
+(function() {
+  const canvas = document.getElementById('comparisonCanvas');
+  const sigBtn = document.getElementById('compSigreg');
+  const vicBtn = document.getElementById('compVicreg');
+  const barlowBtn = document.getElementById('compBarlow');
+  const animBtn = document.getElementById('compAnimate');
+  const resetBtn = document.getElementById('compReset');
+
+  let activeMethod = 'sigreg';
+  let animAll = false;
+  let frame = 0;
+
+  const methods = {
+    sigreg: {
+      label: 'SIGReg',
+      color: '#c2402a',
+      // Smooth single basin
+      loss: (a, d) => {
+        const pred = (1 - a) * (1 - a);
+        const sig = Math.exp(-3 * d * d);
+        return pred + 0.5 * sig + 0.05;
+      },
+      trajectory: [],
+      startA: 0.1, startD: 0.1
+    },
+    vicreg: {
+      label: 'VICReg',
+      color: '#2563eb',
+      // Multiple local minima
+      loss: (a, d) => {
+        const pred = (1 - a) * (1 - a);
+        const var_ = 0.4 * Math.exp(-2 * d * d);
+        const cov = 0.2 * (1 + 0.4 * Math.sin(a * 8) * Math.sin(d * 8));
+        return pred + var_ + cov + 0.08;
+      },
+      trajectory: [],
+      startA: 0.1, startD: 0.15
+    },
+    barlow: {
+      label: 'Barlow Twins',
+      color: '#7c3aed',
+      // Ridge-like landscape
+      loss: (a, d) => {
+        const pred = (1 - a) * (1 - a);
+        const cross = 0.3 * Math.exp(-4 * (d - 0.5 * a) * (d - 0.5 * a));
+        const ridge = 0.15 * Math.exp(-2 * d) * (1 + 0.3 * Math.sin(a * 6));
+        return pred + cross + ridge + 0.1;
+      },
+      trajectory: [],
+      startA: 0.1, startD: 0.1
+    }
+  };
+
+  function resetTrajectories() {
+    Object.values(methods).forEach(m => {
+      m.trajectory = [{ a: m.startA, d: m.startD }];
+    });
+  }
+  resetTrajectories();
+
+  function grad(fn, a, d) {
+    const eps = 0.005;
+    return [
+      (fn(a + eps, d) - fn(a - eps, d)) / (2 * eps),
+      (fn(a, d + eps) - fn(a, d - eps)) / (2 * eps)
+    ];
+  }
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 50, r: 20, t: 30, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+
+    const methodsToDraw = animAll ? Object.keys(methods) : [activeMethod];
+
+    methodsToDraw.forEach(mKey => {
+      const m = methods[mKey];
+
+      // Draw contour plot
+      const gridN = 80;
+      const cellW = pw / gridN;
+      const cellH = ph / gridN;
+
+      for (let i = 0; i < gridN; i++) {
+        for (let j = 0; j < gridN; j++) {
+          const a = i / gridN;
+          const d = j / gridN;
+          const val = m.loss(a, d);
+          const norm = Math.min(val / 2, 1);
+
+          if (!animAll || mKey === activeMethod) {
+            const r = Math.round(250 - 60 * norm);
+            const g = Math.round(248 - 50 * norm);
+            const b = Math.round(244 - 40 * norm);
+            ctx.fillStyle = `rgb(${r},${g},${b})`;
+            ctx.fillRect(pad.l + i * cellW, pad.t + (gridN - 1 - j) * cellH, cellW + 0.5, cellH + 0.5);
+          }
+        }
+      }
+
+      // Contour lines
+      if (!animAll || mKey === activeMethod) {
+        for (let level = 0.2; level < 2; level += 0.15) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(26,26,46,${0.08})`;
+          ctx.lineWidth = 0.8;
+          for (let i = 1; i < gridN - 1; i++) {
+            for (let j = 1; j < gridN - 1; j++) {
+              const a = i / gridN, d = j / gridN;
+              const v = m.loss(a, d);
+              const vr = m.loss((i + 1) / gridN, d);
+              const vu = m.loss(a, (j + 1) / gridN);
+              if ((v - level) * (vr - level) < 0 || (v - level) * (vu - level) < 0) {
+                const x = pad.l + i * cellW;
+                const y = pad.t + (gridN - 1 - j) * cellH;
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + 1, y + 1);
+              }
+            }
+          }
+          ctx.stroke();
+        }
+      }
+
+      // Update trajectory
+      const traj = m.trajectory;
+      if ((animAll || mKey === activeMethod) && traj.length < 400) {
+        const last = traj[traj.length - 1];
+        const [gA, gD] = grad(m.loss, last.a, last.d);
+        const lr = 0.08;
+        const newA = Math.max(0.01, Math.min(0.99, last.a - gA * lr));
+        const newD = Math.max(0.01, Math.min(0.99, last.d - gD * lr));
+        if (Math.abs(gA) + Math.abs(gD) > 0.0005) {
+          traj.push({ a: newA, d: newD });
+        }
+      }
+
+      // Draw trajectory
+      if (traj.length > 1) {
+        ctx.beginPath();
+        ctx.strokeStyle = m.color;
+        ctx.lineWidth = 2.5;
+        ctx.globalAlpha = animAll ? 0.8 : 1;
+        traj.forEach((pt, idx) => {
+          const x = pad.l + pt.a * pw;
+          const y = pad.t + (1 - pt.d) * ph;
+          idx === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        // End marker
+        const last = traj[traj.length - 1];
+        const ex = pad.l + last.a * pw;
+        const ey = pad.t + (1 - last.d) * ph;
+        ctx.beginPath();
+        ctx.arc(ex, ey, 5, 0, Math.PI * 2);
+        ctx.fillStyle = m.color;
+        ctx.fill();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    });
+
+    // Axis labels
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Alignment \u2192', pad.l + pw / 2, h - 8);
+    ctx.save();
+    ctx.translate(14, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Diversity \u2192', 0, 0);
+    ctx.restore();
+
+    // Method label
+    if (animAll) {
+      let yOff = 0;
+      Object.values(methods).forEach(m => {
+        ctx.fillStyle = m.color;
+        ctx.font = '600 13px "Source Code Pro", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(m.label, pad.l + pw - 10, pad.t + 20 + yOff);
+        yOff += 18;
+      });
+    } else {
+      const m = methods[activeMethod];
+      ctx.fillStyle = m.color;
+      ctx.font = '600 14px "Newsreader", serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(m.label, pad.l + pw - 10, pad.t + 22);
+    }
+
+    // Collapse zone label
+    ctx.fillStyle = 'rgba(194,64,42,0.5)';
+    ctx.font = '11px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('collapse zone', pad.l + pw / 2, pad.t + ph - 10);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  function setMethod(m) {
+    activeMethod = m; animAll = false;
+    animBtn.classList.remove('active');
+    [sigBtn, vicBtn, barlowBtn].forEach(b => b.classList.remove('active'));
+    if (m === 'sigreg') sigBtn.classList.add('active');
+    if (m === 'vicreg') vicBtn.classList.add('active');
+    if (m === 'barlow') barlowBtn.classList.add('active');
+    resetTrajectories();
+  }
+
+  sigBtn.onclick = () => setMethod('sigreg');
+  vicBtn.onclick = () => setMethod('vicreg');
+  barlowBtn.onclick = () => setMethod('barlow');
+  animBtn.onclick = () => { animAll = !animAll; animBtn.classList.toggle('active'); resetTrajectories(); };
+  resetBtn.onclick = () => { setMethod('sigreg'); };
+
+  draw();
+})();
+
+
+// ─── Figure 5: Complexity Comparison ───
+(function() {
+  const canvas = document.getElementById('complexityCanvas');
+  const dimSlider = document.getElementById('complexDim');
+  const dimVal = document.getElementById('complexDimVal');
+
+  let embedDim = 1024;
+  const B = 256, K = 2048;
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 80, r: 30, t: 20, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t + ph);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.moveTo(pad.l, pad.t);
+    ctx.lineTo(pad.l, pad.t + ph);
+    ctx.stroke();
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Embedding dimension d', pad.l + pw / 2, h - 8);
+
+    ctx.save();
+    ctx.translate(16, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('FLOPs (relative)', 0, 0);
+    ctx.restore();
+
+    const maxD = 4096;
+    const steps = 200;
+
+    // Compute max value for scaling
+    const maxCovariance = B * maxD * maxD;
+    const maxSigreg = B * K * maxD;
+    const maxVal = maxCovariance;
+
+    function drawCurve(fn, color, dashed) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.5;
+      if (dashed) ctx.setLineDash([6, 4]);
+      for (let i = 0; i <= steps; i++) {
+        const d = 64 + (i / steps) * (maxD - 64);
+        const x = pad.l + (i / steps) * pw;
+        const val = fn(d);
+        const y = pad.t + ph - (val / maxVal) * ph;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // SIGReg: O(BKd)
+    drawCurve(d => B * K * d, '#c2402a', false);
+    // VICReg: O(Bd^2)
+    drawCurve(d => B * d * d, '#2563eb', false);
+    // Barlow: O(Bd^2)
+    drawCurve(d => B * d * d, '#7c3aed', true);
+
+    // Current dimension marker
+    const markerX = pad.l + ((embedDim - 64) / (maxD - 64)) * pw;
+    ctx.strokeStyle = 'rgba(26,26,46,0.2)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    ctx.moveTo(markerX, pad.t);
+    ctx.lineTo(markerX, pad.t + ph);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Values at marker
+    const sigVal = B * K * embedDim;
+    const vicVal = B * embedDim * embedDim;
+    const ratio = (vicVal / sigVal).toFixed(1);
+
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillText('d = ' + embedDim, markerX + 8, pad.t + 20);
+    ctx.fillStyle = '#c2402a';
+    ctx.fillText('SIGReg: ' + (sigVal / 1e6).toFixed(0) + 'M ops', markerX + 8, pad.t + 38);
+    ctx.fillStyle = '#2563eb';
+    ctx.fillText('Cov-based: ' + (vicVal / 1e6).toFixed(0) + 'M ops', markerX + 8, pad.t + 56);
+    ctx.fillStyle = '#8888a0';
+    ctx.fillText(ratio + 'x more expensive', markerX + 8, pad.t + 74);
+
+    // X-axis ticks
+    for (let d = 512; d <= maxD; d += 512) {
+      const x = pad.l + ((d - 64) / (maxD - 64)) * pw;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'center';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.fillText(d.toString(), x, pad.t + ph + 18);
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  dimSlider.oninput = () => {
+    embedDim = +dimSlider.value;
+    dimVal.textContent = embedDim;
+  };
+
+  draw();
+})();
+</script>
+
+</body>
+</html>

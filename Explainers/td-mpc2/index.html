@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TD-MPC2 &mdash; Interactive Explorations</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #faf9f6;
+    --bg-alt: #f3f0eb;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-muted: #8888a0;
+    --accent: #c2402a;
+    --accent-hover: #a03520;
+    --link: #2563eb;
+    --link-hover: #1d4ed8;
+    --border: #e0ddd5;
+    --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+    --card-hover-shadow: 0 8px 24px rgba(26,26,46,0.10), 0 2px 6px rgba(26,26,46,0.06);
+
+    --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+    --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+    --font-mono: 'Source Code Pro', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .article {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header {
+    padding: 80px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .overline {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 600px;
+  }
+
+  .byline {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .byline a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .byline a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .intro {
+    margin-bottom: 56px;
+  }
+
+  .intro p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .intro strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .equation-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 28px;
+    margin: 24px 0;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .equation-block .var { color: var(--accent); }
+
+  .grid-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .viz-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 72px;
+  }
+
+  .viz-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: var(--card-shadow);
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+  }
+
+  .viz-card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+  }
+
+  .viz-card:active {
+    transform: translateY(0);
+  }
+
+  .viz-preview {
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .viz-preview canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .viz-body {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .viz-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .viz-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .viz-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .viz-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--bg-alt);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .viz-card {
+      grid-template-columns: 1fr;
+    }
+    .viz-preview {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      min-height: 120px;
+    }
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 56px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  footer a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <header>
+    <span class="overline">Interactive Explorations</span>
+    <h1>TD-MPC2: Scalable, Robust<br>World Models</h1>
+    <p class="subtitle">
+      A collection of interactive visualizations that make tangible the key mechanisms
+      behind TD-MPC2&thinsp;&mdash;&thinsp;from MPPI trajectory planning to SimNorm's
+      simplex projections to the scaling laws that emerge at 317M parameters.
+    </p>
+    <div class="byline">
+      Based on <a href="https://arxiv.org/abs/2310.16828">Hansen, Su &amp; Wang (ICLR 2024, Spotlight)</a>
+    </div>
+  </header>
+
+  <div class="intro">
+    <p>
+      TD-MPC2 learns an implicit, decoder-free world model that plans in latent space
+      using trajectory optimization. A single agent with a <strong>single set of
+      hyperparameters</strong> achieves state-of-the-art results across 104 continuous
+      control tasks spanning 4 domains and 12 embodiments.
+    </p>
+    <p>
+      Each visualization below isolates one core idea from the architecture, making it
+      explorable through direct interaction. Drag sliders, click data points, and step
+      through simulations to build intuition for how each mechanism works.
+    </p>
+
+    <div class="equation-block">
+      <span class="var">a</span>* = MPPI(
+        <span class="var">d</span>(z, a, e),
+        <span class="var">R</span>(z, a, e),
+        <span class="var">Q</span>(z, a, e);
+        <span class="var">&pi;</span>
+      )
+    </div>
+  </div>
+
+  <span class="grid-label">Explorations</span>
+
+  <div class="viz-grid">
+
+    <a href="01-model-predictive-control.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-1"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">01</div>
+        <div class="viz-title">MPPI Planning Loop</div>
+        <div class="viz-desc">
+          Watch the planner sample action trajectories, score them with the world model,
+          and iteratively refine toward the optimal path. Adjust samples, horizon,
+          and temperature in real time.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">MPPI</span>
+          <span class="tag">Trajectory Optimization</span>
+          <span class="tag">Interactive</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="02-simnorm.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-2"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">02</div>
+        <div class="viz-title">SimNorm &amp; the Simplex</div>
+        <div class="viz-desc">
+          Explore Simplicial Normalization: drag activations through the softmax
+          projection onto the simplex. Compare LayerNorm vs SimNorm and see how
+          SimNorm prevents representation collapse.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">SimNorm</span>
+          <span class="tag">Simplex Geometry</span>
+          <span class="tag">Collapse Prevention</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="03-multi-task-scaling.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-3"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">03</div>
+        <div class="viz-title">Multi-Task Scaling Curves</div>
+        <div class="viz-desc">
+          Explore scaling laws for world models: click domains, compare specialist
+          vs generalist, and visualize the task embedding space where 80 tasks
+          organize by embodiment and dynamics.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">Scaling Laws</span>
+          <span class="tag">Task Embeddings</span>
+          <span class="tag">317M Parameters</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+
+<footer>
+  <a href="https://arxiv.org/abs/2310.16828">Paper</a> &ensp;&middot;&ensp;
+  <a href="https://github.com/nicklashansen/tdmpc2">Code</a> &ensp;&middot;&ensp;
+  <a href="https://nicklashansen.com/td-mpc2/">Project Site</a>
+</footer>
+
+<script>
+// ── Preview 1: MPPI Trajectories ──
+(function() {
+  const c = document.getElementById('preview-1');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  let frame = 0;
+
+  // Pre-generate some trajectory data
+  const trajs = [];
+  for (let i = 0; i < 20; i++) {
+    const pts = [];
+    let x = 0.1, y = 0.5;
+    const quality = Math.random();
+    for (let j = 0; j < 6; j++) {
+      x += 0.12 + Math.random() * 0.04;
+      y += (Math.random() - 0.5) * 0.25 * (1 - quality * 0.7);
+      y = Math.max(0.1, Math.min(0.9, y));
+      pts.push({ x, y });
+    }
+    trajs.push({ pts, quality });
+  }
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    // Obstacles
+    ctx.fillStyle = 'rgba(26,26,46,0.15)';
+    ctx.beginPath();
+    ctx.arc(rw * 0.4, rh * 0.3, rw * 0.06, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(rw * 0.6, rh * 0.65, rw * 0.07, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Trajectories with animated sweep
+    const sweepPhase = (frame % 120) / 120;
+    trajs.forEach((traj, ti) => {
+      const phase = ((frame * 0.008 + ti * 0.05) % 1);
+      const alpha = 0.05 + traj.quality * 0.25;
+      const r = Math.floor(220 - traj.quality * 180);
+      const g = Math.floor(60 + traj.quality * 180);
+      ctx.strokeStyle = `rgba(${r},${g},60,${alpha})`;
+      ctx.lineWidth = 0.5 + traj.quality * 1.5;
+      ctx.beginPath();
+      ctx.moveTo(rw * 0.1, rh * 0.5);
+      traj.pts.forEach(p => {
+        const wobble = Math.sin(frame * 0.02 + ti) * 0.02;
+        ctx.lineTo(p.x * rw, (p.y + wobble) * rh);
+      });
+      ctx.stroke();
+    });
+
+    // Agent
+    ctx.fillStyle = '#2563eb';
+    ctx.beginPath();
+    ctx.arc(rw * 0.1, rh * 0.5, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Goal
+    const pulse = 1 + 0.1 * Math.sin(frame * 0.04);
+    ctx.fillStyle = 'rgba(5,150,105,0.2)';
+    ctx.beginPath();
+    ctx.arc(rw * 0.88, rh * 0.4, 8 * pulse, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#059669';
+    ctx.beginPath();
+    ctx.arc(rw * 0.88, rh * 0.4, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Preview 2: SimNorm Simplex ──
+(function() {
+  const c = document.getElementById('preview-2');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  let frame = 0;
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const cx = rw / 2, cy = rh / 2;
+    const r = Math.min(rw, rh) * 0.35;
+
+    // Triangle (simplex)
+    const verts = [
+      { x: cx, y: cy - r },
+      { x: cx - r * 0.866, y: cy + r * 0.5 },
+      { x: cx + r * 0.866, y: cy + r * 0.5 },
+    ];
+
+    ctx.strokeStyle = 'rgba(194,64,42,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(verts[0].x, verts[0].y);
+    ctx.lineTo(verts[1].x, verts[1].y);
+    ctx.lineTo(verts[2].x, verts[2].y);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Grid lines inside
+    for (let i = 1; i < 4; i++) {
+      const t = i / 4;
+      for (let e = 0; e < 3; e++) {
+        const v0 = verts[e], v1 = verts[(e+1)%3], v2 = verts[(e+2)%3];
+        const p1 = { x: v0.x + (v1.x - v0.x) * t, y: v0.y + (v1.y - v0.y) * t };
+        const p2 = { x: v0.x + (v2.x - v0.x) * t, y: v0.y + (v2.y - v0.y) * t };
+        ctx.strokeStyle = 'rgba(194,64,42,0.08)';
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+    }
+
+    // Moving point on simplex
+    const t = frame * 0.01;
+    const b1 = (Math.sin(t) + 1) / 2;
+    const b2 = (Math.sin(t + 2.1) + 1) / 2;
+    const b3 = Math.max(0, 1 - b1 - b2);
+    const sum = b1 + b2 + b3;
+    const nb1 = b1 / sum, nb2 = b2 / sum, nb3 = b3 / sum;
+    const px = nb1 * verts[0].x + nb2 * verts[1].x + nb3 * verts[2].x;
+    const py = nb1 * verts[0].y + nb2 * verts[1].y + nb3 * verts[2].y;
+
+    ctx.fillStyle = 'rgba(194,64,42,0.15)';
+    ctx.beginPath();
+    ctx.arc(px, py, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#c2402a';
+    ctx.beginPath();
+    ctx.arc(px, py, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Preview 3: Scaling Curves ──
+(function() {
+  const c = document.getElementById('preview-3');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, frame = 0;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  // Scaling data points (log-scale x)
+  const data = [
+    { x: 0.0, y: 0.84 },   // 1M: 16
+    { x: 0.28, y: 0.505 },  // 5M: 49.5
+    { x: 0.51, y: 0.429 },  // 19M: 57.1
+    { x: 0.67, y: 0.32 },   // 48M: 68
+    { x: 1.0, y: 0.294 },   // 317M: 70.6
+  ];
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const pad = 20;
+    const plotW = rw - pad * 2;
+    const plotH = rh - pad * 2;
+
+    // Grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 4; i++) {
+      const y = pad + (i / 4) * plotH;
+      ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(pad + plotW, y); ctx.stroke();
+    }
+
+    // Animated curve reveal
+    const progress = Math.min(1, frame / 60);
+
+    // Line
+    ctx.strokeStyle = 'rgba(194,64,42,0.7)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    data.forEach((p, i) => {
+      if (i / data.length > progress) return;
+      const x = pad + p.x * plotW;
+      const y = pad + p.y * plotH;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Points
+    data.forEach((p, i) => {
+      if (i / data.length > progress) return;
+      const x = pad + p.x * plotW;
+      const y = pad + p.y * plotH;
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#c2402a';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.fillStyle = '#c2402a';
+      ctx.beginPath();
+      ctx.arc(x, y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Second curve (different domain) with slight delay
+    const progress2 = Math.min(1, (frame - 20) / 60);
+    if (progress2 > 0) {
+      const data2 = [
+        { x: 0.0, y: 0.88 },
+        { x: 0.28, y: 0.60 },
+        { x: 0.51, y: 0.46 },
+        { x: 0.67, y: 0.38 },
+        { x: 1.0, y: 0.30 },
+      ];
+      ctx.strokeStyle = 'rgba(37,99,235,0.5)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      data2.forEach((p, i) => {
+        if (i / data2.length > progress2) return;
+        const x = pad + p.x * plotW;
+        const y = pad + p.y * plotH;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+    }
+
+    frame++;
+    if (frame > 200) frame = 0; // Loop
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

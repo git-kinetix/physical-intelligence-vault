@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 &mdash; Scaling Behavior</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #faf9f6;
+    --bg-alt: #f3f0eb;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-muted: #8888a0;
+    --accent: #c2402a;
+    --accent-hover: #a03520;
+    --blue: #2563eb;
+    --green: #059669;
+    --orange: #d97706;
+    --purple: #7c3aed;
+    --pink: #db2777;
+    --border: #e0ddd5;
+    --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+    --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+    --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+    --font-mono: 'Source Code Pro', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+  .back-link {
+    display: inline-block; margin-top: 24px;
+    font-family: var(--font-mono); font-size: 13px;
+    color: var(--text-muted); text-decoration: none;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  header { padding: 48px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+
+  .overline {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px; display: block;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 600;
+    line-height: 1.2; color: var(--text); margin-bottom: 16px; letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-family: var(--font-serif); font-size: 1.1rem; font-weight: 300;
+    color: var(--text-secondary); line-height: 1.65; max-width: 620px;
+  }
+
+  h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--text); margin: 56px 0 16px; letter-spacing: -0.01em; }
+  h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; color: var(--text); margin: 32px 0 12px; }
+  p { margin-bottom: 20px; color: var(--text-secondary); }
+  p strong { color: var(--text); font-weight: 500; }
+
+  .figure {
+    margin: 32px 0; background: white; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; box-shadow: var(--card-shadow);
+  }
+  .figure-wide { margin-left: -60px; margin-right: -60px; }
+  @media (max-width: 860px) { .figure-wide { margin-left: 0; margin-right: 0; } }
+
+  .figure-canvas-wrap { position: relative; width: 100%; }
+  .figure-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+
+  .figure-caption {
+    padding: 12px 20px; font-family: var(--font-mono); font-size: 12px;
+    color: var(--text-muted); border-top: 1px solid var(--border); background: var(--bg-alt);
+  }
+
+  .controls {
+    padding: 16px 20px; background: var(--bg-alt); border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  }
+
+  .control-group { display: flex; align-items: center; gap: 8px; }
+
+  .control-group label {
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    width: 120px; height: 4px; border-radius: 2px;
+    background: var(--border); outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); cursor: pointer; border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .value-display {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    color: var(--accent); min-width: 40px;
+  }
+
+  .btn {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 12px; border: 1px solid var(--border); border-radius: 4px;
+    background: white; color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .btn-color {
+    position: relative;
+    padding-left: 22px;
+  }
+  .btn-color::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 16px; padding: 12px 20px;
+    background: var(--bg-alt); border-top: 1px solid var(--border);
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 2px; }
+
+  .side-note {
+    font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+    border-left: 3px solid var(--accent); padding: 12px 16px; margin: 24px 0;
+    background: white; border-radius: 0 4px 4px 0;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 32px 0 56px; margin-top: 72px;
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+  }
+  footer a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border); }
+  footer a:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+<a href="index.html" class="back-link">&larr; All Explorations</a>
+
+<header>
+  <span class="overline">Exploration 03</span>
+  <h1>Scaling Behavior</h1>
+  <p class="subtitle">
+    Le-JEPA scales from tiny models to 1.8-billion-parameter giants
+    without changing a single hyperparameter. This stability is unprecedented
+    in self-supervised learning.
+  </p>
+</header>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-value">60+</div>
+    <div class="stat-label">Architectures</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">1.8B</div>
+    <div class="stat-label">Max Parameters</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">1</div>
+    <div class="stat-label">Hyperparameter</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">79%</div>
+    <div class="stat-label">ImageNet Top-1</div>
+  </div>
+</div>
+
+<h2>Training Loss Across Scales</h2>
+
+<p>
+  One of Le-JEPA's most remarkable properties is that the <strong>same training configuration</strong>
+  works across wildly different model sizes. The figure below shows simulated training loss curves for
+  Vision Transformers from ViT-S (22M params) to ViT-g (1.8B params). Click model sizes to toggle
+  their curves.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 400px;">
+    <canvas id="lossCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <button class="btn active btn-color" id="btnVitS" style="--clr: #2563eb">ViT-S (22M)</button>
+    <button class="btn btn-color" id="btnVitB" style="--clr: #059669">ViT-B (86M)</button>
+    <button class="btn btn-color" id="btnVitL" style="--clr: #d97706">ViT-L (304M)</button>
+    <button class="btn btn-color" id="btnVitH" style="--clr: #c2402a">ViT-H (632M)</button>
+    <button class="btn btn-color" id="btnVitG" style="--clr: #7c3aed">ViT-g (1.8B)</button>
+    <button class="btn" id="lossShowAll">Show All</button>
+    <button class="btn" id="lossReset">Reset</button>
+  </div>
+  <div class="figure-caption">
+    Training loss curves for Le-JEPA at different model scales. All curves converge smoothly.
+    No learning rate scheduling changes needed across scales.
+  </div>
+</div>
+
+<p>
+  Notice how all curves converge smoothly without any divergence or instability. Larger models
+  achieve lower final loss, but the <strong>training dynamics are qualitatively identical</strong>.
+  This is the signature of a well-conditioned optimization landscape.
+</p>
+
+<h2>The Instability Problem in Other Methods</h2>
+
+<p>
+  Contrast Le-JEPA's smooth scaling with what happens in other self-supervised methods. DINO
+  requires careful temperature scheduling that breaks at large scales. VICReg's covariance
+  computation becomes unstable. I-JEPA needs EMA rate tuning per model size. The figure below
+  shows these methods alongside Le-JEPA.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 420px;">
+    <canvas id="compareCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <button class="btn active" id="cmpLejepa">Le-JEPA</button>
+    <button class="btn" id="cmpDino">DINO</button>
+    <button class="btn" id="cmpVicreg">VICReg</button>
+    <button class="btn" id="cmpIjepa">I-JEPA</button>
+    <button class="btn" id="cmpAll">Compare All</button>
+    <div class="control-group">
+      <label>Model Size</label>
+      <input type="range" id="cmpSize" min="0" max="4" step="1" value="2">
+      <span class="value-display" id="cmpSizeVal">ViT-L</span>
+    </div>
+    <button class="btn" id="cmpReset">Reset</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Le-JEPA</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>DINO</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span>VICReg</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--purple)"></span>I-JEPA</span>
+  </div>
+  <div class="figure-caption">
+    At small scales (ViT-S), all methods train stably. Move the slider to larger models and watch
+    how DINO, VICReg, and I-JEPA develop instabilities while Le-JEPA remains smooth.
+  </div>
+</div>
+
+<div class="side-note">
+  At the ViT-g scale (1.8B parameters), DINO typically requires 3-5 restarts with different
+  hyperparameters to achieve stable training. Le-JEPA trains stably on the <strong>first attempt</strong>
+  with the same &lambda; used for ViT-S.
+</div>
+
+<h2>Architecture-Agnostic Performance</h2>
+
+<p>
+  Le-JEPA is not limited to Vision Transformers. The paper validates across <strong>five
+  architecture families</strong>: ViTs, ConvNeXts, ResNets, MaxViTs, and Swin Transformers.
+  The figure below shows performance across 50+ architectures from the timm library, all
+  trained with identical hyperparameters.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 380px;">
+    <canvas id="archCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <button class="btn active" id="archAll">All</button>
+    <button class="btn" id="archVit">ViT</button>
+    <button class="btn" id="archConvnext">ConvNeXt</button>
+    <button class="btn" id="archResnet">ResNet</button>
+    <button class="btn" id="archSwin">Swin</button>
+    <button class="btn" id="archMaxvit">MaxViT</button>
+    <div class="control-group">
+      <label>Sort</label>
+      <button class="btn active" id="archSortAcc">By Accuracy</button>
+      <button class="btn" id="archSortSize">By Params</button>
+    </div>
+    <button class="btn" id="archReset">Reset</button>
+  </div>
+  <div class="figure-caption">
+    Each bar is a different architecture trained with identical Le-JEPA settings on ImageNet-10.
+    Filter by family to see that performance scales with model capacity regardless of architecture.
+  </div>
+</div>
+
+<h2>Loss Predicts Performance</h2>
+
+<p>
+  A practical breakthrough in Le-JEPA is that the <strong>training loss correlates strongly
+  with downstream performance</strong>. This means you can select the best model checkpoint
+  purely from the training loss, without needing to run expensive linear probing evaluations.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 360px;">
+    <canvas id="corrCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>Noise</label>
+      <input type="range" id="corrNoise" min="0" max="1" step="0.01" value="0.1">
+      <span class="value-display" id="corrNoiseVal">0.10</span>
+    </div>
+    <button class="btn" id="corrToggleLine">Show Fit Line</button>
+    <button class="btn" id="corrReset">Reset</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Le-JEPA (r = 0.95)</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>VICReg (r = 0.6)</span>
+  </div>
+  <div class="figure-caption">
+    Scatter plot of training loss vs. downstream linear probe accuracy. Le-JEPA shows strong
+    negative correlation (lower loss = higher accuracy). VICReg's correlation is much weaker.
+  </div>
+</div>
+
+<h2>No Hyperparameter Tuning</h2>
+
+<p>
+  To drive the point home: the table below shows the <strong>exact same configuration</strong>
+  used across all experiments. Toggle the switch to see what happens when you try to use
+  a single set of hyperparameters with competing methods.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 340px;">
+    <canvas id="hpCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <button class="btn active" id="hpLejepa">Le-JEPA</button>
+    <button class="btn" id="hpOthers">Other Methods</button>
+    <button class="btn" id="hpReset">Reset</button>
+  </div>
+  <div class="figure-caption">
+    Le-JEPA uses a single &lambda; across all scales. Other methods require per-scale tuning
+    of multiple hyperparameters to avoid training failure.
+  </div>
+</div>
+
+<footer>
+  <a href="02-view-augmentation.html">&larr; View Augmentation</a>
+  <span>Le-JEPA &middot; Balestriero &amp; LeCun, 2025</span>
+  <a href="index.html">Back to Index &rarr;</a>
+</footer>
+
+</div>
+
+<script>
+function dpr() { return window.devicePixelRatio || 1; }
+function setupCanvas(canvas, wrap) {
+  const r = (wrap || canvas.parentElement).getBoundingClientRect();
+  const d = dpr();
+  canvas.width = r.width * d;
+  canvas.height = r.height * d;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(d, d);
+  return { ctx, w: r.width, h: r.height };
+}
+
+// Seeded noise
+function noise(t, seed) {
+  return Math.sin(t * 12.9898 + seed * 78.233) * 0.5 + 0.5;
+}
+
+
+// ─── Figure 1: Training Loss Curves ───
+(function() {
+  const canvas = document.getElementById('lossCanvas');
+  const models = [
+    { id: 'VitS', label: 'ViT-S (22M)', color: '#2563eb', params: 22, finalLoss: 0.42, btn: 'btnVitS' },
+    { id: 'VitB', label: 'ViT-B (86M)', color: '#059669', params: 86, finalLoss: 0.34, btn: 'btnVitB' },
+    { id: 'VitL', label: 'ViT-L (304M)', color: '#d97706', params: 304, finalLoss: 0.28, btn: 'btnVitL' },
+    { id: 'VitH', label: 'ViT-H (632M)', color: '#c2402a', params: 632, finalLoss: 0.22, btn: 'btnVitH' },
+    { id: 'VitG', label: 'ViT-g (1.8B)', color: '#7c3aed', params: 1800, finalLoss: 0.18, btn: 'btnVitG' },
+  ];
+
+  const visible = { VitS: true, VitB: false, VitL: false, VitH: false, VitG: false };
+  let frame = 0;
+
+  function generateCurve(model, epochs) {
+    const points = [];
+    for (let i = 0; i <= epochs; i++) {
+      const t = i / epochs;
+      const base = model.finalLoss + (1.2 - model.finalLoss) * Math.exp(-4 * t);
+      const jitter = 0.015 * Math.sin(t * 50 + model.params * 0.01) * (1 - t);
+      points.push(base + jitter);
+    }
+    return points;
+  }
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 60, r: 30, t: 20, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t + ph);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.moveTo(pad.l, pad.t);
+    ctx.lineTo(pad.l, pad.t + ph);
+    ctx.stroke();
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Training Epoch', pad.l + pw / 2, h - 8);
+
+    ctx.save();
+    ctx.translate(14, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Training Loss', 0, 0);
+    ctx.restore();
+
+    // Tick marks
+    for (let v = 0; v <= 100; v += 25) {
+      const x = pad.l + (v / 100) * pw;
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.toString(), x, pad.t + ph + 18);
+    }
+
+    const maxLoss = 1.3;
+    for (let v = 0.2; v <= 1.2; v += 0.2) {
+      const y = pad.t + ph - (v / maxLoss) * ph;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'right';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.fillText(v.toFixed(1), pad.l - 8, y + 4);
+      ctx.strokeStyle = '#e0ddd580';
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y);
+      ctx.lineTo(pad.l + pw, y);
+      ctx.stroke();
+    }
+
+    const epochs = 100;
+    const animProgress = Math.min(frame / 120, 1);
+    const visibleEpochs = Math.floor(animProgress * epochs);
+
+    let legendY = pad.t + 16;
+    models.forEach(model => {
+      if (!visible[model.id]) return;
+
+      const curve = generateCurve(model, epochs);
+
+      ctx.beginPath();
+      ctx.strokeStyle = model.color;
+      ctx.lineWidth = 2.5;
+      for (let i = 0; i <= visibleEpochs; i++) {
+        const x = pad.l + (i / epochs) * pw;
+        const y = pad.t + ph - (curve[i] / maxLoss) * ph;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // End dot
+      if (visibleEpochs > 0) {
+        const ex = pad.l + (visibleEpochs / epochs) * pw;
+        const ey = pad.t + ph - (curve[visibleEpochs] / maxLoss) * ph;
+        ctx.beginPath();
+        ctx.arc(ex, ey, 4, 0, Math.PI * 2);
+        ctx.fillStyle = model.color;
+        ctx.fill();
+      }
+
+      // Legend entry
+      ctx.fillStyle = model.color;
+      ctx.font = '500 12px "Source Code Pro", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(model.label + ' (' + model.finalLoss.toFixed(2) + ')', pad.l + pw - 8, legendY);
+      legendY += 18;
+    });
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  models.forEach(m => {
+    document.getElementById(m.btn).onclick = () => {
+      visible[m.id] = !visible[m.id];
+      document.getElementById(m.btn).classList.toggle('active');
+      frame = 0; // restart animation
+    };
+  });
+
+  document.getElementById('lossShowAll').onclick = () => {
+    Object.keys(visible).forEach(k => visible[k] = true);
+    models.forEach(m => document.getElementById(m.btn).classList.add('active'));
+    frame = 0;
+  };
+
+  document.getElementById('lossReset').onclick = () => {
+    Object.keys(visible).forEach(k => visible[k] = false);
+    visible.VitS = true;
+    models.forEach(m => document.getElementById(m.btn).classList.remove('active'));
+    document.getElementById('btnVitS').classList.add('active');
+    frame = 0;
+  };
+
+  // Color indicators for buttons
+  models.forEach(m => {
+    const btn = document.getElementById(m.btn);
+    btn.style.setProperty('--clr', m.color);
+    btn.insertAdjacentHTML('afterbegin', '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:' + m.color + ';margin-right:6px;vertical-align:middle;"></span>');
+  });
+
+  draw();
+})();
+
+
+// ─── Figure 2: Method Comparison ───
+(function() {
+  const canvas = document.getElementById('compareCanvas');
+  const sizeSlider = document.getElementById('cmpSize');
+  const sizeVal = document.getElementById('cmpSizeVal');
+  const btns = {
+    lejepa: document.getElementById('cmpLejepa'),
+    dino: document.getElementById('cmpDino'),
+    vicreg: document.getElementById('cmpVicreg'),
+    ijepa: document.getElementById('cmpIjepa'),
+  };
+  const allBtn = document.getElementById('cmpAll');
+  const resetBtn = document.getElementById('cmpReset');
+
+  const sizeLabels = ['ViT-S', 'ViT-B', 'ViT-L', 'ViT-H', 'ViT-g'];
+  let modelSize = 2;
+  let showAll = false;
+  let activeMethod = 'lejepa';
+  let frame = 0;
+
+  const methods = {
+    lejepa: { label: 'Le-JEPA', color: '#c2402a' },
+    dino: { label: 'DINO', color: '#2563eb' },
+    vicreg: { label: 'VICReg', color: '#059669' },
+    ijepa: { label: 'I-JEPA', color: '#7c3aed' },
+  };
+
+  function generateMethodCurve(method, size, epochs) {
+    const points = [];
+    const sizeScale = size / 4; // 0..1
+
+    for (let i = 0; i <= epochs; i++) {
+      const t = i / epochs;
+      let val;
+
+      if (method === 'lejepa') {
+        // Always stable
+        const final = 0.4 - sizeScale * 0.2;
+        val = final + (1.1 - final) * Math.exp(-4 * t);
+        val += 0.01 * Math.sin(t * 40 + size * 3);
+      } else if (method === 'dino') {
+        // Increasingly unstable at large sizes
+        const final = 0.38 - sizeScale * 0.18;
+        val = final + (1.1 - final) * Math.exp(-3.5 * t);
+        // Instability spikes at large scale
+        if (size >= 3) {
+          const spikeProb = sizeScale * 0.5;
+          if (t > 0.3 && t < 0.5) val += spikeProb * 0.4 * Math.sin((t - 0.3) * 30);
+          if (size >= 4 && t > 0.6) val += 0.3 * Math.sin((t - 0.6) * 20) * (t - 0.6);
+        }
+        val += 0.015 * Math.sin(t * 35 + size * 5);
+      } else if (method === 'vicreg') {
+        // Covariance instability at scale
+        const final = 0.42 - sizeScale * 0.15;
+        val = final + (1.0 - final) * Math.exp(-3 * t);
+        if (size >= 3) {
+          val += sizeScale * 0.08 * Math.sin(t * 15) * t;
+        }
+        if (size >= 4 && t > 0.4) {
+          val += 0.25 * (t - 0.4) * sizeScale; // Divergence
+        }
+        val += 0.02 * Math.sin(t * 25 + size * 7);
+      } else if (method === 'ijepa') {
+        // EMA tuning issues at scale
+        const final = 0.36 - sizeScale * 0.16;
+        val = final + (1.15 - final) * Math.exp(-3.8 * t);
+        if (size >= 3) {
+          // Periodic instability from EMA mismatch
+          val += sizeScale * 0.06 * Math.abs(Math.sin(t * 12));
+        }
+        if (size >= 4 && t > 0.5) {
+          val += 0.15 * Math.sin((t - 0.5) * 8) * sizeScale;
+        }
+        val += 0.012 * Math.sin(t * 30 + size * 4);
+      }
+
+      points.push(Math.max(0.05, val));
+    }
+    return points;
+  }
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 60, r: 30, t: 30, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+    const epochs = 100;
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t + ph);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.moveTo(pad.l, pad.t);
+    ctx.lineTo(pad.l, pad.t + ph);
+    ctx.stroke();
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Training Epoch', pad.l + pw / 2, h - 8);
+
+    ctx.save();
+    ctx.translate(14, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Training Loss', 0, 0);
+    ctx.restore();
+
+    for (let v = 0; v <= 100; v += 25) {
+      const x = pad.l + (v / 100) * pw;
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.toString(), x, pad.t + ph + 18);
+    }
+
+    const maxLoss = 1.8;
+    for (let v = 0.2; v <= 1.6; v += 0.2) {
+      const y = pad.t + ph - (v / maxLoss) * ph;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'right';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.fillText(v.toFixed(1), pad.l - 8, y + 4);
+      ctx.strokeStyle = '#e0ddd580';
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y);
+      ctx.lineTo(pad.l + pw, y);
+      ctx.stroke();
+    }
+
+    // Model size title
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '600 14px "Newsreader", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(sizeLabels[modelSize], pad.l + pw / 2, pad.t + 18);
+
+    // Instability warning
+    if (modelSize >= 3 && !showAll && activeMethod !== 'lejepa') {
+      ctx.fillStyle = '#c2402a80';
+      ctx.font = '500 12px "Source Code Pro", monospace';
+      ctx.fillText('Warning: training instability detected', pad.l + pw / 2, pad.t + 36);
+    }
+
+    const animProgress = Math.min(frame / 150, 1);
+    const visibleEpochs = Math.floor(animProgress * epochs);
+
+    const toDraw = showAll ? Object.keys(methods) : [activeMethod];
+
+    let legendY = pad.t + 18;
+    toDraw.forEach(mKey => {
+      const m = methods[mKey];
+      const curve = generateMethodCurve(mKey, modelSize, epochs);
+
+      ctx.beginPath();
+      ctx.strokeStyle = m.color;
+      ctx.lineWidth = showAll ? 2 : 2.5;
+      for (let i = 0; i <= visibleEpochs; i++) {
+        const x = pad.l + (i / epochs) * pw;
+        const y = pad.t + ph - (curve[i] / maxLoss) * ph;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, Math.max(pad.t, Math.min(pad.t + ph, y)));
+      }
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = m.color;
+      ctx.font = '500 12px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(m.label, pad.l + 8, legendY);
+      legendY += 16;
+    });
+
+    // Stability zone annotation
+    if (modelSize >= 3) {
+      ctx.fillStyle = 'rgba(5,150,105,0.05)';
+      const stableY = pad.t + ph - (0.5 / maxLoss) * ph;
+      ctx.fillRect(pad.l, stableY, pw, pad.t + ph - stableY);
+      ctx.fillStyle = '#05966960';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText('stable convergence zone', pad.l + pw - 8, pad.t + ph - 6);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  function setMethod(m) {
+    activeMethod = m; showAll = false; frame = 0;
+    allBtn.classList.remove('active');
+    Object.keys(btns).forEach(k => btns[k].classList.remove('active'));
+    btns[m].classList.add('active');
+  }
+
+  Object.keys(btns).forEach(k => { btns[k].onclick = () => setMethod(k); });
+  allBtn.onclick = () => { showAll = !showAll; allBtn.classList.toggle('active'); frame = 0; };
+
+  sizeSlider.oninput = () => {
+    modelSize = +sizeSlider.value;
+    sizeVal.textContent = sizeLabels[modelSize];
+    frame = 0;
+  };
+
+  resetBtn.onclick = () => {
+    setMethod('lejepa');
+    sizeSlider.value = 2; modelSize = 2;
+    sizeVal.textContent = 'ViT-L';
+    frame = 0;
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 3: Architecture Agnostic ───
+(function() {
+  const canvas = document.getElementById('archCanvas');
+  const filterBtns = {
+    all: document.getElementById('archAll'),
+    vit: document.getElementById('archVit'),
+    convnext: document.getElementById('archConvnext'),
+    resnet: document.getElementById('archResnet'),
+    swin: document.getElementById('archSwin'),
+    maxvit: document.getElementById('archMaxvit'),
+  };
+  const sortAccBtn = document.getElementById('archSortAcc');
+  const sortSizeBtn = document.getElementById('archSortSize');
+  const resetBtn = document.getElementById('archReset');
+
+  let activeFilter = 'all';
+  let sortBy = 'acc';
+  let frame = 0;
+
+  // Simulated architectures
+  const rng = (function(s) { return function() { s = (s * 16807) % 2147483647; return s / 2147483647; }; })(42);
+
+  const families = ['vit', 'convnext', 'resnet', 'swin', 'maxvit'];
+  const familyColors = { vit: '#2563eb', convnext: '#059669', resnet: '#d97706', swin: '#7c3aed', maxvit: '#db2777' };
+  const familyLabels = { vit: 'ViT', convnext: 'ConvNeXt', resnet: 'ResNet', swin: 'Swin', maxvit: 'MaxViT' };
+
+  const architectures = [];
+  // Generate ~50 architectures
+  for (let i = 0; i < 12; i++) architectures.push({ family: 'vit', params: 5 + rng() * 300, acc: 91.5 + rng() * 3.5 });
+  for (let i = 0; i < 10; i++) architectures.push({ family: 'convnext', params: 3 + rng() * 200, acc: 91.8 + rng() * 3 });
+  for (let i = 0; i < 12; i++) architectures.push({ family: 'resnet', params: 2 + rng() * 100, acc: 91 + rng() * 3 });
+  for (let i = 0; i < 8; i++) architectures.push({ family: 'swin', params: 8 + rng() * 250, acc: 92 + rng() * 2.8 });
+  for (let i = 0; i < 8; i++) architectures.push({ family: 'maxvit', params: 10 + rng() * 200, acc: 92.2 + rng() * 2.5 });
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 50, r: 20, t: 30, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+
+    let filtered = activeFilter === 'all' ? [...architectures] : architectures.filter(a => a.family === activeFilter);
+
+    if (sortBy === 'acc') filtered.sort((a, b) => b.acc - a.acc);
+    else filtered.sort((a, b) => a.params - b.params);
+
+    const n = filtered.length;
+    if (n === 0) return requestAnimationFrame(draw);
+
+    const barW = Math.min(pw / n - 1, 14);
+    const gap = (pw - n * barW) / (n + 1);
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t + ph);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.moveTo(pad.l, pad.t);
+    ctx.lineTo(pad.l, pad.t + ph);
+    ctx.stroke();
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(sortBy === 'acc' ? 'Architecture (sorted by accuracy)' : 'Architecture (sorted by parameters)', pad.l + pw / 2, h - 8);
+
+    ctx.save();
+    ctx.translate(14, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('ImageNet-10 Acc. (%)', 0, 0);
+    ctx.restore();
+
+    const minAcc = 90;
+    const maxAcc = 96;
+
+    for (let v = 91; v <= 95; v++) {
+      const y = pad.t + ph - ((v - minAcc) / (maxAcc - minAcc)) * ph;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'right';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.fillText(v + '%', pad.l - 8, y + 4);
+      ctx.strokeStyle = '#e0ddd580';
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y);
+      ctx.lineTo(pad.l + pw, y);
+      ctx.stroke();
+    }
+
+    // Animate bars growing
+    const progress = Math.min(frame / 60, 1);
+
+    filtered.forEach((arch, i) => {
+      const x = pad.l + gap + i * (barW + gap);
+      const barHeight = ((arch.acc - minAcc) / (maxAcc - minAcc)) * ph * progress;
+      const y = pad.t + ph - barHeight;
+
+      ctx.fillStyle = familyColors[arch.family];
+      ctx.globalAlpha = 0.8;
+      ctx.fillRect(x, y, barW, barHeight);
+      ctx.globalAlpha = 1;
+    });
+
+    // Family legend in top right
+    let ly = pad.t + 10;
+    const shownFamilies = activeFilter === 'all' ? families : [activeFilter];
+    shownFamilies.forEach(f => {
+      ctx.fillStyle = familyColors[f];
+      ctx.fillRect(pad.l + pw - 100, ly - 8, 10, 10);
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(familyLabels[f] + ' (' + filtered.filter(a => a.family === f).length + ')', pad.l + pw - 84, ly);
+      ly += 16;
+    });
+
+    // Mean accuracy line
+    if (filtered.length > 0) {
+      const meanAcc = filtered.reduce((s, a) => s + a.acc, 0) / filtered.length;
+      const meanY = pad.t + ph - ((meanAcc - minAcc) / (maxAcc - minAcc)) * ph;
+      ctx.strokeStyle = '#c2402a80';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo(pad.l, meanY);
+      ctx.lineTo(pad.l + pw, meanY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#c2402a';
+      ctx.font = '500 11px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('mean: ' + meanAcc.toFixed(1) + '%', pad.l + 8, meanY - 6);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  Object.keys(filterBtns).forEach(k => {
+    filterBtns[k].onclick = () => {
+      activeFilter = k; frame = 0;
+      Object.keys(filterBtns).forEach(j => filterBtns[j].classList.remove('active'));
+      filterBtns[k].classList.add('active');
+    };
+  });
+
+  sortAccBtn.onclick = () => { sortBy = 'acc'; frame = 0; sortAccBtn.classList.add('active'); sortSizeBtn.classList.remove('active'); };
+  sortSizeBtn.onclick = () => { sortBy = 'size'; frame = 0; sortSizeBtn.classList.add('active'); sortAccBtn.classList.remove('active'); };
+  resetBtn.onclick = () => {
+    activeFilter = 'all'; sortBy = 'acc'; frame = 0;
+    Object.keys(filterBtns).forEach(j => filterBtns[j].classList.remove('active'));
+    filterBtns.all.classList.add('active');
+    sortAccBtn.classList.add('active'); sortSizeBtn.classList.remove('active');
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 4: Loss-Performance Correlation ───
+(function() {
+  const canvas = document.getElementById('corrCanvas');
+  const noiseSlider = document.getElementById('corrNoise');
+  const noiseVal = document.getElementById('corrNoiseVal');
+  const fitBtn = document.getElementById('corrToggleLine');
+  const resetBtn = document.getElementById('corrReset');
+
+  let noiseLevel = 0.1;
+  let showFit = false;
+  let frame = 0;
+
+  // Generate correlated data points
+  const rng = (function(s) { return function() { s = (s * 16807) % 2147483647; return (s / 2147483647 - 0.5) * 2; }; })(123);
+
+  function generatePoints(method, n, noiseMul) {
+    const points = [];
+    for (let i = 0; i < n; i++) {
+      const loss = 0.15 + Math.random() * 0.7;
+      let acc;
+      if (method === 'lejepa') {
+        acc = 80 - 35 * loss + noiseMul * 3 * rng();
+      } else {
+        acc = 75 - 25 * loss + noiseMul * 12 * rng();
+      }
+      points.push({ loss, acc: Math.max(40, Math.min(82, acc)) });
+    }
+    return points;
+  }
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 60, r: 30, t: 20, b: 50 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+
+    const lejepaPoints = generatePoints('lejepa', 40, noiseLevel);
+    const vicregPoints = generatePoints('vicreg', 40, noiseLevel);
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t + ph);
+    ctx.lineTo(pad.l + pw, pad.t + ph);
+    ctx.moveTo(pad.l, pad.t);
+    ctx.lineTo(pad.l, pad.t + ph);
+    ctx.stroke();
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Training Loss', pad.l + pw / 2, h - 8);
+
+    ctx.save();
+    ctx.translate(14, pad.t + ph / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Linear Probe Acc. (%)', 0, 0);
+    ctx.restore();
+
+    const lossMin = 0.1, lossMax = 0.9;
+    const accMin = 40, accMax = 85;
+
+    // Grid
+    for (let v = 0.2; v <= 0.8; v += 0.2) {
+      const x = pad.l + ((v - lossMin) / (lossMax - lossMin)) * pw;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'center';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.fillText(v.toFixed(1), x, pad.t + ph + 18);
+    }
+    for (let v = 50; v <= 80; v += 10) {
+      const y = pad.t + ph - ((v - accMin) / (accMax - accMin)) * ph;
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'right';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.fillText(v + '%', pad.l - 8, y + 4);
+      ctx.strokeStyle = '#e0ddd580';
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y);
+      ctx.lineTo(pad.l + pw, y);
+      ctx.stroke();
+    }
+
+    function plotPoints(points, color) {
+      points.forEach(p => {
+        const x = pad.l + ((p.loss - lossMin) / (lossMax - lossMin)) * pw;
+        const y = pad.t + ph - ((p.acc - accMin) / (accMax - accMin)) * ph;
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = color + '80';
+        ctx.fill();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+    }
+
+    // Plot VICReg first (background)
+    plotPoints(vicregPoints, '#2563eb');
+    plotPoints(lejepaPoints, '#c2402a');
+
+    // Fit lines
+    if (showFit) {
+      function drawFitLine(points, color) {
+        // Simple linear regression
+        const n = points.length;
+        let sx = 0, sy = 0, sxx = 0, sxy = 0;
+        points.forEach(p => { sx += p.loss; sy += p.acc; sxx += p.loss * p.loss; sxy += p.loss * p.acc; });
+        const slope = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+        const intercept = (sy - slope * sx) / n;
+
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        const x1 = lossMin, x2 = lossMax;
+        const y1 = slope * x1 + intercept, y2 = slope * x2 + intercept;
+        const sx1 = pad.l + ((x1 - lossMin) / (lossMax - lossMin)) * pw;
+        const sy1 = pad.t + ph - ((y1 - accMin) / (accMax - accMin)) * ph;
+        const sx2 = pad.l + ((x2 - lossMin) / (lossMax - lossMin)) * pw;
+        const sy2 = pad.t + ph - ((y2 - accMin) / (accMax - accMin)) * ph;
+        ctx.moveTo(sx1, sy1);
+        ctx.lineTo(sx2, sy2);
+        ctx.stroke();
+
+        // Correlation coefficient
+        const meanX = sx / n, meanY = sy / n;
+        let num = 0, denX = 0, denY = 0;
+        points.forEach(p => {
+          num += (p.loss - meanX) * (p.acc - meanY);
+          denX += (p.loss - meanX) * (p.loss - meanX);
+          denY += (p.acc - meanY) * (p.acc - meanY);
+        });
+        return num / Math.sqrt(denX * denY);
+      }
+
+      const rLe = drawFitLine(lejepaPoints, '#c2402a');
+      const rVic = drawFitLine(vicregPoints, '#2563eb');
+
+      ctx.font = '500 12px "Source Code Pro", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#c2402a';
+      ctx.fillText('r = ' + rLe.toFixed(2), pad.l + pw - 8, pad.t + 20);
+      ctx.fillStyle = '#2563eb';
+      ctx.fillText('r = ' + rVic.toFixed(2), pad.l + pw - 8, pad.t + 36);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  noiseSlider.oninput = () => { noiseLevel = +noiseSlider.value; noiseVal.textContent = noiseLevel.toFixed(2); };
+  fitBtn.onclick = () => { showFit = !showFit; fitBtn.classList.toggle('active'); };
+  resetBtn.onclick = () => {
+    noiseSlider.value = 0.1; noiseLevel = 0.1; noiseVal.textContent = '0.10';
+    showFit = false; fitBtn.classList.remove('active');
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 5: Hyperparameter Comparison ───
+(function() {
+  const canvas = document.getElementById('hpCanvas');
+  const lejepaBtn = document.getElementById('hpLejepa');
+  const othersBtn = document.getElementById('hpOthers');
+  const resetBtn = document.getElementById('hpReset');
+
+  let showOthers = false;
+  let frame = 0;
+
+  const lejepaConfig = [
+    { param: '\u03BB (regularization)', value: '0.5', status: 'fixed' },
+    { param: 'Learning rate', value: '1.5e-4', status: 'fixed' },
+    { param: 'Batch size', value: '512', status: 'fixed' },
+    { param: 'Views', value: '2 global + 4 local', status: 'fixed' },
+    { param: 'Freq. slices', value: '2048', status: 'fixed' },
+    { param: 'EMA rate', value: 'N/A (not used)', status: 'eliminated' },
+    { param: 'Stop-gradient', value: 'N/A (not used)', status: 'eliminated' },
+    { param: 'Temp. schedule', value: 'N/A (not used)', status: 'eliminated' },
+  ];
+
+  const othersConfig = [
+    { param: '\u03BB_var / \u03BB_cov / \u03BB_inv', value: 'tuned per scale', status: 'tuned', method: 'VICReg' },
+    { param: 'Learning rate', value: 'tuned per scale', status: 'tuned', method: 'All' },
+    { param: 'Batch size', value: '4096+ required', status: 'tuned', method: 'SimCLR' },
+    { param: 'EMA rate \u03C4', value: '0.996\u20130.9999', status: 'tuned', method: 'DINO' },
+    { param: 'Teacher temp.', value: 'scheduled', status: 'tuned', method: 'DINO' },
+    { param: 'Student temp.', value: '0.1 (fragile)', status: 'tuned', method: 'DINO' },
+    { param: 'Centering', value: 'required', status: 'tuned', method: 'DINO' },
+    { param: 'Warmup epochs', value: '10\u201330 (scale-dep.)', status: 'tuned', method: 'All' },
+  ];
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const config = showOthers ? othersConfig : lejepaConfig;
+    const pad = { l: 30, r: 30, t: 40, b: 20 };
+    const rowH = (h - pad.t - pad.b) / config.length;
+
+    // Title
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '600 16px "Newsreader", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(showOthers ? 'Other Methods: Per-Scale Tuning Required' : 'Le-JEPA: One Configuration for All Scales', w / 2, pad.t - 12);
+
+    config.forEach((item, i) => {
+      const y = pad.t + i * rowH;
+      const animDelay = i * 4;
+      const alpha = Math.min(1, Math.max(0, (frame - animDelay) / 20));
+
+      ctx.globalAlpha = alpha;
+
+      // Row background
+      if (i % 2 === 0) {
+        ctx.fillStyle = '#faf9f608';
+        ctx.fillRect(pad.l, y, w - pad.l - pad.r, rowH);
+      }
+
+      // Param name
+      ctx.fillStyle = '#4a4a6a';
+      ctx.font = '500 13px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(item.param, pad.l + 10, y + rowH / 2 + 5);
+
+      // Value
+      const valueX = w * 0.55;
+      ctx.font = '13px "Source Code Pro", monospace';
+
+      if (item.status === 'fixed') {
+        ctx.fillStyle = '#059669';
+        ctx.fillText(item.value, valueX, y + rowH / 2 + 5);
+        // Checkmark
+        ctx.fillStyle = '#059669';
+        ctx.font = '16px sans-serif';
+        ctx.fillText('\u2713', valueX - 20, y + rowH / 2 + 6);
+      } else if (item.status === 'eliminated') {
+        ctx.fillStyle = '#8888a0';
+        ctx.fillText(item.value, valueX, y + rowH / 2 + 5);
+        // Strikethrough
+        ctx.strokeStyle = '#8888a060';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(valueX, y + rowH / 2 + 1);
+        ctx.lineTo(valueX + ctx.measureText(item.value).width, y + rowH / 2 + 1);
+        ctx.stroke();
+      } else if (item.status === 'tuned') {
+        ctx.fillStyle = '#c2402a';
+        ctx.fillText(item.value, valueX, y + rowH / 2 + 5);
+        // Warning
+        ctx.font = '14px sans-serif';
+        ctx.fillText('\u26A0', valueX - 20, y + rowH / 2 + 6);
+        // Method tag
+        if (item.method) {
+          ctx.font = '10px "Source Code Pro", monospace';
+          ctx.fillStyle = '#8888a0';
+          ctx.fillText(item.method, w - pad.r - 60, y + rowH / 2 + 5);
+        }
+      }
+
+      // Separator
+      ctx.strokeStyle = '#e0ddd5';
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y + rowH);
+      ctx.lineTo(w - pad.r, y + rowH);
+      ctx.stroke();
+
+      ctx.globalAlpha = 1;
+    });
+
+    // Scale indicators at bottom
+    const scales = ['ViT-S', 'ViT-B', 'ViT-L', 'ViT-H', 'ViT-g'];
+    const scaleY = h - pad.b - 2;
+    scales.forEach((s, i) => {
+      const x = pad.l + 60 + i * (pw => (w - pad.l - pad.r - 120) / 4)(i);
+      const x2 = pad.l + 60 + i * ((w - pad.l - pad.r - 120) / 4);
+      ctx.fillStyle = showOthers ? '#c2402a' : '#059669';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      const pulse = showOthers ? (0.5 + 0.5 * Math.sin(frame * 0.05 + i)) : 1;
+      ctx.globalAlpha = pulse;
+      ctx.fillText(s, x2, scaleY);
+      if (showOthers) {
+        ctx.fillText(i >= 3 ? 'UNSTABLE' : 'OK', x2, scaleY + 14);
+      } else {
+        ctx.fillText('STABLE', x2, scaleY + 14);
+      }
+      ctx.globalAlpha = 1;
+    });
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  lejepaBtn.onclick = () => { showOthers = false; frame = 0; lejepaBtn.classList.add('active'); othersBtn.classList.remove('active'); };
+  othersBtn.onclick = () => { showOthers = true; frame = 0; othersBtn.classList.add('active'); lejepaBtn.classList.remove('active'); };
+  resetBtn.onclick = () => { showOthers = false; frame = 0; lejepaBtn.classList.add('active'); othersBtn.classList.remove('active'); };
+
+  draw();
+})();
+</script>
+
+</body>
+</html>

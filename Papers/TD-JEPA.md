@@ -16,6 +16,8 @@ aliases: [TD-JEPA, Temporal Difference JEPA]
 
 !PDFs/TD-JEPA.pdf
 
+> **Interactive Explainer:** [TD-JEPA — temporal difference JEPA, zero-shot control, representation probing](https://dxlrak3ky5x8b.cloudfront.net/Explainers/td-jepa/index.html)
+
 
 # TD-JEPA: Latent-predictive Representations for Zero-Shot Reinforcement Learning
 

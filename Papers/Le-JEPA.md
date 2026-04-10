@@ -17,6 +17,8 @@ aliases: [LeJEPA, Le-JEPA]
 
 !PDFs/Le-JEPA.pdf
 
+> **Interactive Explainer:** [LeJEPA — SIGReg loss, view augmentation, scaling behavior](https://dxlrak3ky5x8b.cloudfront.net/Explainers/le-jepa/index.html)
+
 
 # LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics
 

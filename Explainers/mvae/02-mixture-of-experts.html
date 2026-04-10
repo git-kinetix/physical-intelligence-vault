@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 &mdash; Mixture of Experts Decoder &mdash; Motion VAE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #faf9f6;
+  --bg-alt: #f3f0eb;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent: #c2402a;
+  --accent-hover: #a03520;
+  --blue: #2563eb;
+  --green: #059669;
+  --purple: #7c3aed;
+  --orange: #d97706;
+  --pink: #db2777;
+  --teal: #0891b2;
+  --border: #e0ddd5;
+  --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+  --font-mono: 'Source Code Pro', 'Menlo', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+.prose { margin-bottom: 40px; }
+.prose p { margin-bottom: 18px; color: var(--text-secondary); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 500; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+.equation-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 28px;
+  margin: 24px 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+}
+.equation-block .var { color: var(--accent); }
+.equation-block .blue { color: var(--blue); }
+
+.figure-wrap {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 28px 0 40px;
+  box-shadow: var(--card-shadow);
+}
+
+.figure-wrap canvas {
+  display: block;
+  width: 100%;
+}
+
+.figure-caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+
+.controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-alt);
+  flex-wrap: wrap;
+}
+
+.controls-bar label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.controls-bar input[type="range"] {
+  width: 90px;
+  accent-color: var(--accent);
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: white;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+.btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.spacer { flex: 1; }
+
+/* Expert toggle buttons with custom colors */
+.expert-btn { position: relative; padding-left: 22px; }
+.expert-btn::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.expert-btn.on { font-weight: 600; }
+.expert-btn.off { opacity: 0.45; text-decoration: line-through; }
+
+.expert-btn[data-idx="0"]::before { background: #c2402a; }
+.expert-btn[data-idx="1"]::before { background: #2563eb; }
+.expert-btn[data-idx="2"]::before { background: #059669; }
+.expert-btn[data-idx="3"]::before { background: #d97706; }
+.expert-btn[data-idx="4"]::before { background: #7c3aed; }
+.expert-btn[data-idx="5"]::before { background: #db2777; }
+
+/* Dual figure */
+.dual-figure {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.dual-figure .dual-panel { position: relative; }
+.dual-figure .dual-panel + .dual-panel { border-left: 1px solid var(--border); }
+.dual-figure canvas { display: block; width: 100%; }
+.dual-label {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .dual-figure { grid-template-columns: 1fr; }
+  .dual-figure .dual-panel + .dual-panel { border-left: none; border-top: 1px solid var(--border); }
+}
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 48px 0 0;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+.page-nav a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.page-nav a:hover { color: var(--accent); }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0 56px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+footer a:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <a href="index.html" class="back-link">&larr; Motion VAE Explorations</a>
+
+  <header>
+    <span class="overline">Exploration 02</span>
+    <h1>Mixture of Experts Decoder</h1>
+    <p class="subtitle">
+      A single feedforward decoder struggles to cover the full diversity of human
+      motion. MVAE uses a Mixture of Experts (MoE) architecture with 6 expert
+      networks, each specializing on different motion patterns.
+    </p>
+  </header>
+
+  <div class="prose">
+    <p>
+      Why does a single decoder network fail? Human motion is <strong>multi-modal</strong>:
+      walking, running, turning, stopping, and idle standing have fundamentally
+      different dynamics. A single network must average over these modes, producing
+      blurry, artifact-laden motion. The MoE decoder solves this by routing different
+      inputs to different specialized experts, blended by a learned gating network.
+    </p>
+  </div>
+
+  <div class="equation-block">
+    <span class="var">p</span><sub>t</sub> = <span class="blue">&Sigma;</span><sub>i=1</sub><sup>6</sup>
+    <span class="var">g</span><sub>i</sub>(p<sub>t-1</sub>, z) &middot;
+    <span class="blue">E</span><sub>i</sub>(p<sub>t-1</sub>, z)
+  </div>
+
+  <div class="prose">
+    <p>
+      The gating network <em>g</em> takes the previous pose and latent code as input
+      and outputs a softmax distribution over the 6 experts. Each expert <em>E<sub>i</sub></em>
+      independently predicts the next pose, and the final output is their weighted
+      blend. A critical design choice is that <strong>z is injected at every layer</strong>
+      of each expert network, not just the input layer. This prevents posterior
+      collapse&thinsp;&mdash;&thinsp;without it, the decoder learns to ignore z entirely
+      and just copies the input pose.
+    </p>
+  </div>
+
+  <div class="margin-note">
+    Both the gating network and each expert are three-layer feedforward networks with
+    256 hidden units and ELU activations. The gating network's output passes through
+    a softmax to produce blending weights that sum to 1.
+  </div>
+
+  <h2>Expert Specialization</h2>
+
+  <div class="prose">
+    <p>
+      The visualization below shows how each expert specializes. The circular
+      display on the left maps different motion types around the perimeter. The
+      <strong>gating weights</strong> at center show which experts activate most
+      strongly for the current motion. On the right, the resulting blended motion
+      plays on a stick figure. Use the motion type selector to see how the expert
+      mixture shifts.
+    </p>
+  </div>
+
+  <div class="figure-wrap">
+    <canvas id="gating-canvas" height="420"></canvas>
+    <div class="controls-bar">
+      <label>Motion:
+        <input type="range" id="motion-slider" min="0" max="100" step="1" value="20">
+      </label>
+      <span class="spacer"></span>
+      <span id="motion-label" style="font-family:var(--font-mono);font-size:11px;color:var(--accent);">WALK</span>
+    </div>
+    <div class="figure-caption">
+      Drag the motion slider to transition between idle, walk, run, turn, and jump.
+      Watch how the gating weights redistribute across experts. Expert colors match
+      the contribution bars.
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      Notice how <strong>walking engages primarily experts 1 and 2</strong> (locomotion
+      specialists), while <strong>jumping activates expert 4</strong> (the dynamics expert)
+      along with contributions from experts 0 and 5 for the take-off and landing phases.
+      Turning produces a distinctive three-expert blend. This soft specialization
+      emerges entirely from training&thinsp;&mdash;&thinsp;no motion labels guide
+      the expert assignment.
+    </p>
+  </div>
+
+  <h2>Expert Ablation</h2>
+
+  <div class="prose">
+    <p>
+      What happens when experts are removed? Toggle individual experts on and off below
+      to see how motion quality degrades. The left panel shows the full 6-expert
+      output; the right panel shows the ablated version with your selected subset.
+      The quality meter beneath tracks foot skating artifacts&thinsp;&mdash;&thinsp;the
+      paper's primary quality metric.
+    </p>
+  </div>
+
+  <div class="figure-wrap">
+    <div class="dual-figure">
+      <div class="dual-panel">
+        <span class="dual-label">All 6 Experts</span>
+        <canvas id="full-canvas" height="360"></canvas>
+      </div>
+      <div class="dual-panel">
+        <span class="dual-label">Ablated</span>
+        <canvas id="ablated-canvas" height="360"></canvas>
+      </div>
+    </div>
+    <div class="controls-bar" id="expert-toggles">
+      <button class="btn expert-btn on" data-idx="0">E0 Stance</button>
+      <button class="btn expert-btn on" data-idx="1">E1 Walk</button>
+      <button class="btn expert-btn on" data-idx="2">E2 Stride</button>
+      <button class="btn expert-btn on" data-idx="3">E3 Turn</button>
+      <button class="btn expert-btn on" data-idx="4">E4 Jump</button>
+      <button class="btn expert-btn on" data-idx="5">E5 Blend</button>
+      <span class="spacer"></span>
+      <button class="btn" id="btn-all-on">All On</button>
+      <button class="btn" id="btn-reset-ablation">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Toggle expert buttons to disable them. Removing key experts introduces visible
+      artifacts: foot skating, jerky transitions, and loss of motion diversity.
+      The paper found that reducing from 6 to 4 experts consistently increased foot skating.
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The results from the paper confirm what this ablation demonstrates:
+      <strong>reducing from 6 to 4 experts</strong> increases foot skating from
+      0.067 to 0.085 cm/frame on random walks, and from 0.24 to 0.38 cm/frame
+      on maze navigation. The 6-expert configuration also produces more symmetric
+      turning behavior (1.70 s left vs. 1.56 s right), compared to the 4-expert
+      model's pronounced handedness bias (1.63 s left vs. 1.11 s right).
+    </p>
+  </div>
+
+  <h2>Latent Injection Depth</h2>
+
+  <div class="prose">
+    <p>
+      One of the paper's key architectural insights is that <strong>z must be passed
+      to every layer</strong> of each expert, not just the input. The figure below
+      illustrates why. When z is only at the input, the deep layers learn to ignore it,
+      and the model collapses to a deterministic copy of the previous pose (posterior
+      collapse). When z penetrates every layer, the decoder remains dependent on
+      the latent code, preserving the VAE's generative capability.
+    </p>
+  </div>
+
+  <div class="figure-wrap">
+    <canvas id="injection-canvas" height="340"></canvas>
+    <div class="controls-bar">
+      <label>Injection depth:
+        <select id="injection-select" style="font-family:var(--font-mono);font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:3px;background:white;">
+          <option value="all">All Layers (MVAE default)</option>
+          <option value="first">Input Layer Only</option>
+          <option value="none">No z Injection</option>
+        </select>
+      </label>
+      <span class="spacer"></span>
+      <button class="btn" id="btn-reset-injection">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Compare how injection depth affects the decoder's use of the latent code. "Input Only"
+      shows partial collapse; "No z" shows full posterior collapse where all z samples produce
+      identical output.
+    </div>
+  </div>
+
+  <div class="margin-note">
+    Posterior collapse is a well-known failure mode of VAEs where the decoder learns
+    to ignore the latent code, making the KL term trivially zero. The beta=0.2
+    weighting further mitigates this by under-penalizing the KL divergence.
+  </div>
+
+  <h2>Expert Count: 4 vs. 6</h2>
+
+  <div class="prose">
+    <p>
+      The paper ablates the number of experts (N=4 vs. N=6) and finds consistent
+      improvements from having more experts. The visualization below compares
+      the two configurations side by side across the paper's key metrics. With
+      4 experts, foot skating nearly doubles on maze navigation (0.24 to 0.38 cm/frame),
+      and a pronounced <strong>handedness bias</strong> emerges: the 4-expert
+      model turns right in 1.11 seconds but takes 1.63 seconds to turn left.
+    </p>
+    <p>
+      This asymmetry is attributed to the interaction between RL exploration
+      and a limited expert pool. With fewer experts, the RL agent discovers
+      effective right-turning strategies early and exploits them, leading to
+      an asymmetric policy. With 6 experts, there is enough capacity for
+      symmetric specialization, and the model achieves 1.70 s left vs. 1.56 s
+      right&thinsp;&mdash;&thinsp;a much more balanced controller.
+    </p>
+  </div>
+
+  <div class="figure-wrap">
+    <canvas id="comparison-canvas" height="320"></canvas>
+    <div class="controls-bar">
+      <label>Metric:
+        <select id="metric-select" style="font-family:var(--font-mono);font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:3px;background:white;">
+          <option value="skating">Foot Skating (cm/frame)</option>
+          <option value="response">Joystick Response Time (s)</option>
+          <option value="symmetry">Turning Symmetry (L vs R)</option>
+        </select>
+      </label>
+      <span class="spacer"></span>
+      <button class="btn" id="btn-reset-compare">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Comparison of N=4 and N=6 expert configurations. The 6-expert model achieves lower
+      foot skating, more symmetric turning, and comparable response times. Data from Tables 1
+      and 2 of the paper.
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The soft specialization of the MoE decoder is one of MVAE's most elegant
+      contributions. Rather than requiring explicit motion labels to assign motions
+      to different networks (as in earlier phase-based methods), the gating network
+      <strong>discovers the natural modes of human motion</strong> during training.
+      The 6-expert configuration provides enough capacity to cover the full
+      diversity of the motion capture data while maintaining smooth blending
+      between motion types.
+    </p>
+    <p>
+      This insight has influenced subsequent work in character animation, where
+      mixture-of-experts architectures have become a standard component for handling
+      multi-modal motion distributions. The key lesson is that <strong>soft routing
+      outperforms hard assignment</strong>&thinsp;&mdash;&thinsp;real human motion
+      exists on a continuum, and the gating network's continuous blending weights
+      capture this better than discrete motion categories ever could.
+    </p>
+  </div>
+
+  <nav class="page-nav">
+    <a href="01-latent-action-space.html">&larr; 01: Latent Action Space</a>
+    <a href="03-scheduled-sampling.html">03: Scheduled Sampling &rarr;</a>
+  </nav>
+
+</div>
+
+<footer>
+  <a href="index.html">Motion VAE Explorations</a> &ensp;&middot;&ensp;
+  <a href="https://arxiv.org/abs/2103.14274">Paper</a> &ensp;&middot;&ensp;
+  <a href="https://github.com/electronicarts/character-motion-vaes">Code</a>
+</footer>
+
+<script>
+// Expert colors
+const EXPERT_COLORS = ['#c2402a','#2563eb','#059669','#d97706','#7c3aed','#db2777'];
+const EXPERT_NAMES = ['E0 Stance','E1 Walk','E2 Stride','E3 Turn','E4 Jump','E5 Blend'];
+
+// Motion types mapped to 0-100 slider
+const MOTION_TYPES = [
+  { name: 'IDLE', pos: 0 },
+  { name: 'WALK', pos: 20 },
+  { name: 'RUN', pos: 45 },
+  { name: 'TURN', pos: 65 },
+  { name: 'JUMP', pos: 85 },
+  { name: 'STOP', pos: 100 },
+];
+
+// Expert gating profiles for each motion type (6 experts)
+// Each array sums to ~1
+const GATING_PROFILES = {
+  IDLE:  [0.55, 0.10, 0.05, 0.05, 0.05, 0.20],
+  WALK:  [0.08, 0.40, 0.30, 0.05, 0.02, 0.15],
+  RUN:   [0.03, 0.15, 0.45, 0.05, 0.12, 0.20],
+  TURN:  [0.10, 0.15, 0.08, 0.42, 0.05, 0.20],
+  JUMP:  [0.12, 0.05, 0.08, 0.05, 0.50, 0.20],
+  STOP:  [0.40, 0.15, 0.05, 0.15, 0.03, 0.22],
+};
+
+// State
+let motionValue = 20;
+let expertEnabled = [true, true, true, true, true, true];
+let injectionMode = 'all';
+let frame = 0;
+
+// Interpolate gating weights from slider position
+function getGatingWeights(sliderVal) {
+  // Find surrounding motion types
+  let lower = MOTION_TYPES[0], upper = MOTION_TYPES[MOTION_TYPES.length - 1];
+  for (let i = 0; i < MOTION_TYPES.length - 1; i++) {
+    if (sliderVal >= MOTION_TYPES[i].pos && sliderVal <= MOTION_TYPES[i+1].pos) {
+      lower = MOTION_TYPES[i];
+      upper = MOTION_TYPES[i+1];
+      break;
+    }
+  }
+  const t = upper.pos === lower.pos ? 0 : (sliderVal - lower.pos) / (upper.pos - lower.pos);
+  const wL = GATING_PROFILES[lower.name];
+  const wU = GATING_PROFILES[upper.name];
+  return wL.map((v, i) => v * (1 - t) + wU[i] * t);
+}
+
+function getMotionName(sliderVal) {
+  let best = MOTION_TYPES[0];
+  let bestDist = Infinity;
+  MOTION_TYPES.forEach(m => {
+    const d = Math.abs(sliderVal - m.pos);
+    if (d < bestDist) { bestDist = d; best = m; }
+  });
+  return best.name;
+}
+
+// ============================================================
+// Figure 1: Gating visualization
+// ============================================================
+(function() {
+  const canvas = document.getElementById('gating-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const slider = document.getElementById('motion-slider');
+  const label = document.getElementById('motion-label');
+
+  function resize() {
+    const r = canvas.parentElement.getBoundingClientRect();
+    canvas.width = r.width * devicePixelRatio;
+    canvas.height = 420 * devicePixelRatio;
+    canvas.style.height = '420px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  slider.addEventListener('input', () => {
+    motionValue = parseFloat(slider.value);
+    label.textContent = getMotionName(motionValue);
+  });
+
+  // Smooth gating weights for animation
+  let smoothWeights = [0.08, 0.40, 0.30, 0.05, 0.02, 0.15];
+
+  function drawStickFigure(ctx, cx, baseY, t, energy, weights) {
+    const phase = t * (0.5 + energy * 2.5) * 0.06;
+    const stride = 0.3 + energy * 0.6;
+    const bounce = Math.sin(phase * 2) * (0.02 + energy * 0.06) * 100;
+    const hipY = baseY - 50 - bounce;
+    const shoulderY = hipY - 38;
+    const headY = shoulderY - 22;
+
+    // Jumping effect from E4 weight
+    let jumpOff = 0;
+    if (weights[4] > 0.2) {
+      jumpOff = Math.abs(Math.sin(phase * 0.5)) * weights[4] * 50;
+    }
+
+    const totalHipY = hipY - jumpOff;
+    const totalShoulderY = shoulderY - jumpOff;
+    const totalHeadY = headY - jumpOff;
+    const totalBaseY = baseY - jumpOff;
+
+    // Lean from turn expert
+    const lean = weights[3] * Math.sin(phase * 0.7) * 12;
+
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#1a1a2e';
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(cx + lean * 0.3, totalHeadY, 7, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Spine
+    ctx.beginPath();
+    ctx.moveTo(cx + lean * 0.3, totalHeadY + 7);
+    ctx.lineTo(cx + lean * 0.2, totalShoulderY);
+    ctx.lineTo(cx, totalHipY);
+    ctx.stroke();
+
+    // Arms
+    const aSwing = Math.sin(phase) * (0.2 + energy * 0.4) * 18;
+    ctx.beginPath();
+    ctx.moveTo(cx - 14 + aSwing + lean, totalShoulderY + 16);
+    ctx.lineTo(cx + lean * 0.2, totalShoulderY);
+    ctx.lineTo(cx + 14 - aSwing + lean, totalShoulderY + 16);
+    ctx.stroke();
+
+    // Legs
+    const lSwing = Math.sin(phase) * stride * 18;
+    ctx.beginPath();
+    ctx.moveTo(cx - 10 + lSwing, totalBaseY);
+    ctx.lineTo(cx, totalHipY);
+    ctx.lineTo(cx + 10 - lSwing, totalBaseY);
+    ctx.stroke();
+
+    // Feet
+    ctx.beginPath();
+    ctx.moveTo(cx - 10 + lSwing, totalBaseY);
+    ctx.lineTo(cx - 3 + lSwing, totalBaseY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + 10 - lSwing, totalBaseY);
+    ctx.lineTo(cx + 17 - lSwing, totalBaseY);
+    ctx.stroke();
+  }
+
+  function draw() {
+    const w = canvas.width / devicePixelRatio;
+    const h = canvas.height / devicePixelRatio;
+    ctx.clearRect(0, 0, w, h);
+
+    const weights = getGatingWeights(motionValue);
+
+    // Smooth interpolation
+    for (let i = 0; i < 6; i++) {
+      smoothWeights[i] += (weights[i] - smoothWeights[i]) * 0.08;
+    }
+
+    // === Left side: Expert radar / pie ===
+    const radarCx = w * 0.28;
+    const radarCy = h * 0.45;
+    const radarR = Math.min(w * 0.2, 120);
+
+    // Background circle
+    ctx.beginPath();
+    ctx.arc(radarCx, radarCy, radarR + 10, 0, Math.PI * 2);
+    ctx.fillStyle = '#f8f7f4';
+    ctx.fill();
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Radar rings
+    for (let r = 1; r <= 3; r++) {
+      ctx.beginPath();
+      ctx.arc(radarCx, radarCy, radarR * r / 3, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(224,221,213,${0.3 + r * 0.15})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+
+    // Expert sectors and bars
+    for (let i = 0; i < 6; i++) {
+      const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+      const nextAngle = ((i + 1) / 6) * Math.PI * 2 - Math.PI / 2;
+
+      // Sector fill based on weight
+      ctx.beginPath();
+      ctx.moveTo(radarCx, radarCy);
+      ctx.arc(radarCx, radarCy, radarR * smoothWeights[i] * 1.8, angle, nextAngle);
+      ctx.closePath();
+      ctx.fillStyle = EXPERT_COLORS[i];
+      ctx.globalAlpha = 0.25;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Sector border
+      ctx.beginPath();
+      ctx.moveTo(radarCx, radarCy);
+      ctx.lineTo(radarCx + Math.cos(angle) * radarR, radarCy + Math.sin(angle) * radarR);
+      ctx.strokeStyle = '#e0ddd5';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+
+      // Expert label
+      const labelR = radarR + 24;
+      const midAngle = (angle + nextAngle) / 2;
+      const lx = radarCx + Math.cos(midAngle) * labelR;
+      const ly = radarCy + Math.sin(midAngle) * labelR;
+      ctx.fillStyle = EXPERT_COLORS[i];
+      ctx.font = '500 10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('E' + i, lx, ly);
+    }
+
+    // Center label
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(getMotionName(motionValue), radarCx, radarCy);
+
+    // === Center: Contribution bars ===
+    const barX = w * 0.48;
+    const barW = w * 0.14;
+    const barStartY = 60;
+    const barSpacing = 48;
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('GATING WEIGHTS', barX, 40);
+
+    for (let i = 0; i < 6; i++) {
+      const y = barStartY + i * barSpacing;
+
+      // Label
+      ctx.fillStyle = '#4a4a6a';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(EXPERT_NAMES[i], barX, y + 3);
+
+      // Bar track
+      ctx.fillStyle = '#f0ede8';
+      ctx.fillRect(barX, y + 10, barW, 12);
+
+      // Bar fill
+      ctx.fillStyle = EXPERT_COLORS[i];
+      ctx.globalAlpha = 0.7;
+      const fillW = smoothWeights[i] * barW * 1.8;
+      ctx.fillRect(barX, y + 10, Math.min(fillW, barW), 12);
+      ctx.globalAlpha = 1;
+
+      // Percentage
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText((smoothWeights[i] * 100).toFixed(0) + '%', barX + barW + 6, y + 20);
+    }
+
+    // === Right side: Blended stick figure ===
+    const figCx = w * 0.82;
+    const figBaseY = h * 0.82;
+    const energy = smoothWeights[2] * 1.2 + smoothWeights[4] * 0.8 + smoothWeights[1] * 0.3;
+
+    // Ground
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(figCx - 60, figBaseY + 2);
+    ctx.lineTo(figCx + 60, figBaseY + 2);
+    ctx.stroke();
+
+    drawStickFigure(ctx, figCx, figBaseY, frame, Math.min(1, energy), smoothWeights);
+
+    // "Output" label
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('BLENDED OUTPUT', figCx, 40);
+
+    // Arrow from bars to figure
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    const arrowStartX = barX + barW + 30;
+    const arrowEndX = figCx - 70;
+    const arrowY = h * 0.45;
+    ctx.beginPath();
+    ctx.moveTo(arrowStartX, arrowY);
+    ctx.lineTo(arrowEndX, arrowY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(arrowEndX, arrowY);
+    ctx.lineTo(arrowEndX - 6, arrowY - 4);
+    ctx.lineTo(arrowEndX - 6, arrowY + 4);
+    ctx.closePath();
+    ctx.fillStyle = '#e0ddd5';
+    ctx.fill();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+
+// ============================================================
+// Figure 2: Expert ablation comparison
+// ============================================================
+(function() {
+  const fc = document.getElementById('full-canvas');
+  const ac = document.getElementById('ablated-canvas');
+  if (!fc || !ac) return;
+
+  const fctx = fc.getContext('2d');
+  const actx = ac.getContext('2d');
+
+  function resize() {
+    [fc, ac].forEach(c => {
+      const r = c.parentElement.getBoundingClientRect();
+      c.width = r.width * devicePixelRatio;
+      c.height = 360 * devicePixelRatio;
+      c.style.height = '360px';
+      c.getContext('2d').scale(devicePixelRatio, devicePixelRatio);
+    });
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Toggle buttons
+  document.querySelectorAll('.expert-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx);
+      expertEnabled[idx] = !expertEnabled[idx];
+      btn.classList.toggle('on', expertEnabled[idx]);
+      btn.classList.toggle('off', !expertEnabled[idx]);
+    });
+  });
+
+  document.getElementById('btn-all-on').addEventListener('click', () => {
+    expertEnabled.fill(true);
+    document.querySelectorAll('.expert-btn').forEach(btn => {
+      btn.classList.add('on');
+      btn.classList.remove('off');
+    });
+  });
+
+  document.getElementById('btn-reset-ablation').addEventListener('click', () => {
+    expertEnabled.fill(true);
+    document.querySelectorAll('.expert-btn').forEach(btn => {
+      btn.classList.add('on');
+      btn.classList.remove('off');
+    });
+  });
+
+  function drawFigureWithQuality(ctx, w, h, t, enabledExperts, isAblated) {
+    ctx.clearRect(0, 0, w, h);
+
+    const weights = getGatingWeights(motionValue);
+    const activeCount = enabledExperts.filter(Boolean).length;
+
+    // Compute ablated weights (redistribute disabled expert weight)
+    let ablatedWeights = weights.slice();
+    if (isAblated) {
+      let disabledMass = 0;
+      ablatedWeights = weights.map((w2, i) => {
+        if (!enabledExperts[i]) { disabledMass += w2; return 0; }
+        return w2;
+      });
+      const activeSum = ablatedWeights.reduce((a, b) => a + b, 0);
+      if (activeSum > 0) {
+        ablatedWeights = ablatedWeights.map(w2 => w2 / activeSum);
+      }
+    }
+
+    // Quality degrades with fewer experts
+    const qualityFactor = isAblated ? activeCount / 6 : 1;
+
+    // Figure parameters
+    const cx = w / 2;
+    const groundY = h * 0.72;
+    const energy = ablatedWeights[2] * 1.2 + ablatedWeights[4] * 0.8 + ablatedWeights[1] * 0.3;
+    const phase = t * (0.5 + energy * 2) * 0.06;
+
+    // Noise increases with fewer experts (simulates foot skating / artifacts)
+    const noise = isAblated ? (1 - qualityFactor) * 6 : 0;
+    const jitter = () => (Math.random() - 0.5) * noise;
+
+    const bounce = Math.sin(phase * 2) * (0.02 + energy * 0.06) * 80;
+    const hipY = groundY - 48 - bounce;
+    const shoulderY = hipY - 36;
+    const headY = shoulderY - 20;
+
+    // Jump from E4
+    let jumpOff = 0;
+    if (ablatedWeights[4] > 0.15) {
+      jumpOff = Math.abs(Math.sin(phase * 0.5)) * ablatedWeights[4] * 40;
+    }
+
+    const lean = ablatedWeights[3] * Math.sin(phase * 0.7) * 10;
+
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = isAblated && activeCount < 6 ? '#c2402a' : '#1a1a2e';
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(cx + lean * 0.3 + jitter(), headY - jumpOff + jitter(), 7, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Spine
+    ctx.beginPath();
+    ctx.moveTo(cx + lean * 0.3 + jitter(), headY + 7 - jumpOff);
+    ctx.lineTo(cx + lean * 0.2 + jitter(), shoulderY - jumpOff);
+    ctx.lineTo(cx + jitter(), hipY - jumpOff);
+    ctx.stroke();
+
+    // Arms
+    const aSwing = Math.sin(phase) * (0.2 + energy * 0.4) * 16;
+    ctx.beginPath();
+    ctx.moveTo(cx - 13 + aSwing + lean + jitter(), shoulderY + 14 - jumpOff + jitter());
+    ctx.lineTo(cx + lean * 0.2, shoulderY - jumpOff);
+    ctx.lineTo(cx + 13 - aSwing + lean + jitter(), shoulderY + 14 - jumpOff + jitter());
+    ctx.stroke();
+
+    // Legs
+    const lSwing = Math.sin(phase) * 0.5 * 16;
+    const lFootY = groundY - jumpOff + jitter();
+    const rFootY = groundY - jumpOff + jitter();
+
+    ctx.beginPath();
+    ctx.moveTo(cx - 9 + lSwing + jitter(), lFootY);
+    ctx.lineTo(cx + jitter(), hipY - jumpOff);
+    ctx.lineTo(cx + 9 - lSwing + jitter(), rFootY);
+    ctx.stroke();
+
+    // Feet with potential skating
+    const skateOffset = isAblated ? (1 - qualityFactor) * Math.sin(phase * 3) * 5 : 0;
+    ctx.beginPath();
+    ctx.moveTo(cx - 9 + lSwing + skateOffset, lFootY);
+    ctx.lineTo(cx - 1 + lSwing + skateOffset, lFootY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + 9 - lSwing - skateOffset, rFootY);
+    ctx.lineTo(cx + 17 - lSwing - skateOffset, rFootY);
+    ctx.stroke();
+
+    // Ground
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(20, groundY + 2);
+    ctx.lineTo(w - 20, groundY + 2);
+    ctx.stroke();
+
+    // Quality meter
+    const meterX = 20;
+    const meterY = h * 0.82;
+    const meterW = w - 40;
+    const meterH = 10;
+
+    ctx.fillStyle = '#f0ede8';
+    ctx.beginPath();
+    ctx.roundRect(meterX, meterY, meterW, meterH, 5);
+    ctx.fill();
+
+    // Fill based on quality
+    const qColor = qualityFactor > 0.8 ? '#059669' : qualityFactor > 0.5 ? '#d97706' : '#c2402a';
+    ctx.fillStyle = qColor;
+    ctx.globalAlpha = 0.7;
+    ctx.beginPath();
+    ctx.roundRect(meterX, meterY, meterW * qualityFactor, meterH, 5);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Label
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '10px "Source Code Pro", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('QUALITY', meterX, meterY - 6);
+    ctx.textAlign = 'right';
+    ctx.fillText((qualityFactor * 100).toFixed(0) + '%', meterX + meterW, meterY - 6);
+
+    // Foot skating metric
+    const skating = isAblated ?
+      (0.067 + (1 - qualityFactor) * 0.32).toFixed(3) :
+      '0.067';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '10px "Source Code Pro", monospace';
+    ctx.fillText('Foot skating: ' + skating + ' cm/frame', w / 2, h - 12);
+
+    // Expert contribution mini-bars
+    const miniBarY = h * 0.90;
+    const miniBarW = (w - 60) / 6;
+    for (let i = 0; i < 6; i++) {
+      const x = 20 + i * miniBarW + i * 4;
+      const active = isAblated ? enabledExperts[i] : true;
+      ctx.fillStyle = EXPERT_COLORS[i];
+      ctx.globalAlpha = active ? 0.6 : 0.1;
+      const bh = ablatedWeights[i] * 20;
+      ctx.fillRect(x, miniBarY - bh, miniBarW, bh);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function draw() {
+    const fw = fc.width / devicePixelRatio;
+    const fh = fc.height / devicePixelRatio;
+    const aw = ac.width / devicePixelRatio;
+    const ah = ac.height / devicePixelRatio;
+
+    drawFigureWithQuality(fctx, fw, fh, frame, [true,true,true,true,true,true], false);
+    drawFigureWithQuality(actx, aw, ah, frame, expertEnabled, true);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+
+// ============================================================
+// Figure 3: Latent injection depth visualization
+// ============================================================
+(function() {
+  const canvas = document.getElementById('injection-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const select = document.getElementById('injection-select');
+  select.addEventListener('change', () => {
+    injectionMode = select.value;
+  });
+
+  document.getElementById('btn-reset-injection').addEventListener('click', () => {
+    select.value = 'all';
+    injectionMode = 'all';
+  });
+
+  function resize() {
+    const r = canvas.parentElement.getBoundingClientRect();
+    canvas.width = r.width * devicePixelRatio;
+    canvas.height = 340 * devicePixelRatio;
+    canvas.style.height = '340px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawNetworkDiagram(ctx, w, h) {
+    ctx.clearRect(0, 0, w, h);
+
+    const layers = 3;
+    const nodesPerLayer = 5;
+    const layerGap = (w - 120) / (layers + 1);
+    const inputX = 60;
+
+    // Title
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('EXPERT NETWORK ARCHITECTURE', w / 2, 25);
+
+    // Injection mode label
+    const modeLabels = { all: 'z injected at every layer', first: 'z injected at input only', none: 'No z injection' };
+    const modeColors = { all: '#059669', first: '#d97706', none: '#c2402a' };
+    ctx.fillStyle = modeColors[injectionMode];
+    ctx.font = 'italic 12px "Spectral", serif';
+    ctx.fillText(modeLabels[injectionMode], w / 2, 48);
+
+    // Draw layers
+    for (let l = 0; l <= layers; l++) {
+      const x = inputX + l * layerGap;
+      const nodes = l === 0 ? 4 : l === layers ? 4 : nodesPerLayer;
+
+      for (let n = 0; n < nodes; n++) {
+        const y = h * 0.3 + (n - (nodes - 1) / 2) * 32;
+
+        // Node
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = l === 0 ? 'rgba(37,99,235,0.15)' :
+                        l === layers ? 'rgba(5,150,105,0.15)' :
+                        'rgba(26,26,46,0.08)';
+        ctx.fill();
+        ctx.strokeStyle = l === 0 ? '#2563eb' :
+                         l === layers ? '#059669' : '#8888a0';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Connections to next layer
+        if (l < layers) {
+          const nextNodes = l + 1 === layers ? 4 : nodesPerLayer;
+          for (let nn = 0; nn < nextNodes; nn++) {
+            const ny = h * 0.3 + (nn - (nextNodes - 1) / 2) * 32;
+            const nx = inputX + (l + 1) * layerGap;
+            ctx.beginPath();
+            ctx.moveTo(x + 8, y);
+            ctx.lineTo(nx - 8, ny);
+            ctx.strokeStyle = 'rgba(26,26,46,0.06)';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Layer labels
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '9px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      const labelNames = ['Input', 'Hidden 1', 'Hidden 2', 'Output'];
+      if (l < labelNames.length) {
+        ctx.fillText(labelNames[l], x, h * 0.3 + (nodesPerLayer / 2) * 32 + 20);
+      }
+
+      // z injection arrows
+      const showZ = injectionMode === 'all' ? true :
+                    injectionMode === 'first' ? l === 0 :
+                    false;
+
+      if (showZ && l <= layers - 1) {
+        const zY = h * 0.72;
+
+        // z node
+        ctx.beginPath();
+        ctx.arc(x, zY, 10, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(194,64,42,0.15)';
+        ctx.fill();
+        ctx.strokeStyle = '#c2402a';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#c2402a';
+        ctx.font = 'italic 11px "Spectral", serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('z', x, zY + 4);
+
+        // Arrow up
+        ctx.strokeStyle = '#c2402a';
+        ctx.lineWidth = 1.5;
+        const arrowTopY = h * 0.3 + ((nodesPerLayer - 1) / 2) * 32 + 14;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(x, zY - 10);
+        ctx.lineTo(x, arrowTopY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Arrowhead
+        ctx.beginPath();
+        ctx.moveTo(x, arrowTopY);
+        ctx.lineTo(x - 4, arrowTopY + 6);
+        ctx.lineTo(x + 4, arrowTopY + 6);
+        ctx.closePath();
+        ctx.fillStyle = '#c2402a';
+        ctx.fill();
+
+        // Pulse animation
+        const pulsePhase = (frame * 0.04 + l * 0.8) % (Math.PI * 2);
+        const pulseY = zY - 10 - (zY - 10 - arrowTopY) * ((Math.sin(pulsePhase) + 1) / 2);
+        ctx.beginPath();
+        ctx.arc(x, pulseY, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(194,64,42,0.5)';
+        ctx.fill();
+      }
+    }
+
+    // Posterior collapse indicator
+    const collapseLevel = injectionMode === 'all' ? 0 :
+                          injectionMode === 'first' ? 0.5 : 1;
+
+    const indX = w - 50;
+    const indY = 80;
+    const indH = 140;
+
+    ctx.fillStyle = '#f0ede8';
+    ctx.beginPath();
+    ctx.roundRect(indX - 12, indY, 24, indH, 4);
+    ctx.fill();
+
+    const collapseColor = collapseLevel < 0.3 ? '#059669' :
+                          collapseLevel < 0.7 ? '#d97706' : '#c2402a';
+    ctx.fillStyle = collapseColor;
+    ctx.globalAlpha = 0.6;
+    ctx.beginPath();
+    ctx.roundRect(indX - 12, indY + indH * (1 - collapseLevel), 24, indH * collapseLevel, 4);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '9px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Collapse', indX, indY - 8);
+    ctx.fillText('Risk', indX, indY - 0);
+
+    // Diversity indicators: 3 small stick figures with different poses
+    const divY = h * 0.88;
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '9px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Output diversity when sampling different z:', w / 2, divY - 16);
+
+    const figSpacing = 60;
+    const figStartX = w / 2 - figSpacing;
+
+    for (let f = 0; f < 3; f++) {
+      const fx = figStartX + f * figSpacing;
+      const fy = divY + 20;
+
+      // Different poses unless collapsed
+      const poseVar = injectionMode === 'all' ? f * 0.8 :
+                      injectionMode === 'first' ? f * 0.3 : 0;
+      const fPhase = frame * 0.05 + poseVar * 2;
+
+      ctx.strokeStyle = collapseLevel > 0.7 ? '#c2402a' : '#1a1a2e';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+
+      // Mini stick figure
+      ctx.beginPath();
+      ctx.arc(fx, fy - 14, 4, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(fx, fy - 10);
+      ctx.lineTo(fx, fy + 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(fx - 6 + Math.sin(fPhase + poseVar) * 4, fy - 2);
+      ctx.lineTo(fx, fy - 6);
+      ctx.lineTo(fx + 6 - Math.sin(fPhase + poseVar) * 4, fy - 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(fx - 5 + Math.sin(fPhase) * poseVar * 5, fy + 14);
+      ctx.lineTo(fx, fy + 2);
+      ctx.lineTo(fx + 5 - Math.sin(fPhase) * poseVar * 5, fy + 14);
+      ctx.stroke();
+    }
+  }
+
+  function draw() {
+    const w = canvas.width / devicePixelRatio;
+    const h = canvas.height / devicePixelRatio;
+    drawNetworkDiagram(ctx, w, h);
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+
+// ============================================================
+// Figure 4: N=4 vs N=6 comparison chart
+// ============================================================
+(function() {
+  const canvas = document.getElementById('comparison-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let compFrame = 0;
+  let currentMetric = 'skating';
+
+  const metricSelect = document.getElementById('metric-select');
+  metricSelect.addEventListener('change', () => {
+    currentMetric = metricSelect.value;
+  });
+
+  document.getElementById('btn-reset-compare').addEventListener('click', () => {
+    metricSelect.value = 'skating';
+    currentMetric = 'skating';
+  });
+
+  function resize() {
+    const r = canvas.parentElement.getBoundingClientRect();
+    canvas.width = r.width * devicePixelRatio;
+    canvas.height = 320 * devicePixelRatio;
+    canvas.style.height = '320px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Data from the paper
+  const skatingData = {
+    labels: ['Random', 'Target', 'Joystick', 'Path', 'Maze'],
+    n6: [0.067, 0.27, 0.28, 0.30, 0.24],
+    n4: [0.085, 0.24, 0.39, 0.44, 0.38],
+    gt: 0.10,
+  };
+
+  const responseData = {
+    labels: ['Overall', 'Left', 'Right'],
+    n6: [1.62, 1.70, 1.56],
+    n4: [1.38, 1.63, 1.11],
+  };
+
+  const symmetryData = {
+    labels: ['N=6 (balanced)', 'N=4 (biased)'],
+    left: [1.70, 1.63],
+    right: [1.56, 1.11],
+  };
+
+  // Smooth animation values
+  let animValues = { n6: [0,0,0,0,0], n4: [0,0,0,0,0] };
+
+  function draw() {
+    const w = canvas.width / devicePixelRatio;
+    const h = canvas.height / devicePixelRatio;
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { left: 70, right: 30, top: 50, bottom: 50 };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    if (currentMetric === 'skating') {
+      const data = skatingData;
+      const maxVal = 0.5;
+      const barGroupW = plotW / data.labels.length;
+      const barW = barGroupW * 0.3;
+
+      // Title
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '500 10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('FOOT SKATING COMPARISON (cm/frame, lower is better)', w / 2, pad.top - 20);
+
+      // Y axis
+      ctx.strokeStyle = '#e0ddd5';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, pad.top);
+      ctx.lineTo(pad.left, pad.top + plotH);
+      ctx.lineTo(pad.left + plotW, pad.top + plotH);
+      ctx.stroke();
+
+      // Y labels
+      for (let i = 0; i <= 5; i++) {
+        const val = (i / 5) * maxVal;
+        const y = pad.top + plotH * (1 - val / maxVal);
+        ctx.fillStyle = '#8888a0';
+        ctx.font = '10px "Source Code Pro", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(val.toFixed(2), pad.left - 8, y + 4);
+        ctx.strokeStyle = '#f0ede8';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(pad.left + plotW, y);
+        ctx.stroke();
+      }
+
+      // Ground truth reference line
+      const gtY = pad.top + plotH * (1 - data.gt / maxVal);
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = 'rgba(5,150,105,0.4)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, gtY);
+      ctx.lineTo(pad.left + plotW, gtY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#059669';
+      ctx.font = 'italic 10px "Spectral", serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('Ground truth: 0.10', pad.left + plotW, gtY - 6);
+
+      // Bars
+      data.labels.forEach((label, i) => {
+        const groupX = pad.left + i * barGroupW + barGroupW * 0.15;
+
+        // Animate toward target
+        const targetN6 = data.n6[i] / maxVal;
+        const targetN4 = data.n4[i] / maxVal;
+        if (!animValues.n6[i]) animValues.n6[i] = 0;
+        if (!animValues.n4[i]) animValues.n4[i] = 0;
+        animValues.n6[i] += (targetN6 - animValues.n6[i]) * 0.06;
+        animValues.n4[i] += (targetN4 - animValues.n4[i]) * 0.06;
+
+        const h6 = animValues.n6[i] * plotH;
+        const h4 = animValues.n4[i] * plotH;
+
+        // N=6 bar (blue)
+        ctx.fillStyle = 'rgba(37,99,235,0.5)';
+        ctx.beginPath();
+        ctx.roundRect(groupX, pad.top + plotH - h6, barW, h6, [3, 3, 0, 0]);
+        ctx.fill();
+
+        // N=4 bar (red)
+        ctx.fillStyle = 'rgba(194,64,42,0.5)';
+        ctx.beginPath();
+        ctx.roundRect(groupX + barW + 4, pad.top + plotH - h4, barW, h4, [3, 3, 0, 0]);
+        ctx.fill();
+
+        // Value labels
+        ctx.fillStyle = '#2563eb';
+        ctx.font = '9px "Source Code Pro", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(data.n6[i].toFixed(3), groupX + barW / 2, pad.top + plotH - h6 - 6);
+
+        ctx.fillStyle = '#c2402a';
+        ctx.fillText(data.n4[i].toFixed(3), groupX + barW + 4 + barW / 2, pad.top + plotH - h4 - 6);
+
+        // X label
+        ctx.fillStyle = '#4a4a6a';
+        ctx.font = '10px "Source Code Pro", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, groupX + barW + 2, pad.top + plotH + 16);
+      });
+
+      // Legend
+      ctx.fillStyle = 'rgba(37,99,235,0.5)';
+      ctx.fillRect(w - 140, pad.top, 10, 10);
+      ctx.fillStyle = '#4a4a6a';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('N=6 experts', w - 126, pad.top + 9);
+
+      ctx.fillStyle = 'rgba(194,64,42,0.5)';
+      ctx.fillRect(w - 140, pad.top + 18, 10, 10);
+      ctx.fillStyle = '#4a4a6a';
+      ctx.fillText('N=4 experts', w - 126, pad.top + 27);
+
+    } else if (currentMetric === 'response') {
+      const data = responseData;
+      const maxVal = 2.0;
+      const barGroupW = plotW / data.labels.length;
+      const barW = barGroupW * 0.3;
+
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '500 10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('JOYSTICK RESPONSE TIME (seconds to reach within 5 deg)', w / 2, pad.top - 20);
+
+      // Axes
+      ctx.strokeStyle = '#e0ddd5';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, pad.top);
+      ctx.lineTo(pad.left, pad.top + plotH);
+      ctx.lineTo(pad.left + plotW, pad.top + plotH);
+      ctx.stroke();
+
+      for (let i = 0; i <= 4; i++) {
+        const val = (i / 4) * maxVal;
+        const y = pad.top + plotH * (1 - val / maxVal);
+        ctx.fillStyle = '#8888a0';
+        ctx.font = '10px "Source Code Pro", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(val.toFixed(1) + 's', pad.left - 8, y + 4);
+        ctx.strokeStyle = '#f0ede8';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(pad.left + plotW, y);
+        ctx.stroke();
+      }
+
+      data.labels.forEach((label, i) => {
+        const groupX = pad.left + i * barGroupW + barGroupW * 0.15;
+        const h6 = (data.n6[i] / maxVal) * plotH;
+        const h4 = (data.n4[i] / maxVal) * plotH;
+
+        ctx.fillStyle = 'rgba(37,99,235,0.5)';
+        ctx.beginPath();
+        ctx.roundRect(groupX, pad.top + plotH - h6, barW, h6, [3, 3, 0, 0]);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(194,64,42,0.5)';
+        ctx.beginPath();
+        ctx.roundRect(groupX + barW + 4, pad.top + plotH - h4, barW, h4, [3, 3, 0, 0]);
+        ctx.fill();
+
+        ctx.fillStyle = '#2563eb';
+        ctx.font = '9px "Source Code Pro", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(data.n6[i].toFixed(2), groupX + barW / 2, pad.top + plotH - h6 - 6);
+
+        ctx.fillStyle = '#c2402a';
+        ctx.fillText(data.n4[i].toFixed(2), groupX + barW + 4 + barW / 2, pad.top + plotH - h4 - 6);
+
+        ctx.fillStyle = '#4a4a6a';
+        ctx.font = '10px "Source Code Pro", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, groupX + barW + 2, pad.top + plotH + 16);
+      });
+
+      ctx.fillStyle = 'rgba(37,99,235,0.5)';
+      ctx.fillRect(w - 140, pad.top, 10, 10);
+      ctx.fillStyle = '#4a4a6a';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('N=6 experts', w - 126, pad.top + 9);
+      ctx.fillStyle = 'rgba(194,64,42,0.5)';
+      ctx.fillRect(w - 140, pad.top + 18, 10, 10);
+      ctx.fillStyle = '#4a4a6a';
+      ctx.fillText('N=4 experts', w - 126, pad.top + 27);
+
+    } else if (currentMetric === 'symmetry') {
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '500 10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('TURNING SYMMETRY: LEFT vs RIGHT RESPONSE TIME (seconds)', w / 2, pad.top - 20);
+
+      const cxLeft = w * 0.3;
+      const cxRight = w * 0.7;
+      const cy2 = h * 0.5;
+      const maxR = 80;
+
+      // N=6 (balanced)
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '500 11px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('N=6 Experts', cxLeft, pad.top + 10);
+
+      // Left half
+      const n6LeftR = (symmetryData.left[0] / 2) * maxR;
+      const n6RightR = (symmetryData.right[0] / 2) * maxR;
+
+      ctx.beginPath();
+      ctx.arc(cxLeft, cy2, n6LeftR, Math.PI / 2, Math.PI * 1.5);
+      ctx.fillStyle = 'rgba(37,99,235,0.2)';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(cxLeft, cy2, n6RightR, -Math.PI / 2, Math.PI / 2);
+      ctx.fillStyle = 'rgba(194,64,42,0.2)';
+      ctx.fill();
+
+      // Labels
+      ctx.fillStyle = '#2563eb';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText('L: 1.70s', cxLeft - n6LeftR - 8, cy2 + 4);
+      ctx.fillStyle = '#c2402a';
+      ctx.textAlign = 'left';
+      ctx.fillText('R: 1.56s', cxLeft + n6RightR + 8, cy2 + 4);
+
+      // Center line
+      ctx.strokeStyle = '#e0ddd5';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cxLeft, cy2 - maxR - 10);
+      ctx.lineTo(cxLeft, cy2 + maxR + 10);
+      ctx.stroke();
+
+      // Difference label
+      ctx.fillStyle = '#059669';
+      ctx.font = 'italic 10px "Spectral", serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Diff: 0.14s (symmetric)', cxLeft, cy2 + maxR + 28);
+
+      // N=4 (biased)
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '500 11px "Source Code Pro", monospace';
+      ctx.fillText('N=4 Experts', cxRight, pad.top + 10);
+
+      const n4LeftR = (symmetryData.left[1] / 2) * maxR;
+      const n4RightR = (symmetryData.right[1] / 2) * maxR;
+
+      ctx.beginPath();
+      ctx.arc(cxRight, cy2, n4LeftR, Math.PI / 2, Math.PI * 1.5);
+      ctx.fillStyle = 'rgba(37,99,235,0.2)';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(cxRight, cy2, n4RightR, -Math.PI / 2, Math.PI / 2);
+      ctx.fillStyle = 'rgba(194,64,42,0.2)';
+      ctx.fill();
+
+      ctx.fillStyle = '#2563eb';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText('L: 1.63s', cxRight - n4LeftR - 8, cy2 + 4);
+      ctx.fillStyle = '#c2402a';
+      ctx.textAlign = 'left';
+      ctx.fillText('R: 1.11s', cxRight + n4RightR + 8, cy2 + 4);
+
+      ctx.strokeStyle = '#e0ddd5';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cxRight, cy2 - maxR - 10);
+      ctx.lineTo(cxRight, cy2 + maxR + 10);
+      ctx.stroke();
+
+      ctx.fillStyle = '#c2402a';
+      ctx.font = 'italic 10px "Spectral", serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Diff: 0.52s (biased right)', cxRight, cy2 + maxR + 28);
+
+      // Pulsing highlight on the asymmetry
+      ctx.globalAlpha = 0.15 + 0.1 * Math.sin(compFrame * 0.04);
+      ctx.fillStyle = '#c2402a';
+      ctx.beginPath();
+      ctx.arc(cxRight + n4RightR / 2, cy2, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    compFrame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+</body>
+</html>

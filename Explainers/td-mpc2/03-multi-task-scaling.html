@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 &mdash; Multi-Task Scaling &mdash; TD-MPC2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #faf9f6;
+  --bg-alt: #f3f0eb;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent: #c2402a;
+  --accent-hover: #a03520;
+  --blue: #2563eb;
+  --green: #059669;
+  --orange: #d97706;
+  --purple: #7c3aed;
+  --border: #e0ddd5;
+  --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+  --font-mono: 'Source Code Pro', 'Menlo', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+.prose { margin-bottom: 40px; }
+.prose p { margin-bottom: 18px; color: var(--text-secondary); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 500; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+.figure-wrapper {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 32px 0 40px;
+  box-shadow: var(--card-shadow);
+}
+
+.figure-canvas-wrap {
+  position: relative;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.figure-canvas-wrap canvas { display: block; width: 100%; }
+
+.figure-controls {
+  padding: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.control-group input[type="range"] {
+  width: 100px;
+  accent-color: var(--accent);
+}
+
+.control-group .val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  min-width: 28px;
+  text-align: right;
+}
+
+button.btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button.btn:hover { background: var(--accent-hover); }
+
+button.btn-outline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+button.btn-outline:hover { color: var(--accent); border-color: var(--accent); }
+
+button.domain-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+button.domain-btn:hover { border-color: var(--accent); color: var(--text); }
+button.domain-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.figure-caption {
+  padding: 12px 24px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+  border-top: 1px solid var(--border);
+}
+
+.equation-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 28px;
+  margin: 24px 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+}
+.equation-block .var { color: var(--accent); }
+
+/* ── Data Table ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 15px;
+}
+.data-table th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--border);
+  text-align: left;
+}
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.data-table td:first-child { font-weight: 500; color: var(--text); }
+.data-table tr:hover td { background: var(--bg-alt); }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0 56px;
+  margin-top: 72px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+footer a:hover { color: var(--accent); border-color: var(--accent); }
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <a href="index.html" class="back-link">&larr; TD-MPC2 Explorations</a>
+
+  <header>
+    <span class="overline">Exploration 03</span>
+    <h1>Multi-Task Scaling<br>Behavior</h1>
+    <p class="subtitle">
+      TD-MPC2 demonstrates clear scaling laws for world models: a single 317M-parameter
+      agent trained on 80 tasks across 12 embodiments shows consistently improving
+      performance with model and data scale.
+    </p>
+  </header>
+
+  <!-- ── Section 1 ── -->
+  <div class="prose fade-in">
+    <p>
+      One of TD-MPC2's most striking results is the emergence of <strong>scaling laws
+      for model-based RL</strong>. The paper trains models from 1M to 317M parameters
+      on a shared dataset of 80 tasks and shows that performance increases smoothly
+      with scale &mdash; a pattern previously observed in language models but rarely
+      in RL.
+    </p>
+    <p>
+      The scaling is remarkably efficient: the 317M model requires only <strong>~9x the
+      GPU days</strong> of the 1M model while achieving <strong>4.4x the normalized
+      score</strong>. This sub-linear cost scaling suggests that scaling world models
+      is a practical path to more capable RL agents.
+    </p>
+  </div>
+
+  <table class="data-table fade-in">
+    <thead>
+      <tr>
+        <th>Params</th>
+        <th>Encoder Dim</th>
+        <th>MLP Dim</th>
+        <th>Latent Dim</th>
+        <th>GPU Days</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1M</td><td>256</td><td>384</td><td>128</td><td>3.7</td><td>16.0</td></tr>
+      <tr><td>5M</td><td>256</td><td>512</td><td>512</td><td>4.2</td><td>49.5</td></tr>
+      <tr><td>19M</td><td>1024</td><td>1024</td><td>768</td><td>5.3</td><td>57.1</td></tr>
+      <tr><td>48M</td><td>1792</td><td>1792</td><td>768</td><td>12</td><td>68.0</td></tr>
+      <tr><td>317M</td><td>4096</td><td>4096</td><td>1376</td><td>33</td><td>70.6</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── Figure 1: Main scaling curve ── -->
+  <h2 class="fade-in">Performance vs. Model Size</h2>
+  <div class="prose fade-in">
+    <p>
+      Click on different domains to see how scaling behavior varies. Some tasks benefit
+      enormously from larger models, while others saturate earlier. The tooltip shows
+      exact values when you hover over data points.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="scaling-canvas" width="1400" height="800"></canvas>
+    </div>
+    <div class="figure-controls">
+      <button class="domain-btn active" id="btn-all-tasks" data-domain="all">All 80 Tasks</button>
+      <button class="domain-btn" data-domain="dmcontrol">DMControl</button>
+      <button class="domain-btn" data-domain="metaworld">Meta-World</button>
+      <button class="domain-btn" data-domain="locomotion">Locomotion</button>
+      <button class="domain-btn" data-domain="maniskill">ManiSkill2</button>
+    </div>
+    <div class="figure-caption">
+      Normalized task score (0-100) vs. model parameters on a log scale. Performance increases
+      smoothly with model size and shows no sign of saturating at 317M.
+    </div>
+  </div>
+
+  <!-- ── Section 2: Data Scaling ── -->
+  <h2 class="fade-in">Data Scaling</h2>
+  <div class="prose fade-in">
+    <p>
+      TD-MPC2 also investigates how performance scales with the number of tasks in the
+      training dataset. The same model architecture trained on 15, 30, and 80 tasks
+      shows different scaling behavior: <strong>larger datasets require larger models
+      to fully exploit</strong>, but also enable higher ultimate performance.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="data-scaling-canvas" width="1400" height="700"></canvas>
+    </div>
+    <div class="figure-controls">
+      <div class="control-group">
+        <label>Dataset Size</label>
+        <input type="range" id="ctrl-dataset" min="0" max="2" value="2" step="1">
+        <span class="val" id="val-dataset">80 tasks</span>
+      </div>
+      <button class="btn-outline" id="btn-show-all-data">Show All</button>
+    </div>
+    <div class="figure-caption">
+      Drag the slider to compare scaling behavior across dataset sizes.
+      Larger datasets benefit more from larger models.
+    </div>
+  </div>
+
+  <!-- ── Section 3: Specialist vs Generalist ── -->
+  <h2 class="fade-in">Single-Task Specialist vs. Multi-Task Generalist</h2>
+  <div class="prose fade-in">
+    <p>
+      A natural question is whether multi-task training helps or hurts individual task
+      performance. The data reveals a nuanced picture: <strong>small multi-task models
+      underperform specialists</strong>, but as model capacity grows, the gap narrows
+      and the generalist gains the advantage of broad knowledge transfer.
+    </p>
+    <p>
+      The interactive chart below compares single-task specialist baselines (trained per-task)
+      against the multi-task generalist at different model sizes.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="specialist-canvas" width="1400" height="700"></canvas>
+    </div>
+    <div class="figure-controls">
+      <div class="control-group">
+        <label>Model Size</label>
+        <input type="range" id="ctrl-model-size" min="0" max="4" value="2" step="1">
+        <span class="val" id="val-model-size">19M</span>
+      </div>
+    </div>
+    <div class="figure-caption">
+      Blue bars: single-task specialist (5M, per-task tuned). Red bars: multi-task generalist
+      at the selected model size. Larger generalists approach specialist performance.
+    </div>
+  </div>
+
+  <!-- ── Section 4: Task Embeddings ── -->
+  <h2 class="fade-in">Task Embedding Space</h2>
+  <div class="prose fade-in">
+    <p>
+      TD-MPC2 conditions all model components on a 96-dimensional <strong>learnable task
+      embedding</strong> (L2-normalized). These embeddings organize in meaningful ways:
+      tasks with similar embodiments or reward structures cluster together, enabling
+      the model to share representations efficiently across related tasks.
+    </p>
+    <p>
+      The visualization below simulates the task embedding space (projected to 2D).
+      Hover over points to see task names, and notice how similar tasks cluster together.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="embedding-canvas" width="1400" height="800"></canvas>
+    </div>
+    <div class="figure-controls">
+      <button class="domain-btn active" id="btn-emb-all" data-emb="all">All Tasks</button>
+      <button class="domain-btn" data-emb="dmcontrol">DMControl</button>
+      <button class="domain-btn" data-emb="metaworld">Meta-World</button>
+      <button class="domain-btn" data-emb="locomotion">Locomotion</button>
+      <button class="btn-outline" id="btn-reset-emb">Reset View</button>
+    </div>
+    <div class="figure-caption">
+      Simulated 2D projection of 96-dimensional task embeddings. Tasks with similar
+      dynamics or embodiments form natural clusters. Hover to inspect.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="02-simnorm.html">&larr; SimNorm</a> &ensp;&middot;&ensp;
+  <a href="index.html">All Explorations</a>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// FIGURE 1: Performance vs Model Size
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('scaling-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.57) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.57) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  // Data from paper
+  const scalingData = {
+    all: {
+      label: 'All 80 Tasks',
+      color: '#c2402a',
+      points: [
+        { params: 1, score: 16.0 },
+        { params: 5, score: 49.5 },
+        { params: 19, score: 57.1 },
+        { params: 48, score: 68.0 },
+        { params: 317, score: 70.6 },
+      ]
+    },
+    dmcontrol: {
+      label: 'DMControl (30 tasks)',
+      color: '#2563eb',
+      points: [
+        { params: 1, score: 18.9 },
+        { params: 5, score: 28.1 },
+        { params: 19, score: 54.2 },
+        { params: 48, score: 59.4 },
+        { params: 317, score: 71.4 },
+      ]
+    },
+    metaworld: {
+      label: 'Meta-World (50 tasks)',
+      color: '#059669',
+      points: [
+        { params: 1, score: 12.0 },
+        { params: 5, score: 42.0 },
+        { params: 19, score: 48.5 },
+        { params: 48, score: 61.0 },
+        { params: 317, score: 65.2 },
+      ]
+    },
+    locomotion: {
+      label: 'Locomotion (7 tasks)',
+      color: '#d97706',
+      points: [
+        { params: 1, score: 20.0 },
+        { params: 5, score: 55.0 },
+        { params: 19, score: 65.0 },
+        { params: 48, score: 74.0 },
+        { params: 317, score: 78.0 },
+      ]
+    },
+    maniskill: {
+      label: 'ManiSkill2 (5 tasks)',
+      color: '#7c3aed',
+      points: [
+        { params: 1, score: 8.0 },
+        { params: 5, score: 35.0 },
+        { params: 19, score: 52.0 },
+        { params: 48, score: 62.0 },
+        { params: 317, score: 68.0 },
+      ]
+    },
+  };
+
+  let activeDomain = 'all';
+  let hoverPoint = null;
+  let animProgress = 0;
+
+  // Domain buttons
+  document.querySelectorAll('.domain-btn[data-domain]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.domain-btn[data-domain]').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      activeDomain = this.dataset.domain;
+      animProgress = 0;
+    });
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    hoverPoint = null;
+
+    const data = scalingData[activeDomain];
+    const w = W(), h = H();
+    const pad = { left: 70, right: 40, top: 40, bottom: 50 };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    data.points.forEach(p => {
+      const x = pad.left + (Math.log10(p.params) / Math.log10(400)) * plotW;
+      const y = pad.top + plotH - (p.score / 100) * plotH;
+      if (Math.abs(mx - x) < 15 && Math.abs(my - y) < 15) {
+        hoverPoint = { ...p, sx: x, sy: y };
+      }
+    });
+  });
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    animProgress = Math.min(1, animProgress + 0.02);
+
+    const pad = { left: 70, right: 40, top: 40, bottom: 50 };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    // Grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 0.5;
+
+    // Y-axis grid
+    for (let y = 0; y <= 100; y += 20) {
+      const py = pad.top + plotH - (y / 100) * plotH;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, py);
+      ctx.lineTo(pad.left + plotW, py);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(136,136,160,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'right';
+      ctx.fillText(y, pad.left - 10, py + 4);
+    }
+
+    // X-axis grid (log scale)
+    const xTicks = [1, 5, 19, 48, 317];
+    const xLabels = ['1M', '5M', '19M', '48M', '317M'];
+    xTicks.forEach((val, i) => {
+      const px = pad.left + (Math.log10(val) / Math.log10(400)) * plotW;
+      ctx.beginPath();
+      ctx.moveTo(px, pad.top);
+      ctx.lineTo(px, pad.top + plotH);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(136,136,160,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'center';
+      ctx.fillText(xLabels[i], px, pad.top + plotH + 20);
+    });
+
+    // Axis labels
+    ctx.fillStyle = 'rgba(136,136,160,0.8)';
+    ctx.font = '500 10px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.fillText('MODEL PARAMETERS', pad.left + plotW / 2, h - 8);
+
+    ctx.save();
+    ctx.translate(16, pad.top + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('NORMALIZED SCORE', 0, 0);
+    ctx.restore();
+
+    // Draw inactive domains faintly
+    Object.entries(scalingData).forEach(([key, data]) => {
+      if (key === activeDomain) return;
+      ctx.strokeStyle = data.color;
+      ctx.globalAlpha = 0.08;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      data.points.forEach((p, i) => {
+        const x = pad.left + (Math.log10(p.params) / Math.log10(400)) * plotW;
+        const y = pad.top + plotH - (p.score / 100) * plotH;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+
+    // Draw active domain
+    const data = scalingData[activeDomain];
+    const pts = data.points;
+
+    // Line
+    ctx.strokeStyle = data.color;
+    ctx.lineWidth = 2.5;
+    ctx.globalAlpha = 0.8;
+    ctx.beginPath();
+    pts.forEach((p, i) => {
+      const x = pad.left + (Math.log10(p.params) / Math.log10(400)) * plotW;
+      const rawY = pad.top + plotH - (p.score / 100) * plotH;
+      const y = pad.top + plotH + (rawY - pad.top - plotH) * Math.min(1, animProgress * 1.5 - i * 0.1);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // Points
+    pts.forEach((p, i) => {
+      const x = pad.left + (Math.log10(p.params) / Math.log10(400)) * plotW;
+      const rawY = pad.top + plotH - (p.score / 100) * plotH;
+      const y = pad.top + plotH + (rawY - pad.top - plotH) * Math.min(1, animProgress * 1.5 - i * 0.1);
+      const isHover = hoverPoint && hoverPoint.params === p.params;
+
+      if (isHover) {
+        ctx.fillStyle = data.color;
+        ctx.globalAlpha = 0.1;
+        ctx.beginPath();
+        ctx.arc(x, y, 16, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      // Dot
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = data.color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = data.color;
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Hover tooltip
+    if (hoverPoint) {
+      const tx = hoverPoint.sx + 14;
+      const ty = hoverPoint.sy - 12;
+      const text = `${hoverPoint.params}M params = ${hoverPoint.score} score`;
+      ctx.font = '500 12px Source Code Pro';
+      const tw = ctx.measureText(text).width + 16;
+
+      ctx.fillStyle = 'rgba(26,26,46,0.9)';
+      ctx.beginPath();
+      ctx.roundRect(tx, ty - 16, tw, 24, 4);
+      ctx.fill();
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'left';
+      ctx.fillText(text, tx + 8, ty);
+    }
+
+    // Legend
+    ctx.fillStyle = data.color;
+    ctx.font = '500 13px Newsreader';
+    ctx.textAlign = 'left';
+    ctx.fillText(data.label, pad.left + 8, pad.top + 20);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 2: Data Scaling
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('data-scaling-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.5) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.5) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  const datasets = [
+    {
+      label: '15 tasks (DMC subset)',
+      color: '#059669',
+      points: [
+        { params: 5, score: 61.1 },
+        { params: 19, score: 78.0 },
+        { params: 48, score: 80.5 },
+      ]
+    },
+    {
+      label: '30 tasks (DMC)',
+      color: '#2563eb',
+      points: [
+        { params: 1, score: 18.9 },
+        { params: 5, score: 28.1 },
+        { params: 19, score: 54.2 },
+        { params: 48, score: 59.4 },
+        { params: 317, score: 71.4 },
+      ]
+    },
+    {
+      label: '80 tasks (DMC + Meta-World)',
+      color: '#c2402a',
+      points: [
+        { params: 1, score: 16.0 },
+        { params: 5, score: 49.5 },
+        { params: 19, score: 57.1 },
+        { params: 48, score: 68.0 },
+        { params: 317, score: 70.6 },
+      ]
+    },
+  ];
+
+  const ctrlDataset = document.getElementById('ctrl-dataset');
+  const valDataset = document.getElementById('val-dataset');
+  const labels = ['15 tasks', '30 tasks', '80 tasks'];
+  let showAll = false;
+
+  ctrlDataset.oninput = () => {
+    valDataset.textContent = labels[ctrlDataset.value];
+    showAll = false;
+    document.getElementById('btn-show-all-data').textContent = 'Show All';
+  };
+
+  document.getElementById('btn-show-all-data').onclick = function() {
+    showAll = !showAll;
+    this.textContent = showAll ? 'Show One' : 'Show All';
+  };
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { left: 70, right: 40, top: 40, bottom: 50 };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    // Grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 0.5;
+
+    for (let y = 0; y <= 100; y += 20) {
+      const py = pad.top + plotH - (y / 100) * plotH;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, py);
+      ctx.lineTo(pad.left + plotW, py);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(136,136,160,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'right';
+      ctx.fillText(y, pad.left - 10, py + 4);
+    }
+
+    const xTicks = [1, 5, 19, 48, 317];
+    const xLabels = ['1M', '5M', '19M', '48M', '317M'];
+    xTicks.forEach((val, i) => {
+      const px = pad.left + (Math.log10(val) / Math.log10(400)) * plotW;
+      ctx.beginPath();
+      ctx.moveTo(px, pad.top);
+      ctx.lineTo(px, pad.top + plotH);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(136,136,160,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'center';
+      ctx.fillText(xLabels[i], px, pad.top + plotH + 20);
+    });
+
+    // Axis labels
+    ctx.fillStyle = 'rgba(136,136,160,0.8)';
+    ctx.font = '500 10px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.fillText('MODEL PARAMETERS', pad.left + plotW / 2, h - 8);
+
+    ctx.save();
+    ctx.translate(16, pad.top + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('NORMALIZED SCORE', 0, 0);
+    ctx.restore();
+
+    const activeIdx = parseInt(ctrlDataset.value);
+    const drawSet = showAll ? [0, 1, 2] : [activeIdx];
+
+    drawSet.forEach(di => {
+      const data = datasets[di];
+      const isActive = showAll || di === activeIdx;
+      const alpha = isActive ? 0.9 : 0.2;
+
+      ctx.strokeStyle = data.color;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      data.points.forEach((p, i) => {
+        const x = pad.left + (Math.log10(p.params) / Math.log10(400)) * plotW;
+        const y = pad.top + plotH - (p.score / 100) * plotH;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      data.points.forEach(p => {
+        const x = pad.left + (Math.log10(p.params) / Math.log10(400)) * plotW;
+        const y = pad.top + plotH - (p.score / 100) * plotH;
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = data.color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = data.color;
+        ctx.beginPath();
+        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      // Label
+      const lastPt = data.points[data.points.length - 1];
+      const lx = pad.left + (Math.log10(lastPt.params) / Math.log10(400)) * plotW + 10;
+      const ly = pad.top + plotH - (lastPt.score / 100) * plotH;
+      ctx.fillStyle = data.color;
+      ctx.globalAlpha = alpha;
+      ctx.font = '500 11px Source Code Pro';
+      ctx.textAlign = 'left';
+      ctx.fillText(data.label, Math.min(lx, w - 160), ly + 4);
+      ctx.globalAlpha = 1;
+    });
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 3: Specialist vs Generalist
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('specialist-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.5) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.5) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  const modelSizes = ['1M', '5M', '19M', '48M', '317M'];
+  const domains = ['DMControl', 'Meta-World', 'ManiSkill2', 'Locomotion', 'MyoSuite'];
+
+  // Specialist scores (single-task 5M, approximate from paper)
+  const specialistScores = [70, 75, 90, 90, 60];
+
+  // Generalist scores at each model size
+  const generalistScores = [
+    [15, 12, 8, 20, 10],   // 1M
+    [45, 42, 35, 55, 30],  // 5M
+    [58, 50, 52, 65, 42],  // 19M
+    [68, 62, 62, 74, 52],  // 48M
+    [75, 68, 68, 78, 58],  // 317M
+  ];
+
+  const ctrlModelSize = document.getElementById('ctrl-model-size');
+  const valModelSize = document.getElementById('val-model-size');
+
+  ctrlModelSize.oninput = () => {
+    valModelSize.textContent = modelSizes[ctrlModelSize.value];
+  };
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { left: 90, right: 30, top: 40, bottom: 60 };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+    const sizeIdx = parseInt(ctrlModelSize.value);
+
+    // Y-axis grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 0.5;
+    for (let y = 0; y <= 100; y += 20) {
+      const py = pad.top + plotH - (y / 100) * plotH;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, py);
+      ctx.lineTo(pad.left + plotW, py);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(136,136,160,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'right';
+      ctx.fillText(y, pad.left - 10, py + 4);
+    }
+
+    // Bars
+    const groupW = plotW / domains.length;
+    const barW = groupW * 0.3;
+    const gap = 6;
+
+    domains.forEach((domain, i) => {
+      const gx = pad.left + i * groupW + groupW / 2;
+
+      // Specialist bar
+      const sH = (specialistScores[i] / 100) * plotH;
+      ctx.fillStyle = '#2563eb';
+      ctx.globalAlpha = 0.65;
+      ctx.fillRect(gx - barW - gap / 2, pad.top + plotH - sH, barW, sH);
+
+      // Generalist bar
+      const genScore = generalistScores[sizeIdx][i];
+      const gH = (genScore / 100) * plotH;
+      ctx.fillStyle = '#c2402a';
+      ctx.globalAlpha = 0.65;
+      ctx.fillRect(gx + gap / 2, pad.top + plotH - gH, barW, gH);
+
+      ctx.globalAlpha = 1;
+
+      // Score labels
+      ctx.font = '500 10px Source Code Pro';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#2563eb';
+      ctx.fillText(specialistScores[i], gx - barW / 2 - gap / 2, pad.top + plotH - sH - 6);
+      ctx.fillStyle = '#c2402a';
+      ctx.fillText(genScore, gx + barW / 2 + gap / 2, pad.top + plotH - gH - 6);
+
+      // Domain label
+      ctx.fillStyle = 'rgba(26,26,46,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'center';
+      ctx.fillText(domain, gx, pad.top + plotH + 18);
+    });
+
+    // Legend
+    const legX = pad.left + 8;
+    const legY = pad.top + 16;
+
+    ctx.fillStyle = '#2563eb';
+    ctx.globalAlpha = 0.65;
+    ctx.fillRect(legX, legY - 8, 14, 10);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(26,26,46,0.7)';
+    ctx.font = '400 11px Source Code Pro';
+    ctx.textAlign = 'left';
+    ctx.fillText('Specialist (5M, per-task)', legX + 20, legY);
+
+    ctx.fillStyle = '#c2402a';
+    ctx.globalAlpha = 0.65;
+    ctx.fillRect(legX, legY + 14, 14, 10);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(26,26,46,0.7)';
+    ctx.fillText('Generalist (' + modelSizes[sizeIdx] + ', multi-task)', legX + 20, legY + 22);
+
+    // Model size indicator
+    ctx.fillStyle = 'rgba(136,136,160,0.5)';
+    ctx.font = '500 12px Source Code Pro';
+    ctx.textAlign = 'right';
+    ctx.fillText('Generalist: ' + modelSizes[sizeIdx] + ' params', w - pad.right - 8, pad.top + 16);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 4: Task Embedding Space
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('embedding-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.57) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.57) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  // Simulated task embeddings with clustering
+  function gaussCluster(cx, cy, n, spread) {
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      pts.push({
+        x: cx + (Math.random() - 0.5) * spread + (Math.random() - 0.5) * spread * 0.3,
+        y: cy + (Math.random() - 0.5) * spread + (Math.random() - 0.5) * spread * 0.3,
+      });
+    }
+    return pts;
+  }
+
+  const tasks = [];
+  const dmcNames = ['Walker Walk', 'Walker Run', 'Walker Stand', 'Cheetah Run', 'Hopper Hop',
+                     'Cartpole Swingup', 'Finger Turn Hard', 'Reacher Easy', 'Fish Swim',
+                     'Acrobot Swingup', 'Pendulum Swingup', 'Ball in Cup Catch',
+                     'Quadruped Walk', 'Quadruped Run', 'Swimmer 6', 'Swimmer 15'];
+  const mwNames = ['Drawer Open', 'Drawer Close', 'Button Press', 'Reach', 'Push',
+                    'Pick Place', 'Door Open', 'Door Close', 'Window Open', 'Peg Insert',
+                    'Hammer', 'Shelf Place', 'Box Close', 'Bin Picking', 'Assembly'];
+  const locoNames = ['Humanoid Walk', 'Humanoid Run', 'Humanoid Stand',
+                      'Dog Walk', 'Dog Run', 'Dog Trot', 'Dog Stand'];
+
+  const dmcPts = gaussCluster(0.3, 0.35, dmcNames.length, 0.22);
+  const mwPts = gaussCluster(0.7, 0.65, mwNames.length, 0.18);
+  const locoPts = gaussCluster(0.25, 0.72, locoNames.length, 0.14);
+
+  dmcPts.forEach((p, i) => tasks.push({ ...p, name: dmcNames[i], domain: 'dmcontrol', color: '#2563eb' }));
+  mwPts.forEach((p, i) => tasks.push({ ...p, name: mwNames[i], domain: 'metaworld', color: '#059669' }));
+  locoPts.forEach((p, i) => tasks.push({ ...p, name: locoNames[i], domain: 'locomotion', color: '#d97706' }));
+
+  let activeFilter = 'all';
+  let hoverTask = null;
+
+  document.querySelectorAll('.domain-btn[data-emb]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.domain-btn[data-emb]').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      activeFilter = this.dataset.emb;
+    });
+  });
+
+  document.getElementById('btn-reset-emb').onclick = () => {
+    activeFilter = 'all';
+    document.querySelectorAll('.domain-btn[data-emb]').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-emb-all').classList.add('active');
+  };
+
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const w = W(), h = H();
+    const pad = 50;
+
+    hoverTask = null;
+    let minD = 20;
+    tasks.forEach(t => {
+      if (activeFilter !== 'all' && t.domain !== activeFilter) return;
+      const sx = pad + t.x * (w - pad * 2);
+      const sy = pad + t.y * (h - pad * 2);
+      const d = Math.sqrt((mx - sx) ** 2 + (my - sy) ** 2);
+      if (d < minD) {
+        minD = d;
+        hoverTask = { ...t, sx, sy };
+      }
+    });
+  });
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = 50;
+
+    // Background grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 10; i++) {
+      const x = pad + (i / 10) * (w - pad * 2);
+      const y = pad + (i / 10) * (h - pad * 2);
+      ctx.beginPath(); ctx.moveTo(x, pad); ctx.lineTo(x, h - pad); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(w - pad, y); ctx.stroke();
+    }
+
+    // Cluster hulls (convex hull approximation as ellipses)
+    const clusters = [
+      { cx: 0.3, cy: 0.35, rx: 0.15, ry: 0.12, color: '#2563eb', label: 'DMControl' },
+      { cx: 0.7, cy: 0.65, rx: 0.12, ry: 0.10, color: '#059669', label: 'Meta-World' },
+      { cx: 0.25, cy: 0.72, rx: 0.10, ry: 0.08, color: '#d97706', label: 'Locomotion' },
+    ];
+
+    clusters.forEach(c => {
+      if (activeFilter !== 'all' && !c.label.toLowerCase().includes(activeFilter)) return;
+      const sx = pad + c.cx * (w - pad * 2);
+      const sy = pad + c.cy * (h - pad * 2);
+      const rx = c.rx * (w - pad * 2);
+      const ry = c.ry * (h - pad * 2);
+
+      ctx.strokeStyle = c.color;
+      ctx.globalAlpha = 0.12;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(sx, sy, rx, ry, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = c.color;
+      ctx.globalAlpha = 0.03;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Cluster label
+      ctx.fillStyle = c.color;
+      ctx.globalAlpha = 0.4;
+      ctx.font = '500 10px Source Code Pro';
+      ctx.textAlign = 'center';
+      ctx.fillText(c.label, sx, sy - ry - 8);
+      ctx.globalAlpha = 1;
+    });
+
+    // Points
+    tasks.forEach(t => {
+      const isActive = activeFilter === 'all' || t.domain === activeFilter;
+      const sx = pad + t.x * (w - pad * 2);
+      const sy = pad + t.y * (h - pad * 2);
+      const isHover = hoverTask && hoverTask.name === t.name;
+
+      ctx.fillStyle = t.color;
+      ctx.globalAlpha = isActive ? (isHover ? 1.0 : 0.6) : 0.08;
+
+      if (isHover) {
+        ctx.beginPath();
+        ctx.arc(sx, sy, 10, 0, Math.PI * 2);
+        ctx.globalAlpha = 0.1;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      ctx.beginPath();
+      ctx.arc(sx, sy, isHover ? 5 : 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+
+    // Hover tooltip
+    if (hoverTask) {
+      const tx = hoverTask.sx + 12;
+      const ty = hoverTask.sy - 8;
+      ctx.font = '500 12px Source Code Pro';
+      const tw = ctx.measureText(hoverTask.name).width + 16;
+
+      ctx.fillStyle = 'rgba(26,26,46,0.9)';
+      ctx.beginPath();
+      ctx.roundRect(Math.min(tx, w - tw - 10), ty - 16, tw, 24, 4);
+      ctx.fill();
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'left';
+      ctx.fillText(hoverTask.name, Math.min(tx, w - tw - 10) + 8, ty);
+    }
+
+    // Legend
+    const legX = w - pad - 120;
+    const legY = pad + 10;
+    const legItems = [
+      { color: '#2563eb', label: 'DMControl' },
+      { color: '#059669', label: 'Meta-World' },
+      { color: '#d97706', label: 'Locomotion' },
+    ];
+    legItems.forEach((item, i) => {
+      ctx.fillStyle = item.color;
+      ctx.globalAlpha = 0.6;
+      ctx.beginPath();
+      ctx.arc(legX, legY + i * 18, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = 'rgba(26,26,46,0.6)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'left';
+      ctx.fillText(item.label, legX + 10, legY + i * 18 + 4);
+    });
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

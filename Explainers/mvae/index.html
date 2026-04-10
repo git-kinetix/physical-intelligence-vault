@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion VAE &mdash; Interactive Explorations</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #faf9f6;
+    --bg-alt: #f3f0eb;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-muted: #8888a0;
+    --accent: #c2402a;
+    --accent-hover: #a03520;
+    --link: #2563eb;
+    --link-hover: #1d4ed8;
+    --border: #e0ddd5;
+    --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+    --card-hover-shadow: 0 8px 24px rgba(26,26,46,0.10), 0 2px 6px rgba(26,26,46,0.06);
+
+    --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+    --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+    --font-mono: 'Source Code Pro', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* -- Article Container -- */
+  .article {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* -- Header -- */
+  header {
+    padding: 80px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .overline {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 600px;
+  }
+
+  .byline {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .byline a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .byline a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* -- Introduction -- */
+  .intro {
+    margin-bottom: 56px;
+  }
+
+  .intro p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .intro strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* -- Equation Block -- */
+  .equation-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 28px;
+    margin: 24px 0;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .equation-block .var { color: var(--accent); }
+  .equation-block .blue { color: var(--link); }
+
+  /* -- Visualization Cards -- */
+  .grid-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .viz-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 72px;
+  }
+
+  .viz-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: var(--card-shadow);
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+  }
+
+  .viz-card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+  }
+
+  .viz-card:active {
+    transform: translateY(0);
+  }
+
+  .viz-preview {
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .viz-preview canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .viz-body {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .viz-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .viz-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .viz-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .viz-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--bg-alt);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .viz-card {
+      grid-template-columns: 1fr;
+    }
+    .viz-preview {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      min-height: 120px;
+    }
+  }
+
+  /* -- Architecture Diagram -- */
+  .arch-canvas-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 28px 0 40px;
+    box-shadow: var(--card-shadow);
+  }
+
+  .arch-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 240px;
+  }
+
+  .arch-caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-alt);
+  }
+
+  /* -- Footer -- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 56px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  footer a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* -- Animations -- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <header>
+    <span class="overline">Interactive Explorations</span>
+    <h1>Character Controllers<br>Using Motion VAEs</h1>
+    <p class="subtitle">
+      A collection of interactive visualizations exploring how a conditional
+      VAE learns a structured action space for character animation&thinsp;&mdash;&thinsp;from
+      latent space geometry to mixture-of-experts decoding and scheduled sampling.
+    </p>
+    <div class="byline">
+      Based on <a href="https://arxiv.org/abs/2103.14274">Ling, Zinno, Cheng &amp; van de Panne, SIGGRAPH 2020</a>
+    </div>
+  </header>
+
+  <div class="intro">
+    <p>
+      The Motion VAE (MVAE) learns to generate realistic, diverse human movement
+      from motion capture data. Its core insight is that the <strong>latent variables of a
+      trained VAE define a compact action space</strong> for character controllers. An RL agent
+      (PPO) then selects latent codes to steer the character toward goals&mdash;reaching
+      targets, following paths, or navigating mazes.
+    </p>
+    <p>
+      Each exploration below isolates one key mechanism from the MVAE framework.
+      Drag through the latent space, toggle mixture-of-experts components, and
+      scrub through the training curriculum to build intuition for how each piece contributes.
+    </p>
+
+    <div class="equation-block">
+      <span class="var">L</span> = <span class="blue">L</span><sub>recon</sub>
+      + <span class="var">&beta;</span> &middot; D<sub>KL</sub>(<span class="blue">q</span>(z | x) &Vert; p(z))
+      &emsp;&emsp;
+      <span class="var">&beta;</span> = 0.2
+    </div>
+  </div>
+
+  <!-- Architecture overview canvas -->
+  <div class="arch-canvas-wrap fade-in">
+    <canvas id="arch-overview"></canvas>
+    <div class="arch-caption">
+      Two-stage framework: the MVAE learns a generative model of motion (left),
+      then RL controllers select latent actions z to achieve goals (right).
+    </div>
+  </div>
+
+  <span class="grid-label">Explorations</span>
+
+  <div class="viz-grid">
+
+    <a href="01-latent-action-space.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-1"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">01</div>
+        <div class="viz-title">The Latent Action Space</div>
+        <div class="viz-desc">
+          Drag through the 32-dimensional latent space projected to 2D and watch
+          a stick figure animate in real time. Discover how different regions encode
+          walking, running, and jumping.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">VAE Latent Space</span>
+          <span class="tag">Stick Figure</span>
+          <span class="tag">Draggable</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="02-mixture-of-experts.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-2"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">02</div>
+        <div class="viz-title">Mixture of Experts Decoder</div>
+        <div class="viz-desc">
+          See how 6 expert networks specialize on different motion types.
+          Toggle experts on and off to observe how the gating network blends
+          their contributions and how quality degrades.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">MoE</span>
+          <span class="tag">Gating Network</span>
+          <span class="tag">Expert Ablation</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="03-scheduled-sampling.html" class="viz-card fade-in">
+      <div class="viz-preview">
+        <canvas id="preview-3"></canvas>
+      </div>
+      <div class="viz-body">
+        <div class="viz-number">03</div>
+        <div class="viz-title">Scheduled Sampling &amp; Drift</div>
+        <div class="viz-desc">
+          Scrub through 180 training epochs and watch the transition from
+          teacher forcing to autoregressive generation. Compare error accumulation
+          with and without the curriculum.
+        </div>
+        <div class="viz-tags">
+          <span class="tag">Training Curriculum</span>
+          <span class="tag">Autoregressive</span>
+          <span class="tag">Error Drift</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+
+<footer>
+  <a href="../index.html">All Explainers</a> &ensp;&middot;&ensp;
+  <a href="https://arxiv.org/abs/2103.14274">Paper</a> &ensp;&middot;&ensp;
+  <a href="https://github.com/electronicarts/character-motion-vaes">Code</a>
+</footer>
+
+<script>
+// -- Architecture Overview Canvas --
+(function() {
+  const c = document.getElementById('arch-overview');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, frame = 0;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = 240 * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawBox(x, y, bw, bh, label, color, alpha) {
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.roundRect(x, y, bw, bh, 6);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(x, y, bw, bh, 6);
+    ctx.stroke();
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '500 12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + bw / 2, y + bh / 2 + 4);
+  }
+
+  function drawArrow(x1, y1, x2, y2, color) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - 8 * Math.cos(angle - 0.4), y2 - 8 * Math.sin(angle - 0.4));
+    ctx.lineTo(x2 - 8 * Math.cos(angle + 0.4), y2 - 8 * Math.sin(angle + 0.4));
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const cy = rh / 2;
+
+    // Stage 1: MVAE
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.globalAlpha = 0.5;
+    ctx.fillText('STAGE 1: LEARN MOTION PRIOR', rw * 0.25, 28);
+    ctx.fillText('STAGE 2: RL CONTROL', rw * 0.72, 28);
+    ctx.globalAlpha = 1;
+
+    // Encoder
+    drawBox(rw * 0.05, cy - 25, 80, 50, 'Encoder', '#2563eb', 0.1);
+    // Latent z
+    const zPulse = 1 + 0.05 * Math.sin(frame * 0.04);
+    drawBox(rw * 0.25 - 30 * zPulse, cy - 20 * zPulse, 60 * zPulse, 40 * zPulse, 'z', '#c2402a', 0.15);
+    // MoE Decoder
+    drawBox(rw * 0.38, cy - 25, 100, 50, 'MoE Decoder', '#059669', 0.1);
+
+    // Arrows stage 1
+    drawArrow(rw * 0.05 + 80, cy, rw * 0.25 - 30, cy, '#2563eb');
+    drawArrow(rw * 0.25 + 30, cy, rw * 0.38, cy, '#c2402a');
+
+    // Divider
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.54, 40);
+    ctx.lineTo(rw * 0.54, rh - 20);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Stage 2: RL
+    drawBox(rw * 0.60, cy - 25, 90, 50, 'PPO Agent', '#7c3aed', 0.1);
+    drawBox(rw * 0.78, cy - 25, 80, 50, 'MVAE', '#c2402a', 0.1);
+
+    drawArrow(rw * 0.60 + 90, cy, rw * 0.78, cy, '#7c3aed');
+
+    // Feedback loop
+    ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = '#059669';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.78 + 40, cy + 25);
+    ctx.quadraticCurveTo(rw * 0.78 + 40, cy + 60, rw * 0.65, cy + 60);
+    ctx.quadraticCurveTo(rw * 0.60, cy + 60, rw * 0.60 + 45, cy + 25);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Reward label
+    ctx.fillStyle = '#059669';
+    ctx.font = 'italic 11px "Spectral", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('reward', rw * 0.70, cy + 73);
+
+    // Output: stick figure hint
+    const figX = rw * 0.92, figY = cy;
+    const phase = frame * 0.03;
+    ctx.strokeStyle = '#1a1a2e';
+    ctx.lineWidth = 1.5;
+    // head
+    ctx.beginPath();
+    ctx.arc(figX, figY - 28, 6, 0, Math.PI * 2);
+    ctx.stroke();
+    // spine
+    ctx.beginPath();
+    ctx.moveTo(figX, figY - 22);
+    ctx.lineTo(figX, figY + 2);
+    ctx.stroke();
+    // arms
+    ctx.beginPath();
+    ctx.moveTo(figX - 12, figY - 14 + 3 * Math.sin(phase));
+    ctx.lineTo(figX, figY - 16);
+    ctx.lineTo(figX + 12, figY - 14 - 3 * Math.sin(phase));
+    ctx.stroke();
+    // legs
+    ctx.beginPath();
+    ctx.moveTo(figX - 10, figY + 22 + 4 * Math.sin(phase));
+    ctx.lineTo(figX, figY + 2);
+    ctx.lineTo(figX + 10, figY + 22 - 4 * Math.sin(phase));
+    ctx.stroke();
+
+    drawArrow(rw * 0.78 + 80, cy, rw * 0.90, cy, '#1a1a2e');
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// -- Preview 1: Latent space dots with draggable feel --
+(function() {
+  const c = document.getElementById('preview-1');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, frame = 0;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  // Scatter points representing latent space
+  const pts = [];
+  for (let i = 0; i < 80; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r2 = Math.sqrt(Math.random()) * 0.35;
+    pts.push({ x: 0.5 + Math.cos(a) * r2, y: 0.5 + Math.sin(a) * r2,
+               c: Math.random() > 0.5 ? '#c2402a' : '#2563eb' });
+  }
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    // Contour rings
+    const cx = rw / 2, cy = rh / 2;
+    for (let i = 3; i >= 1; i--) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, i * 18, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(194,64,42,' + (0.05 * i) + ')';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    pts.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x * rw, p.y * rh, 2, 0, Math.PI * 2);
+      ctx.fillStyle = p.c;
+      ctx.globalAlpha = 0.35;
+      ctx.fill();
+    });
+
+    // Cursor dot moving in a circle
+    const cx2 = 0.5 + 0.18 * Math.cos(frame * 0.015);
+    const cy2 = 0.5 + 0.18 * Math.sin(frame * 0.015);
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    ctx.arc(cx2 * rw, cy2 * rh, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#c2402a';
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// -- Preview 2: MoE expert bars --
+(function() {
+  const c = document.getElementById('preview-2');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, frame = 0;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  const colors = ['#c2402a','#2563eb','#059669','#d97706','#7c3aed','#db2777'];
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const barW = (rw - 40) / 6;
+    const maxH = rh - 50;
+
+    for (let i = 0; i < 6; i++) {
+      const phase = frame * 0.02 + i * 1.2;
+      const val = 0.15 + 0.7 * Math.max(0, Math.sin(phase)) *
+                  (i === Math.floor((frame * 0.01) % 6) ? 1 : 0.3 + 0.3 * Math.sin(phase * 0.7));
+      const bh = val * maxH;
+      const x = 20 + i * barW;
+      const y = rh - 20 - bh;
+
+      ctx.fillStyle = colors[i];
+      ctx.globalAlpha = 0.6;
+      ctx.beginPath();
+      ctx.roundRect(x + 2, y, barW - 4, bh, [3, 3, 0, 0]);
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// -- Preview 3: Scheduled sampling timeline --
+(function() {
+  const c = document.getElementById('preview-3');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, frame = 0;
+
+  function resize() {
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = w = r.width * devicePixelRatio;
+    c.height = h = r.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+
+  function draw() {
+    const rw = w / devicePixelRatio, rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const pad = 20;
+    const plotW = rw - pad * 2;
+    const plotH = rh - pad * 2;
+
+    // Sampling probability curve
+    ctx.beginPath();
+    ctx.strokeStyle = '#c2402a';
+    ctx.lineWidth = 2;
+    for (let i = 0; i <= 100; i++) {
+      const t = i / 100;
+      const x = pad + t * plotW;
+      let prob;
+      if (t < 0.111) prob = 0;         // epochs 0-20: teacher forcing
+      else if (t < 0.222) prob = (t - 0.111) / 0.111;  // epochs 20-40: ramp
+      else prob = 1;                    // epochs 40-180: autoregressive
+      const y = pad + plotH * (1 - prob);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Moving progress indicator
+    const progress = ((frame * 0.003) % 1);
+    const px = pad + progress * plotW;
+    let pProb;
+    if (progress < 0.111) pProb = 0;
+    else if (progress < 0.222) pProb = (progress - 0.111) / 0.111;
+    else pProb = 1;
+    const py = pad + plotH * (1 - pProb);
+
+    ctx.beginPath();
+    ctx.arc(px, py, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#c2402a';
+    ctx.fill();
+
+    // Drift comparison: two curves at bottom
+    const baseY = rh - 14;
+    // Without scheduled sampling (more drift)
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(194,64,42,0.3)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 60; i++) {
+      const x = pad + (i / 60) * plotW * 0.4;
+      const y = baseY - 8 - i * 0.15 + 2 * Math.sin(i * 0.3 + frame * 0.05);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // With scheduled sampling (stable)
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(37,99,235,0.3)';
+    for (let i = 0; i <= 60; i++) {
+      const x = pad + plotW * 0.5 + (i / 60) * plotW * 0.4;
+      const y = baseY - 8 + 0.8 * Math.sin(i * 0.3 + frame * 0.05);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// -- Scroll reveal --
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

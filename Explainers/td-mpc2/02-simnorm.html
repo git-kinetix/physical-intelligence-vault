@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 &mdash; SimNorm (Simplicial Normalization) &mdash; TD-MPC2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #faf9f6;
+  --bg-alt: #f3f0eb;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent: #c2402a;
+  --accent-hover: #a03520;
+  --blue: #2563eb;
+  --green: #059669;
+  --orange: #d97706;
+  --purple: #7c3aed;
+  --border: #e0ddd5;
+  --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+  --font-mono: 'Source Code Pro', 'Menlo', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+.prose { margin-bottom: 40px; }
+.prose p { margin-bottom: 18px; color: var(--text-secondary); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 500; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+.figure-wrapper {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 32px 0 40px;
+  box-shadow: var(--card-shadow);
+}
+
+.figure-canvas-wrap {
+  position: relative;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.figure-canvas-wrap canvas { display: block; width: 100%; }
+
+.figure-controls {
+  padding: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.control-group input[type="range"] {
+  width: 100px;
+  accent-color: var(--accent);
+}
+
+.control-group .val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  min-width: 28px;
+  text-align: right;
+}
+
+button.btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button.btn:hover { background: var(--accent-hover); }
+
+button.btn-outline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+button.btn-outline:hover { color: var(--accent); border-color: var(--accent); }
+
+.figure-caption {
+  padding: 12px 24px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+  border-top: 1px solid var(--border);
+}
+
+.equation-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 28px;
+  margin: 24px 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+}
+.equation-block .var { color: var(--accent); }
+
+/* ── Side by side canvases ── */
+.dual-canvas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.dual-canvas .panel {
+  position: relative;
+}
+.dual-canvas .panel:first-child {
+  border-right: 1px solid var(--border);
+}
+.dual-canvas .panel-label {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  z-index: 1;
+}
+.dual-canvas canvas { display: block; width: 100%; }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0 56px;
+  margin-top: 72px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+footer a:hover { color: var(--accent); border-color: var(--accent); }
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <a href="index.html" class="back-link">&larr; TD-MPC2 Explorations</a>
+
+  <header>
+    <span class="overline">Exploration 02</span>
+    <h1>SimNorm: Simplicial<br>Normalization</h1>
+    <p class="subtitle">
+      A key innovation of TD-MPC2 is SimNorm &mdash; projecting latent representations
+      onto simplices via softmax, biasing toward sparsity without the hard constraints
+      of VQ-VAE. This prevents representation collapse and stabilizes training.
+    </p>
+  </header>
+
+  <!-- ── Section 1 ── -->
+  <div class="prose fade-in">
+    <p>
+      In standard continuous latent spaces, representations can collapse: all inputs
+      map to nearly the same point, destroying useful information. This is a common
+      failure mode for model-based RL, where the world model must maintain <strong>diverse,
+      information-rich embeddings</strong> across different states.
+    </p>
+    <p>
+      SimNorm addresses this by partitioning the latent vector into <code>L</code> groups
+      of dimension <code>V</code>, then applying softmax independently to each group.
+      Each group is thereby projected onto a <strong>V-dimensional simplex</strong> &mdash;
+      a generalization of the triangle to arbitrary dimensions.
+    </p>
+  </div>
+
+  <div class="equation-block fade-in">
+    SimNorm(<span class="var">z</span>) = [softmax(<span class="var">z</span><sub>1</sub> / <span class="var">&tau;</span>), ..., softmax(<span class="var">z</span><sub>L</sub> / <span class="var">&tau;</span>)]
+    &emsp;&emsp;
+    <span class="var">&tau;</span> = temperature
+  </div>
+
+  <div class="margin-note fade-in">
+    In the paper, the latent state is partitioned into L = 8 groups each of dimension V = 16
+    for the 5M base model. Each group sums to 1 after SimNorm, living on a 15-dimensional simplex.
+  </div>
+
+  <!-- ── Figure 1: Interactive SimNorm step-by-step ── -->
+  <h2 class="fade-in">Step-by-Step SimNorm</h2>
+  <div class="prose fade-in">
+    <p>
+      Drag the input bars to set raw activation values, then watch SimNorm project them
+      onto the simplex. The output values always sum to 1. Lower temperature makes the
+      output sparser (closer to one-hot).
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="simnorm-step-canvas" width="1400" height="700"></canvas>
+    </div>
+    <div class="figure-controls">
+      <div class="control-group">
+        <label>Temperature &tau;</label>
+        <input type="range" id="ctrl-tau" min="1" max="200" value="50">
+        <span class="val" id="val-tau">0.50</span>
+      </div>
+      <div class="control-group">
+        <label>Dimensions V</label>
+        <input type="range" id="ctrl-dims" min="3" max="8" value="5" step="1">
+        <span class="val" id="val-dims">5</span>
+      </div>
+      <button class="btn" id="btn-randomize">Randomize</button>
+      <button class="btn-outline" id="btn-reset-simnorm">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Drag the input bars on the left. The center shows the softmax computation. The right shows the
+      normalized output on the simplex. Lower &tau; produces sparser outputs.
+    </div>
+  </div>
+
+  <!-- ── Section 2: Simplex Geometry ── -->
+  <h2 class="fade-in">The Simplex Geometry</h2>
+  <div class="prose fade-in">
+    <p>
+      A <strong>simplex</strong> is the simplest polytope in any dimension: a line segment in 1D,
+      an equilateral triangle in 2D, a tetrahedron in 3D. Each point on a V-dimensional simplex
+      represents a probability distribution over V outcomes. The vertices correspond to one-hot
+      vectors (complete certainty), while the center is the uniform distribution (maximum
+      uncertainty).
+    </p>
+    <p>
+      Below, you can see how a 3-dimensional input gets projected onto a 2D simplex (triangle).
+      Drag the point to move it around the simplex and observe how the coordinate values change.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="simplex-canvas" width="1400" height="800"></canvas>
+    </div>
+    <div class="figure-controls">
+      <button class="btn-outline" id="btn-reset-simplex">Reset</button>
+      <span class="control-group">
+        <label>Coordinates</label>
+        <span class="val" id="val-simplex-coords">(0.33, 0.33, 0.33)</span>
+      </span>
+    </div>
+    <div class="figure-caption">
+      Click and drag inside the triangle to move the point. Vertex labels show which dimension
+      dominates. The point's distance from each edge determines its coordinate value.
+    </div>
+  </div>
+
+  <!-- ── Section 3: Comparison LayerNorm vs SimNorm ── -->
+  <h2 class="fade-in">LayerNorm vs SimNorm</h2>
+  <div class="prose fade-in">
+    <p>
+      TD-MPC2 uses both LayerNorm and SimNorm in its encoder: LayerNorm normalizes each
+      layer's activations, while SimNorm is applied to the <strong>final latent
+      representation</strong>. The critical difference is that SimNorm constrains outputs
+      to the simplex, which provides a structural bias toward sparsity and diversity.
+    </p>
+    <p>
+      Compare the two normalizations on the same input below. LayerNorm centers and scales
+      but can still collapse to similar representations. SimNorm's simplex constraint
+      maintains geometric diversity.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="dual-canvas">
+      <div class="panel">
+        <span class="panel-label">LayerNorm</span>
+        <canvas id="ln-canvas" width="700" height="600"></canvas>
+      </div>
+      <div class="panel">
+        <span class="panel-label">SimNorm</span>
+        <canvas id="sn-canvas" width="700" height="600"></canvas>
+      </div>
+    </div>
+    <div class="figure-controls">
+      <div class="control-group">
+        <label>Input spread</label>
+        <input type="range" id="ctrl-spread" min="1" max="100" value="50">
+        <span class="val" id="val-spread">0.50</span>
+      </div>
+      <div class="control-group">
+        <label>N points</label>
+        <input type="range" id="ctrl-npoints" min="10" max="200" value="60" step="10">
+        <span class="val" id="val-npoints">60</span>
+      </div>
+      <button class="btn" id="btn-regenerate">Regenerate</button>
+      <button class="btn-outline" id="btn-reset-compare">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Both panels show the same input points after normalization. LayerNorm preserves
+      directional structure but can collapse; SimNorm distributes points across the simplex,
+      preserving diversity.
+    </div>
+  </div>
+
+  <!-- ── Section 4: Collapse Prevention ── -->
+  <h2 class="fade-in">Why SimNorm Prevents Collapse</h2>
+  <div class="prose fade-in">
+    <p>
+      Representation collapse occurs when the encoder maps all inputs to nearly identical
+      latent vectors &mdash; the world model then cannot distinguish between states. The
+      ablation results from the paper are striking: removing normalization entirely drops
+      performance from 54.2 to ~35 on the 80-task benchmark.
+    </p>
+    <p>
+      SimNorm's simplex constraint provides a <strong>geometric guarantee</strong>: since each
+      group sums to 1, the representation cannot collapse to a single point. Different
+      inputs will be forced to distribute their "probability mass" differently across
+      dimensions, maintaining diversity.
+    </p>
+    <p>
+      The visualization below simulates embedding dynamics with and without SimNorm.
+      Watch how embeddings collapse without it, while SimNorm maintains spread.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="collapse-canvas" width="1400" height="600"></canvas>
+    </div>
+    <div class="figure-controls">
+      <button class="btn" id="btn-start-collapse">Start Simulation</button>
+      <button class="btn-outline" id="btn-reset-collapse">Reset</button>
+      <span class="control-group">
+        <label>Step</label>
+        <span class="val" id="val-collapse-step">0</span>
+      </span>
+    </div>
+    <div class="figure-caption">
+      Left: embeddings without normalization gradually collapse toward the origin.
+      Right: SimNorm maintains diversity by constraining each group to the simplex.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="01-model-predictive-control.html">&larr; MPPI Planning</a> &ensp;&middot;&ensp;
+  <a href="index.html">All Explorations</a> &ensp;&middot;&ensp;
+  <a href="03-multi-task-scaling.html">Next: Scaling &rarr;</a>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// FIGURE 1: Step-by-step SimNorm
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('simnorm-step-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.5) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.5) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  const ctrlTau = document.getElementById('ctrl-tau');
+  const valTau = document.getElementById('val-tau');
+  const ctrlDims = document.getElementById('ctrl-dims');
+  const valDims = document.getElementById('val-dims');
+
+  ctrlTau.oninput = () => { valTau.textContent = (ctrlTau.value / 100).toFixed(2); };
+  ctrlDims.oninput = () => {
+    valDims.textContent = ctrlDims.value;
+    initInputs();
+  };
+
+  let inputs = [];
+  let dragging = -1;
+
+  const colors = ['#c2402a', '#2563eb', '#059669', '#d97706', '#7c3aed', '#db2777', '#0891b2', '#65a30d'];
+
+  function initInputs() {
+    const n = parseInt(ctrlDims.value);
+    inputs = [];
+    for (let i = 0; i < n; i++) {
+      inputs.push(-2 + Math.random() * 4);
+    }
+  }
+  initInputs();
+
+  function softmax(arr, tau) {
+    const t = Math.max(tau, 0.01);
+    const maxVal = Math.max(...arr);
+    const exps = arr.map(v => Math.exp((v - maxVal) / t));
+    const sum = exps.reduce((a, b) => a + b, 0);
+    return exps.map(v => v / sum);
+  }
+
+  // Mouse interaction for dragging input bars
+  canvas.addEventListener('mousedown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left);
+    const my = (e.clientY - rect.top);
+    const w = W(), h = H();
+
+    // Check if clicking on input bars
+    const n = inputs.length;
+    const barAreaX = 30;
+    const barAreaW = w * 0.25;
+    const barH = Math.min(35, (h - 80) / n - 8);
+    const startY = 60;
+
+    for (let i = 0; i < n; i++) {
+      const by = startY + i * (barH + 8);
+      if (mx >= barAreaX && mx <= barAreaX + barAreaW && my >= by && my <= by + barH) {
+        dragging = i;
+        break;
+      }
+    }
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    if (dragging < 0) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left);
+    const w = W();
+    const barAreaX = 30;
+    const barAreaW = w * 0.25;
+    const t = (mx - barAreaX) / barAreaW;
+    inputs[dragging] = -4 + t * 8;
+    inputs[dragging] = Math.max(-4, Math.min(4, inputs[dragging]));
+  });
+
+  canvas.addEventListener('mouseup', () => { dragging = -1; });
+  canvas.addEventListener('mouseleave', () => { dragging = -1; });
+
+  document.getElementById('btn-randomize').onclick = () => {
+    const n = parseInt(ctrlDims.value);
+    inputs = [];
+    for (let i = 0; i < n; i++) {
+      inputs.push(-3 + Math.random() * 6);
+    }
+  };
+
+  document.getElementById('btn-reset-simnorm').onclick = () => {
+    ctrlTau.value = 50;
+    valTau.textContent = '0.50';
+    ctrlDims.value = 5;
+    valDims.textContent = '5';
+    initInputs();
+  };
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    const n = inputs.length;
+    const tau = parseInt(ctrlTau.value) / 100;
+    const output = softmax(inputs, tau);
+
+    const barAreaX = 30;
+    const barAreaW = w * 0.25;
+    const barH = Math.min(35, (h - 80) / n - 8);
+    const startY = 60;
+
+    // Section labels
+    ctx.fillStyle = 'rgba(136,136,160,0.8)';
+    ctx.font = '500 10px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.fillText('RAW INPUTS', barAreaX + barAreaW / 2, 30);
+    ctx.fillText('SOFTMAX / \u03C4', w * 0.5, 30);
+    ctx.fillText('NORMALIZED OUTPUT', w * 0.78, 30);
+
+    // Input bars
+    for (let i = 0; i < n; i++) {
+      const by = startY + i * (barH + 8);
+      const val = inputs[i];
+      const normT = (val + 4) / 8; // map -4..4 to 0..1
+
+      // Background bar
+      ctx.fillStyle = 'rgba(240,237,232,1)';
+      ctx.fillRect(barAreaX, by, barAreaW, barH);
+
+      // Value bar
+      const midX = barAreaX + barAreaW * 0.5;
+      const barW = normT * barAreaW - barAreaW * 0.5;
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.globalAlpha = 0.7;
+      if (barW >= 0) {
+        ctx.fillRect(midX, by, barW, barH);
+      } else {
+        ctx.fillRect(midX + barW, by, -barW, barH);
+      }
+      ctx.globalAlpha = 1;
+
+      // Zero line
+      ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(midX, by);
+      ctx.lineTo(midX, by + barH);
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = 'rgba(26,26,46,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'right';
+      ctx.fillText('z' + (i + 1), barAreaX - 6, by + barH / 2 + 4);
+
+      // Value
+      ctx.textAlign = 'left';
+      ctx.fillText(val.toFixed(2), barAreaX + barAreaW + 8, by + barH / 2 + 4);
+    }
+
+    // Arrows from input to center
+    const centerX = w * 0.5;
+    const arrowStartX = barAreaX + barAreaW + 50;
+    const arrowEndX = centerX - 60;
+
+    ctx.strokeStyle = 'rgba(194,64,42,0.3)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < n; i++) {
+      const by = startY + i * (barH + 8) + barH / 2;
+      ctx.beginPath();
+      ctx.moveTo(arrowStartX, by);
+      ctx.lineTo(arrowEndX, h / 2);
+      ctx.stroke();
+    }
+
+    // Center: softmax box
+    const boxW = 100, boxH = 50;
+    ctx.fillStyle = 'white';
+    ctx.strokeStyle = 'var(--accent)';
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = '#c2402a';
+    ctx.beginPath();
+    ctx.roundRect(centerX - boxW / 2, h / 2 - boxH / 2, boxW, boxH, 6);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#c2402a';
+    ctx.font = '500 12px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.fillText('softmax', centerX, h / 2 - 5);
+    ctx.fillStyle = 'rgba(26,26,46,0.5)';
+    ctx.font = '400 11px Source Code Pro';
+    ctx.fillText('\u03C4 = ' + tau.toFixed(2), centerX, h / 2 + 12);
+
+    // Output bars
+    const outAreaX = w * 0.65;
+    const outAreaW = w * 0.25;
+
+    // Arrows from center to output
+    const arrowOutStartX = centerX + boxW / 2 + 10;
+    const arrowOutEndX = outAreaX - 10;
+
+    ctx.strokeStyle = 'rgba(5,150,105,0.3)';
+    for (let i = 0; i < n; i++) {
+      const by = startY + i * (barH + 8) + barH / 2;
+      ctx.beginPath();
+      ctx.moveTo(arrowOutStartX, h / 2);
+      ctx.lineTo(arrowOutEndX, by);
+      ctx.stroke();
+    }
+
+    // Output bars
+    let sumOut = 0;
+    for (let i = 0; i < n; i++) {
+      const by = startY + i * (barH + 8);
+      const val = output[i];
+      sumOut += val;
+
+      // Background
+      ctx.fillStyle = 'rgba(240,237,232,1)';
+      ctx.fillRect(outAreaX, by, outAreaW, barH);
+
+      // Value bar
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.globalAlpha = 0.7;
+      ctx.fillRect(outAreaX, by, val * outAreaW, barH);
+      ctx.globalAlpha = 1;
+
+      // Value text
+      ctx.fillStyle = 'rgba(26,26,46,0.7)';
+      ctx.font = '400 11px Source Code Pro';
+      ctx.textAlign = 'left';
+      ctx.fillText(val.toFixed(3), outAreaX + outAreaW + 8, by + barH / 2 + 4);
+    }
+
+    // Sum indicator
+    const sumY = startY + n * (barH + 8) + 10;
+    ctx.fillStyle = 'rgba(5,150,105,0.8)';
+    ctx.font = '500 11px Source Code Pro';
+    ctx.textAlign = 'right';
+    ctx.fillText('\u2211 = ' + sumOut.toFixed(4), outAreaX + outAreaW + 50, sumY);
+
+    // Drag hint
+    if (frame < 180) {
+      const alpha = Math.max(0, 1 - frame / 180);
+      ctx.fillStyle = `rgba(136,136,160,${alpha * 0.6})`;
+      ctx.font = '400 12px Spectral';
+      ctx.textAlign = 'center';
+      ctx.fillText('Drag the input bars to change values', barAreaX + barAreaW / 2, h - 20);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 2: Simplex Geometry
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('simplex-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.57) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.57) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  // Triangle vertices (equilateral)
+  function getTriVerts(w, h) {
+    const cx = w / 2, cy = h / 2;
+    const r = Math.min(w, h) * 0.38;
+    return [
+      { x: cx, y: cy - r },                              // top: dimension 1
+      { x: cx - r * Math.cos(Math.PI / 6), y: cy + r * Math.sin(Math.PI / 6) }, // bottom-left: dim 2
+      { x: cx + r * Math.cos(Math.PI / 6), y: cy + r * Math.sin(Math.PI / 6) }, // bottom-right: dim 3
+    ];
+  }
+
+  // Barycentric coords from screen coords
+  function screenToBarycentric(px, py, v) {
+    const d = (v[1].y - v[2].y) * (v[0].x - v[2].x) + (v[2].x - v[1].x) * (v[0].y - v[2].y);
+    const w1 = ((v[1].y - v[2].y) * (px - v[2].x) + (v[2].x - v[1].x) * (py - v[2].y)) / d;
+    const w2 = ((v[2].y - v[0].y) * (px - v[2].x) + (v[0].x - v[2].x) * (py - v[2].y)) / d;
+    const w3 = 1 - w1 - w2;
+    return [w1, w2, w3];
+  }
+
+  function barycentricToScreen(b, v) {
+    return {
+      x: b[0] * v[0].x + b[1] * v[1].x + b[2] * v[2].x,
+      y: b[0] * v[0].y + b[1] * v[1].y + b[2] * v[2].y,
+    };
+  }
+
+  let point = [1/3, 1/3, 1/3];
+  let isDragging = false;
+  const valCoords = document.getElementById('val-simplex-coords');
+
+  canvas.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    updatePoint(e);
+  });
+  canvas.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    updatePoint(e);
+  });
+  canvas.addEventListener('mouseup', () => { isDragging = false; });
+  canvas.addEventListener('mouseleave', () => { isDragging = false; });
+
+  // Touch support
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    updatePoint(e.touches[0]);
+  });
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!isDragging) return;
+    updatePoint(e.touches[0]);
+  });
+  canvas.addEventListener('touchend', () => { isDragging = false; });
+
+  function updatePoint(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const w = W(), h = H();
+    const verts = getTriVerts(w, h);
+    const b = screenToBarycentric(mx, my, verts);
+    // Clamp to simplex
+    const clamped = b.map(v => Math.max(0, v));
+    const sum = clamped.reduce((a, b) => a + b, 0);
+    point = clamped.map(v => v / sum);
+    valCoords.textContent = '(' + point.map(v => v.toFixed(2)).join(', ') + ')';
+  }
+
+  document.getElementById('btn-reset-simplex').onclick = () => {
+    point = [1/3, 1/3, 1/3];
+    valCoords.textContent = '(0.33, 0.33, 0.33)';
+  };
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    const verts = getTriVerts(w, h);
+
+    // Grid lines within triangle (subdivisions)
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 0.5;
+    const subdivs = 10;
+    for (let i = 1; i < subdivs; i++) {
+      const t = i / subdivs;
+      // Lines parallel to each edge
+      for (let edge = 0; edge < 3; edge++) {
+        const v0 = verts[edge];
+        const v1 = verts[(edge + 1) % 3];
+        const v2 = verts[(edge + 2) % 3];
+        const p1 = { x: v0.x + (v1.x - v0.x) * t, y: v0.y + (v1.y - v0.y) * t };
+        const p2 = { x: v0.x + (v2.x - v0.x) * t, y: v0.y + (v2.y - v0.y) * t };
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+    }
+
+    // Fill triangle
+    ctx.fillStyle = 'rgba(250,249,246,0.7)';
+    ctx.beginPath();
+    ctx.moveTo(verts[0].x, verts[0].y);
+    ctx.lineTo(verts[1].x, verts[1].y);
+    ctx.lineTo(verts[2].x, verts[2].y);
+    ctx.closePath();
+    ctx.fill();
+
+    // Triangle edges
+    ctx.strokeStyle = 'rgba(26,26,46,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(verts[0].x, verts[0].y);
+    ctx.lineTo(verts[1].x, verts[1].y);
+    ctx.lineTo(verts[2].x, verts[2].y);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Color-coded edges
+    const edgeColors = ['#c2402a', '#2563eb', '#059669'];
+    for (let i = 0; i < 3; i++) {
+      const v1 = verts[i], v2 = verts[(i + 1) % 3];
+      ctx.strokeStyle = edgeColors[i];
+      ctx.lineWidth = 2.5;
+      ctx.globalAlpha = 0.4;
+      ctx.beginPath();
+      ctx.moveTo(v1.x, v1.y);
+      ctx.lineTo(v2.x, v2.y);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
+    // Vertex labels
+    const labels = ['z\u2081 = 1', 'z\u2082 = 1', 'z\u2083 = 1'];
+    const labelOffsets = [{ dx: 0, dy: -18 }, { dx: -28, dy: 18 }, { dx: 28, dy: 18 }];
+    ctx.font = '500 12px Source Code Pro';
+    ctx.textAlign = 'center';
+    for (let i = 0; i < 3; i++) {
+      ctx.fillStyle = edgeColors[i];
+      ctx.fillText(labels[i], verts[i].x + labelOffsets[i].dx, verts[i].y + labelOffsets[i].dy);
+    }
+
+    // Center label
+    const center = barycentricToScreen([1/3, 1/3, 1/3], verts);
+    ctx.fillStyle = 'rgba(136,136,160,0.4)';
+    ctx.font = '400 10px Source Code Pro';
+    ctx.fillText('uniform', center.x, center.y + 24);
+
+    // Point on simplex
+    const screenPt = barycentricToScreen(point, verts);
+    const pulse = 1 + 0.08 * Math.sin(frame * 0.05);
+
+    // Lines from point to edges (showing distances)
+    for (let i = 0; i < 3; i++) {
+      ctx.strokeStyle = edgeColors[i];
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 0.3;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(screenPt.x, screenPt.y);
+      ctx.lineTo(verts[i].x, verts[i].y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+
+      // Coordinate value along the line
+      const mx = (screenPt.x + verts[i].x) / 2;
+      const my = (screenPt.y + verts[i].y) / 2;
+      ctx.fillStyle = edgeColors[i];
+      ctx.font = '500 11px Source Code Pro';
+      ctx.fillText(point[i].toFixed(2), mx + (i === 0 ? 16 : (i === 1 ? -16 : 16)), my);
+    }
+
+    // Glow
+    ctx.fillStyle = 'rgba(194,64,42,0.12)';
+    ctx.beginPath();
+    ctx.arc(screenPt.x, screenPt.y, 18 * pulse, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Point
+    ctx.fillStyle = '#c2402a';
+    ctx.beginPath();
+    ctx.arc(screenPt.x, screenPt.y, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = 'white';
+    ctx.font = '500 8px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('z', screenPt.x, screenPt.y);
+    ctx.textBaseline = 'alphabetic';
+
+    // Bar chart on the right side
+    const barX = w - 120;
+    const barW = 80;
+    const barStartY = h * 0.25;
+    const barH = 28;
+    ctx.fillStyle = 'rgba(136,136,160,0.6)';
+    ctx.font = '500 9px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.fillText('COORDINATES', barX + barW / 2, barStartY - 12);
+
+    for (let i = 0; i < 3; i++) {
+      const by = barStartY + i * (barH + 6);
+      ctx.fillStyle = 'rgba(240,237,232,1)';
+      ctx.fillRect(barX, by, barW, barH);
+      ctx.fillStyle = edgeColors[i];
+      ctx.globalAlpha = 0.6;
+      ctx.fillRect(barX, by, point[i] * barW, barH);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = 'rgba(26,26,46,0.6)';
+      ctx.font = '400 10px Source Code Pro';
+      ctx.textAlign = 'right';
+      ctx.fillText('z' + (i + 1), barX - 6, by + barH / 2 + 4);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 3: LayerNorm vs SimNorm Comparison
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const lnCanvas = document.getElementById('ln-canvas');
+  const snCanvas = document.getElementById('sn-canvas');
+  const lnCtx = lnCanvas.getContext('2d');
+  const snCtx = snCanvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    [lnCanvas, snCanvas].forEach(c => {
+      const rect = c.parentElement.getBoundingClientRect();
+      c.style.width = rect.width + 'px';
+      c.style.height = (rect.width * 0.857) + 'px';
+      c.width = rect.width * dpr;
+      c.height = (rect.width * 0.857) * dpr;
+      c.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+    });
+  }
+  setupCanvas();
+
+  const CW = () => lnCanvas.width / dpr;
+  const CH = () => lnCanvas.height / dpr;
+
+  const ctrlSpread = document.getElementById('ctrl-spread');
+  const valSpread = document.getElementById('val-spread');
+  const ctrlNPoints = document.getElementById('ctrl-npoints');
+  const valNPoints = document.getElementById('val-npoints');
+
+  ctrlSpread.oninput = () => { valSpread.textContent = (ctrlSpread.value / 100).toFixed(2); };
+  ctrlNPoints.oninput = () => { valNPoints.textContent = ctrlNPoints.value; };
+
+  let rawPoints = [];
+  function generatePoints() {
+    const n = parseInt(ctrlNPoints.value);
+    const spread = parseInt(ctrlSpread.value) / 100;
+    rawPoints = [];
+    for (let i = 0; i < n; i++) {
+      rawPoints.push([
+        (Math.random() - 0.5) * spread * 4 + (Math.random() - 0.5) * 0.5,
+        (Math.random() - 0.5) * spread * 4 + (Math.random() - 0.5) * 0.5,
+      ]);
+    }
+  }
+  generatePoints();
+
+  document.getElementById('btn-regenerate').onclick = generatePoints;
+  document.getElementById('btn-reset-compare').onclick = () => {
+    ctrlSpread.value = 50;
+    valSpread.textContent = '0.50';
+    ctrlNPoints.value = 60;
+    valNPoints.textContent = '60';
+    generatePoints();
+  };
+
+  function layerNorm(pts) {
+    return pts.map(p => {
+      const mean = (p[0] + p[1]) / 2;
+      const std = Math.sqrt(((p[0] - mean) ** 2 + (p[1] - mean) ** 2) / 2) || 0.001;
+      return [(p[0] - mean) / std, (p[1] - mean) / std];
+    });
+  }
+
+  function simNorm(pts) {
+    return pts.map(p => {
+      const tau = 0.5;
+      const e0 = Math.exp(p[0] / tau);
+      const e1 = Math.exp(p[1] / tau);
+      const sum = e0 + e1;
+      return [e0 / sum, e1 / sum];
+    });
+  }
+
+  function drawPanel(c, points, label, isSimNorm) {
+    const ctx_local = c.getContext('2d');
+    const w = CW(), h = CH();
+    ctx_local.clearRect(0, 0, w, h);
+
+    const pad = 30;
+    const plotW = w - pad * 2;
+    const plotH = h - pad * 2;
+
+    // Grid
+    ctx_local.strokeStyle = 'rgba(0,0,0,0.06)';
+    ctx_local.lineWidth = 0.5;
+    for (let i = 0; i <= 8; i++) {
+      const x = pad + (i / 8) * plotW;
+      const y = pad + (i / 8) * plotH;
+      ctx_local.beginPath(); ctx_local.moveTo(x, pad); ctx_local.lineTo(x, pad + plotH); ctx_local.stroke();
+      ctx_local.beginPath(); ctx_local.moveTo(pad, y); ctx_local.lineTo(pad + plotW, y); ctx_local.stroke();
+    }
+
+    // Determine plot range
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    for (const p of points) {
+      minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]);
+      minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]);
+    }
+    const rangeX = Math.max(maxX - minX, 0.1) * 1.2;
+    const rangeY = Math.max(maxY - minY, 0.1) * 1.2;
+    const cx = (minX + maxX) / 2;
+    const cy = (minY + maxY) / 2;
+
+    function toScreen(px, py) {
+      return {
+        x: pad + ((px - cx) / rangeX + 0.5) * plotW,
+        y: pad + ((py - cy) / rangeY + 0.5) * plotH,
+      };
+    }
+
+    // SimNorm: draw simplex line (x + y = 1)
+    if (isSimNorm) {
+      const p1 = toScreen(0, 1);
+      const p2 = toScreen(1, 0);
+      ctx_local.strokeStyle = 'rgba(194,64,42,0.25)';
+      ctx_local.lineWidth = 1.5;
+      ctx_local.setLineDash([4, 4]);
+      ctx_local.beginPath();
+      ctx_local.moveTo(p1.x, p1.y);
+      ctx_local.lineTo(p2.x, p2.y);
+      ctx_local.stroke();
+      ctx_local.setLineDash([]);
+
+      // Label
+      const midP = toScreen(0.5, 0.5);
+      ctx_local.fillStyle = 'rgba(194,64,42,0.5)';
+      ctx_local.font = '400 10px Source Code Pro';
+      ctx_local.textAlign = 'center';
+      ctx_local.fillText('simplex (x+y=1)', midP.x + 30, midP.y - 8);
+    }
+
+    // Points
+    const color = isSimNorm ? '#c2402a' : '#2563eb';
+    for (const p of points) {
+      const s = toScreen(p[0], p[1]);
+      ctx_local.fillStyle = color;
+      ctx_local.globalAlpha = 0.4;
+      ctx_local.beginPath();
+      ctx_local.arc(s.x, s.y, 3.5, 0, Math.PI * 2);
+      ctx_local.fill();
+    }
+    ctx_local.globalAlpha = 1;
+
+    // Compute variance as diversity metric
+    const meanPt = [
+      points.reduce((a, p) => a + p[0], 0) / points.length,
+      points.reduce((a, p) => a + p[1], 0) / points.length,
+    ];
+    const variance = points.reduce((a, p) =>
+      a + (p[0] - meanPt[0]) ** 2 + (p[1] - meanPt[1]) ** 2, 0) / points.length;
+
+    // Mean point
+    const ms = toScreen(meanPt[0], meanPt[1]);
+    ctx_local.strokeStyle = color;
+    ctx_local.lineWidth = 1.5;
+    ctx_local.beginPath();
+    ctx_local.moveTo(ms.x - 6, ms.y - 6);
+    ctx_local.lineTo(ms.x + 6, ms.y + 6);
+    ctx_local.moveTo(ms.x + 6, ms.y - 6);
+    ctx_local.lineTo(ms.x - 6, ms.y + 6);
+    ctx_local.stroke();
+
+    // Stats
+    ctx_local.fillStyle = 'rgba(26,26,46,0.6)';
+    ctx_local.font = '400 10px Source Code Pro';
+    ctx_local.textAlign = 'left';
+    ctx_local.fillText('variance: ' + variance.toFixed(4), pad + 4, h - 10);
+  }
+
+  function drawComparison() {
+    const lnPoints = layerNorm(rawPoints);
+    const snPoints = simNorm(rawPoints);
+    drawPanel(lnCanvas, lnPoints, 'LayerNorm', false);
+    drawPanel(snCanvas, snPoints, 'SimNorm', true);
+    requestAnimationFrame(drawComparison);
+  }
+  drawComparison();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 4: Collapse Prevention Simulation
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('collapse-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.43) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.43) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  const N = 40;
+  let noNormPts = [];
+  let simNormPts = [];
+  let step = 0;
+  let running = false;
+  let animInterval = null;
+
+  function initPoints() {
+    noNormPts = [];
+    simNormPts = [];
+    for (let i = 0; i < N; i++) {
+      const x = Math.random() * 2 - 1;
+      const y = Math.random() * 2 - 1;
+      noNormPts.push({ x, y, ox: x, oy: y });
+      simNormPts.push({ x, y, ox: x, oy: y });
+    }
+    step = 0;
+    document.getElementById('val-collapse-step').textContent = '0';
+  }
+  initPoints();
+
+  function simulateStep() {
+    step++;
+    document.getElementById('val-collapse-step').textContent = step;
+
+    // No normalization: embeddings gradually collapse toward mean
+    const meanX = noNormPts.reduce((a, p) => a + p.x, 0) / N;
+    const meanY = noNormPts.reduce((a, p) => a + p.y, 0) / N;
+    noNormPts.forEach(p => {
+      p.x += (meanX - p.x) * 0.06 + (Math.random() - 0.5) * 0.02;
+      p.y += (meanY - p.y) * 0.06 + (Math.random() - 0.5) * 0.02;
+    });
+
+    // SimNorm: project back onto simplex after each step (maintains diversity)
+    const smMeanX = simNormPts.reduce((a, p) => a + p.x, 0) / N;
+    const smMeanY = simNormPts.reduce((a, p) => a + p.y, 0) / N;
+    simNormPts.forEach(p => {
+      // Slight attraction (same dynamics)
+      p.x += (smMeanX - p.x) * 0.06 + (Math.random() - 0.5) * 0.02;
+      p.y += (smMeanY - p.y) * 0.06 + (Math.random() - 0.5) * 0.02;
+      // SimNorm: project onto simplex via softmax
+      const tau = 0.5;
+      const ex = Math.exp(p.x / tau);
+      const ey = Math.exp(p.y / tau);
+      const sum = ex + ey;
+      const sx = ex / sum;
+      const sy = ey / sum;
+      // Map back to display range but keep simplex structure
+      p.x = (sx - 0.5) * 2;
+      p.y = (sy - 0.5) * 2;
+      // Add diversity-preserving repulsion
+      simNormPts.forEach(q => {
+        if (q === p) return;
+        const dx = p.x - q.x;
+        const dy = p.y - q.y;
+        const d = Math.sqrt(dx * dx + dy * dy) + 0.001;
+        if (d < 0.3) {
+          p.x += dx / d * 0.008;
+          p.y += dy / d * 0.008;
+        }
+      });
+    });
+  }
+
+  document.getElementById('btn-start-collapse').onclick = function() {
+    if (running) {
+      running = false;
+      if (animInterval) clearInterval(animInterval);
+      this.textContent = 'Start Simulation';
+    } else {
+      running = true;
+      this.textContent = 'Pause';
+      animInterval = setInterval(() => {
+        if (step >= 200) { running = false; clearInterval(animInterval); return; }
+        simulateStep();
+      }, 50);
+    }
+  };
+
+  document.getElementById('btn-reset-collapse').onclick = () => {
+    running = false;
+    if (animInterval) clearInterval(animInterval);
+    document.getElementById('btn-start-collapse').textContent = 'Start Simulation';
+    initPoints();
+  };
+
+  function drawPoints(pts, offsetX, panelW, color, label) {
+    const h = H();
+    const pad = 30;
+    const plotW = panelW - pad * 2;
+    const plotH = h - pad * 2;
+    const cx = offsetX + panelW / 2;
+    const cy = h / 2;
+
+    // Background
+    ctx.fillStyle = 'rgba(250,249,246,0.5)';
+    ctx.fillRect(offsetX + pad, pad, plotW, plotH);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 6; i++) {
+      const x = offsetX + pad + (i / 6) * plotW;
+      const y = pad + (i / 6) * plotH;
+      ctx.beginPath(); ctx.moveTo(x, pad); ctx.lineTo(x, pad + plotH); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(offsetX + pad, y); ctx.lineTo(offsetX + pad + plotW, y); ctx.stroke();
+    }
+
+    // Points
+    for (const p of pts) {
+      const sx = cx + p.x * plotW * 0.35;
+      const sy = cy + p.y * plotH * 0.35;
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // Label
+    ctx.fillStyle = 'rgba(136,136,160,0.8)';
+    ctx.font = '500 10px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, cx, 18);
+
+    // Compute variance
+    const mx = pts.reduce((a, p) => a + p.x, 0) / pts.length;
+    const my = pts.reduce((a, p) => a + p.y, 0) / pts.length;
+    const variance = pts.reduce((a, p) => a + (p.x - mx) ** 2 + (p.y - my) ** 2, 0) / pts.length;
+
+    ctx.fillText('var: ' + variance.toFixed(4), cx, h - 8);
+  }
+
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    const halfW = w / 2;
+
+    // Divider
+    ctx.strokeStyle = 'rgba(224,221,213,1)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(halfW, 0);
+    ctx.lineTo(halfW, h);
+    ctx.stroke();
+
+    drawPoints(noNormPts, 0, halfW, '#2563eb', 'WITHOUT NORMALIZATION');
+    drawPoints(simNormPts, halfW, halfW, '#c2402a', 'WITH SIMNORM');
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

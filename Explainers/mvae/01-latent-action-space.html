@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 &mdash; The Latent Action Space &mdash; Motion VAE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+/* -- Design Tokens -- */
+:root {
+  --bg: #faf9f6;
+  --bg-alt: #f3f0eb;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent: #c2402a;
+  --accent-hover: #a03520;
+  --blue: #2563eb;
+  --green: #059669;
+  --purple: #7c3aed;
+  --orange: #d97706;
+  --border: #e0ddd5;
+  --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+  --font-mono: 'Source Code Pro', 'Menlo', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* -- Navigation -- */
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* -- Header -- */
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+/* -- Prose -- */
+.prose { margin-bottom: 40px; }
+.prose p { margin-bottom: 18px; color: var(--text-secondary); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 500; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+/* -- Figure Wrappers -- */
+.figure-wrap {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 28px 0 40px;
+  box-shadow: var(--card-shadow);
+}
+
+.figure-wrap canvas {
+  display: block;
+  width: 100%;
+  cursor: crosshair;
+}
+
+.figure-caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+
+/* -- Controls -- */
+.controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-alt);
+  flex-wrap: wrap;
+}
+
+.controls-bar label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.controls-bar input[type="range"] {
+  width: 100px;
+  accent-color: var(--accent);
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: white;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.spacer { flex: 1; }
+
+/* -- Slider Group -- */
+.slider-group {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 28px 0 40px;
+  box-shadow: var(--card-shadow);
+}
+
+.slider-group-header {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 14px 20px 0;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+}
+
+.slider-row label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 60px;
+}
+
+.slider-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+  height: 4px;
+}
+
+.slider-row .val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  min-width: 44px;
+  text-align: right;
+}
+
+/* -- Equation Block -- */
+.equation-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 28px;
+  margin: 24px 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+}
+.equation-block .var { color: var(--accent); }
+.equation-block .blue { color: var(--blue); }
+
+/* -- Footer -- */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0 56px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+footer a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* -- Side by Side -- */
+.dual-figure {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.dual-figure .dual-panel {
+  position: relative;
+}
+.dual-figure .dual-panel + .dual-panel {
+  border-left: 1px solid var(--border);
+}
+.dual-figure canvas {
+  display: block;
+  width: 100%;
+}
+.dual-label {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .dual-figure { grid-template-columns: 1fr; }
+  .dual-figure .dual-panel + .dual-panel { border-left: none; border-top: 1px solid var(--border); }
+}
+
+/* -- Nav arrows -- */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 48px 0 0;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+.page-nav a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.page-nav a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <a href="index.html" class="back-link">&larr; Motion VAE Explorations</a>
+
+  <header>
+    <span class="overline">Exploration 01</span>
+    <h1>The Latent Action Space</h1>
+    <p class="subtitle">
+      In MVAE, the encoder compresses pairs of consecutive poses into a
+      32-dimensional latent code <em>z</em>. This code is not just a compressed
+      representation&thinsp;&mdash;&thinsp;it serves as the <em>action</em> that
+      a reinforcement learning agent selects to drive the character.
+    </p>
+  </header>
+
+  <div class="prose">
+    <p>
+      Traditional character controllers operate in high-dimensional joint-angle
+      or torque spaces. MVAE replaces this with a much more compact and
+      structured alternative: the latent space of a trained variational
+      autoencoder. The encoder takes two consecutive poses
+      (<strong>p<sub>t-1</sub></strong> and <strong>p<sub>t</sub></strong>)
+      and produces a mean and variance for a 32-dimensional Gaussian. Through
+      the reparameterization trick, we sample a latent code <em>z</em> that
+      captures the essential "intent" of the motion transition.
+    </p>
+  </div>
+
+  <div class="equation-block">
+    <span class="blue">q</span>(z | p<sub>t-1</sub>, p<sub>t</sub>) = N(<span class="var">&mu;</span>, <span class="var">&sigma;</span><sup>2</sup>)
+    &emsp;&emsp;
+    z &in; R<sup>32</sup>
+  </div>
+
+  <div class="prose">
+    <p>
+      The visualization below projects this 32-dimensional space down to 2D
+      using a simulated t-SNE-like layout. Each point represents a latent code
+      sampled from the training data. <strong>Drag the red cursor</strong>
+      through the space to explore different regions. The stick figure on the right
+      changes its pose and motion in real time, interpolating smoothly between
+      motion types.
+    </p>
+  </div>
+
+  <!-- Main interactive figure: latent space + stick figure -->
+  <div class="figure-wrap">
+    <div class="dual-figure">
+      <div class="dual-panel">
+        <span class="dual-label">Latent Space (2D projection)</span>
+        <canvas id="latent-canvas" height="400"></canvas>
+      </div>
+      <div class="dual-panel">
+        <span class="dual-label">Generated Motion</span>
+        <canvas id="figure-canvas" height="400"></canvas>
+      </div>
+    </div>
+    <div class="controls-bar">
+      <button class="btn" id="btn-walk">Walk</button>
+      <button class="btn" id="btn-run">Run</button>
+      <button class="btn" id="btn-jump">Jump</button>
+      <button class="btn" id="btn-idle">Idle</button>
+      <span class="spacer"></span>
+      <button class="btn" id="btn-reset">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Drag in the latent space (left) to control the stick figure (right). Preset buttons
+      snap to learned motion regions. The color gradient indicates motion energy: cool blue
+      (slow/idle) to warm red (fast/dynamic).
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      Notice how the latent space organizes itself into <strong>coherent regions</strong>
+      without any motion labels. Walking motions cluster near the center, running
+      occupies a ring at higher energy, and transitional motions (turning, stopping)
+      fill the spaces between. This emergent structure is what makes the latent
+      space viable as an action space for RL&thinsp;&mdash;&thinsp;nearby codes
+      produce similar motions, giving the policy a smooth optimization landscape.
+    </p>
+  </div>
+
+  <div class="margin-note">
+    The encoder uses three fully connected layers with 256 hidden units and ELU
+    activations. The latent dimension of 32 was chosen to balance expressiveness
+    with compactness&thinsp;&mdash;&thinsp;the RL agent needs to search this space
+    efficiently.
+  </div>
+
+  <h2>Latent Dimension Sliders</h2>
+
+  <div class="prose">
+    <p>
+      While the full latent code has 32 dimensions, certain individual dimensions
+      correlate with interpretable motion features. The sliders below let you
+      adjust six key dimensions and observe how they affect the generated motion.
+      <strong>Dimension 0</strong> tends to control stride length, while
+      <strong>Dimension 3</strong> correlates with lateral movement.
+    </p>
+  </div>
+
+  <div class="slider-group">
+    <div class="slider-group-header">Latent Dimensions</div>
+    <div class="slider-row">
+      <label>z[0] stride</label>
+      <input type="range" id="dim-0" min="-3" max="3" step="0.05" value="0">
+      <span class="val" id="val-0">0.00</span>
+    </div>
+    <div class="slider-row">
+      <label>z[1] speed</label>
+      <input type="range" id="dim-1" min="-3" max="3" step="0.05" value="0">
+      <span class="val" id="val-1">0.00</span>
+    </div>
+    <div class="slider-row">
+      <label>z[2] height</label>
+      <input type="range" id="dim-2" min="-3" max="3" step="0.05" value="0">
+      <span class="val" id="val-2">0.00</span>
+    </div>
+    <div class="slider-row">
+      <label>z[3] lateral</label>
+      <input type="range" id="dim-3" min="-3" max="3" step="0.05" value="0">
+      <span class="val" id="val-3">0.00</span>
+    </div>
+    <div class="slider-row">
+      <label>z[4] arms</label>
+      <input type="range" id="dim-4" min="-3" max="3" step="0.05" value="0">
+      <span class="val" id="val-4">0.00</span>
+    </div>
+    <div class="slider-row">
+      <label>z[5] torso</label>
+      <input type="range" id="dim-5" min="-3" max="3" step="0.05" value="0">
+      <span class="val" id="val-5">0.00</span>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The <strong>&beta; = 0.2</strong> weighting in the KL divergence term is
+      crucial here. A higher &beta; would force the latent space to be more
+      Gaussian-like (smoother interpolation, but less expressive). A lower &beta;
+      would allow sharper mode separation at the cost of possible "dead zones"
+      where sampling produces artifacts. The MVAE authors found 0.2 to be the
+      sweet spot for maintaining both smooth coverage and motion quality.
+    </p>
+  </div>
+
+  <h2>Sampling vs. Policy Selection</h2>
+
+  <div class="prose">
+    <p>
+      The figure below contrasts two ways of selecting latent codes. On the left,
+      <strong>random sampling</strong> from the prior p(z) = N(0, I) produces
+      varied but undirected motion&thinsp;&mdash;&thinsp;the character wanders
+      aimlessly. On the right, a trained <strong>PPO policy</strong> selects
+      codes strategically, producing goal-directed movement. The policy output
+      is clipped to [-4, +4] via Tanh scaling, keeping the agent within the
+      high-density region of the latent space.
+    </p>
+  </div>
+
+  <div class="figure-wrap">
+    <div class="dual-figure">
+      <div class="dual-panel">
+        <span class="dual-label">Random Sampling</span>
+        <canvas id="random-canvas" height="320"></canvas>
+      </div>
+      <div class="dual-panel">
+        <span class="dual-label">PPO Policy</span>
+        <canvas id="policy-canvas" height="320"></canvas>
+      </div>
+    </div>
+    <div class="controls-bar">
+      <button class="btn" id="btn-reset-compare">Reset</button>
+      <label>Speed: <input type="range" id="speed-slider" min="0.2" max="3" step="0.1" value="1"></label>
+    </div>
+    <div class="figure-caption">
+      Random walk (left) vs. goal-directed policy (right). The red diamond marks the target.
+      The policy-controlled character reaches the target in fewer steps with smoother motion.
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The difference is striking. Random sampling produces <em>plausible</em> motion
+      at each frame&thinsp;&mdash;&thinsp;the VAE's learned prior ensures that&thinsp;&mdash;&thinsp;but
+      without coherent direction. The PPO policy, trained with task rewards in the
+      latent space, produces purposeful locomotion. This demonstrates the key insight
+      of MVAE: <strong>the VAE handles motion quality while RL handles task completion</strong>,
+      a clean separation of concerns.
+    </p>
+  </div>
+
+  <div class="margin-note">
+    The PPO controller uses two hidden layers of 256 units with ReLU activations.
+    Training uses 100 parallel simulations and takes 1-6 hours per task on a desktop GPU.
+  </div>
+
+  <h2>The Encoder-Decoder Pipeline</h2>
+
+  <div class="prose">
+    <p>
+      To understand why the latent space works as an action space, it helps to
+      trace the full encoder-decoder pipeline. The encoder takes a pair of
+      consecutive poses and compresses them into a 32-dimensional Gaussian.
+      The decoder takes the <em>previous</em> pose plus a latent sample and
+      predicts the <em>next</em> pose. This asymmetry is key: the latent code
+      captures the <strong>transition dynamics</strong> between poses, not the
+      pose itself.
+    </p>
+    <p>
+      The visualization below shows the pipeline in action. The left column
+      shows the encoder processing two input frames. The center shows the
+      bottleneck where the latent code is sampled. The right column shows
+      the decoder producing the output pose. The flowing particles
+      represent information being compressed and then expanded.
+    </p>
+  </div>
+
+  <div class="figure-wrap">
+    <canvas id="pipeline-canvas" height="300"></canvas>
+    <div class="figure-caption">
+      The encoder-decoder pipeline. Two consecutive poses enter the encoder (left),
+      are compressed to a 32-dim latent code z (center), and decoded into the next
+      pose prediction (right). Each encoder/decoder has three 256-unit layers with ELU activations.
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      A crucial detail is the <strong>pose representation</strong> used by MVAE.
+      Each pose includes root position, root facing direction, linear velocities,
+      joint positions in 3D, joint velocities in 3D, and joint orientations
+      encoded as 6D forward/upward vectors. This rich representation gives the
+      model enough information to predict physically plausible transitions without
+      needing explicit foot contact labels or gait phase annotations.
+    </p>
+    <p>
+      The choice of <strong>6D rotation representation</strong> for joint orientations
+      is particularly important. Unlike Euler angles (which suffer from gimbal lock)
+      or quaternions (which have antipodal ambiguity), the 6D representation
+      provides a continuous, singularity-free parameterization that makes
+      regression loss well-behaved during training.
+    </p>
+  </div>
+
+  <h2>Four Control Tasks</h2>
+
+  <div class="prose">
+    <p>
+      The MVAE framework is evaluated on four diverse control tasks, all operating
+      through the same 32-dimensional latent action space. An energy penalty
+      <code>E = v_root^2 + (1/J) * sum(|v_joints|)</code> is applied across all tasks
+      to discourage excessive, unnatural motion. The tasks range from simple
+      point-to-point navigation to complex maze exploration with limited perception.
+    </p>
+  </div>
+
+  <div class="figure-wrap">
+    <canvas id="tasks-canvas" height="340"></canvas>
+    <div class="controls-bar">
+      <button class="btn" id="btn-task-target">Target</button>
+      <button class="btn active" id="btn-task-joystick">Joystick</button>
+      <button class="btn" id="btn-task-path">Path</button>
+      <button class="btn" id="btn-task-maze">Maze</button>
+      <span class="spacer"></span>
+      <button class="btn" id="btn-reset-tasks">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Four control tasks evaluated in the paper. Target reaching: navigate to random
+      points in a 120x80ft arena. Joystick: follow directional commands at varying speeds.
+      Path following: track a figure-8 path with 4 lookahead targets. Maze: explore a
+      procedural maze using 16-ray vision sensing.
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      What makes these results remarkable is that <strong>a single MVAE model</strong>
+      trained on just 17 minutes of motion capture data supports all four tasks.
+      The RL controllers are task-specific, but they all operate in the same
+      shared latent space. This demonstrates the generality of the learned
+      motion prior: it captures enough about human locomotion to support
+      any downstream control objective, from simple waypoint navigation to
+      complex spatial reasoning.
+    </p>
+  </div>
+
+  <nav class="page-nav">
+    <a href="index.html">&larr; Index</a>
+    <a href="02-mixture-of-experts.html">02: Mixture of Experts &rarr;</a>
+  </nav>
+
+</div>
+
+<footer>
+  <a href="index.html">Motion VAE Explorations</a> &ensp;&middot;&ensp;
+  <a href="https://arxiv.org/abs/2103.14274">Paper</a> &ensp;&middot;&ensp;
+  <a href="https://github.com/electronicarts/character-motion-vaes">Code</a>
+</footer>
+
+<script>
+// ============================================================
+// Utility: simple seeded random for reproducible scatter
+// ============================================================
+function mulberry32(a) {
+  return function() {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    var t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+// ============================================================
+// Latent space data: generate clusters for walk/run/jump/idle
+// ============================================================
+const rng = mulberry32(42);
+const clusters = [
+  { cx: 0.0, cy: 0.0, r: 0.15, label: 'idle', color: '#2563eb', energy: 0.1 },
+  { cx: -0.25, cy: 0.1, r: 0.18, label: 'walk', color: '#059669', energy: 0.35 },
+  { cx: 0.3, cy: -0.15, r: 0.16, label: 'run', color: '#d97706', energy: 0.7 },
+  { cx: 0.05, cy: -0.35, r: 0.12, label: 'jump', color: '#c2402a', energy: 0.9 },
+  { cx: -0.35, cy: -0.2, r: 0.14, label: 'turn', color: '#7c3aed', energy: 0.5 },
+];
+
+const latentPoints = [];
+clusters.forEach(cl => {
+  const n = 40 + Math.floor(rng() * 20);
+  for (let i = 0; i < n; i++) {
+    const angle = rng() * Math.PI * 2;
+    const dist = Math.sqrt(rng()) * cl.r;
+    latentPoints.push({
+      x: cl.cx + Math.cos(angle) * dist,
+      y: cl.cy + Math.sin(angle) * dist,
+      cluster: cl.label,
+      color: cl.color,
+      energy: cl.energy + (rng() - 0.5) * 0.2,
+    });
+  }
+});
+
+// ============================================================
+// State
+// ============================================================
+let cursorX = 0, cursorY = 0;  // normalized latent coords [-0.6, 0.6]
+let targetCursorX = 0, targetCursorY = 0;
+let isDragging = false;
+let animFrame = 0;
+let simSpeed = 1;
+
+// Preset positions
+const presets = {
+  walk: { x: -0.25, y: 0.1 },
+  run:  { x: 0.3, y: -0.15 },
+  jump: { x: 0.05, y: -0.35 },
+  idle: { x: 0.0, y: 0.0 },
+};
+
+// Slider state
+const sliderValues = [0, 0, 0, 0, 0, 0];
+
+// ============================================================
+// Stick Figure definition
+// ============================================================
+function getMotionParams(cx, cy, sliders) {
+  // Compute motion parameters from cursor position + sliders
+  const dist = Math.sqrt(cx * cx + cy * cy);
+  let energy = Math.min(1, dist / 0.4);
+
+  // Find nearest cluster for motion type blending
+  let bestDist = Infinity, bestCluster = clusters[0];
+  clusters.forEach(cl => {
+    const d = Math.sqrt((cx - cl.cx) ** 2 + (cy - cl.cy) ** 2);
+    if (d < bestDist) { bestDist = d; bestCluster = cl; }
+  });
+
+  // Base parameters from cluster
+  const stride = 0.3 + energy * 0.7 + sliders[0] * 0.15;
+  const speed = 0.5 + energy * 2.5 + sliders[1] * 0.3;
+  const bounce = 0.02 + energy * 0.08 + sliders[2] * 0.03;
+  const lateral = sliders[3] * 0.15;
+  const armSwing = 0.3 + energy * 0.5 + sliders[4] * 0.15;
+  const torsoLean = energy * 0.15 + sliders[5] * 0.08;
+
+  const isJump = bestCluster.label === 'jump' && bestDist < 0.2;
+
+  return { stride, speed, bounce, lateral, armSwing, torsoLean, energy, isJump, motionType: bestCluster.label };
+}
+
+function drawStickFigure(ctx, w, h, t, params) {
+  const cx = w / 2 + params.lateral * w;
+  const groundY = h * 0.82;
+  const phase = t * params.speed * 0.06;
+
+  // Jump arc
+  let jumpOffset = 0;
+  if (params.isJump) {
+    jumpOffset = Math.abs(Math.sin(phase * 0.5)) * 40 * params.energy;
+  }
+
+  const bodyBounce = Math.sin(phase * 2) * params.bounce * h;
+  const hipY = groundY - 50 - bodyBounce - jumpOffset;
+
+  // Torso lean
+  const lean = Math.sin(phase) * params.torsoLean;
+
+  // Spine
+  const shoulderY = hipY - 40;
+  const headY = shoulderY - 25;
+  const shoulderX = cx + lean * 30;
+  const headX = shoulderX + lean * 10;
+
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  // Color based on energy
+  const r = Math.floor(26 + params.energy * 168);
+  const g = Math.floor(26 + (1 - params.energy) * 73);
+  const b = Math.floor(46);
+  ctx.strokeStyle = `rgb(${r},${g},${b})`;
+  ctx.fillStyle = ctx.strokeStyle;
+
+  // Head
+  ctx.beginPath();
+  ctx.arc(headX, headY, 8, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Neck to hip
+  ctx.beginPath();
+  ctx.moveTo(headX, headY + 8);
+  ctx.lineTo(shoulderX, shoulderY);
+  ctx.lineTo(cx, hipY);
+  ctx.stroke();
+
+  // Arms
+  const armPhase = phase;
+  const lArmAngle = Math.sin(armPhase) * params.armSwing;
+  const rArmAngle = Math.sin(armPhase + Math.PI) * params.armSwing;
+
+  // Left arm
+  const lElbowX = shoulderX - 15 + Math.sin(lArmAngle) * 12;
+  const lElbowY = shoulderY + 18 + Math.cos(lArmAngle) * 5;
+  const lHandX = lElbowX - 5 + Math.sin(lArmAngle) * 10;
+  const lHandY = lElbowY + 16;
+
+  ctx.beginPath();
+  ctx.moveTo(shoulderX, shoulderY);
+  ctx.lineTo(lElbowX, lElbowY);
+  ctx.lineTo(lHandX, lHandY);
+  ctx.stroke();
+
+  // Right arm
+  const rElbowX = shoulderX + 15 + Math.sin(rArmAngle) * 12;
+  const rElbowY = shoulderY + 18 + Math.cos(rArmAngle) * 5;
+  const rHandX = rElbowX + 5 + Math.sin(rArmAngle) * 10;
+  const rHandY = rElbowY + 16;
+
+  ctx.beginPath();
+  ctx.moveTo(shoulderX, shoulderY);
+  ctx.lineTo(rElbowX, rElbowY);
+  ctx.lineTo(rHandX, rHandY);
+  ctx.stroke();
+
+  // Legs
+  const legPhase = phase;
+  const lLegAngle = Math.sin(legPhase) * params.stride * 0.6;
+  const rLegAngle = Math.sin(legPhase + Math.PI) * params.stride * 0.6;
+
+  // Left leg
+  const lKneeX = cx - 8 + Math.sin(lLegAngle) * 15;
+  const lKneeY = hipY + 25 + Math.abs(Math.cos(lLegAngle)) * 5;
+  const lFootX = cx - 6 + Math.sin(lLegAngle) * 25;
+  const lFootY = groundY - jumpOffset;
+
+  ctx.beginPath();
+  ctx.moveTo(cx, hipY);
+  ctx.lineTo(lKneeX, lKneeY);
+  ctx.lineTo(lFootX, lFootY);
+  ctx.stroke();
+
+  // Foot
+  ctx.beginPath();
+  ctx.moveTo(lFootX, lFootY);
+  ctx.lineTo(lFootX + 8, lFootY);
+  ctx.stroke();
+
+  // Right leg
+  const rKneeX = cx + 8 + Math.sin(rLegAngle) * 15;
+  const rKneeY = hipY + 25 + Math.abs(Math.cos(rLegAngle)) * 5;
+  const rFootX = cx + 6 + Math.sin(rLegAngle) * 25;
+  const rFootY = groundY - jumpOffset;
+
+  ctx.beginPath();
+  ctx.moveTo(cx, hipY);
+  ctx.lineTo(rKneeX, rKneeY);
+  ctx.lineTo(rFootX, rFootY);
+  ctx.stroke();
+
+  // Foot
+  ctx.beginPath();
+  ctx.moveTo(rFootX, rFootY);
+  ctx.lineTo(rFootX + 8, rFootY);
+  ctx.stroke();
+
+  // Ground line
+  ctx.strokeStyle = '#e0ddd5';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(20, groundY + 2);
+  ctx.lineTo(w - 20, groundY + 2);
+  ctx.stroke();
+
+  // Motion type label
+  ctx.fillStyle = '#8888a0';
+  ctx.font = '500 11px "Source Code Pro", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(params.motionType.toUpperCase(), w / 2, 30);
+
+  // Energy bar
+  ctx.fillStyle = '#e0ddd5';
+  ctx.fillRect(w - 30, 40, 8, 80);
+  const eColor = params.energy > 0.6 ? '#c2402a' : params.energy > 0.3 ? '#d97706' : '#2563eb';
+  ctx.fillStyle = eColor;
+  ctx.fillRect(w - 30, 40 + 80 * (1 - params.energy), 8, 80 * params.energy);
+  ctx.fillStyle = '#8888a0';
+  ctx.font = '9px "Source Code Pro", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('E', w - 26, 35);
+}
+
+
+// ============================================================
+// Main latent space canvas
+// ============================================================
+(function() {
+  const lc = document.getElementById('latent-canvas');
+  const fc = document.getElementById('figure-canvas');
+  if (!lc || !fc) return;
+
+  const lctx = lc.getContext('2d');
+  const fctx = fc.getContext('2d');
+
+  function resize() {
+    [lc, fc].forEach(c => {
+      const r = c.parentElement.getBoundingClientRect();
+      c.width = r.width * devicePixelRatio;
+      c.height = 400 * devicePixelRatio;
+      c.style.height = '400px';
+      c.getContext('2d').scale(devicePixelRatio, devicePixelRatio);
+    });
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Coordinate transform: latent [-0.6, 0.6] -> canvas pixels
+  function l2c(lx, ly, cw, ch) {
+    return {
+      x: cw / 2 + (lx / 0.6) * (cw * 0.42),
+      y: ch / 2 - (ly / 0.6) * (ch * 0.42),
+    };
+  }
+  function c2l(px, py, cw, ch) {
+    return {
+      x: ((px - cw / 2) / (cw * 0.42)) * 0.6,
+      y: -((py - ch / 2) / (ch * 0.42)) * 0.6,
+    };
+  }
+
+  // Mouse handling on latent canvas
+  lc.addEventListener('mousedown', e => {
+    isDragging = true;
+    updateCursor(e);
+  });
+  lc.addEventListener('mousemove', e => {
+    if (isDragging) updateCursor(e);
+  });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+
+  lc.addEventListener('touchstart', e => {
+    isDragging = true;
+    updateCursorTouch(e);
+    e.preventDefault();
+  }, { passive: false });
+  lc.addEventListener('touchmove', e => {
+    if (isDragging) updateCursorTouch(e);
+    e.preventDefault();
+  }, { passive: false });
+  lc.addEventListener('touchend', () => { isDragging = false; });
+
+  function updateCursor(e) {
+    const rect = lc.getBoundingClientRect();
+    const px = e.clientX - rect.left;
+    const py = e.clientY - rect.top;
+    const cw = rect.width, ch = rect.height;
+    const l = c2l(px, py, cw, ch);
+    targetCursorX = Math.max(-0.55, Math.min(0.55, l.x));
+    targetCursorY = Math.max(-0.55, Math.min(0.55, l.y));
+  }
+  function updateCursorTouch(e) {
+    const rect = lc.getBoundingClientRect();
+    const touch = e.touches[0];
+    const px = touch.clientX - rect.left;
+    const py = touch.clientY - rect.top;
+    const cw = rect.width, ch = rect.height;
+    const l = c2l(px, py, cw, ch);
+    targetCursorX = Math.max(-0.55, Math.min(0.55, l.x));
+    targetCursorY = Math.max(-0.55, Math.min(0.55, l.y));
+  }
+
+  // Preset buttons
+  Object.keys(presets).forEach(key => {
+    document.getElementById('btn-' + key).addEventListener('click', () => {
+      targetCursorX = presets[key].x;
+      targetCursorY = presets[key].y;
+    });
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    targetCursorX = 0;
+    targetCursorY = 0;
+    sliderValues.fill(0);
+    for (let i = 0; i < 6; i++) {
+      document.getElementById('dim-' + i).value = 0;
+      document.getElementById('val-' + i).textContent = '0.00';
+    }
+  });
+
+  // Slider listeners
+  for (let i = 0; i < 6; i++) {
+    const slider = document.getElementById('dim-' + i);
+    const valSpan = document.getElementById('val-' + i);
+    slider.addEventListener('input', () => {
+      sliderValues[i] = parseFloat(slider.value);
+      valSpan.textContent = sliderValues[i].toFixed(2);
+    });
+  }
+
+  function drawLatent() {
+    const cw = lc.width / devicePixelRatio;
+    const ch = lc.height / devicePixelRatio;
+    lctx.clearRect(0, 0, cw, ch);
+
+    // Background grid
+    lctx.strokeStyle = '#f0ede8';
+    lctx.lineWidth = 0.5;
+    const center = l2c(0, 0, cw, ch);
+    for (let i = -3; i <= 3; i++) {
+      const p = l2c(i * 0.2, 0, cw, ch);
+      lctx.beginPath();
+      lctx.moveTo(p.x, 20);
+      lctx.lineTo(p.x, ch - 20);
+      lctx.stroke();
+    }
+    for (let i = -3; i <= 3; i++) {
+      const p = l2c(0, i * 0.2, cw, ch);
+      lctx.beginPath();
+      lctx.moveTo(20, p.y);
+      lctx.lineTo(cw - 20, p.y);
+      lctx.stroke();
+    }
+
+    // Density contours
+    for (let i = 3; i >= 1; i--) {
+      const r = i * cw * 0.14;
+      lctx.beginPath();
+      lctx.arc(center.x, center.y, r, 0, Math.PI * 2);
+      lctx.strokeStyle = `rgba(194,64,42,${0.04 * i})`;
+      lctx.lineWidth = 1;
+      lctx.stroke();
+    }
+
+    // Cluster labels
+    lctx.font = 'italic 11px "Spectral", serif';
+    lctx.textAlign = 'center';
+    clusters.forEach(cl => {
+      const p = l2c(cl.cx, cl.cy, cw, ch);
+      lctx.fillStyle = cl.color;
+      lctx.globalAlpha = 0.35;
+      lctx.fillText(cl.label, p.x, p.y - cl.r * cw * 0.7 - 6);
+      lctx.globalAlpha = 1;
+    });
+
+    // Data points
+    latentPoints.forEach(pt => {
+      const p = l2c(pt.x, pt.y, cw, ch);
+      lctx.beginPath();
+      lctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+      lctx.fillStyle = pt.color;
+      lctx.globalAlpha = 0.25;
+      lctx.fill();
+    });
+    lctx.globalAlpha = 1;
+
+    // Cursor with spring
+    cursorX += (targetCursorX - cursorX) * 0.12;
+    cursorY += (targetCursorY - cursorY) * 0.12;
+
+    const cp = l2c(cursorX, cursorY, cw, ch);
+
+    // Glow
+    const grad = lctx.createRadialGradient(cp.x, cp.y, 0, cp.x, cp.y, 20);
+    grad.addColorStop(0, 'rgba(194,64,42,0.2)');
+    grad.addColorStop(1, 'rgba(194,64,42,0)');
+    lctx.fillStyle = grad;
+    lctx.beginPath();
+    lctx.arc(cp.x, cp.y, 20, 0, Math.PI * 2);
+    lctx.fill();
+
+    // Cursor dot
+    lctx.beginPath();
+    lctx.arc(cp.x, cp.y, 6, 0, Math.PI * 2);
+    lctx.fillStyle = '#c2402a';
+    lctx.fill();
+    lctx.strokeStyle = 'white';
+    lctx.lineWidth = 2;
+    lctx.stroke();
+
+    // Coordinates
+    lctx.fillStyle = '#8888a0';
+    lctx.font = '10px "Source Code Pro", monospace';
+    lctx.textAlign = 'left';
+    lctx.fillText(`z = (${cursorX.toFixed(2)}, ${cursorY.toFixed(2)})`, cp.x + 12, cp.y - 8);
+  }
+
+  function drawFigure() {
+    const cw = fc.width / devicePixelRatio;
+    const ch = fc.height / devicePixelRatio;
+    fctx.clearRect(0, 0, cw, ch);
+
+    const params = getMotionParams(cursorX, cursorY, sliderValues);
+    drawStickFigure(fctx, cw, ch, animFrame, params);
+  }
+
+  function animate() {
+    animFrame += simSpeed;
+    drawLatent();
+    drawFigure();
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+
+// ============================================================
+// Random vs Policy comparison
+// ============================================================
+(function() {
+  const rc = document.getElementById('random-canvas');
+  const pc = document.getElementById('policy-canvas');
+  if (!rc || !pc) return;
+
+  const rctx = rc.getContext('2d');
+  const pctx = pc.getContext('2d');
+  let frame = 0;
+
+  function resize() {
+    [rc, pc].forEach(c => {
+      const r = c.parentElement.getBoundingClientRect();
+      c.width = r.width * devicePixelRatio;
+      c.height = 320 * devicePixelRatio;
+      c.style.height = '320px';
+      c.getContext('2d').scale(devicePixelRatio, devicePixelRatio);
+    });
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Random walker state
+  let rndX = 0.3, rndY = 0.5;
+  let rndVx = 0, rndVy = 0;
+  const rndTrail = [];
+
+  // Policy walker state
+  let polX = 0.3, polY = 0.5;
+  let polVx = 0, polVy = 0;
+  const polTrail = [];
+
+  // Target
+  let targetX = 0.75, targetY = 0.35;
+
+  const speedSlider = document.getElementById('speed-slider');
+  speedSlider.addEventListener('input', () => {
+    simSpeed = parseFloat(speedSlider.value);
+  });
+
+  document.getElementById('btn-reset-compare').addEventListener('click', () => {
+    rndX = 0.3; rndY = 0.5; rndVx = 0; rndVy = 0;
+    polX = 0.3; polY = 0.5; polVx = 0; polVy = 0;
+    rndTrail.length = 0;
+    polTrail.length = 0;
+    targetX = 0.7 + Math.random() * 0.15;
+    targetY = 0.25 + Math.random() * 0.3;
+  });
+
+  function drawArena(ctx, w, h, charX, charY, trail, isPolicy) {
+    ctx.clearRect(0, 0, w, h);
+
+    // Ground
+    ctx.fillStyle = '#f3f0eb';
+    ctx.fillRect(0, h * 0.75, w, h * 0.25);
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.75);
+    ctx.lineTo(w, h * 0.75);
+    ctx.stroke();
+
+    // Trail
+    if (trail.length > 1) {
+      ctx.beginPath();
+      ctx.strokeStyle = isPolicy ? 'rgba(37,99,235,0.2)' : 'rgba(194,64,42,0.15)';
+      ctx.lineWidth = 1.5;
+      trail.forEach((p, i) => {
+        i === 0 ? ctx.moveTo(p.x * w, p.y * h) : ctx.lineTo(p.x * w, p.y * h);
+      });
+      ctx.stroke();
+    }
+
+    // Target
+    const tx = targetX * w, ty = targetY * h;
+    ctx.save();
+    ctx.translate(tx, ty);
+    ctx.rotate(Math.PI / 4);
+    ctx.fillStyle = '#c2402a';
+    ctx.globalAlpha = 0.7 + 0.3 * Math.sin(frame * 0.05);
+    ctx.fillRect(-6, -6, 12, 12);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+
+    // Stick figure at char position
+    const figX = charX * w;
+    const figBaseY = h * 0.72;
+    const phase = frame * 0.08;
+    const speed = Math.sqrt(
+      (trail.length > 1 ? (trail[trail.length-1].x - trail[Math.max(0, trail.length-3)].x) : 0) ** 2 +
+      (trail.length > 1 ? (trail[trail.length-1].y - trail[Math.max(0, trail.length-3)].y) : 0) ** 2
+    ) * 50;
+
+    ctx.strokeStyle = isPolicy ? '#2563eb' : '#c2402a';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+
+    // head
+    ctx.beginPath();
+    ctx.arc(figX, figBaseY - 34, 5, 0, Math.PI * 2);
+    ctx.stroke();
+    // spine
+    ctx.beginPath();
+    ctx.moveTo(figX, figBaseY - 29);
+    ctx.lineTo(figX, figBaseY - 8);
+    ctx.stroke();
+    // arms
+    const aSwing = Math.sin(phase) * (0.2 + speed * 0.5) * 10;
+    ctx.beginPath();
+    ctx.moveTo(figX - 10 + aSwing, figBaseY - 18);
+    ctx.lineTo(figX, figBaseY - 24);
+    ctx.lineTo(figX + 10 - aSwing, figBaseY - 18);
+    ctx.stroke();
+    // legs
+    const lSwing = Math.sin(phase) * (0.2 + speed * 0.4) * 12;
+    ctx.beginPath();
+    ctx.moveTo(figX - 8 + lSwing, figBaseY + 6);
+    ctx.lineTo(figX, figBaseY - 8);
+    ctx.lineTo(figX + 8 - lSwing, figBaseY + 6);
+    ctx.stroke();
+  }
+
+  function animate() {
+    const rw = rc.width / devicePixelRatio;
+    const rh = rc.height / devicePixelRatio;
+    const pw = pc.width / devicePixelRatio;
+    const ph = pc.height / devicePixelRatio;
+
+    // Random walk: brownian motion
+    if (frame % 5 === 0) {
+      rndVx = (Math.random() - 0.5) * 0.012;
+      rndVy = (Math.random() - 0.5) * 0.008;
+    }
+    rndX = Math.max(0.05, Math.min(0.95, rndX + rndVx * simSpeed));
+    rndY = Math.max(0.1, Math.min(0.7, rndY + rndVy * simSpeed));
+    rndTrail.push({ x: rndX, y: rndY });
+    if (rndTrail.length > 200) rndTrail.shift();
+
+    // Policy: move toward target
+    const dx = targetX - polX;
+    const dy = targetY - polY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist > 0.01) {
+      polVx += dx / dist * 0.0008 * simSpeed;
+      polVy += dy / dist * 0.0005 * simSpeed;
+    }
+    polVx *= 0.95;
+    polVy *= 0.95;
+    polX = Math.max(0.05, Math.min(0.95, polX + polVx * simSpeed));
+    polY = Math.max(0.1, Math.min(0.7, polY + polVy * simSpeed));
+    polTrail.push({ x: polX, y: polY });
+    if (polTrail.length > 200) polTrail.shift();
+
+    // Retarget when close
+    if (dist < 0.03) {
+      targetX = 0.15 + Math.random() * 0.7;
+      targetY = 0.2 + Math.random() * 0.4;
+    }
+
+    drawArena(rctx, rw, rh, rndX, rndY, rndTrail, false);
+    drawArena(pctx, pw, ph, polX, polY, polTrail, true);
+
+    frame++;
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ============================================================
+// Pipeline visualization
+// ============================================================
+(function() {
+  const canvas = document.getElementById('pipeline-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, frame = 0;
+
+  function resize() {
+    const r = canvas.parentElement.getBoundingClientRect();
+    canvas.width = w = r.width * devicePixelRatio;
+    canvas.height = 300 * devicePixelRatio;
+    canvas.style.height = '300px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Flowing particles
+  const particles = [];
+  for (let i = 0; i < 40; i++) {
+    particles.push({
+      x: Math.random(), y: 0.3 + Math.random() * 0.4,
+      speed: 0.001 + Math.random() * 0.002,
+      phase: Math.random() * Math.PI * 2,
+      size: 1.5 + Math.random() * 2,
+    });
+  }
+
+  function drawBox(x, y, bw, bh, label, sublabel, color, alpha) {
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.roundRect(x, y, bw, bh, 6);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(x, y, bw, bh, 6);
+    ctx.stroke();
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '500 12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + bw / 2, y + bh / 2 + (sublabel ? -2 : 4));
+    if (sublabel) {
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.fillText(sublabel, x + bw / 2, y + bh / 2 + 14);
+    }
+  }
+
+  function draw() {
+    const rw = w / devicePixelRatio;
+    const rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const cy = rh * 0.45;
+
+    // Section labels
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('ENCODER', rw * 0.18, 22);
+    ctx.fillText('LATENT', rw * 0.5, 22);
+    ctx.fillText('DECODER', rw * 0.82, 22);
+
+    // Input poses
+    drawBox(rw * 0.04, cy - 50, 80, 40, 'p_{t-1}', 'prev pose', '#2563eb', 0.08);
+    drawBox(rw * 0.04, cy + 10, 80, 40, 'p_t', 'curr pose', '#2563eb', 0.08);
+
+    // Encoder layers
+    const encLayers = ['256', '256', '256'];
+    for (let i = 0; i < 3; i++) {
+      const x = rw * 0.2 + i * 50;
+      const bh = 70 - i * 10;
+      drawBox(x, cy - bh/2, 40, bh, encLayers[i], 'ELU', '#2563eb', 0.06);
+
+      // Connections
+      if (i > 0) {
+        ctx.strokeStyle = 'rgba(37,99,235,0.2)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, cy);
+        ctx.lineTo(x - 10, cy);
+        ctx.stroke();
+      }
+    }
+
+    // Arrow to encoder
+    ctx.strokeStyle = 'rgba(37,99,235,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.04 + 80, cy - 30);
+    ctx.lineTo(rw * 0.2, cy - 10);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.04 + 80, cy + 30);
+    ctx.lineTo(rw * 0.2, cy + 10);
+    ctx.stroke();
+
+    // Bottleneck: mu and sigma
+    const bottleX = rw * 0.44;
+    drawBox(bottleX, cy - 35, 50, 25, 'mu', null, '#7c3aed', 0.08);
+    drawBox(bottleX, cy + 10, 50, 25, 'sigma', null, '#7c3aed', 0.08);
+
+    // z sample (pulsing)
+    const zPulse = 1 + 0.06 * Math.sin(frame * 0.05);
+    const zW = 50 * zPulse;
+    const zH = 30 * zPulse;
+    drawBox(rw * 0.54, cy - zH/2, zW, zH, 'z', 'R^32', '#c2402a', 0.12);
+
+    // Arrows encoder to bottleneck
+    ctx.strokeStyle = 'rgba(124,58,237,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.2 + 2 * 50 + 40, cy);
+    ctx.lineTo(bottleX, cy);
+    ctx.stroke();
+
+    // Reparameterization arrow
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.moveTo(bottleX + 50, cy - 22);
+    ctx.lineTo(rw * 0.54, cy - 5);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(bottleX + 50, cy + 22);
+    ctx.lineTo(rw * 0.54, cy + 5);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Epsilon label
+    ctx.fillStyle = '#7c3aed';
+    ctx.font = 'italic 10px "Spectral", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('+ epsilon * sigma', rw * 0.52, cy + 42);
+
+    // Decoder layers
+    const decLayers = ['256', '256', '256'];
+    for (let i = 0; i < 3; i++) {
+      const x = rw * 0.66 + i * 50;
+      const bh = 50 + i * 8;
+      drawBox(x, cy - bh/2, 40, bh, decLayers[i], 'ELU', '#059669', 0.06);
+
+      // z injection arrows at every layer
+      ctx.strokeStyle = 'rgba(194,64,42,0.3)';
+      ctx.setLineDash([2, 2]);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(rw * 0.54 + zW/2, cy);
+      ctx.quadraticCurveTo(x - 5, cy + 50, x + 20, cy + bh/2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      if (i > 0) {
+        ctx.strokeStyle = 'rgba(5,150,105,0.2)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, cy);
+        ctx.lineTo(x - 10, cy);
+        ctx.stroke();
+      }
+    }
+
+    // Arrow from z to decoder
+    ctx.strokeStyle = 'rgba(194,64,42,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.54 + zW, cy);
+    ctx.lineTo(rw * 0.66, cy);
+    ctx.stroke();
+
+    // Output pose
+    drawBox(rw * 0.86, cy - 20, 80, 40, 'p_{t+1}', 'next pose', '#059669', 0.08);
+
+    // Arrow from decoder to output
+    ctx.strokeStyle = 'rgba(5,150,105,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.66 + 2 * 50 + 40, cy);
+    ctx.lineTo(rw * 0.86, cy);
+    ctx.stroke();
+
+    // Previous pose input to decoder
+    ctx.strokeStyle = 'rgba(37,99,235,0.15)';
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    ctx.moveTo(rw * 0.04 + 80, cy - 30);
+    ctx.quadraticCurveTo(rw * 0.35, rh * 0.08, rw * 0.66 + 20, cy - 25);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#2563eb';
+    ctx.font = 'italic 9px "Spectral", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('p_{t-1} also fed to decoder', rw * 0.45, rh * 0.1);
+
+    // Flowing particles
+    particles.forEach(p => {
+      p.x += p.speed;
+      if (p.x > 1.05) { p.x = -0.05; p.y = 0.3 + Math.random() * 0.4; }
+
+      const px = p.x * rw;
+      const py = cy + Math.sin(p.phase + frame * 0.03 + p.x * 5) * 15;
+
+      // Compress toward center
+      const compressionX = rw * 0.5;
+      const dist = Math.abs(px - compressionX) / (rw * 0.4);
+      const yOffset = (1 - dist) * Math.sin(p.phase) * 8;
+
+      ctx.beginPath();
+      ctx.arc(px, py + yOffset, p.size * (0.5 + dist * 0.5), 0, Math.PI * 2);
+
+      const alpha = 0.08 + 0.12 * (1 - dist);
+      if (p.x < 0.45) {
+        ctx.fillStyle = `rgba(37,99,235,${alpha})`;
+      } else if (p.x < 0.55) {
+        ctx.fillStyle = `rgba(194,64,42,${alpha * 1.5})`;
+      } else {
+        ctx.fillStyle = `rgba(5,150,105,${alpha})`;
+      }
+      ctx.fill();
+    });
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ============================================================
+// Task visualization
+// ============================================================
+(function() {
+  const canvas = document.getElementById('tasks-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, taskFrame = 0;
+  let currentTask = 'joystick';
+
+  function resize() {
+    const r = canvas.parentElement.getBoundingClientRect();
+    canvas.width = w = r.width * devicePixelRatio;
+    canvas.height = 340 * devicePixelRatio;
+    canvas.style.height = '340px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const taskBtns = ['target', 'joystick', 'path', 'maze'];
+  taskBtns.forEach(t => {
+    document.getElementById('btn-task-' + t).addEventListener('click', () => {
+      currentTask = t;
+      taskBtns.forEach(t2 => {
+        document.getElementById('btn-task-' + t2).classList.toggle('active', t2 === t);
+      });
+    });
+  });
+
+  document.getElementById('btn-reset-tasks').addEventListener('click', () => {
+    taskFrame = 0;
+  });
+
+  // Character state
+  let charX = 0.5, charY = 0.5;
+  let charVx = 0, charVy = 0;
+  let targetPt = { x: 0.75, y: 0.35 };
+  let joystickAngle = 0;
+  const pathTrail = [];
+
+  function draw() {
+    const rw = w / devicePixelRatio;
+    const rh = h / devicePixelRatio;
+    ctx.clearRect(0, 0, rw, rh);
+
+    const pad = 40;
+    const arenaW = rw - pad * 2;
+    const arenaH = rh - pad * 2 - 40;
+    const arenaX = pad;
+    const arenaY = pad + 20;
+
+    // Arena background
+    ctx.fillStyle = '#f8f7f4';
+    ctx.beginPath();
+    ctx.roundRect(arenaX, arenaY, arenaW, arenaH, 6);
+    ctx.fill();
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(arenaX, arenaY, arenaW, arenaH, 6);
+    ctx.stroke();
+
+    // Grid
+    ctx.strokeStyle = '#f0ede8';
+    ctx.lineWidth = 0.5;
+    for (let i = 1; i < 8; i++) {
+      ctx.beginPath();
+      ctx.moveTo(arenaX + i * arenaW / 8, arenaY);
+      ctx.lineTo(arenaX + i * arenaW / 8, arenaY + arenaH);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(arenaX, arenaY + i * arenaH / 8);
+      ctx.lineTo(arenaX + arenaW, arenaY + i * arenaH / 8);
+      ctx.stroke();
+    }
+
+    // Task title
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    const taskNames = { target: 'TARGET REACHING (120x80ft arena)',
+                        joystick: 'JOYSTICK CONTROL (direction + speed)',
+                        path: 'PATH FOLLOWING (figure-8 with lookahead)',
+                        maze: 'MAZE NAVIGATION (16-ray vision)' };
+    ctx.fillText(taskNames[currentTask], rw / 2, arenaY - 6);
+
+    // Task-specific drawing
+    if (currentTask === 'target') {
+      // Target diamond
+      const tx = arenaX + targetPt.x * arenaW;
+      const ty = arenaY + targetPt.y * arenaH;
+      ctx.save();
+      ctx.translate(tx, ty);
+      ctx.rotate(Math.PI / 4);
+      ctx.fillStyle = '#c2402a';
+      ctx.globalAlpha = 0.5 + 0.3 * Math.sin(taskFrame * 0.05);
+      ctx.fillRect(-7, -7, 14, 14);
+      ctx.globalAlpha = 1;
+      ctx.restore();
+
+      // Character moves toward target
+      const dx = targetPt.x - charX;
+      const dy = targetPt.y - charY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > 0.02) {
+        charVx += dx / dist * 0.0006;
+        charVy += dy / dist * 0.0006;
+      }
+      charVx *= 0.96; charVy *= 0.96;
+      charX = Math.max(0.05, Math.min(0.95, charX + charVx));
+      charY = Math.max(0.05, Math.min(0.95, charY + charVy));
+
+      if (dist < 0.04) {
+        targetPt = { x: 0.1 + Math.random() * 0.8, y: 0.1 + Math.random() * 0.8 };
+      }
+    } else if (currentTask === 'joystick') {
+      // Joystick direction changes
+      joystickAngle += 0.008;
+      const dirX = Math.cos(joystickAngle * 0.7);
+      const dirY = Math.sin(joystickAngle * 0.5);
+      charVx += dirX * 0.0004;
+      charVy += dirY * 0.0004;
+      charVx *= 0.96; charVy *= 0.96;
+      charX = Math.max(0.05, Math.min(0.95, charX + charVx));
+      charY = Math.max(0.05, Math.min(0.95, charY + charVy));
+
+      // Direction indicator
+      const cx2 = arenaX + charX * arenaW;
+      const cy2 = arenaY + charY * arenaH;
+      ctx.strokeStyle = 'rgba(37,99,235,0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx2, cy2);
+      ctx.lineTo(cx2 + dirX * 30, cy2 + dirY * 30);
+      ctx.stroke();
+      // Arrowhead
+      const ang = Math.atan2(dirY, dirX);
+      ctx.beginPath();
+      ctx.moveTo(cx2 + dirX * 30, cy2 + dirY * 30);
+      ctx.lineTo(cx2 + dirX * 30 - 8 * Math.cos(ang - 0.4), cy2 + dirY * 30 - 8 * Math.sin(ang - 0.4));
+      ctx.lineTo(cx2 + dirX * 30 - 8 * Math.cos(ang + 0.4), cy2 + dirY * 30 - 8 * Math.sin(ang + 0.4));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(37,99,235,0.4)';
+      ctx.fill();
+    } else if (currentTask === 'path') {
+      // Figure-8 path
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(5,150,105,0.3)';
+      ctx.lineWidth = 2;
+      for (let i = 0; i <= 200; i++) {
+        const t = (i / 200) * Math.PI * 2;
+        const px = 0.5 + 0.3 * Math.sin(t);
+        const py = 0.5 + 0.2 * Math.sin(t * 2);
+        const sx = arenaX + px * arenaW;
+        const sy = arenaY + py * arenaH;
+        i === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      }
+      ctx.stroke();
+
+      // Lookahead targets on path
+      for (let k = 0; k < 4; k++) {
+        const t = (taskFrame * 0.002 + k * 0.1) % 1 * Math.PI * 2;
+        const px = 0.5 + 0.3 * Math.sin(t);
+        const py = 0.5 + 0.2 * Math.sin(t * 2);
+        ctx.beginPath();
+        ctx.arc(arenaX + px * arenaW, arenaY + py * arenaH, 4, 0, Math.PI * 2);
+        ctx.fillStyle = k === 0 ? '#059669' : 'rgba(5,150,105,0.3)';
+        ctx.fill();
+      }
+
+      // Character follows path
+      const pathT = (taskFrame * 0.002) % 1 * Math.PI * 2;
+      charX = 0.5 + 0.3 * Math.sin(pathT - 0.15);
+      charY = 0.5 + 0.2 * Math.sin((pathT - 0.15) * 2);
+    } else if (currentTask === 'maze') {
+      // Simple maze
+      const walls = [
+        [0.3, 0, 0.3, 0.6], [0.6, 0.3, 0.6, 1],
+        [0.15, 0.4, 0.5, 0.4], [0.5, 0.65, 0.85, 0.65],
+        [0.75, 0.15, 0.75, 0.5],
+      ];
+      ctx.strokeStyle = '#1a1a2e';
+      ctx.lineWidth = 2;
+      walls.forEach(wl => {
+        ctx.beginPath();
+        ctx.moveTo(arenaX + wl[0] * arenaW, arenaY + wl[1] * arenaH);
+        ctx.lineTo(arenaX + wl[2] * arenaW, arenaY + wl[3] * arenaH);
+        ctx.stroke();
+      });
+
+      // 16 vision rays
+      const cx2 = arenaX + charX * arenaW;
+      const cy2 = arenaY + charY * arenaH;
+      for (let r2 = 0; r2 < 16; r2++) {
+        const ang = (r2 / 16) * Math.PI * 2;
+        const rayLen = 25 + Math.sin(r2 * 3 + taskFrame * 0.02) * 10;
+        ctx.strokeStyle = 'rgba(194,64,42,0.15)';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(cx2, cy2);
+        ctx.lineTo(cx2 + Math.cos(ang) * rayLen, cy2 + Math.sin(ang) * rayLen);
+        ctx.stroke();
+      }
+
+      // Slow wandering in maze
+      charVx += (Math.sin(taskFrame * 0.005) * 0.0003);
+      charVy += (Math.cos(taskFrame * 0.007) * 0.0003);
+      charVx *= 0.97; charVy *= 0.97;
+      charX = Math.max(0.05, Math.min(0.95, charX + charVx));
+      charY = Math.max(0.05, Math.min(0.95, charY + charVy));
+    }
+
+    // Trail
+    pathTrail.push({ x: charX, y: charY });
+    if (pathTrail.length > 150) pathTrail.shift();
+    if (pathTrail.length > 1) {
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(37,99,235,0.12)';
+      ctx.lineWidth = 1;
+      pathTrail.forEach((p, i) => {
+        const px = arenaX + p.x * arenaW;
+        const py = arenaY + p.y * arenaH;
+        i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      });
+      ctx.stroke();
+    }
+
+    // Character dot
+    const charPx = arenaX + charX * arenaW;
+    const charPy = arenaY + charY * arenaH;
+    ctx.beginPath();
+    ctx.arc(charPx, charPy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#2563eb';
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Reward info
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '10px "Source Code Pro", monospace';
+    ctx.textAlign = 'left';
+    const rewardTexts = {
+      target: 'Reward: distance reduction + energy penalty',
+      joystick: 'Reward: direction alignment + speed matching',
+      path: 'Reward: proximity to path + lookahead tracking',
+      maze: 'Reward: exploration coverage + energy penalty',
+    };
+    ctx.fillText(rewardTexts[currentTask], arenaX, arenaY + arenaH + 18);
+
+    taskFrame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+</body>
+</html>

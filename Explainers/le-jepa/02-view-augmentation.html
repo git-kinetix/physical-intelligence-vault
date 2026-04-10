@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 &mdash; Multi-View Augmentation Strategy</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #faf9f6;
+    --bg-alt: #f3f0eb;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-muted: #8888a0;
+    --accent: #c2402a;
+    --accent-hover: #a03520;
+    --blue: #2563eb;
+    --green: #059669;
+    --orange: #d97706;
+    --purple: #7c3aed;
+    --border: #e0ddd5;
+    --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+    --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+    --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+    --font-mono: 'Source Code Pro', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+  .back-link {
+    display: inline-block; margin-top: 24px;
+    font-family: var(--font-mono); font-size: 13px;
+    color: var(--text-muted); text-decoration: none;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  header { padding: 48px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+
+  .overline {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px; display: block;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 600;
+    line-height: 1.2; color: var(--text); margin-bottom: 16px; letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-family: var(--font-serif); font-size: 1.1rem; font-weight: 300;
+    color: var(--text-secondary); line-height: 1.65; max-width: 620px;
+  }
+
+  h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--text); margin: 56px 0 16px; letter-spacing: -0.01em; }
+  h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; color: var(--text); margin: 32px 0 12px; }
+  p { margin-bottom: 20px; color: var(--text-secondary); }
+  p strong { color: var(--text); font-weight: 500; }
+
+  .figure {
+    margin: 32px 0; background: white; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; box-shadow: var(--card-shadow);
+  }
+  .figure-wide { margin-left: -60px; margin-right: -60px; }
+  @media (max-width: 860px) { .figure-wide { margin-left: 0; margin-right: 0; } }
+
+  .figure-canvas-wrap { position: relative; width: 100%; }
+  .figure-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+
+  .figure-caption {
+    padding: 12px 20px; font-family: var(--font-mono); font-size: 12px;
+    color: var(--text-muted); border-top: 1px solid var(--border); background: var(--bg-alt);
+  }
+
+  .controls {
+    padding: 16px 20px; background: var(--bg-alt); border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+  }
+
+  .control-group { display: flex; align-items: center; gap: 8px; }
+
+  .control-group label {
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    width: 120px; height: 4px; border-radius: 2px;
+    background: var(--border); outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); cursor: pointer; border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .value-display {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    color: var(--accent); min-width: 40px;
+  }
+
+  .btn {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 14px; border: 1px solid var(--border); border-radius: 4px;
+    background: white; color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .equation-block {
+    background: white; border: 1px solid var(--border); border-radius: 6px;
+    padding: 20px 28px; margin: 24px 0; text-align: center;
+    font-family: var(--font-serif); font-size: 1.05rem; font-style: italic;
+    color: var(--text); line-height: 2;
+  }
+  .equation-block .var { color: var(--accent); font-weight: 500; }
+  .equation-block .fn { color: var(--blue); }
+  .equation-block .note {
+    display: block; font-size: 0.85rem; font-style: normal;
+    color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono); font-size: 12px;
+  }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 16px; padding: 12px 20px;
+    background: var(--bg-alt); border-top: 1px solid var(--border);
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 2px; }
+
+  .side-note {
+    font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+    border-left: 3px solid var(--accent); padding: 12px 16px; margin: 24px 0;
+    background: white; border-radius: 0 4px 4px 0;
+  }
+
+  .comparison-table {
+    width: 100%; border-collapse: collapse; margin: 24px 0;
+    font-family: var(--font-mono); font-size: 13px;
+  }
+  .comparison-table th {
+    text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border);
+    color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-size: 11px;
+  }
+  .comparison-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary);
+  }
+  .comparison-table tr:hover td { background: var(--bg-alt); }
+  .comparison-table .highlight { color: var(--accent); font-weight: 600; }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 32px 0 56px; margin-top: 72px;
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+  }
+  footer a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border); }
+  footer a:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+<a href="index.html" class="back-link">&larr; All Explorations</a>
+
+<header>
+  <span class="overline">Exploration 02</span>
+  <h1>Multi-View Augmentation</h1>
+  <p class="subtitle">
+    How Le-JEPA creates multiple views of an image to learn invariant representations&thinsp;&mdash;&thinsp;and
+    why it does not need a teacher-student (EMA) framework.
+  </p>
+</header>
+
+<h2>Views Are the Supervision</h2>
+
+<p>
+  In self-supervised learning, the training signal comes from the data itself.
+  Le-JEPA creates <strong>multiple augmented views</strong> of each image and trains the encoder
+  to produce <strong>consistent representations</strong> across views. If two crops of the same
+  dog produce similar embeddings, the network has learned something meaningful about "dog-ness."
+</p>
+
+<p>
+  The figure below shows how a single image gets transformed into global views (large crops, 70-100%
+  of the image) and local views (small crops, 20-50%). Drag the sliders to control each augmentation.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 420px;">
+    <canvas id="augCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>Crop</label>
+      <input type="range" id="augCrop" min="0" max="1" step="0.01" value="0.3">
+      <span class="value-display" id="augCropVal">0.30</span>
+    </div>
+    <div class="control-group">
+      <label>Color Jitter</label>
+      <input type="range" id="augColor" min="0" max="1" step="0.01" value="0.3">
+      <span class="value-display" id="augColorVal">0.30</span>
+    </div>
+    <div class="control-group">
+      <label>Blur</label>
+      <input type="range" id="augBlur" min="0" max="1" step="0.01" value="0">
+      <span class="value-display" id="augBlurVal">0.00</span>
+    </div>
+    <div class="control-group">
+      <label>Flip</label>
+      <input type="range" id="augFlip" min="0" max="1" step="1" value="0">
+      <span class="value-display" id="augFlipVal">Off</span>
+    </div>
+    <button class="btn" id="augReset">Reset</button>
+    <button class="btn" id="augRandomize">Randomize</button>
+  </div>
+  <div class="figure-caption">
+    Left: original image. Right: four augmented views (2 global, 2 local). Adjust sliders to see augmentation effects.
+  </div>
+</div>
+
+<h2>The Shared-Weight Architecture</h2>
+
+<p>
+  A critical difference between Le-JEPA and its predecessors (I-JEPA, DINO) is the absence of
+  separate "online" and "target" networks. In methods like DINO, a teacher network is maintained
+  as an exponential moving average (EMA) of the student. Le-JEPA eliminates this entirely:
+  <strong>both views are processed by the same encoder with shared weights</strong>.
+</p>
+
+<div class="equation-block">
+  <span class="var">z</span><sub>x</sub> = <span class="fn">f</span><sub>&theta;</sub>(<span class="var">x</span>)
+  &emsp;&emsp;
+  <span class="var">z</span><sub>y</sub> = <span class="fn">f</span><sub>&theta;</sub>(<span class="var">y</span>)
+  &emsp;&emsp;
+  <span class="var">L</span><sub>pred</sub> = || <span class="fn">g</span><sub>&phi;</sub>(<span class="var">z</span><sub>x</sub>) &minus; <span class="var">z</span><sub>y</sub> ||&sup2;
+  <span class="note">Same encoder f_&theta; for both views. No stop-gradient. No EMA.</span>
+</div>
+
+<p>
+  The figure below shows the two-branch architecture. Drag the EMA slider to compare:
+  at EMA = 0.0, both branches share weights (Le-JEPA). As EMA increases, the target branch
+  becomes a lagging copy (the I-JEPA / DINO approach).
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 440px;">
+    <canvas id="archCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>EMA &tau;</label>
+      <input type="range" id="archEma" min="0" max="0.999" step="0.001" value="0">
+      <span class="value-display" id="archEmaVal">0.000</span>
+    </div>
+    <div class="control-group">
+      <label>Training Step</label>
+      <input type="range" id="archStep" min="0" max="100" step="1" value="0">
+      <span class="value-display" id="archStepVal">0</span>
+    </div>
+    <button class="btn" id="archAnimate">Animate</button>
+    <button class="btn" id="archReset">Reset</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>Context branch</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Target branch</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span>Predictor</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--orange)"></span>Weight sync / EMA</span>
+  </div>
+  <div class="figure-caption">
+    Le-JEPA (EMA = 0): both branches are identical. Traditional methods (EMA > 0): the target
+    encoder is a slowly-updating copy. The "Animate" button steps through training to show weight divergence.
+  </div>
+</div>
+
+<div class="side-note">
+  Eliminating EMA reduces Le-JEPA's implementation to approximately <strong>50 lines of code</strong>
+  for the full distributed training loop. This simplicity is a direct consequence of having a
+  theoretically grounded regularizer (SIGReg) instead of heuristic stability tricks.
+</div>
+
+<h2>View Configuration Matters</h2>
+
+<p>
+  The number and type of views significantly impacts performance. Le-JEPA's ablations reveal
+  a clear hierarchy: <strong>at least 2 global views are essential</strong> (jumping from 53%
+  to 72% accuracy), while additional local views provide diminishing returns.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 340px;">
+    <canvas id="viewConfigCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>Global Views</label>
+      <input type="range" id="viewGlobal" min="1" max="4" step="1" value="2">
+      <span class="value-display" id="viewGlobalVal">2</span>
+    </div>
+    <div class="control-group">
+      <label>Local Views</label>
+      <input type="range" id="viewLocal" min="0" max="8" step="2" value="0">
+      <span class="value-display" id="viewLocalVal">0</span>
+    </div>
+    <button class="btn" id="viewReset">Reset</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>Global view</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Local view</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span>Accuracy bar</span>
+  </div>
+  <div class="figure-caption">
+    Adjust global and local view counts. The bar chart shows the corresponding ImageNet accuracy from Table 1b.
+  </div>
+</div>
+
+<h2>Augmentation Pairs Create the Prediction Task</h2>
+
+<p>
+  The multi-view strategy generates pairs for the prediction loss. From each pair,
+  one view is the <strong>context</strong> (input to the predictor) and the other is the
+  <strong>target</strong> (what the predictor tries to reconstruct in embedding space).
+  All pairs from the same image contribute to the loss.
+</p>
+
+<div class="figure figure-wide">
+  <div class="figure-canvas-wrap" style="height: 360px;">
+    <canvas id="pairingCanvas"></canvas>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>Views</label>
+      <input type="range" id="pairViews" min="2" max="6" step="1" value="4">
+      <span class="value-display" id="pairViewsVal">4</span>
+    </div>
+    <button class="btn" id="pairAnimate">Animate Pairs</button>
+    <button class="btn" id="pairReset">Reset</button>
+  </div>
+  <div class="figure-caption">
+    Each view is paired with every other view. The predictor g learns to map z_context to z_target.
+    More views = more training signal per image, but with diminishing returns.
+  </div>
+</div>
+
+<h3>Why No EMA Works</h3>
+
+<p>
+  The EMA trick in prior methods serves as an implicit regularizer: the slowly-updating teacher
+  prevents the student from changing too fast, which would cause collapse. But SIGReg provides a
+  <strong>much stronger guarantee</strong>&thinsp;&mdash;&thinsp;it directly constrains the
+  embedding distribution to be Gaussian, making the EMA crutch unnecessary.
+</p>
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>I-JEPA / DINO</th>
+      <th>Le-JEPA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Encoder branches</td>
+      <td>Online + Target (EMA)</td>
+      <td class="highlight">Single shared</td>
+    </tr>
+    <tr>
+      <td>Stop-gradient</td>
+      <td>Required</td>
+      <td class="highlight">Not needed</td>
+    </tr>
+    <tr>
+      <td>Collapse prevention</td>
+      <td>EMA + scheduling</td>
+      <td class="highlight">SIGReg only</td>
+    </tr>
+    <tr>
+      <td>Hyperparameters</td>
+      <td>5+ (EMA rate, LR schedule, warmup, ...)</td>
+      <td class="highlight">1 (&lambda;)</td>
+    </tr>
+    <tr>
+      <td>Code complexity</td>
+      <td>~500+ lines</td>
+      <td class="highlight">~50 lines</td>
+    </tr>
+  </tbody>
+</table>
+
+<footer>
+  <a href="01-sigreg-loss.html">&larr; SIGReg Loss</a>
+  <span>Le-JEPA &middot; Balestriero &amp; LeCun, 2025</span>
+  <a href="03-scaling-behavior.html">Next: Scaling Behavior &rarr;</a>
+</footer>
+
+</div>
+
+<script>
+function dpr() { return window.devicePixelRatio || 1; }
+function setupCanvas(canvas, wrap) {
+  const r = (wrap || canvas.parentElement).getBoundingClientRect();
+  const d = dpr();
+  canvas.width = r.width * d;
+  canvas.height = r.height * d;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(d, d);
+  return { ctx, w: r.width, h: r.height };
+}
+
+// Seeded random for consistent "image"
+function seededRandom(seed) {
+  let s = seed;
+  return function() { s = (s * 16807 + 0) % 2147483647; return s / 2147483647; };
+}
+
+// Generate a simple abstract image on canvas
+function drawAbstractImage(ctx, x, y, w, h, seed, cropFrac, colorJitter, blurAmount, flipH) {
+  const rng = seededRandom(seed);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.clip();
+
+  if (flipH) {
+    ctx.translate(x + w, 0);
+    ctx.scale(-1, 1);
+    ctx.translate(-x, 0);
+  }
+
+  // Background
+  const bgHue = 40 + colorJitter * 60;
+  ctx.fillStyle = `hsl(${bgHue}, ${20 + colorJitter * 30}%, ${85 - colorJitter * 15}%)`;
+  ctx.fillRect(x, y, w, h);
+
+  // Crop offset
+  const cx = cropFrac * w * 0.15;
+  const cy = cropFrac * h * 0.1;
+
+  // Draw "image" elements
+  const shapes = [
+    { type: 'circle', px: 0.35, py: 0.35, r: 0.18, hue: 200 },
+    { type: 'rect', px: 0.55, py: 0.5, sw: 0.3, sh: 0.35, hue: 25 },
+    { type: 'circle', px: 0.7, py: 0.3, r: 0.12, hue: 140 },
+    { type: 'tri', px: 0.3, py: 0.7, r: 0.15, hue: 350 },
+    { type: 'rect', px: 0.15, py: 0.55, sw: 0.15, sh: 0.2, hue: 60 },
+  ];
+
+  shapes.forEach(s => {
+    const hue = s.hue + colorJitter * 80 * (rng() - 0.5);
+    const sat = 50 + colorJitter * 30;
+    const light = 50 + colorJitter * 20 * (rng() - 0.5);
+    ctx.fillStyle = `hsl(${hue}, ${sat}%, ${light}%)`;
+
+    const sx = x + cx + s.px * (w - cx * 2);
+    const sy = y + cy + s.py * (h - cy * 2);
+
+    if (s.type === 'circle') {
+      ctx.beginPath();
+      ctx.arc(sx, sy, s.r * Math.min(w, h), 0, Math.PI * 2);
+      ctx.fill();
+    } else if (s.type === 'rect') {
+      ctx.fillRect(sx - s.sw * w / 2, sy - s.sh * h / 2, s.sw * w, s.sh * h);
+    } else if (s.type === 'tri') {
+      const r = s.r * Math.min(w, h);
+      ctx.beginPath();
+      ctx.moveTo(sx, sy - r);
+      ctx.lineTo(sx + r * 0.866, sy + r * 0.5);
+      ctx.lineTo(sx - r * 0.866, sy + r * 0.5);
+      ctx.closePath();
+      ctx.fill();
+    }
+  });
+
+  // Blur overlay
+  if (blurAmount > 0.01) {
+    ctx.fillStyle = `rgba(250,249,246,${blurAmount * 0.5})`;
+    ctx.fillRect(x, y, w, h);
+    // Simulate blur with semi-transparent overlapping rects
+    for (let i = 0; i < Math.floor(blurAmount * 8); i++) {
+      ctx.fillStyle = `rgba(250,249,246,${0.05 + blurAmount * 0.08})`;
+      ctx.fillRect(x + rng() * 4 - 2, y + rng() * 4 - 2, w, h);
+    }
+  }
+
+  ctx.restore();
+}
+
+
+// ─── Figure 1: Augmentation Playground ───
+(function() {
+  const canvas = document.getElementById('augCanvas');
+  const cropSlider = document.getElementById('augCrop');
+  const colorSlider = document.getElementById('augColor');
+  const blurSlider = document.getElementById('augBlur');
+  const flipSlider = document.getElementById('augFlip');
+  const cropVal = document.getElementById('augCropVal');
+  const colorVal = document.getElementById('augColorVal');
+  const blurVal = document.getElementById('augBlurVal');
+  const flipVal = document.getElementById('augFlipVal');
+  const resetBtn = document.getElementById('augReset');
+  const randBtn = document.getElementById('augRandomize');
+
+  let crop = 0.3, color = 0.3, blur = 0, flip = 0;
+  let frame = 0;
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = 20;
+    const leftW = (w - pad * 3) * 0.35;
+    const rightW = (w - pad * 3) * 0.65;
+    const imgH = h - pad * 2;
+
+    // Original image label
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '500 12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('ORIGINAL', pad + leftW / 2, pad - 4);
+
+    // Original image
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(pad, pad, leftW, imgH);
+    drawAbstractImage(ctx, pad, pad, leftW, imgH, 42, 0, 0, 0, false);
+
+    // Draw 4 augmented views in a 2x2 grid
+    const viewW = (rightW - pad) / 2;
+    const viewH = (imgH - pad) / 2;
+    const startX = pad * 2 + leftW;
+
+    const views = [
+      { label: 'Global 1', crop: crop * 0.5, color: color, blur: blur * 0.3, flip: false, isGlobal: true },
+      { label: 'Global 2', crop: crop * 0.7, color: color * 0.8, blur: blur * 0.5, flip: flip > 0.5, isGlobal: true },
+      { label: 'Local 1', crop: crop, color: color * 1.2, blur: blur * 0.7, flip: false, isGlobal: false },
+      { label: 'Local 2', crop: crop * 1.3, color: color * 0.6, blur: blur, flip: flip > 0.5, isGlobal: false },
+    ];
+
+    views.forEach((v, i) => {
+      const col = i % 2;
+      const row = Math.floor(i / 2);
+      const vx = startX + col * (viewW + pad / 2);
+      const vy = pad + row * (viewH + pad / 2);
+
+      // View border
+      const borderColor = v.isGlobal ? '#2563eb' : '#c2402a';
+      ctx.strokeStyle = borderColor;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(vx, vy, viewW, viewH);
+
+      // Draw augmented image
+      drawAbstractImage(ctx, vx, vy, viewW, viewH, 42 + i * 7, v.crop, v.color, v.blur, v.flip);
+
+      // If it's a local view, draw crop indicators on original
+      if (!v.isGlobal) {
+        const origCropX = pad + v.crop * leftW * 0.2 + (i - 2) * leftW * 0.1;
+        const origCropY = pad + v.crop * imgH * 0.15 + (i - 2) * imgH * 0.1;
+        const origCropW = leftW * (1 - v.crop * 0.6);
+        const origCropH = imgH * (1 - v.crop * 0.6);
+        ctx.strokeStyle = borderColor + '60';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 3]);
+        ctx.strokeRect(origCropX, origCropY, origCropW, origCropH);
+        ctx.setLineDash([]);
+      }
+
+      // Label
+      ctx.fillStyle = borderColor;
+      ctx.font = '500 11px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.label.toUpperCase(), vx + viewW / 2, vy - 4);
+    });
+
+    // Animated connection lines from original to views
+    const pulse = 0.5 + 0.3 * Math.sin(frame * 0.04);
+    ctx.strokeStyle = `rgba(37,99,235,${pulse * 0.3})`;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+    views.forEach((v, i) => {
+      const col = i % 2;
+      const row = Math.floor(i / 2);
+      const vx = startX + col * (viewW + pad / 2);
+      const vy = pad + row * (viewH + pad / 2);
+      ctx.beginPath();
+      ctx.moveTo(pad + leftW, pad + imgH / 2);
+      ctx.lineTo(vx, vy + viewH / 2);
+      ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  cropSlider.oninput = () => { crop = +cropSlider.value; cropVal.textContent = crop.toFixed(2); };
+  colorSlider.oninput = () => { color = +colorSlider.value; colorVal.textContent = color.toFixed(2); };
+  blurSlider.oninput = () => { blur = +blurSlider.value; blurVal.textContent = blur.toFixed(2); };
+  flipSlider.oninput = () => { flip = +flipSlider.value; flipVal.textContent = flip > 0.5 ? 'On' : 'Off'; };
+
+  resetBtn.onclick = () => {
+    cropSlider.value = 0.3; colorSlider.value = 0.3; blurSlider.value = 0; flipSlider.value = 0;
+    crop = 0.3; color = 0.3; blur = 0; flip = 0;
+    cropVal.textContent = '0.30'; colorVal.textContent = '0.30';
+    blurVal.textContent = '0.00'; flipVal.textContent = 'Off';
+  };
+
+  randBtn.onclick = () => {
+    crop = Math.random(); color = Math.random(); blur = Math.random() * 0.7; flip = Math.random() > 0.5 ? 1 : 0;
+    cropSlider.value = crop; colorSlider.value = color; blurSlider.value = blur; flipSlider.value = flip;
+    cropVal.textContent = crop.toFixed(2); colorVal.textContent = color.toFixed(2);
+    blurVal.textContent = blur.toFixed(2); flipVal.textContent = flip > 0.5 ? 'On' : 'Off';
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 2: Architecture Diagram ───
+(function() {
+  const canvas = document.getElementById('archCanvas');
+  const emaSlider = document.getElementById('archEma');
+  const stepSlider = document.getElementById('archStep');
+  const emaVal = document.getElementById('archEmaVal');
+  const stepVal = document.getElementById('archStepVal');
+  const animBtn = document.getElementById('archAnimate');
+  const resetBtn = document.getElementById('archReset');
+
+  let ema = 0, step = 0;
+  let animating = false;
+  let frame = 0;
+
+  function drawBlock(ctx, x, y, w, h, label, color, alpha) {
+    ctx.globalAlpha = alpha || 1;
+    ctx.fillStyle = color + '15';
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    const r = 6;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = color;
+    ctx.font = '600 13px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + w / 2, y + h / 2 + 5);
+    ctx.globalAlpha = 1;
+  }
+
+  function drawArrow(ctx, x1, y1, x2, y2, color, dashed) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    if (dashed) ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Arrowhead
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const sz = 8;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - sz * Math.cos(angle - 0.4), y2 - sz * Math.sin(angle - 0.4));
+    ctx.lineTo(x2 - sz * Math.cos(angle + 0.4), y2 - sz * Math.sin(angle + 0.4));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    if (animating) {
+      step = (step + 0.3) % 101;
+      stepSlider.value = step;
+      stepVal.textContent = Math.round(step);
+    }
+
+    const midY = h / 2;
+    const blockW = 110;
+    const blockH = 50;
+    const gap = 40;
+
+    // Context branch (top)
+    const topY = midY - 80;
+    const botY = midY + 30;
+
+    // Image inputs
+    drawAbstractImage(ctx, 30, topY - 15, 60, 50, 42, 0.2, 0.2, 0, false);
+    ctx.fillStyle = '#2563eb';
+    ctx.font = '11px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Context x', 60, topY - 22);
+
+    drawAbstractImage(ctx, 30, botY - 15, 60, 50, 49, 0.5, 0.4, 0, false);
+    ctx.fillStyle = '#c2402a';
+    ctx.fillText('Target y', 60, botY - 22);
+
+    // Encoders
+    const encX = 130;
+    const weightDivergence = ema * step / 100;
+
+    // Context encoder
+    drawBlock(ctx, encX, topY - 10, blockW, blockH, 'Encoder f\u03B8', '#2563eb', 1);
+
+    // Target encoder (opacity changes with EMA)
+    const targetAlpha = ema > 0.01 ? 1 : 0.4;
+    if (ema > 0.01) {
+      drawBlock(ctx, encX, botY - 10, blockW, blockH, 'Encoder f\u03B8\'', '#c2402a', targetAlpha);
+    } else {
+      drawBlock(ctx, encX, botY - 10, blockW, blockH, 'Encoder f\u03B8', '#c2402a', 1);
+    }
+
+    // Arrows from images to encoders
+    drawArrow(ctx, 92, topY + 10, encX - 4, topY + 15, '#2563eb', false);
+    drawArrow(ctx, 92, botY + 10, encX - 4, botY + 15, '#c2402a', false);
+
+    // Embeddings
+    const embX = encX + blockW + gap;
+    ctx.fillStyle = '#2563eb';
+    ctx.font = '600 14px "Newsreader", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('z_x', embX + 20, topY + 18);
+    ctx.beginPath();
+    ctx.arc(embX + 20, topY + 10, 14, 0, Math.PI * 2);
+    ctx.fillStyle = '#2563eb20';
+    ctx.fill();
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#c2402a';
+    ctx.font = '600 14px "Newsreader", serif';
+    ctx.fillText('z_y', embX + 20, botY + 18);
+    ctx.beginPath();
+    ctx.arc(embX + 20, botY + 10, 14, 0, Math.PI * 2);
+    ctx.fillStyle = '#c2402a20';
+    ctx.fill();
+    ctx.strokeStyle = '#c2402a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Arrows to embeddings
+    drawArrow(ctx, encX + blockW + 4, topY + 15, embX + 4, topY + 10, '#2563eb', false);
+    drawArrow(ctx, encX + blockW + 4, botY + 15, embX + 4, botY + 10, '#c2402a', false);
+
+    // Predictor
+    const predX = embX + 70;
+    drawBlock(ctx, predX, topY - 10, blockW, blockH, 'Predictor g\u03C6', '#059669', 1);
+    drawArrow(ctx, embX + 36, topY + 10, predX - 4, topY + 15, '#059669', false);
+
+    // Predicted embedding
+    const predEmbX = predX + blockW + gap;
+    ctx.fillStyle = '#059669';
+    ctx.font = '600 14px "Newsreader", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('g(z_x)', predEmbX + 20, topY + 18);
+    ctx.beginPath();
+    ctx.arc(predEmbX + 20, topY + 10, 14, 0, Math.PI * 2);
+    ctx.fillStyle = '#05966920';
+    ctx.fill();
+    ctx.strokeStyle = '#059669';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    drawArrow(ctx, predX + blockW + 4, topY + 15, predEmbX + 4, topY + 10, '#059669', false);
+
+    // Loss comparison
+    const lossX = predEmbX + 60;
+    const lossY = (topY + botY) / 2;
+
+    // Dashed lines from predicted and target to loss
+    drawArrow(ctx, predEmbX + 20, topY + 26, lossX, lossY - 10, '#1a1a2e80', true);
+    drawArrow(ctx, embX + 20, botY + 26, lossX, lossY + 10, '#1a1a2e80', true);
+
+    // Loss label
+    const pulse = 0.7 + 0.3 * Math.sin(frame * 0.05);
+    ctx.fillStyle = `rgba(194,64,42,${pulse})`;
+    ctx.font = '600 16px "Newsreader", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('L_pred', lossX + 10, lossY + 6);
+
+    // EMA / weight sharing connection
+    const shareY = botY + blockH + 15;
+    if (ema > 0.01) {
+      // EMA arrow with divergence indicator
+      const arrowPhase = (frame * 0.03) % 1;
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(encX + blockW / 2, topY + blockH - 8);
+      ctx.lineTo(encX + blockW / 2, botY - 12);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#d97706';
+      ctx.font = '500 12px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('\u03B8\' \u2190 \u03C4\u03B8\' + (1-\u03C4)\u03B8', encX + blockW / 2, shareY);
+      ctx.fillText('EMA \u03C4 = ' + ema.toFixed(3), encX + blockW / 2, shareY + 16);
+
+      // Weight divergence bar
+      const barW = 100;
+      const barH = 8;
+      const barX = encX + blockW / 2 - barW / 2;
+      ctx.fillStyle = '#e0ddd5';
+      ctx.fillRect(barX, shareY + 24, barW, barH);
+      ctx.fillStyle = '#d97706';
+      ctx.fillRect(barX, shareY + 24, barW * Math.min(weightDivergence, 1), barH);
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.fillText('weight divergence', encX + blockW / 2, shareY + 46);
+    } else {
+      // Shared weights indicator
+      ctx.strokeStyle = '#059669';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(encX + blockW / 2, topY + blockH - 8);
+      ctx.lineTo(encX + blockW / 2, botY - 12);
+      ctx.stroke();
+
+      ctx.fillStyle = '#059669';
+      ctx.font = '600 12px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('SHARED WEIGHTS', encX + blockW / 2, shareY);
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.fillText('No EMA needed', encX + blockW / 2, shareY + 16);
+    }
+
+    // Mode label
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = '600 16px "Newsreader", serif';
+    ctx.textAlign = 'left';
+    if (ema < 0.01) {
+      ctx.fillText('Le-JEPA (shared weights)', 30, h - 20);
+    } else {
+      ctx.fillText('Traditional (EMA \u03C4 = ' + ema.toFixed(3) + ')', 30, h - 20);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  emaSlider.oninput = () => { ema = +emaSlider.value; emaVal.textContent = ema.toFixed(3); };
+  stepSlider.oninput = () => { step = +stepSlider.value; stepVal.textContent = Math.round(step); animating = false; animBtn.classList.remove('active'); };
+  animBtn.onclick = () => { animating = !animating; animBtn.classList.toggle('active'); };
+  resetBtn.onclick = () => {
+    emaSlider.value = 0; stepSlider.value = 0; ema = 0; step = 0;
+    emaVal.textContent = '0.000'; stepVal.textContent = '0';
+    animating = false; animBtn.classList.remove('active');
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 3: View Configuration ───
+(function() {
+  const canvas = document.getElementById('viewConfigCanvas');
+  const globalSlider = document.getElementById('viewGlobal');
+  const localSlider = document.getElementById('viewLocal');
+  const globalVal = document.getElementById('viewGlobalVal');
+  const localVal = document.getElementById('viewLocalVal');
+  const resetBtn = document.getElementById('viewReset');
+
+  let numGlobal = 2, numLocal = 0;
+
+  // Accuracy lookup from Table 1b
+  const accData = {
+    '1_0': 40, '1_2': 40, '1_4': 53.06, '1_6': 58.65, '1_8': 64.46,
+    '2_0': 72.26, '2_2': 72.26, '2_4': 73.07, '2_6': 73.68, '2_8': 73.68,
+    '3_0': 72.8, '3_2': 73.2, '3_4': 73.5, '3_6': 73.9, '3_8': 74.5,
+    '4_0': 73.68, '4_2': 73.68, '4_4': 73.94, '4_6': 75.08, '4_8': 75.08
+  };
+
+  function getAcc(g, l) {
+    const key = g + '_' + l;
+    return accData[key] || (72 + g * 0.5 + l * 0.3);
+  }
+
+  let frame = 0;
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 50, r: 30, t: 30, b: 50 };
+    const leftW = (w - pad.l - pad.r) * 0.55;
+    const rightW = (w - pad.l - pad.r) * 0.4;
+    const plotH = h - pad.t - pad.b;
+
+    // Left side: view icons
+    const viewSize = 44;
+    const viewGap = 8;
+    const totalViews = numGlobal + numLocal;
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '500 11px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('VIEWS (total: ' + totalViews + ')', pad.l + leftW * 0.35, pad.t);
+
+    // Draw view thumbnails
+    let vx = pad.l + 10;
+    let vy = pad.t + 20;
+    const maxPerRow = Math.floor((leftW - 20) / (viewSize + viewGap));
+
+    for (let i = 0; i < numGlobal; i++) {
+      const col = i % maxPerRow;
+      const row = Math.floor(i / maxPerRow);
+      const x = vx + col * (viewSize + viewGap);
+      const y = vy + row * (viewSize + viewGap + 16);
+
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, viewSize, viewSize);
+      drawAbstractImage(ctx, x, y, viewSize, viewSize, 42 + i, 0.2 + i * 0.1, 0.2, 0, i % 2 === 1);
+
+      ctx.fillStyle = '#2563eb';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('G' + (i + 1), x + viewSize / 2, y + viewSize + 12);
+    }
+
+    vy = vy + (Math.ceil(numGlobal / maxPerRow)) * (viewSize + viewGap + 16) + 10;
+
+    for (let i = 0; i < numLocal; i++) {
+      const col = i % maxPerRow;
+      const row = Math.floor(i / maxPerRow);
+      const x = vx + col * (viewSize + viewGap);
+      const y = vy + row * (viewSize + viewGap + 16);
+
+      const smallSize = viewSize * 0.7;
+      const offset = (viewSize - smallSize) / 2;
+      ctx.strokeStyle = '#c2402a';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x + offset, y + offset, smallSize, smallSize);
+      drawAbstractImage(ctx, x + offset, y + offset, smallSize, smallSize, 50 + i, 0.5 + i * 0.1, 0.3, 0.1, i % 2 === 0);
+
+      ctx.fillStyle = '#c2402a';
+      ctx.font = '10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('L' + (i + 1), x + viewSize / 2, y + viewSize + 4);
+    }
+
+    // Right side: accuracy bar
+    const barX = pad.l + leftW + 40;
+    const barW = rightW - 40;
+    const acc = getAcc(numGlobal, numLocal);
+    const maxAcc = 80;
+    const minAcc = 30;
+
+    // Axis
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(barX, pad.t);
+    ctx.lineTo(barX, pad.t + plotH);
+    ctx.moveTo(barX, pad.t + plotH);
+    ctx.lineTo(barX + barW, pad.t + plotH);
+    ctx.stroke();
+
+    // Y-axis ticks
+    for (let v = 40; v <= 80; v += 10) {
+      const y = pad.t + plotH - ((v - minAcc) / (maxAcc - minAcc)) * plotH;
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '11px "Source Code Pro", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(v + '%', barX - 6, y + 4);
+      ctx.strokeStyle = '#e0ddd580';
+      ctx.beginPath();
+      ctx.moveTo(barX, y);
+      ctx.lineTo(barX + barW, y);
+      ctx.stroke();
+    }
+
+    // Bar
+    const barHeight = ((acc - minAcc) / (maxAcc - minAcc)) * plotH;
+    const barY = pad.t + plotH - barHeight;
+
+    const gradient = ctx.createLinearGradient(0, barY, 0, pad.t + plotH);
+    gradient.addColorStop(0, '#059669');
+    gradient.addColorStop(1, '#05966940');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(barX + 10, barY, barW - 20, barHeight);
+
+    // Accuracy label on bar
+    ctx.fillStyle = '#059669';
+    ctx.font = '600 18px "Newsreader", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(acc.toFixed(1) + '%', barX + barW / 2, barY - 10);
+
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '11px "Source Code Pro", monospace';
+    ctx.fillText('ImageNet Acc.', barX + barW / 2, pad.t + plotH + 18);
+
+    // Pairs count
+    const pairs = totalViews * (totalViews - 1);
+    ctx.fillStyle = '#4a4a6a';
+    ctx.font = '12px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(pairs + ' view pairs', barX + barW / 2, barY - 28);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  globalSlider.oninput = () => { numGlobal = +globalSlider.value; globalVal.textContent = numGlobal; };
+  localSlider.oninput = () => { numLocal = +localSlider.value; localVal.textContent = numLocal; };
+  resetBtn.onclick = () => {
+    globalSlider.value = 2; localSlider.value = 0;
+    numGlobal = 2; numLocal = 0;
+    globalVal.textContent = '2'; localVal.textContent = '0';
+  };
+
+  draw();
+})();
+
+
+// ─── Figure 4: View Pairing ───
+(function() {
+  const canvas = document.getElementById('pairingCanvas');
+  const viewsSlider = document.getElementById('pairViews');
+  const viewsVal = document.getElementById('pairViewsVal');
+  const animBtn = document.getElementById('pairAnimate');
+  const resetBtn = document.getElementById('pairReset');
+
+  let numViews = 4;
+  let animating = false;
+  let activePair = -1;
+  let frame = 0;
+
+  function draw() {
+    const { ctx, w, h } = setupCanvas(canvas);
+    ctx.clearRect(0, 0, w, h);
+
+    const cxCenter = w / 2;
+    const cyCenter = h / 2 - 10;
+    const radius = Math.min(w, h) * 0.28;
+
+    // Position views in a circle
+    const views = [];
+    for (let i = 0; i < numViews; i++) {
+      const angle = -Math.PI / 2 + (i / numViews) * Math.PI * 2;
+      views.push({
+        x: cxCenter + Math.cos(angle) * radius,
+        y: cyCenter + Math.sin(angle) * radius,
+        label: i < 2 ? 'G' + (i + 1) : 'L' + (i - 1),
+        isGlobal: i < 2
+      });
+    }
+
+    // Generate all pairs
+    const pairs = [];
+    for (let i = 0; i < numViews; i++) {
+      for (let j = i + 1; j < numViews; j++) {
+        pairs.push([i, j]);
+      }
+    }
+
+    if (animating) {
+      activePair = Math.floor(frame / 40) % pairs.length;
+    }
+
+    // Draw connection lines
+    pairs.forEach((pair, idx) => {
+      const v1 = views[pair[0]], v2 = views[pair[1]];
+      const isActive = idx === activePair;
+      ctx.beginPath();
+      ctx.moveTo(v1.x, v1.y);
+      ctx.lineTo(v2.x, v2.y);
+      ctx.strokeStyle = isActive ? '#059669' : '#e0ddd5';
+      ctx.lineWidth = isActive ? 3 : 1;
+      ctx.stroke();
+
+      if (isActive) {
+        // Animated dot along the line
+        const t = (frame % 40) / 40;
+        const dx = v1.x + (v2.x - v1.x) * t;
+        const dy = v1.y + (v2.y - v1.y) * t;
+        ctx.beginPath();
+        ctx.arc(dx, dy, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#059669';
+        ctx.fill();
+
+        // Label
+        ctx.fillStyle = '#059669';
+        ctx.font = '500 12px "Source Code Pro", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('predict ' + v1.label + ' \u2192 ' + v2.label, (v1.x + v2.x) / 2, (v1.y + v2.y) / 2 - 12);
+      }
+    });
+
+    // Draw view nodes
+    views.forEach((v, i) => {
+      const size = v.isGlobal ? 50 : 38;
+      const isInActive = activePair >= 0 && (pairs[activePair][0] === i || pairs[activePair][1] === i);
+      const color = v.isGlobal ? '#2563eb' : '#c2402a';
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = isInActive ? 3 : 2;
+      ctx.strokeRect(v.x - size / 2, v.y - size / 2, size, size);
+      drawAbstractImage(ctx, v.x - size / 2, v.y - size / 2, size, size, 42 + i * 7, 0.3 + i * 0.1, 0.2, 0, false);
+
+      ctx.fillStyle = color;
+      ctx.font = '600 12px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.label, v.x, v.y + size / 2 + 16);
+    });
+
+    // Info
+    ctx.fillStyle = '#4a4a6a';
+    ctx.font = '13px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(pairs.length + ' prediction pairs from ' + numViews + ' views', w / 2, h - 20);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  viewsSlider.oninput = () => { numViews = +viewsSlider.value; viewsVal.textContent = numViews; activePair = -1; };
+  animBtn.onclick = () => { animating = !animating; animBtn.classList.toggle('active'); if (!animating) activePair = -1; };
+  resetBtn.onclick = () => {
+    viewsSlider.value = 4; numViews = 4; viewsVal.textContent = '4';
+    animating = false; activePair = -1; animBtn.classList.remove('active');
+  };
+
+  draw();
+})();
+</script>
+
+</body>
+</html>

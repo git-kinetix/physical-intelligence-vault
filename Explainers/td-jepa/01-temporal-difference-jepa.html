@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 &mdash; Temporal Difference Meets JEPA &mdash; TD-JEPA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+/* ── Design Tokens ── */
+:root {
+  --bg: #faf9f6;
+  --bg-alt: #f3f0eb;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent: #c2402a;
+  --accent-hover: #a03520;
+  --blue: #2563eb;
+  --green: #059669;
+  --orange: #d97706;
+  --purple: #7c3aed;
+  --border: #e0ddd5;
+  --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+  --font-mono: 'Source Code Pro', 'Menlo', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.prose { margin-bottom: 40px; }
+.prose p { margin-bottom: 18px; color: var(--text-secondary); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 500; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+/* ── Figure Wrappers ── */
+.figure { margin: 36px 0 48px; }
+
+.figure-inner {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.figure-canvas-wrap {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+figcaption {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+}
+
+figcaption strong { color: var(--text-secondary); font-weight: 500; }
+
+/* ── Buttons & Controls ── */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 8px 20px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.slider-group input[type="range"] {
+  width: 120px;
+  accent-color: var(--accent);
+}
+
+.slider-value {
+  min-width: 36px;
+  text-align: right;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ── Mode Toggle ── */
+.mode-toggle {
+  display: flex;
+  background: var(--bg-alt);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.mode-toggle button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.mode-toggle button.active {
+  background: var(--accent);
+  color: white;
+}
+
+.mode-toggle button:not(.active):hover {
+  color: var(--text);
+  background: rgba(194,64,42,0.06);
+}
+
+/* ── Equation Block ── */
+.equation-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px 24px;
+  margin: 20px 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+  transition: all 0.3s;
+}
+.equation-block .var { color: var(--accent); }
+.equation-block .blue-var { color: var(--blue); }
+
+/* ── Side-by-side Layout ── */
+.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+.side-by-side .panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+.side-by-side .panel-header {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.side-by-side .panel-header.jepa-header { color: var(--blue); }
+.side-by-side .panel-header.td-header { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .side-by-side { grid-template-columns: 1fr; }
+}
+
+/* ── Representation Display ── */
+.repr-bar {
+  display: flex;
+  gap: 2px;
+  margin: 8px 0;
+  height: 24px;
+  align-items: flex-end;
+}
+.repr-bar .dim {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.4s ease, background 0.4s ease;
+}
+
+/* ── Navigation Footer ── */
+.nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0 56px;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.nav-footer a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-footer a:hover { color: var(--accent); }
+.nav-spacer { flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <a href="index.html" class="back-link">&larr; All Explorations</a>
+
+  <header>
+    <span class="overline">Exploration 01</span>
+    <h1>Temporal Difference<br>Meets JEPA</h1>
+    <p class="subtitle">
+      Standard JEPA predicts the next latent state. TD-JEPA replaces this with a
+      temporal difference target that captures long-horizon dynamics&thinsp;&mdash;&thinsp;the
+      key innovation that enables zero-shot RL.
+    </p>
+  </header>
+
+  <!-- ── Section 1: The Problem with One-Step Prediction ── -->
+
+  <div class="prose">
+    <h2>The Problem with One-Step Prediction</h2>
+    <p>
+      A standard Joint-Embedding Predictive Architecture (JEPA) encodes an observation
+      into a latent vector and then trains a predictor to produce the <strong>next</strong>
+      latent state. This one-step regression loss captures local transition dynamics
+      beautifully, but it is fundamentally myopic.
+    </p>
+    <p>
+      Consider an agent at a fork in a maze: one path leads to a dead end in three steps,
+      the other to a reward in twenty. A one-step predictor sees both paths as equally
+      promising&thinsp;&mdash;&thinsp;the next state is just one step away in either direction.
+      Reinforcement learning, however, needs representations that encode the
+      <strong>long-term consequences</strong> of choosing one path over another.
+    </p>
+  </div>
+
+  <!-- Figure 1: Side-by-side architecture comparison -->
+
+  <div class="figure">
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <div class="mode-toggle" id="archModeToggle">
+            <button class="active" data-mode="jepa">Standard JEPA</button>
+            <button data-mode="td-jepa">TD-JEPA</button>
+          </div>
+          <button class="btn" id="archReset">Reset</button>
+        </div>
+        <canvas id="archCanvas" width="692" height="380"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 1.</strong> Toggle between Standard JEPA and TD-JEPA to see how the
+        data flow changes. In TD-JEPA, the predictor output is trained against a bootstrapped
+        target that incorporates discounted future predictions, not just the next-step encoding.
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      In standard JEPA, the predictor <code>f</code> learns to map the current latent
+      state to the next latent state. The loss is a simple regression:
+    </p>
+  </div>
+
+  <div class="equation-block" id="eqJepa">
+    <span class="blue-var">L</span><sub>JEPA</sub> =
+    || <span class="blue-var">f</span>(<span class="blue-var">&phi;</span>(s))
+    &minus;
+    <span class="blue-var">&phi;</span>(s&prime;) ||<sup>2</sup>
+  </div>
+
+  <div class="prose">
+    <p>
+      TD-JEPA replaces the target <code>&phi;(s')</code> with a temporal-difference
+      bootstrap. The predictor now regresses against the task encoding of the next state
+      <strong>plus</strong> a discounted version of its own future prediction, stopped
+      from propagating gradients:
+    </p>
+  </div>
+
+  <div class="equation-block" id="eqTd">
+    <span class="var">L</span><sub>TD</sub> =
+    || <span class="var">f</span><sub>k</sub>(<span class="var">&phi;</span>(s))
+    &minus;
+    (<span class="var">&psi;</span>(s&prime;) + <span class="var">&gamma;</span> &middot; sg(<span class="var">f</span><sub>k</sub>(<span class="var">&phi;</span>(s&prime;))))
+    ||<sup>2</sup>
+  </div>
+
+  <div class="prose">
+    <p>
+      This seemingly small change has a profound effect. Unrolling the recursion reveals
+      that the predictor is learning <strong>successor features</strong> in latent space:
+      a discounted sum of all future task encodings under policy <em>k</em>. The
+      representation now captures not just what is adjacent, but what lies far ahead.
+    </p>
+
+    <div class="margin-note">
+      The discount factor &gamma; controls the horizon. At &gamma; = 0 the TD target
+      collapses to the next-step encoding (equivalent to standard JEPA). As &gamma;
+      approaches 1, the representation captures increasingly long-horizon dynamics.
+    </div>
+  </div>
+
+  <!-- ── Section 2: Animated Data Flow ── -->
+
+  <div class="prose">
+    <h2>The Data Flow</h2>
+    <p>
+      Below, watch data flow through the TD-JEPA architecture step by step. An observation
+      enters the state encoder <code>&phi;</code>, producing a latent state <code>z</code>.
+      The policy-conditioned predictor <code>f_k</code> produces a prediction, which is then
+      compared against the TD target constructed from the next observation.
+    </p>
+    <p>
+      Use the <strong>Step</strong> button to advance one stage at a time, or let the
+      animation play continuously. Adjust the discount factor to see how it changes the
+      contribution of the bootstrap term.
+    </p>
+  </div>
+
+  <div class="figure">
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <button class="btn" id="flowStep">Step</button>
+          <button class="btn" id="flowPlay">Play</button>
+          <button class="btn" id="flowReset">Reset</button>
+          <div class="slider-group">
+            <span>&gamma;</span>
+            <input type="range" id="gammaSlider" min="0" max="99" value="90">
+            <span class="slider-value" id="gammaValue">0.90</span>
+          </div>
+        </div>
+        <canvas id="flowCanvas" width="692" height="420"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 2.</strong> Animated data flow through TD-JEPA. Each box is a
+        module; colored packets show data moving through the pipeline. The dashed feedback
+        loop from the TD target back to the predictor is the bootstrap&thinsp;&mdash;&thinsp;the
+        key ingredient that enables long-horizon prediction.
+      </figcaption>
+    </div>
+  </div>
+
+  <!-- ── Section 3: What the Representation Captures ── -->
+
+  <div class="prose">
+    <h2>What the Representation Captures</h2>
+    <p>
+      A concrete way to see the difference: consider two states that look identical locally
+      (same immediate surroundings) but lead to very different outcomes. Standard JEPA would
+      assign them <strong>nearly identical</strong> representations, because the next state
+      is the same. TD-JEPA pushes their representations apart, because the long-run
+      consequences diverge.
+    </p>
+    <p>
+      The interactive below shows a simplified 8-dimensional representation space. Each bar
+      represents one dimension of the learned feature vector. Toggle between JEPA and TD-JEPA
+      to see how the representation changes for a pair of states that are locally similar
+      but have different long-term value.
+    </p>
+  </div>
+
+  <div class="figure">
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <div class="mode-toggle" id="reprModeToggle">
+            <button class="active" data-mode="jepa">Standard JEPA</button>
+            <button data-mode="td-jepa">TD-JEPA</button>
+          </div>
+          <button class="btn" id="reprReset">Reset</button>
+        </div>
+        <canvas id="reprCanvas" width="692" height="320"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 3.</strong> Representation vectors for two locally similar states (blue
+        = State A, leading to reward; red = State B, leading to dead end). Under JEPA the
+        vectors are nearly identical. Under TD-JEPA they diverge, especially in dimensions
+        encoding long-horizon value.
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The theoretical result underlying this figure is that an idealized TD-JEPA learns
+      encoders that capture a <strong>low-rank factorization</strong> of the long-term
+      policy-conditioned transition dynamics. The predictor, in turn, approximates
+      <strong>successor features</strong>&thinsp;&mdash;&thinsp;the expected discounted
+      sum of future encodings under a given policy. This is precisely the information
+      needed for zero-shot policy selection given a new reward function.
+    </p>
+  </div>
+
+  <!-- ── Section 4: The Role of gamma ── -->
+
+  <div class="prose">
+    <h2>The Role of the Discount Factor</h2>
+    <p>
+      The discount factor <code>&gamma;</code> is the single most important hyperparameter
+      in TD-JEPA. It controls how far into the future the representation looks. Drag
+      the slider below to see how representations change as the horizon grows.
+    </p>
+  </div>
+
+  <div class="figure">
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <div class="slider-group">
+            <span>&gamma;</span>
+            <input type="range" id="horizonSlider" min="0" max="99" value="0">
+            <span class="slider-value" id="horizonValue">0.00</span>
+          </div>
+          <button class="btn" id="horizonReset">Reset</button>
+        </div>
+        <canvas id="horizonCanvas" width="692" height="300"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 4.</strong> As &gamma; increases from 0 (pure next-step prediction)
+        to 0.99 (deep horizon), the effective prediction horizon grows exponentially. The
+        representation transitions from capturing local features (position, velocity) to
+        global value-aware features (reachability, long-term reward).
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      At <code>&gamma; = 0</code>, the TD target reduces to <code>&psi;(s')</code> alone,
+      and the method degenerates to standard JEPA. As <code>&gamma;</code> grows, each
+      additional 0.01 expands the effective horizon by roughly 1/(1-&gamma;) steps. At
+      <code>&gamma; = 0.99</code>, the representation looks roughly 100 steps ahead&thinsp;
+      &mdash;&thinsp;enough for most continuous control tasks.
+    </p>
+
+    <div class="margin-note">
+      In practice, Bagatella et al. use &gamma; = 0.99 for all experiments. This matches
+      the standard discount factor in RL and ensures the representation captures the full
+      task-relevant horizon.
+    </div>
+  </div>
+
+  <nav class="nav-footer">
+    <a href="index.html">&larr; Index</a>
+    <span class="nav-spacer"></span>
+    <a href="02-zero-shot-control.html">02: Zero-Shot Control &rarr;</a>
+  </nav>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// Figure 1: Side-by-Side Architecture Comparison
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('archCanvas');
+  const ctx = canvas.getContext('2d');
+  const toggle = document.getElementById('archModeToggle');
+  const resetBtn = document.getElementById('archReset');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 380;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let mode = 'jepa'; // 'jepa' or 'td-jepa'
+  let frame = 0;
+  let animT = 0;
+
+  // Nodes for each mode
+  const jepaNodes = [
+    { x: 0.08, y: 0.48, w: 68, h: 40, label: 'Obs s', color: '#4a4a6a' },
+    { x: 0.28, y: 0.48, w: 78, h: 40, label: 'Encoder \u03C6', color: '#2563eb' },
+    { x: 0.52, y: 0.48, w: 82, h: 40, label: 'Predictor f', color: '#2563eb' },
+    { x: 0.78, y: 0.48, w: 80, h: 40, label: 'Target \u03C6(s\')', color: '#2563eb' },
+  ];
+
+  const tdNodes = [
+    { x: 0.06, y: 0.32, w: 60, h: 36, label: 'Obs s', color: '#4a4a6a' },
+    { x: 0.24, y: 0.32, w: 82, h: 36, label: 'State Enc \u03C6', color: '#2563eb' },
+    { x: 0.48, y: 0.32, w: 88, h: 36, label: 'Predictor f\u2096', color: '#c2402a' },
+    { x: 0.06, y: 0.70, w: 60, h: 36, label: 'Obs s\'', color: '#4a4a6a' },
+    { x: 0.24, y: 0.70, w: 82, h: 36, label: 'Task Enc \u03C8', color: '#059669' },
+    { x: 0.48, y: 0.70, w: 88, h: 36, label: 'Predictor f\u2096', color: '#c2402a' },
+    { x: 0.72, y: 0.70, w: 60, h: 36, label: '\u03B3 \u00B7 sg', color: '#d97706' },
+    { x: 0.78, y: 0.50, w: 76, h: 40, label: 'TD Target', color: '#c2402a' },
+  ];
+
+  // Edges: [fromIdx, toIdx]
+  const jepaEdges = [[0,1],[1,2],[2,3]];
+  const tdEdges = [[0,1],[1,2],[3,4],[3,5],[5,6],[4,7],[6,7],[2,7]];
+
+  function drawNode(n, W, H, pulse) {
+    const x = n.x * W - n.w / 2;
+    const y = n.y * H - n.h / 2;
+    const r = 5;
+    const p = pulse || 0;
+
+    ctx.save();
+    ctx.fillStyle = 'white';
+    ctx.strokeStyle = n.color;
+    ctx.lineWidth = 1.5 + p * 0.5;
+    ctx.shadowColor = n.color;
+    ctx.shadowBlur = p * 8;
+
+    // Rounded rect
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + n.w - r, y);
+    ctx.arcTo(x + n.w, y, x + n.w, y + r, r);
+    ctx.lineTo(x + n.w, y + n.h - r);
+    ctx.arcTo(x + n.w, y + n.h, x + n.w - r, y + n.h, r);
+    ctx.lineTo(x + r, y + n.h);
+    ctx.arcTo(x, y + n.h, x, y + n.h - r, r);
+    ctx.lineTo(x, y + r);
+    ctx.arcTo(x, y, x + r, y, r);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = n.color;
+    ctx.font = '500 11px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(n.label, n.x * W, n.y * H + 1);
+    ctx.restore();
+  }
+
+  function drawEdge(a, b, color, dashed, W, H) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(a.x * W, a.y * H);
+    ctx.lineTo(b.x * W, b.y * H);
+    ctx.strokeStyle = color || 'rgba(26,26,46,0.15)';
+    ctx.lineWidth = 1.2;
+    if (dashed) ctx.setLineDash([4, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Arrow head
+    const angle = Math.atan2(b.y * H - a.y * H, b.x * W - a.x * W);
+    const hx = b.x * W - Math.cos(angle) * (b.w ? b.w / 2 + 4 : 20);
+    const hy = b.y * H - Math.sin(angle) * (b.h ? b.h / 2 + 4 : 20);
+    ctx.beginPath();
+    ctx.moveTo(hx, hy);
+    ctx.lineTo(hx - 6 * Math.cos(angle - 0.4), hy - 6 * Math.sin(angle - 0.4));
+    ctx.lineTo(hx - 6 * Math.cos(angle + 0.4), hy - 6 * Math.sin(angle + 0.4));
+    ctx.closePath();
+    ctx.fillStyle = color || 'rgba(26,26,46,0.3)';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawPacket(a, b, t, color, W, H) {
+    const px = (a.x + (b.x - a.x) * t) * W;
+    const py = (a.y + (b.y - a.y) * t) * H;
+    ctx.beginPath();
+    ctx.arc(px, py, 4, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const nodes = mode === 'jepa' ? jepaNodes : tdNodes;
+    const edges = mode === 'jepa' ? jepaEdges : tdEdges;
+
+    // Draw edges
+    edges.forEach(([fi, ti]) => {
+      const a = nodes[fi], b = nodes[ti];
+      const isBootstrap = mode === 'td-jepa' && fi === 5 && ti === 6;
+      const isTD = mode === 'td-jepa' && (ti === 7);
+      drawEdge(a, b, isTD ? 'rgba(194,64,42,0.3)' : isBootstrap ? 'rgba(217,119,6,0.3)' : 'rgba(37,99,235,0.25)', isBootstrap, W, H);
+    });
+
+    // Animate packets
+    const packetT = (frame % 150) / 150;
+    const numEdges = edges.length;
+    const segDuration = 1.0 / numEdges;
+
+    for (let i = 0; i < numEdges; i++) {
+      const segStart = i * segDuration;
+      const segEnd = segStart + segDuration;
+      if (packetT >= segStart && packetT < segEnd) {
+        const localT = (packetT - segStart) / segDuration;
+        const [fi, ti] = edges[i];
+        const a = nodes[fi], b = nodes[ti];
+        const isTD = mode === 'td-jepa' && (ti === 7);
+        drawPacket(a, b, localT, isTD ? 'rgba(194,64,42,0.8)' : 'rgba(37,99,235,0.7)', W, H);
+      }
+    }
+
+    // Draw nodes
+    nodes.forEach((n, i) => {
+      const p = Math.max(0, Math.sin(frame * 0.04 + i) * 0.3);
+      drawNode(n, W, H, p);
+    });
+
+    // Labels
+    if (mode === 'jepa') {
+      ctx.font = '300 13px "Spectral", serif';
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'center';
+      ctx.fillText('One-step regression: predict next latent state', W * 0.5, H * 0.18);
+
+      // Loss arrow
+      ctx.save();
+      ctx.strokeStyle = 'rgba(37,99,235,0.4)';
+      ctx.setLineDash([3, 3]);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(jepaNodes[2].x * W + jepaNodes[2].w / 2 + 8, jepaNodes[2].y * H);
+      ctx.lineTo(jepaNodes[3].x * W - jepaNodes[3].w / 2 - 8, jepaNodes[3].y * H);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#2563eb';
+      ctx.font = 'italic 500 12px "Spectral", serif';
+      ctx.fillText('MSE Loss', (jepaNodes[2].x + jepaNodes[3].x) / 2 * W, jepaNodes[2].y * H - 16);
+      ctx.restore();
+    } else {
+      ctx.font = '300 13px "Spectral", serif';
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'center';
+      ctx.fillText('TD bootstrap: regression against discounted future sum', W * 0.5, H * 0.12);
+
+      // Policy label
+      ctx.fillStyle = '#c2402a';
+      ctx.font = 'italic 500 11px "Source Code Pro", monospace';
+      ctx.fillText('policy k', tdNodes[2].x * W, tdNodes[2].y * H - 26);
+      ctx.fillText('policy k', tdNodes[5].x * W, tdNodes[5].y * H + 28);
+
+      // Plus sign between psi and gamma
+      ctx.fillStyle = '#4a4a6a';
+      ctx.font = '600 16px "Spectral", serif';
+      ctx.fillText('+', (tdNodes[4].x + tdNodes[6].x) / 2 * W + 10, tdNodes[4].y * H);
+
+      // TD target brace
+      ctx.fillStyle = '#c2402a';
+      ctx.font = 'italic 500 12px "Spectral", serif';
+      ctx.fillText('TD Loss', (tdNodes[2].x + tdNodes[7].x) / 2 * W, tdNodes[7].y * H - 42);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  // Toggle handler
+  toggle.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      toggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      frame = 0;
+    });
+  });
+
+  resetBtn.addEventListener('click', () => { frame = 0; });
+
+  draw();
+})();
+
+
+// ═══════════════════════════════════════════════════════════════════
+// Figure 2: Animated Data Flow Pipeline
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('flowCanvas');
+  const ctx = canvas.getContext('2d');
+  const stepBtn = document.getElementById('flowStep');
+  const playBtn = document.getElementById('flowPlay');
+  const resetBtn = document.getElementById('flowReset');
+  const gammaSlider = document.getElementById('gammaSlider');
+  const gammaVal = document.getElementById('gammaValue');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 420;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let gamma = 0.90;
+  let currentStage = -1; // -1 = idle, 0-6 = stages
+  let stageT = 0; // 0..1 animation within stage
+  let playing = false;
+  let frame = 0;
+
+  const stages = [
+    { name: 'Observation enters', desc: 'Raw observation s fed to state encoder' },
+    { name: 'State encoding', desc: '\u03C6(s) produces latent state z' },
+    { name: 'Prediction', desc: 'Policy-conditioned predictor f\u2096 generates prediction' },
+    { name: 'Next observation', desc: 'Observation s\' fed to task encoder' },
+    { name: 'Task encoding', desc: '\u03C8(s\') produces task-relevant features w' },
+    { name: 'Bootstrap', desc: '\u03B3 \u00B7 sg(f\u2096(\u03C6(s\'))) adds discounted future' },
+    { name: 'TD target formed', desc: 'w + \u03B3 \u00B7 sg(pred) = TD target for training' },
+  ];
+
+  // Pipeline layout
+  const boxes = [
+    { x: 0.07, y: 0.30, w: 64, h: 48, label: 'Obs s', color: '#4a4a6a', stage: 0 },
+    { x: 0.24, y: 0.30, w: 76, h: 48, label: 'Enc \u03C6', color: '#2563eb', stage: 1 },
+    { x: 0.24, y: 0.13, w: 56, h: 30, label: 'z', color: '#2563eb', stage: 1 },
+    { x: 0.44, y: 0.30, w: 78, h: 48, label: 'Pred f\u2096', color: '#c2402a', stage: 2 },
+    { x: 0.44, y: 0.13, w: 56, h: 30, label: 'pred', color: '#c2402a', stage: 2 },
+    { x: 0.07, y: 0.68, w: 64, h: 48, label: 'Obs s\'', color: '#4a4a6a', stage: 3 },
+    { x: 0.24, y: 0.68, w: 76, h: 48, label: 'Enc \u03C8', color: '#059669', stage: 4 },
+    { x: 0.24, y: 0.85, w: 56, h: 30, label: 'w', color: '#059669', stage: 4 },
+    { x: 0.44, y: 0.68, w: 78, h: 48, label: 'Pred f\u2096', color: '#d97706', stage: 5 },
+    { x: 0.44, y: 0.85, w: 66, h: 30, label: '\u03B3\u00B7sg', color: '#d97706', stage: 5 },
+    { x: 0.66, y: 0.50, w: 56, h: 30, label: '+', color: '#4a4a6a', stage: 6 },
+    { x: 0.82, y: 0.50, w: 80, h: 48, label: 'TD Target', color: '#c2402a', stage: 6 },
+  ];
+
+  const pipes = [
+    { from: 0, to: 1, stage: 0 },
+    { from: 1, to: 2, stage: 1 },
+    { from: 2, to: 3, stage: 1 },
+    { from: 3, to: 4, stage: 2 },
+    { from: 5, to: 6, stage: 3 },
+    { from: 6, to: 7, stage: 4 },
+    { from: 5, to: 8, stage: 3 },
+    { from: 8, to: 9, stage: 5 },
+    { from: 7, to: 10, stage: 4 },
+    { from: 9, to: 10, stage: 5 },
+    { from: 10, to: 11, stage: 6 },
+    { from: 4, to: 11, stage: 6 },
+  ];
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.arcTo(x + w, y, x + w, y + r, r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+    ctx.lineTo(x + r, y + h);
+    ctx.arcTo(x, y + h, x, y + h - r, r);
+    ctx.lineTo(x, y + r);
+    ctx.arcTo(x, y, x + r, y, r);
+    ctx.closePath();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw pipes
+    pipes.forEach(p => {
+      const a = boxes[p.from], b = boxes[p.to];
+      const active = p.stage <= currentStage;
+      ctx.beginPath();
+      ctx.moveTo(a.x * W, a.y * H);
+      ctx.lineTo(b.x * W, b.y * H);
+      ctx.strokeStyle = active ? 'rgba(26,26,46,0.18)' : 'rgba(26,26,46,0.06)';
+      ctx.lineWidth = active ? 1.5 : 1;
+      ctx.stroke();
+
+      // Arrow
+      if (active) {
+        const angle = Math.atan2(b.y * H - a.y * H, b.x * W - a.x * W);
+        const hx = b.x * W - Math.cos(angle) * 16;
+        const hy = b.y * H - Math.sin(angle) * 16;
+        ctx.beginPath();
+        ctx.moveTo(hx, hy);
+        ctx.lineTo(hx - 5 * Math.cos(angle - 0.4), hy - 5 * Math.sin(angle - 0.4));
+        ctx.lineTo(hx - 5 * Math.cos(angle + 0.4), hy - 5 * Math.sin(angle + 0.4));
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(26,26,46,0.25)';
+        ctx.fill();
+      }
+    });
+
+    // Animated packet on current stage pipes
+    if (currentStage >= 0 && currentStage < stages.length) {
+      pipes.filter(p => p.stage === currentStage).forEach(p => {
+        const a = boxes[p.from], b = boxes[p.to];
+        const px = (a.x + (b.x - a.x) * stageT) * W;
+        const py = (a.y + (b.y - a.y) * stageT) * H;
+        ctx.beginPath();
+        ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+        const col = boxes[p.to].color;
+        ctx.fillStyle = col;
+        ctx.globalAlpha = 0.7;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+    }
+
+    // Draw boxes
+    boxes.forEach((b, i) => {
+      const active = b.stage <= currentStage;
+      const isCurrent = b.stage === currentStage;
+      const bx = b.x * W - b.w / 2;
+      const by = b.y * H - b.h / 2;
+
+      ctx.globalAlpha = active ? 1 : 0.3;
+      roundRect(bx, by, b.w, b.h, 4);
+      ctx.fillStyle = 'white';
+      ctx.fill();
+      ctx.strokeStyle = b.color;
+      ctx.lineWidth = isCurrent ? 2 : 1;
+      if (isCurrent) {
+        ctx.shadowColor = b.color;
+        ctx.shadowBlur = 8;
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = b.color;
+      ctx.font = '500 10px "Source Code Pro", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(b.label, b.x * W, b.y * H + 1);
+      ctx.globalAlpha = 1;
+    });
+
+    // Stage indicator text
+    if (currentStage >= 0 && currentStage < stages.length) {
+      const s = stages[currentStage];
+      ctx.font = '500 13px "Source Code Pro", monospace';
+      ctx.fillStyle = '#c2402a';
+      ctx.textAlign = 'left';
+      ctx.fillText('Stage ' + (currentStage + 1) + ': ' + s.name, 16, H - 30);
+      ctx.font = '300 13px "Spectral", serif';
+      ctx.fillStyle = '#8888a0';
+      ctx.fillText(s.desc, 16, H - 12);
+    } else {
+      ctx.font = '300 13px "Spectral", serif';
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'left';
+      ctx.fillText('Press Step or Play to begin', 16, H - 20);
+    }
+
+    // Gamma indicator
+    ctx.font = '500 12px "Source Code Pro", monospace';
+    ctx.fillStyle = '#d97706';
+    ctx.textAlign = 'right';
+    ctx.fillText('\u03B3 = ' + gamma.toFixed(2), W - 16, H - 20);
+
+    // Effective horizon
+    const horizon = gamma < 1 ? (1 / (1 - gamma)).toFixed(0) : '\u221E';
+    ctx.font = '300 11px "Spectral", serif';
+    ctx.fillStyle = '#8888a0';
+    ctx.fillText('effective horizon \u2248 ' + horizon + ' steps', W - 16, H - 6);
+
+    // Animate
+    if (playing) {
+      stageT += 0.012;
+      if (stageT >= 1) {
+        stageT = 0;
+        currentStage++;
+        if (currentStage >= stages.length) {
+          currentStage = -1;
+          playing = false;
+          playBtn.textContent = 'Play';
+        }
+      }
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  stepBtn.addEventListener('click', () => {
+    playing = false;
+    playBtn.textContent = 'Play';
+    currentStage = Math.min(currentStage + 1, stages.length - 1);
+    stageT = 1;
+  });
+
+  playBtn.addEventListener('click', () => {
+    if (playing) {
+      playing = false;
+      playBtn.textContent = 'Play';
+    } else {
+      if (currentStage >= stages.length - 1) { currentStage = -1; stageT = 0; }
+      playing = true;
+      playBtn.textContent = 'Pause';
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    currentStage = -1;
+    stageT = 0;
+    playing = false;
+    playBtn.textContent = 'Play';
+  });
+
+  gammaSlider.addEventListener('input', () => {
+    gamma = parseInt(gammaSlider.value) / 100;
+    gammaVal.textContent = gamma.toFixed(2);
+  });
+
+  draw();
+})();
+
+
+// ═══════════════════════════════════════════════════════════════════
+// Figure 3: Representation Comparison
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('reprCanvas');
+  const ctx = canvas.getContext('2d');
+  const toggle = document.getElementById('reprModeToggle');
+  const resetBtn = document.getElementById('reprReset');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 320;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let mode = 'jepa';
+  let frame = 0;
+
+  const ndims = 12;
+
+  // State A: leads to reward. State B: leads to dead end.
+  // Under JEPA, their representations are nearly identical (next step is the same).
+  // Under TD-JEPA, they diverge.
+  const seed = () => {
+    const arr = [];
+    for (let i = 0; i < ndims; i++) arr.push(0.3 + Math.random() * 0.4);
+    return arr;
+  };
+  const baseRepr = seed();
+
+  // JEPA: both states have nearly the same representation
+  const jepA = baseRepr.map(v => v + (Math.random() - 0.5) * 0.04);
+  const jepB = baseRepr.map(v => v + (Math.random() - 0.5) * 0.04);
+
+  // TD-JEPA: State A has high value dimensions, State B has low
+  const tdA = baseRepr.map((v, i) => {
+    if (i < 4) return v + 0.25; // Value-relevant dims boosted
+    if (i >= 8) return v + 0.15;
+    return v + (Math.random() - 0.5) * 0.1;
+  });
+  const tdB = baseRepr.map((v, i) => {
+    if (i < 4) return v - 0.2; // Value-relevant dims suppressed
+    if (i >= 8) return v - 0.15;
+    return v + (Math.random() - 0.5) * 0.1;
+  });
+
+  // Animated current values
+  let currentA = jepA.slice();
+  let currentB = jepB.slice();
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Target values
+    const targetA = mode === 'jepa' ? jepA : tdA;
+    const targetB = mode === 'jepa' ? jepB : tdB;
+
+    // Smooth transition
+    for (let i = 0; i < ndims; i++) {
+      currentA[i] = lerp(currentA[i], targetA[i], 0.05);
+      currentB[i] = lerp(currentB[i], targetB[i], 0.05);
+    }
+
+    const pad = { left: 60, right: 40, top: 60, bottom: 60 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+    const barGroupW = plotW / ndims;
+    const barW = barGroupW * 0.35;
+    const gap = barGroupW * 0.06;
+
+    // Title
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = mode === 'jepa' ? '#2563eb' : '#c2402a';
+    ctx.fillText(mode === 'jepa' ? 'JEPA Representations' : 'TD-JEPA Representations', W / 2, 24);
+
+    // Similarity score
+    let simSum = 0;
+    for (let i = 0; i < ndims; i++) {
+      simSum += (currentA[i] - currentB[i]) * (currentA[i] - currentB[i]);
+    }
+    const dist = Math.sqrt(simSum);
+    ctx.font = '300 12px "Spectral", serif';
+    ctx.fillStyle = '#8888a0';
+    ctx.fillText('L2 distance between A and B: ' + dist.toFixed(3), W / 2, 42);
+
+    // Y axis
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top);
+    ctx.lineTo(pad.left, H - pad.bottom);
+    ctx.lineTo(W - pad.right, H - pad.bottom);
+    ctx.stroke();
+
+    // Y labels
+    ctx.font = '400 10px "Source Code Pro", monospace';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'right';
+    for (let v = 0; v <= 1; v += 0.25) {
+      const y = H - pad.bottom - v * plotH;
+      ctx.fillText(v.toFixed(2), pad.left - 8, y + 3);
+      ctx.beginPath();
+      ctx.moveTo(pad.left, y);
+      ctx.lineTo(W - pad.right, y);
+      ctx.strokeStyle = 'rgba(224,221,213,0.5)';
+      ctx.stroke();
+    }
+
+    // Bars
+    for (let i = 0; i < ndims; i++) {
+      const groupX = pad.left + i * barGroupW + barGroupW * 0.14;
+
+      // State A bar (blue)
+      const hA = currentA[i] * plotH;
+      ctx.fillStyle = 'rgba(37,99,235,0.6)';
+      ctx.fillRect(groupX, H - pad.bottom - hA, barW, hA);
+
+      // State B bar (red)
+      const hB = currentB[i] * plotH;
+      ctx.fillStyle = 'rgba(194,64,42,0.6)';
+      ctx.fillRect(groupX + barW + gap, H - pad.bottom - hB, barW, hB);
+
+      // Dimension label
+      ctx.font = '400 9px "Source Code Pro", monospace';
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'center';
+      ctx.fillText('d' + (i + 1), groupX + barW + gap / 2, H - pad.bottom + 14);
+
+      // Highlight value-relevant dimensions under TD-JEPA
+      if (mode === 'td-jepa' && (i < 4 || i >= 8)) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(194,64,42,0.15)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 2]);
+        ctx.strokeRect(groupX - 3, pad.top, barW * 2 + gap + 6, plotH);
+        ctx.setLineDash([]);
+        ctx.restore();
+      }
+    }
+
+    // Legend
+    const legY = H - 18;
+    ctx.fillStyle = 'rgba(37,99,235,0.6)';
+    ctx.fillRect(W / 2 - 120, legY - 8, 12, 12);
+    ctx.fillStyle = '#4a4a6a';
+    ctx.font = '300 12px "Spectral", serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('State A (reward path)', W / 2 - 104, legY + 2);
+
+    ctx.fillStyle = 'rgba(194,64,42,0.6)';
+    ctx.fillRect(W / 2 + 40, legY - 8, 12, 12);
+    ctx.fillStyle = '#4a4a6a';
+    ctx.fillText('State B (dead end)', W / 2 + 56, legY + 2);
+
+    // Value-relevant label for TD-JEPA
+    if (mode === 'td-jepa') {
+      ctx.font = 'italic 300 11px "Spectral", serif';
+      ctx.fillStyle = '#c2402a';
+      ctx.textAlign = 'center';
+      ctx.fillText('value-relevant dimensions', pad.left + barGroupW * 2, pad.top - 6);
+      ctx.fillText('value-relevant', pad.left + barGroupW * 10, pad.top - 6);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  toggle.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      toggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    currentA = jepA.slice();
+    currentB = jepB.slice();
+    frame = 0;
+  });
+
+  draw();
+})();
+
+
+// ═══════════════════════════════════════════════════════════════════
+// Figure 4: Discount Factor and Horizon
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('horizonCanvas');
+  const ctx = canvas.getContext('2d');
+  const slider = document.getElementById('horizonSlider');
+  const valDisplay = document.getElementById('horizonValue');
+  const resetBtn = document.getElementById('horizonReset');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 300;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let gamma = 0;
+  let animGamma = 0;
+  let frame = 0;
+
+  // Feature labels (from local to global)
+  const features = [
+    { name: 'Position', local: true },
+    { name: 'Velocity', local: true },
+    { name: 'Contact', local: true },
+    { name: 'Heading', local: true },
+    { name: 'Terrain', local: false },
+    { name: 'Distance', local: false },
+    { name: 'Reachability', local: false },
+    { name: 'Value', local: false },
+  ];
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Animate gamma smoothly
+    animGamma += (gamma - animGamma) * 0.06;
+
+    const pad = { left: 100, right: 40, top: 40, bottom: 50 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+
+    // Title
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#c2402a';
+    ctx.fillText('\u03B3 = ' + animGamma.toFixed(2) + '   |   Horizon \u2248 ' + (animGamma < 0.995 ? (1 / (1 - animGamma)).toFixed(0) : '1000+') + ' steps', W / 2, 24);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(224,221,213,0.5)';
+    ctx.lineWidth = 1;
+    for (let v = 0; v <= 1; v += 0.25) {
+      const x = pad.left + v * plotW;
+      ctx.beginPath();
+      ctx.moveTo(x, pad.top);
+      ctx.lineTo(x, H - pad.bottom);
+      ctx.stroke();
+    }
+
+    // Feature bars
+    const barH = plotH / features.length * 0.7;
+    const barGap = plotH / features.length;
+
+    features.forEach((f, i) => {
+      const y = pad.top + i * barGap + barGap * 0.15;
+
+      // Activation level depends on gamma and whether the feature is local/global
+      let activation;
+      if (f.local) {
+        // Local features always active, slightly decrease with very high gamma
+        activation = 0.9 - animGamma * 0.15;
+      } else {
+        // Global features grow with gamma
+        const globalIdx = i - 4; // 0..3
+        const threshold = 0.2 + globalIdx * 0.2;
+        activation = Math.max(0, Math.min(1, (animGamma - threshold) / (1 - threshold)));
+        activation = activation * activation * 0.85;
+      }
+
+      // Background bar
+      ctx.fillStyle = 'rgba(224,221,213,0.3)';
+      ctx.fillRect(pad.left, y, plotW, barH);
+
+      // Active bar
+      const barColor = f.local ? 'rgba(37,99,235,' + (0.3 + activation * 0.5) + ')' : 'rgba(194,64,42,' + (0.3 + activation * 0.5) + ')';
+      ctx.fillStyle = barColor;
+      ctx.fillRect(pad.left, y, plotW * activation, barH);
+
+      // Label
+      ctx.font = '400 11px "Source Code Pro", monospace';
+      ctx.fillStyle = activation > 0.1 ? '#1a1a2e' : '#8888a0';
+      ctx.textAlign = 'right';
+      ctx.fillText(f.name, pad.left - 8, y + barH / 2 + 3);
+
+      // Value
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#8888a0';
+      ctx.font = '300 10px "Source Code Pro", monospace';
+      ctx.fillText((activation * 100).toFixed(0) + '%', pad.left + plotW * activation + 6, y + barH / 2 + 3);
+    });
+
+    // Legend
+    ctx.font = '300 11px "Spectral", serif';
+    ctx.textAlign = 'center';
+
+    ctx.fillStyle = 'rgba(37,99,235,0.6)';
+    ctx.fillRect(W / 2 - 130, H - 18, 10, 10);
+    ctx.fillStyle = '#4a4a6a';
+    ctx.textAlign = 'left';
+    ctx.fillText('Local features', W / 2 - 116, H - 9);
+
+    ctx.fillStyle = 'rgba(194,64,42,0.6)';
+    ctx.fillRect(W / 2 + 20, H - 18, 10, 10);
+    ctx.fillStyle = '#4a4a6a';
+    ctx.fillText('Global/value features', W / 2 + 34, H - 9);
+
+    // Gamma axis label
+    ctx.font = 'italic 300 12px "Spectral", serif';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'center';
+    ctx.fillText('Activation in representation', W / 2, H - 30);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  slider.addEventListener('input', () => {
+    gamma = parseInt(slider.value) / 100;
+    valDisplay.textContent = gamma.toFixed(2);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    gamma = 0;
+    animGamma = 0;
+    slider.value = 0;
+    valDisplay.textContent = '0.00';
+  });
+
+  draw();
+})();
+</script>
+
+</body>
+</html>

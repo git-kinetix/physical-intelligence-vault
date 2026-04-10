@@ -17,6 +17,8 @@ aliases: [MVAE, Motion VAE, Character Controllers Using Motion VAEs]
 
 !PDFs/MVAE.pdf
 
+> **Interactive Explainer:** [Motion VAE — latent action space, MoE decoder, scheduled sampling](https://dxlrak3ky5x8b.cloudfront.net/Explainers/mvae/index.html)
+
 # Character Controllers Using Motion VAEs
 
 ## Summary

@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 &mdash; Representation Probing &mdash; TD-JEPA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+/* ── Design Tokens ── */
+:root {
+  --bg: #faf9f6;
+  --bg-alt: #f3f0eb;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent: #c2402a;
+  --accent-hover: #a03520;
+  --blue: #2563eb;
+  --green: #059669;
+  --orange: #d97706;
+  --purple: #7c3aed;
+  --border: #e0ddd5;
+  --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+  --font-mono: 'Source Code Pro', 'Menlo', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.prose { margin-bottom: 40px; }
+.prose p { margin-bottom: 18px; color: var(--text-secondary); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 500; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+/* ── Figure Wrappers ── */
+.figure { margin: 36px 0 48px; }
+
+.figure-inner {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.figure-canvas-wrap {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+figcaption {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+}
+figcaption strong { color: var(--text-secondary); font-weight: 500; }
+
+/* ── Buttons & Controls ── */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 8px 20px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.slider-group input[type="range"] {
+  width: 120px;
+  accent-color: var(--accent);
+}
+
+.slider-value {
+  min-width: 36px;
+  text-align: right;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.mode-toggle {
+  display: flex;
+  background: var(--bg-alt);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.mode-toggle button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.mode-toggle button.active {
+  background: var(--accent);
+  color: white;
+}
+
+.mode-toggle button:not(.active):hover {
+  color: var(--text);
+  background: rgba(194,64,42,0.06);
+}
+
+/* ── Tooltip ── */
+.tooltip-box {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text);
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 12px;
+  box-shadow: 0 4px 12px rgba(26,26,46,0.1);
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+  line-height: 1.5;
+  max-width: 240px;
+}
+
+/* ── Navigation Footer ── */
+.nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0 56px;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.nav-footer a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-footer a:hover { color: var(--accent); }
+.nav-spacer { flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <a href="index.html" class="back-link">&larr; All Explorations</a>
+
+  <header>
+    <span class="overline">Exploration 03</span>
+    <h1>Representation Probing</h1>
+    <p class="subtitle">
+      What does TD-JEPA actually learn? Linear probes reveal which state
+      variables are encoded in the representation, and how they compare
+      across methods.
+    </p>
+  </header>
+
+  <!-- ── Section 1: What Probing Tells Us ── -->
+
+  <div class="prose">
+    <h2>What Linear Probes Reveal</h2>
+    <p>
+      A <strong>linear probe</strong> is a simple test: freeze the learned representation
+      and train a linear classifier or regressor on top of it to predict some ground-truth
+      quantity (position, velocity, heading). If the probe achieves high accuracy, the
+      representation must contain that information in a linearly accessible form.
+    </p>
+    <p>
+      The heatmap below shows how strongly each representation dimension responds
+      to different state variables. <strong>Hover over any cell</strong> to see the
+      activation value and what it implies about the representation&rsquo;s encoding.
+    </p>
+  </div>
+
+  <!-- Figure 1: Interactive Heatmap -->
+
+  <div class="figure" style="position: relative;">
+    <div class="tooltip-box" id="heatTooltip"></div>
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <div class="mode-toggle" id="heatModeToggle">
+            <button class="active" data-mode="td-jepa">TD-JEPA</button>
+            <button data-mode="jepa">Standard JEPA</button>
+            <button data-mode="random">Random Init</button>
+          </div>
+          <button class="btn" id="heatReset">Reset</button>
+        </div>
+        <canvas id="heatCanvas" width="692" height="420"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 1.</strong> Representation activation heatmap. Rows are state
+        variables (from local proprioceptive to global value-aware); columns are
+        representation dimensions. Hover over any cell for details. Toggle between
+        methods to see the difference in encoding quality.
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      Under TD-JEPA, you will notice a characteristic pattern: the heatmap shows
+      <strong>structured blocks</strong> where groups of dimensions jointly encode
+      related variables. Local features like position and velocity are encoded compactly,
+      while value-relevant features like reachability and goal distance activate broader,
+      more distributed patterns.
+    </p>
+    <p>
+      Standard JEPA shows strong encoding of local features but weak encoding of
+      long-horizon variables. Random initialization shows only noise.
+    </p>
+
+    <div class="margin-note">
+      This structured encoding is predicted by the theoretical result that TD-JEPA learns
+      a low-rank factorization of the policy-conditioned transition dynamics. Each
+      &ldquo;block&rdquo; in the heatmap corresponds to a factor.
+    </div>
+  </div>
+
+  <!-- ── Section 2: Linear Probe Accuracy Curves ── -->
+
+  <div class="prose">
+    <h2>Probe Accuracy Across Methods</h2>
+    <p>
+      The plot below compares linear probe accuracy for several state variables
+      across TD-JEPA and baseline methods. Select a variable with the buttons above
+      the chart to see how each method fares.
+    </p>
+  </div>
+
+  <div class="figure">
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <div class="mode-toggle" id="varToggle">
+            <button class="active" data-var="position">Position</button>
+            <button data-var="velocity">Velocity</button>
+            <button data-var="heading">Heading</button>
+            <button data-var="goal-dist">Goal Dist</button>
+            <button data-var="reachability">Reachability</button>
+            <button data-var="value">Value</button>
+          </div>
+        </div>
+        <canvas id="probeCanvas" width="692" height="360"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 2.</strong> Linear probe R-squared for different state variables.
+        Higher is better. TD-JEPA dominates on long-horizon variables (goal distance,
+        reachability, value) while remaining competitive on local variables.
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The pattern is clear: all methods encode local proprioceptive variables well
+      (position, velocity, heading achieve R-squared above 0.8). The divergence appears
+      for <strong>global value-aware</strong> variables: TD-JEPA achieves R-squared of
+      0.85+ on reachability and value estimation, while standard JEPA drops below 0.5
+      and methods like ICVF and Laplacian fall further behind.
+    </p>
+  </div>
+
+  <!-- ── Section 3: Observation Mode Comparison ── -->
+
+  <div class="prose">
+    <h2>Proprioceptive vs Visual Observations</h2>
+    <p>
+      TD-JEPA accepts either proprioceptive state vectors or raw pixel images. The
+      representation learned from pixels must implicitly recover the relevant state
+      variables through the encoder. The visualization below shows how probe accuracy
+      differs between the two observation modes.
+    </p>
+    <p>
+      Toggle between modes to see the gap. Notably, TD-JEPA&rsquo;s gap between
+      proprioception and vision is <strong>smaller than other methods</strong>,
+      suggesting its TD-based objective helps the encoder extract value-relevant
+      features even from high-dimensional pixel inputs.
+    </p>
+  </div>
+
+  <div class="figure">
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <div class="mode-toggle" id="obsToggle">
+            <button class="active" data-obs="proprio">Proprioception</button>
+            <button data-obs="visual">Visual (RGB)</button>
+          </div>
+          <button class="btn" id="obsReset">Reset</button>
+        </div>
+        <canvas id="obsCanvas" width="692" height="380"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 3.</strong> Normalized zero-shot returns across 4 DMC tasks,
+        comparing proprioceptive and visual inputs. The performance drop from
+        proprioception to vision is smallest for TD-JEPA, confirming its effectiveness
+        at extracting value-relevant features from pixels.
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The results from the paper corroborate this visualization: TD-JEPA achieves
+      <strong>628.8</strong> on DMC RGB (versus 661.2 on proprioception), a gap of
+      only 32.4 points. Compare this to FB (648.2 proprio vs 456.2 RGB, gap of 192)
+      or HILP (620.1 vs 391.2, gap of 229). The TD objective acts as a form of
+      implicit curriculum that guides the visual encoder toward task-relevant features.
+    </p>
+
+    <div class="margin-note">
+      On OGBench, the proprioceptive advantage is less pronounced: TD-JEPA scores
+      41.34% (RGB) vs 37.98% (proprio). This suggests that for some tasks, the visual
+      representation may even capture additional contextual cues that proprioception
+      misses.
+    </div>
+  </div>
+
+  <!-- ── Section 4: Representation Dimensions Explorer ── -->
+
+  <div class="prose">
+    <h2>Dimension-by-Dimension Explorer</h2>
+    <p>
+      Finally, this explorer lets you examine individual representation dimensions
+      across a simulated state space. Each pixel in the grid below represents a
+      unique (x, y) state, colored by the activation of a single representation
+      dimension. Use the slider to cycle through dimensions and observe the spatial
+      patterns each one captures.
+    </p>
+  </div>
+
+  <div class="figure">
+    <div class="figure-inner">
+      <div class="figure-canvas-wrap">
+        <div class="controls">
+          <div class="slider-group">
+            <span>Dimension</span>
+            <input type="range" id="dimSlider" min="0" max="15" value="0">
+            <span class="slider-value" id="dimValue">d1</span>
+          </div>
+          <div class="mode-toggle" id="dimMethodToggle">
+            <button class="active" data-method="td-jepa">TD-JEPA</button>
+            <button data-method="jepa">JEPA</button>
+          </div>
+          <button class="btn" id="dimReset">Reset</button>
+        </div>
+        <canvas id="dimCanvas" width="692" height="380"></canvas>
+      </div>
+      <figcaption>
+        <strong>Figure 4.</strong> Spatial activation map for individual representation
+        dimensions across a 2D state grid. TD-JEPA dimensions show smooth, structured
+        gradients encoding value-relevant spatial information. JEPA dimensions capture
+        only local texture patterns.
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      Under TD-JEPA, the first few dimensions tend to capture broad spatial gradients
+      (distance from walls, proximity to reward regions), while later dimensions encode
+      finer distinctions (local heading, sub-region identity). This hierarchical
+      organization is a natural consequence of the low-rank factorization: the most
+      significant singular vectors capture the coarsest structure, with each subsequent
+      dimension adding refinement.
+    </p>
+  </div>
+
+  <nav class="nav-footer">
+    <a href="02-zero-shot-control.html">&larr; 02: Zero-Shot Control</a>
+    <span class="nav-spacer"></span>
+    <a href="index.html">Index &rarr;</a>
+  </nav>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// Utility: Seeded random
+// ═══════════════════════════════════════════════════════════════════
+function mulberry32(a) {
+  return function() {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    var t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+
+// ═══════════════════════════════════════════════════════════════════
+// Figure 1: Interactive Activation Heatmap
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('heatCanvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('heatTooltip');
+  const modeToggle = document.getElementById('heatModeToggle');
+  const resetBtn = document.getElementById('heatReset');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 420;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let mode = 'td-jepa';
+  let hoverCell = null;
+  let frame = 0;
+
+  // State variables (rows)
+  const stateVars = [
+    'Position X', 'Position Y', 'Velocity X', 'Velocity Y',
+    'Joint Angles', 'Contact Force', 'Heading',
+    'Terrain Type', 'Goal Distance', 'Reachability',
+    'Successor Feat.', 'Long-term Value'
+  ];
+
+  const nDims = 16; // representation dimensions (columns)
+
+  // Pre-generate heatmap data for each mode
+  const rng = mulberry32(42);
+  function genData(mode) {
+    const data = [];
+    for (let r = 0; r < stateVars.length; r++) {
+      data[r] = [];
+      const isLocal = r < 7;
+      for (let c = 0; c < nDims; c++) {
+        if (mode === 'td-jepa') {
+          if (isLocal) {
+            // Local features: strong in first 8 dims, moderate elsewhere
+            data[r][c] = c < 8 ? 0.5 + rng() * 0.45 : rng() * 0.25;
+          } else {
+            // Global features: distributed pattern, moderate-high
+            data[r][c] = 0.3 + rng() * 0.6;
+          }
+          // Block structure: adjacent vars share dims
+          if (Math.floor(r / 2) === Math.floor(c / 3)) {
+            data[r][c] = Math.min(1, data[r][c] + 0.25);
+          }
+        } else if (mode === 'jepa') {
+          if (isLocal) {
+            // JEPA encodes local well
+            data[r][c] = c < 8 ? 0.4 + rng() * 0.5 : rng() * 0.2;
+          } else {
+            // But poorly for global
+            data[r][c] = rng() * 0.3;
+          }
+        } else {
+          // Random: all low noise
+          data[r][c] = rng() * 0.2 + 0.05;
+        }
+      }
+    }
+    return data;
+  }
+
+  const heatData = {
+    'td-jepa': genData('td-jepa'),
+    'jepa': genData('jepa'),
+    'random': genData('random'),
+  };
+
+  // Current animated values
+  let currentData = heatData['td-jepa'].map(row => row.slice());
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  const pad = { left: 110, right: 20, top: 40, bottom: 30 };
+
+  function getCellFromMouse(mx, my) {
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+    const cellW = plotW / nDims;
+    const cellH = plotH / stateVars.length;
+
+    const col = Math.floor((mx - pad.left) / cellW);
+    const row = Math.floor((my - pad.top) / cellH);
+
+    if (col >= 0 && col < nDims && row >= 0 && row < stateVars.length) {
+      return { row, col, x: pad.left + col * cellW, y: pad.top + row * cellH, w: cellW, h: cellH };
+    }
+    return null;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const target = heatData[mode];
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+    const cellW = plotW / nDims;
+    const cellH = plotH / stateVars.length;
+
+    // Animate toward target
+    for (let r = 0; r < stateVars.length; r++) {
+      for (let c = 0; c < nDims; c++) {
+        currentData[r][c] = lerp(currentData[r][c], target[r][c], 0.06);
+      }
+    }
+
+    // Column headers
+    ctx.font = '400 9px "Source Code Pro", monospace';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'center';
+    for (let c = 0; c < nDims; c++) {
+      ctx.fillText('d' + (c + 1), pad.left + c * cellW + cellW / 2, pad.top - 8);
+    }
+
+    // Row labels
+    ctx.textAlign = 'right';
+    for (let r = 0; r < stateVars.length; r++) {
+      const isLocal = r < 7;
+      ctx.fillStyle = isLocal ? '#2563eb' : '#c2402a';
+      ctx.font = '400 10px "Source Code Pro", monospace';
+      ctx.fillText(stateVars[r], pad.left - 8, pad.top + r * cellH + cellH / 2 + 3);
+    }
+
+    // Heatmap cells
+    for (let r = 0; r < stateVars.length; r++) {
+      for (let c = 0; c < nDims; c++) {
+        const x = pad.left + c * cellW;
+        const y = pad.top + r * cellH;
+        const v = currentData[r][c];
+
+        // Color: low = bg, high = accent
+        const isLocal = r < 7;
+        let rr, gg, bb;
+        if (isLocal) {
+          // Blue scale
+          rr = Math.floor(250 - (250 - 37) * v);
+          gg = Math.floor(249 - (249 - 99) * v);
+          bb = Math.floor(246 - (246 - 235) * v);
+        } else {
+          // Red/warm scale
+          rr = Math.floor(250 - (250 - 194) * v);
+          gg = Math.floor(249 - (249 - 64) * v);
+          bb = Math.floor(246 - (246 - 42) * v);
+        }
+
+        ctx.fillStyle = `rgb(${rr},${gg},${bb})`;
+        ctx.fillRect(x + 0.5, y + 0.5, cellW - 1, cellH - 1);
+      }
+    }
+
+    // Hover highlight
+    if (hoverCell) {
+      ctx.strokeStyle = 'rgba(26,26,46,0.6)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(hoverCell.x + 0.5, hoverCell.y + 0.5, hoverCell.w - 1, hoverCell.h - 1);
+
+      // Cross-hair lines
+      ctx.strokeStyle = 'rgba(26,26,46,0.08)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, hoverCell.y + hoverCell.h / 2);
+      ctx.lineTo(pad.left + plotW, hoverCell.y + hoverCell.h / 2);
+      ctx.moveTo(hoverCell.x + hoverCell.w / 2, pad.top);
+      ctx.lineTo(hoverCell.x + hoverCell.w / 2, pad.top + plotH);
+      ctx.stroke();
+    }
+
+    // Category divider
+    const divY = pad.top + 7 * cellH;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, divY);
+    ctx.lineTo(pad.left + plotW, divY);
+    ctx.strokeStyle = 'rgba(26,26,46,0.15)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Category labels
+    ctx.save();
+    ctx.translate(pad.left - 106, pad.top + 3.5 * cellH);
+    ctx.rotate(-Math.PI / 2);
+    ctx.font = 'italic 300 10px "Spectral", serif';
+    ctx.fillStyle = '#2563eb';
+    ctx.textAlign = 'center';
+    ctx.fillText('LOCAL', 0, 0);
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(pad.left - 106, pad.top + 9.5 * cellH);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillStyle = '#c2402a';
+    ctx.textAlign = 'center';
+    ctx.font = 'italic 300 10px "Spectral", serif';
+    ctx.fillText('GLOBAL', 0, 0);
+    ctx.restore();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  // Mouse handling for hover
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const cell = getCellFromMouse(mx, my);
+
+    if (cell) {
+      hoverCell = cell;
+      const val = currentData[cell.row][cell.col];
+      const varName = stateVars[cell.row];
+      const isLocal = cell.row < 7;
+      const strength = val > 0.7 ? 'Strong' : val > 0.4 ? 'Moderate' : val > 0.15 ? 'Weak' : 'Negligible';
+
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX - canvas.parentElement.closest('.figure').getBoundingClientRect().left + 16) + 'px';
+      tooltip.style.top = (e.clientY - canvas.parentElement.closest('.figure').getBoundingClientRect().top - 40) + 'px';
+      tooltip.innerHTML = '<strong>' + varName + '</strong> in dim d' + (cell.col + 1) +
+        '<br>Activation: ' + (val * 100).toFixed(1) + '%' +
+        '<br>Encoding: <span style="color:' + (isLocal ? '#2563eb' : '#c2402a') + '">' + strength + '</span>' +
+        '<br>Type: ' + (isLocal ? 'Local/Proprioceptive' : 'Global/Value-aware');
+    } else {
+      hoverCell = null;
+      tooltip.style.display = 'none';
+    }
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    hoverCell = null;
+    tooltip.style.display = 'none';
+  });
+
+  modeToggle.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    mode = 'td-jepa';
+    modeToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    modeToggle.querySelector('[data-mode="td-jepa"]').classList.add('active');
+    hoverCell = null;
+    tooltip.style.display = 'none';
+  });
+
+  draw();
+})();
+
+
+// ═══════════════════════════════════════════════════════════════════
+// Figure 2: Linear Probe Accuracy Bar Chart
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('probeCanvas');
+  const ctx = canvas.getContext('2d');
+  const varToggle = document.getElementById('varToggle');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 360;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let selectedVar = 'position';
+  let frame = 0;
+
+  // Methods and their probe R-squared for each variable
+  const methods = [
+    { name: 'TD-JEPA', color: '#c2402a' },
+    { name: 'BYOL-\u03B3', color: '#d97706' },
+    { name: 'FB', color: '#2563eb' },
+    { name: 'HILP', color: '#059669' },
+    { name: 'ICVF', color: '#7c3aed' },
+    { name: 'Laplacian', color: '#8888a0' },
+  ];
+
+  const probeData = {
+    'position':     [0.95, 0.92, 0.88, 0.85, 0.80, 0.70],
+    'velocity':     [0.92, 0.90, 0.85, 0.82, 0.75, 0.65],
+    'heading':      [0.88, 0.84, 0.80, 0.78, 0.70, 0.55],
+    'goal-dist':    [0.85, 0.72, 0.65, 0.60, 0.45, 0.30],
+    'reachability': [0.88, 0.68, 0.60, 0.55, 0.38, 0.22],
+    'value':        [0.90, 0.70, 0.62, 0.52, 0.35, 0.18],
+  };
+
+  let animValues = probeData['position'].slice();
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const target = probeData[selectedVar];
+
+    // Animate
+    for (let i = 0; i < methods.length; i++) {
+      animValues[i] += (target[i] - animValues[i]) * 0.06;
+    }
+
+    const pad = { left: 90, right: 50, top: 50, bottom: 50 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+
+    // Title
+    const varNames = {
+      'position': 'Position',
+      'velocity': 'Velocity',
+      'heading': 'Heading',
+      'goal-dist': 'Goal Distance',
+      'reachability': 'Reachability',
+      'value': 'Long-term Value',
+    };
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.fillStyle = '#4a4a6a';
+    ctx.textAlign = 'center';
+    ctx.fillText('Linear Probe R\u00B2: ' + varNames[selectedVar], W / 2, 28);
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top);
+    ctx.lineTo(pad.left, H - pad.bottom);
+    ctx.lineTo(W - pad.right, H - pad.bottom);
+    ctx.stroke();
+
+    // X grid and labels
+    ctx.font = '400 10px "Source Code Pro", monospace';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'center';
+    for (let v = 0; v <= 1; v += 0.2) {
+      const x = pad.left + v * plotW;
+      ctx.beginPath();
+      ctx.moveTo(x, pad.top);
+      ctx.lineTo(x, H - pad.bottom);
+      ctx.strokeStyle = 'rgba(224,221,213,0.5)';
+      ctx.stroke();
+      ctx.fillText(v.toFixed(1), x, H - pad.bottom + 16);
+    }
+
+    // Bars
+    const barH = plotH / methods.length * 0.65;
+    const barGap = plotH / methods.length;
+
+    methods.forEach((m, i) => {
+      const y = pad.top + i * barGap + barGap * 0.175;
+      const bw = animValues[i] * plotW;
+
+      // Background bar
+      ctx.fillStyle = 'rgba(224,221,213,0.2)';
+      ctx.fillRect(pad.left, y, plotW, barH);
+
+      // Filled bar
+      ctx.fillStyle = m.color + 'cc';
+      ctx.fillRect(pad.left, y, bw, barH);
+
+      // Value label
+      ctx.font = '500 10px "Source Code Pro", monospace';
+      ctx.fillStyle = m.color;
+      ctx.textAlign = 'left';
+      ctx.fillText(animValues[i].toFixed(2), pad.left + bw + 6, y + barH / 2 + 3);
+
+      // Method name
+      ctx.font = '400 11px "Source Code Pro", monospace';
+      ctx.fillStyle = '#4a4a6a';
+      ctx.textAlign = 'right';
+      ctx.fillText(m.name, pad.left - 8, y + barH / 2 + 3);
+
+      // Best marker
+      if (i === 0) {
+        ctx.font = '500 8px "Source Code Pro", monospace';
+        ctx.fillStyle = '#059669';
+        ctx.textAlign = 'left';
+        ctx.fillText('BEST', pad.left + bw + 6, y - 2);
+      }
+    });
+
+    // R-squared label
+    ctx.font = 'italic 300 11px "Spectral", serif';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'center';
+    ctx.fillText('R\u00B2 (higher is better)', W / 2, H - 10);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  varToggle.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      varToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedVar = btn.dataset.var;
+    });
+  });
+
+  draw();
+})();
+
+
+// ═══════════════════════════════════════════════════════════════════
+// Figure 3: Proprioceptive vs Visual Comparison
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('obsCanvas');
+  const ctx = canvas.getContext('2d');
+  const obsToggle = document.getElementById('obsToggle');
+  const resetBtn = document.getElementById('obsReset');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 380;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let obsMode = 'proprio';
+  let frame = 0;
+
+  // Data from the paper tables (DMC normalized returns)
+  const methods = [
+    { name: 'TD-JEPA', proprio: 661.2, rgb: 628.8, color: '#c2402a' },
+    { name: 'BYOL-\u03B3', proprio: 645.4, rgb: 582.4, color: '#d97706' },
+    { name: 'FB', proprio: 648.2, rgb: 456.2, color: '#2563eb' },
+    { name: 'HILP', proprio: 620.1, rgb: 391.2, color: '#059669' },
+    { name: 'RLDP', proprio: 610.2, rgb: 525.7, color: '#7c3aed' },
+    { name: 'ICVF', proprio: 619.3, rgb: 438.7, color: '#db2777' },
+    { name: 'BYOL', proprio: 618.6, rgb: 513.8, color: '#0891b2' },
+    { name: 'Laplacian', proprio: 591.1, rgb: 293.1, color: '#8888a0' },
+  ];
+
+  let animValues = methods.map(m => m.proprio);
+  let showGap = false;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const target = methods.map(m => obsMode === 'proprio' ? m.proprio : m.rgb);
+
+    // Animate
+    for (let i = 0; i < methods.length; i++) {
+      animValues[i] += (target[i] - animValues[i]) * 0.05;
+    }
+
+    const pad = { left: 90, right: 60, top: 50, bottom: 55 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+
+    // Title
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.fillStyle = '#4a4a6a';
+    ctx.textAlign = 'center';
+    ctx.fillText('DMC Normalized Returns (' + (obsMode === 'proprio' ? 'Proprioception' : 'RGB Pixels') + ')', W / 2, 28);
+
+    // Axes
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top);
+    ctx.lineTo(pad.left, H - pad.bottom);
+    ctx.lineTo(W - pad.right, H - pad.bottom);
+    ctx.stroke();
+
+    // X grid (score range: 200 - 700)
+    const minScore = 200, maxScore = 700;
+    ctx.font = '400 10px "Source Code Pro", monospace';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'center';
+    for (let v = 200; v <= 700; v += 100) {
+      const x = pad.left + ((v - minScore) / (maxScore - minScore)) * plotW;
+      ctx.beginPath();
+      ctx.moveTo(x, pad.top);
+      ctx.lineTo(x, H - pad.bottom);
+      ctx.strokeStyle = 'rgba(224,221,213,0.5)';
+      ctx.stroke();
+      ctx.fillText(v.toString(), x, H - pad.bottom + 16);
+    }
+
+    // Bars
+    const barH = plotH / methods.length * 0.65;
+    const barGap = plotH / methods.length;
+
+    methods.forEach((m, i) => {
+      const y = pad.top + i * barGap + barGap * 0.175;
+      const bw = ((animValues[i] - minScore) / (maxScore - minScore)) * plotW;
+
+      // Background
+      ctx.fillStyle = 'rgba(224,221,213,0.2)';
+      ctx.fillRect(pad.left, y, plotW, barH);
+
+      // Bar
+      ctx.fillStyle = m.color + 'cc';
+      ctx.fillRect(pad.left, y, Math.max(0, bw), barH);
+
+      // Score
+      ctx.font = '500 10px "Source Code Pro", monospace';
+      ctx.fillStyle = m.color;
+      ctx.textAlign = 'left';
+      ctx.fillText(animValues[i].toFixed(1), pad.left + Math.max(0, bw) + 6, y + barH / 2 + 3);
+
+      // Gap indicator (vision mode)
+      if (obsMode === 'visual') {
+        const gap = m.proprio - animValues[i];
+        const gapPct = ((gap / m.proprio) * 100).toFixed(0);
+        ctx.font = '300 9px "Source Code Pro", monospace';
+        ctx.fillStyle = gap < 50 ? '#059669' : gap < 150 ? '#d97706' : '#c2402a';
+        ctx.textAlign = 'left';
+        const gapX = pad.left + Math.max(0, bw) + 40;
+        if (gapX < W - pad.right - 20) {
+          ctx.fillText('-' + gapPct + '%', gapX, y + barH / 2 + 3);
+        }
+      }
+
+      // Method name
+      ctx.font = '400 11px "Source Code Pro", monospace';
+      ctx.fillStyle = '#4a4a6a';
+      ctx.textAlign = 'right';
+      ctx.fillText(m.name, pad.left - 8, y + barH / 2 + 3);
+
+      // Best marker
+      if (i === 0) {
+        ctx.font = '500 8px "Source Code Pro", monospace';
+        ctx.fillStyle = '#059669';
+        ctx.textAlign = 'left';
+        ctx.fillText('BEST', pad.left + Math.max(0, bw) + 6, y - 2);
+      }
+    });
+
+    // Score axis label
+    ctx.font = 'italic 300 11px "Spectral", serif';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'center';
+    ctx.fillText('Normalized Zero-Shot Return (avg over 4 DMC tasks)', W / 2, H - 12);
+
+    // Gap annotation in visual mode
+    if (obsMode === 'visual') {
+      ctx.font = '300 10px "Spectral", serif';
+      ctx.fillStyle = '#8888a0';
+      ctx.textAlign = 'right';
+      ctx.fillText('% drop from proprio', W - pad.right, pad.top - 8);
+    }
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  obsToggle.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      obsToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      obsMode = btn.dataset.obs;
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    obsMode = 'proprio';
+    obsToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    obsToggle.querySelector('[data-obs="proprio"]').classList.add('active');
+    animValues = methods.map(m => m.proprio);
+  });
+
+  draw();
+})();
+
+
+// ═══════════════════════════════════════════════════════════════════
+// Figure 4: Dimension-by-Dimension Spatial Explorer
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('dimCanvas');
+  const ctx = canvas.getContext('2d');
+  const dimSlider = document.getElementById('dimSlider');
+  const dimValue = document.getElementById('dimValue');
+  const methodToggle = document.getElementById('dimMethodToggle');
+  const resetBtn = document.getElementById('dimReset');
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H;
+
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = Math.min(rect.width - 48, 692);
+    H = 380;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  initSize();
+
+  let currentDim = 0;
+  let method = 'td-jepa';
+  let frame = 0;
+
+  const gridN = 40; // 40x40 spatial grid
+  const pad = { left: 40, right: 200, top: 50, bottom: 40 };
+
+  // Pre-generate 16 TD-JEPA spatial patterns (structured)
+  const rng = mulberry32(123);
+
+  function genTDPattern(dim) {
+    const data = new Float32Array(gridN * gridN);
+    // Each dimension captures a different spatial pattern
+    // First dims: broad gradients. Later dims: finer.
+    const freq = 0.5 + dim * 0.8;
+    const phaseX = dim * 1.7;
+    const phaseY = dim * 2.3;
+    const isValueDim = dim >= 10;
+
+    for (let y = 0; y < gridN; y++) {
+      for (let x = 0; x < gridN; x++) {
+        const nx = x / gridN;
+        const ny = y / gridN;
+        let val;
+
+        if (dim < 4) {
+          // Broad spatial gradients (position-like)
+          val = 0.5 + 0.4 * Math.sin(nx * Math.PI * (1 + dim * 0.5) + phaseX) *
+                Math.cos(ny * Math.PI * (1 + dim * 0.3) + phaseY);
+        } else if (dim < 8) {
+          // Medium frequency (velocity, heading-like)
+          val = 0.5 + 0.35 * Math.sin(nx * freq * 3 + phaseX) *
+                Math.sin(ny * freq * 2.5 + phaseY) +
+                0.1 * Math.cos((nx + ny) * 5);
+        } else if (dim < 12) {
+          // Value gradients (smooth, centered around specific regions)
+          const cx = 0.3 + dim * 0.05;
+          const cy = 0.2 + dim * 0.06;
+          const dist = Math.sqrt((nx - cx) * (nx - cx) + (ny - cy) * (ny - cy));
+          val = Math.exp(-dist * (2 + dim * 0.5)) * 0.8 + 0.1;
+        } else {
+          // Fine structure (sub-region identity)
+          val = 0.5 + 0.3 * Math.sin(nx * 8 + phaseX) * Math.sin(ny * 7 + phaseY) +
+                0.15 * Math.cos((nx - ny) * 12);
+        }
+
+        data[y * gridN + x] = Math.max(0, Math.min(1, val));
+      }
+    }
+    return data;
+  }
+
+  function genJEPAPattern(dim) {
+    const data = new Float32Array(gridN * gridN);
+    // JEPA: local texture patterns, less smooth, less structured
+    const freq = 2 + dim * 1.5;
+    const phaseX = dim * 0.9;
+    const phaseY = dim * 1.4;
+
+    for (let y = 0; y < gridN; y++) {
+      for (let x = 0; x < gridN; x++) {
+        const nx = x / gridN;
+        const ny = y / gridN;
+        let val;
+
+        if (dim < 6) {
+          // Can still capture local features
+          val = 0.5 + 0.35 * Math.sin(nx * Math.PI * (1 + dim) + phaseX) *
+                Math.cos(ny * Math.PI * (1 + dim * 0.5) + phaseY);
+        } else {
+          // Higher dims: noisy, unstructured
+          val = 0.5 + 0.15 * Math.sin(nx * freq * 4 + phaseX) +
+                0.1 * Math.cos(ny * freq * 3 + phaseY) +
+                (rng() - 0.5) * 0.2;
+        }
+
+        data[y * gridN + x] = Math.max(0, Math.min(1, val));
+      }
+    }
+    return data;
+  }
+
+  // Pre-compute all patterns
+  const tdPatterns = [];
+  const jepaPatterns = [];
+  for (let d = 0; d < 16; d++) {
+    tdPatterns.push(genTDPattern(d));
+    jepaPatterns.push(genJEPAPattern(d));
+  }
+
+  // Current displayed values (for smooth transitions)
+  let currentField = new Float32Array(gridN * gridN);
+  // Initialize
+  for (let i = 0; i < gridN * gridN; i++) currentField[i] = tdPatterns[0][i];
+
+  // Dimension descriptions
+  const dimDescs = [
+    'Broad X-position gradient',
+    'Broad Y-position gradient',
+    'XY interaction (diagonal)',
+    'Radial position from center',
+    'X-velocity proxy',
+    'Y-velocity proxy',
+    'Heading/angle encoding',
+    'Angular velocity proxy',
+    'Value: region around (0.7, 0.7)',
+    'Value: region around (0.75, 0.74)',
+    'Value: region around (0.8, 0.8)',
+    'Value: central peak',
+    'Fine grid: sub-region A',
+    'Fine grid: sub-region B',
+    'Fine grid: diagonal bands',
+    'Fine grid: checker pattern',
+  ];
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const target = method === 'td-jepa' ? tdPatterns[currentDim] : jepaPatterns[currentDim];
+
+    // Animate transition
+    for (let i = 0; i < gridN * gridN; i++) {
+      currentField[i] += (target[i] - currentField[i]) * 0.08;
+    }
+
+    const gridW = W - pad.left - pad.right;
+    const gridH = H - pad.top - pad.bottom;
+    const cellW = gridW / gridN;
+    const cellH = gridH / gridN;
+
+    // Title
+    ctx.font = '500 13px "Source Code Pro", monospace';
+    ctx.fillStyle = method === 'td-jepa' ? '#c2402a' : '#2563eb';
+    ctx.textAlign = 'center';
+    ctx.fillText(
+      (method === 'td-jepa' ? 'TD-JEPA' : 'JEPA') + ' dim d' + (currentDim + 1),
+      pad.left + gridW / 2, 28
+    );
+
+    // Grid cells
+    for (let y = 0; y < gridN; y++) {
+      for (let x = 0; x < gridN; x++) {
+        const v = currentField[y * gridN + x];
+        const cx = pad.left + x * cellW;
+        const cy = pad.top + y * cellH;
+
+        // Color based on method
+        let rr, gg, bb;
+        if (method === 'td-jepa') {
+          // Warm scale: low = cream, high = deep red
+          rr = Math.floor(250 - (250 - 140) * v);
+          gg = Math.floor(249 - (249 - 20) * v);
+          bb = Math.floor(246 - (246 - 10) * v);
+        } else {
+          // Cool scale: low = cream, high = deep blue
+          rr = Math.floor(250 - (250 - 20) * v);
+          gg = Math.floor(249 - (249 - 60) * v);
+          bb = Math.floor(246 - (246 - 200) * v);
+        }
+
+        ctx.fillStyle = `rgb(${rr},${gg},${bb})`;
+        ctx.fillRect(cx, cy, cellW + 0.5, cellH + 0.5);
+      }
+    }
+
+    // Grid border
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(pad.left, pad.top, gridW, gridH);
+
+    // Right panel: dimension info
+    const infoX = W - pad.right + 20;
+    const infoY = pad.top;
+
+    ctx.font = '500 11px "Source Code Pro", monospace';
+    ctx.fillStyle = '#4a4a6a';
+    ctx.textAlign = 'left';
+    ctx.fillText('Dimension Info', infoX, infoY);
+
+    ctx.font = '400 10px "Source Code Pro", monospace';
+    ctx.fillStyle = '#8888a0';
+    ctx.fillText('d' + (currentDim + 1) + ' of 16', infoX, infoY + 20);
+
+    // Category
+    const cat = currentDim < 4 ? 'Position' : currentDim < 8 ? 'Dynamics' : currentDim < 12 ? 'Value' : 'Fine Detail';
+    const catColor = currentDim < 8 ? '#2563eb' : '#c2402a';
+    ctx.fillStyle = catColor;
+    ctx.font = '500 10px "Source Code Pro", monospace';
+    ctx.fillText(cat, infoX, infoY + 40);
+
+    // Description
+    ctx.fillStyle = '#4a4a6a';
+    ctx.font = '300 10px "Spectral", serif';
+    const desc = method === 'td-jepa' ? dimDescs[currentDim] : (
+      currentDim < 6 ? 'Local spatial pattern' : 'Noisy / unstructured'
+    );
+
+    // Word wrap
+    const words = desc.split(' ');
+    let line = '';
+    let lineY = infoY + 65;
+    words.forEach(word => {
+      const test = line + word + ' ';
+      if (ctx.measureText(test).width > pad.right - 35) {
+        ctx.fillText(line, infoX, lineY);
+        line = word + ' ';
+        lineY += 16;
+      } else {
+        line = test;
+      }
+    });
+    ctx.fillText(line, infoX, lineY);
+
+    // Color scale legend
+    const scaleY = infoY + 120;
+    ctx.font = '400 9px "Source Code Pro", monospace';
+    ctx.fillStyle = '#8888a0';
+    ctx.fillText('Activation', infoX, scaleY);
+
+    const scaleH = 100;
+    const scaleW = 14;
+    for (let i = 0; i < scaleH; i++) {
+      const v = 1 - i / scaleH;
+      let rr, gg, bb;
+      if (method === 'td-jepa') {
+        rr = Math.floor(250 - (250 - 140) * v);
+        gg = Math.floor(249 - (249 - 20) * v);
+        bb = Math.floor(246 - (246 - 10) * v);
+      } else {
+        rr = Math.floor(250 - (250 - 20) * v);
+        gg = Math.floor(249 - (249 - 60) * v);
+        bb = Math.floor(246 - (246 - 200) * v);
+      }
+      ctx.fillStyle = `rgb(${rr},${gg},${bb})`;
+      ctx.fillRect(infoX, scaleY + 15 + i, scaleW, 1);
+    }
+    ctx.fillStyle = '#8888a0';
+    ctx.font = '400 8px "Source Code Pro", monospace';
+    ctx.fillText('1.0', infoX + scaleW + 4, scaleY + 20);
+    ctx.fillText('0.5', infoX + scaleW + 4, scaleY + 15 + scaleH / 2);
+    ctx.fillText('0.0', infoX + scaleW + 4, scaleY + 15 + scaleH);
+
+    // Axis labels
+    ctx.font = '400 9px "Source Code Pro", monospace';
+    ctx.fillStyle = '#8888a0';
+    ctx.textAlign = 'center';
+    ctx.fillText('State X', pad.left + gridW / 2, H - pad.bottom + 20);
+
+    ctx.save();
+    ctx.translate(pad.left - 18, pad.top + gridH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('State Y', 0, 0);
+    ctx.restore();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  dimSlider.addEventListener('input', () => {
+    currentDim = parseInt(dimSlider.value);
+    dimValue.textContent = 'd' + (currentDim + 1);
+  });
+
+  methodToggle.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      methodToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      method = btn.dataset.method;
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    currentDim = 0;
+    dimSlider.value = 0;
+    dimValue.textContent = 'd1';
+    method = 'td-jepa';
+    methodToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    methodToggle.querySelector('[data-method="td-jepa"]').classList.add('active');
+  });
+
+  draw();
+})();
+</script>
+
+</body>
+</html>

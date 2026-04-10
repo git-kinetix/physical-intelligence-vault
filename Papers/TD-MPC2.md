@@ -17,6 +17,8 @@ aliases: [TD-MPC2, TDMPC2]
 
 !PDFs/TD-MPC2.pdf
 
+> **Interactive Explainer:** [TD-MPC2 — MPPI planning, SimNorm, multi-task scaling](https://dxlrak3ky5x8b.cloudfront.net/Explainers/td-mpc2/index.html)
+
 # TD-MPC2: Scalable, Robust World Models for Continuous Control
 
 ## Summary

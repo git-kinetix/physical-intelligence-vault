@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 &mdash; Model Predictive Control &mdash; TD-MPC2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+/* ── Design Tokens ── */
+:root {
+  --bg: #faf9f6;
+  --bg-alt: #f3f0eb;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent: #c2402a;
+  --accent-hover: #a03520;
+  --blue: #2563eb;
+  --green: #059669;
+  --orange: #d97706;
+  --border: #e0ddd5;
+  --card-shadow: 0 2px 8px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Spectral', Georgia, serif;
+  --font-mono: 'Source Code Pro', 'Menlo', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+.prose { margin-bottom: 40px; }
+.prose p { margin-bottom: 18px; color: var(--text-secondary); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 500; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+/* ── Figure Wrapper ── */
+.figure-wrapper {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 32px 0 40px;
+  box-shadow: var(--card-shadow);
+}
+
+.figure-canvas-wrap {
+  position: relative;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.figure-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+}
+
+.figure-controls {
+  padding: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.control-group input[type="range"] {
+  width: 100px;
+  accent-color: var(--accent);
+}
+
+.control-group .val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  min-width: 28px;
+  text-align: right;
+}
+
+button.btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button.btn:hover { background: var(--accent-hover); }
+
+button.btn-outline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+button.btn-outline:hover { color: var(--accent); border-color: var(--accent); }
+
+.figure-caption {
+  padding: 12px 24px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Equation Block ── */
+.equation-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 28px;
+  margin: 24px 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+}
+.equation-block .var { color: var(--accent); }
+
+/* ── Status bar ── */
+.status-bar {
+  padding: 8px 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: white;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 20px;
+}
+.status-bar .val { color: var(--accent); }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0 56px;
+  margin-top: 72px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+footer a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Scroll Reveal ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="article">
+
+  <a href="index.html" class="back-link">&larr; TD-MPC2 Explorations</a>
+
+  <header>
+    <span class="overline">Exploration 01</span>
+    <h1>Model Predictive Control<br>via MPPI Planning</h1>
+    <p class="subtitle">
+      TD-MPC2 plans by sampling action sequences, rolling them out through a learned
+      world model, and iteratively refining toward high-reward trajectories. This is
+      Model Predictive Path Integral (MPPI) control.
+    </p>
+  </header>
+
+  <!-- ── Section 1: Overview ── -->
+  <div class="prose fade-in">
+    <p>
+      Unlike model-free RL agents that act from a fixed policy, TD-MPC2 <strong>plans at
+      inference time</strong>. Given the current state, the planner imagines many possible
+      futures by rolling action sequences through its learned latent dynamics model. It then
+      selects the action sequence most likely to maximize cumulative reward.
+    </p>
+    <p>
+      This approach is called <strong>Model Predictive Path Integral</strong> (MPPI) control.
+      The key parameters are the number of sampled trajectories (512 in the paper), the planning
+      horizon (H = 3 steps), and the temperature that controls how aggressively the planner
+      concentrates on the best trajectories.
+    </p>
+  </div>
+
+  <div class="margin-note fade-in">
+    The policy prior guides initial sampling, reducing the number of samples needed. Without it,
+    MPPI would require far more trajectories to find good actions from scratch.
+  </div>
+
+  <!-- ── Figure 1: Main MPPI visualization ── -->
+  <h2 class="fade-in">Interactive MPPI Planner</h2>
+  <div class="prose fade-in">
+    <p>
+      The agent (blue circle) must reach the goal (green circle) while avoiding obstacles
+      (dark regions). Use the sliders to adjust how the planner works. Click
+      <strong>Step</strong> to advance one planning cycle, or <strong>Auto</strong> to watch
+      continuous execution.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="mppi-canvas" width="1400" height="900"></canvas>
+    </div>
+    <div class="figure-controls">
+      <div class="control-group">
+        <label>Samples</label>
+        <input type="range" id="ctrl-samples" min="8" max="256" value="64" step="8">
+        <span class="val" id="val-samples">64</span>
+      </div>
+      <div class="control-group">
+        <label>Horizon</label>
+        <input type="range" id="ctrl-horizon" min="2" max="12" value="5" step="1">
+        <span class="val" id="val-horizon">5</span>
+      </div>
+      <div class="control-group">
+        <label>Temperature</label>
+        <input type="range" id="ctrl-temp" min="1" max="100" value="20">
+        <span class="val" id="val-temp">0.20</span>
+      </div>
+      <button class="btn" id="btn-step">Step</button>
+      <button class="btn" id="btn-auto">Auto</button>
+      <button class="btn-outline" id="btn-reset">Reset</button>
+    </div>
+    <div class="status-bar" id="status-bar">
+      <span>Iteration: <span class="val" id="stat-iter">0</span></span>
+      <span>Best reward: <span class="val" id="stat-reward">--</span></span>
+      <span>Distance to goal: <span class="val" id="stat-dist">--</span></span>
+    </div>
+  </div>
+
+  <!-- ── Section 2: Iteration Refinement ── -->
+  <h2 class="fade-in">Iterative Refinement</h2>
+  <div class="prose fade-in">
+    <p>
+      MPPI does not simply pick the best sample. Instead, it refines the sampling distribution
+      across <strong>multiple iterations</strong>. After evaluating all trajectories, it computes
+      a weighted mean (with temperature-controlled softmax weighting), then resamples around
+      this new mean. Watch the trajectories converge below.
+    </p>
+  </div>
+
+  <div class="equation-block fade-in">
+    <span class="var">w</span><sub>i</sub> = softmax(&minus;<span class="var">J</span><sub>i</sub> / <span class="var">&lambda;</span>)
+    &emsp;&emsp;
+    <span class="var">&mu;</span> &larr; &sum; <span class="var">w</span><sub>i</sub> <span class="var">a</span><sub>i</sub>
+  </div>
+
+  <!-- ── Figure 2: Iteration convergence ── -->
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="iter-canvas" width="1400" height="600"></canvas>
+    </div>
+    <div class="figure-controls">
+      <div class="control-group">
+        <label>Iterations</label>
+        <input type="range" id="ctrl-iters" min="1" max="8" value="1" step="1">
+        <span class="val" id="val-iters">1</span>
+      </div>
+      <button class="btn" id="btn-animate-iters">Animate</button>
+      <button class="btn-outline" id="btn-reset-iters">Reset</button>
+    </div>
+    <div class="figure-caption">
+      Drag the iteration slider to see how trajectories converge. After 6+ iterations,
+      nearly all samples cluster around the optimal path.
+    </div>
+  </div>
+
+  <!-- ── Section 3: Policy Prior ── -->
+  <h2 class="fade-in">The Role of the Policy Prior</h2>
+  <div class="prose fade-in">
+    <p>
+      In TD-MPC2, the planner does not sample from a uniform distribution. Instead,
+      initial action samples are drawn from the <strong>learned policy prior</strong> &mdash;
+      a stochastic policy trained to approximate the planner's output. This dramatically
+      improves sample efficiency: the policy provides a warm start, and MPPI only needs to
+      refine locally.
+    </p>
+    <p>
+      The ablation results from the paper confirm this synergy: planning alone scores ~53.7
+      on the 80-task benchmark, policy alone ~48, but <strong>planning + policy together
+      reach ~54.2</strong>. The policy prior also enables fast action selection when compute
+      is limited.
+    </p>
+  </div>
+
+  <div class="margin-note fade-in">
+    At test time, TD-MPC2 executes only the first action of the best trajectory,
+    then replans from the next observed state. This is the "receding horizon" principle
+    of model predictive control.
+  </div>
+
+  <!-- ── Figure 3: Planning pipeline diagram ── -->
+  <h2 class="fade-in">The Planning Pipeline</h2>
+  <div class="prose fade-in">
+    <p>
+      Below is a step-by-step view of one MPPI planning cycle. The pipeline samples from the
+      policy prior, rolls out through latent dynamics, scores with the Q-function, and
+      computes the weighted mean to refine the action distribution.
+    </p>
+  </div>
+
+  <div class="figure-wrapper fade-in">
+    <div class="figure-canvas-wrap">
+      <canvas id="pipeline-canvas" width="1400" height="500"></canvas>
+    </div>
+    <div class="figure-controls">
+      <button class="btn" id="btn-pipeline-step">Next Stage</button>
+      <button class="btn-outline" id="btn-pipeline-reset">Reset</button>
+      <span class="control-group">
+        <label>Stage</label>
+        <span class="val" id="val-pipeline-stage">1 / 5</span>
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="index.html">All Explorations</a> &ensp;&middot;&ensp;
+  <a href="02-simnorm.html">Next: SimNorm &rarr;</a>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// FIGURE 1: Interactive MPPI Planner
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('mppi-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.643) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.643) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  // Controls
+  const ctrlSamples = document.getElementById('ctrl-samples');
+  const ctrlHorizon = document.getElementById('ctrl-horizon');
+  const ctrlTemp = document.getElementById('ctrl-temp');
+  const valSamples = document.getElementById('val-samples');
+  const valHorizon = document.getElementById('val-horizon');
+  const valTemp = document.getElementById('val-temp');
+  const statIter = document.getElementById('stat-iter');
+  const statReward = document.getElementById('stat-reward');
+  const statDist = document.getElementById('stat-dist');
+
+  ctrlSamples.oninput = () => { valSamples.textContent = ctrlSamples.value; };
+  ctrlHorizon.oninput = () => { valHorizon.textContent = ctrlHorizon.value; };
+  ctrlTemp.oninput = () => { valTemp.textContent = (ctrlTemp.value / 100).toFixed(2); };
+
+  // Environment
+  const obstacles = [
+    { x: 0.35, y: 0.30, r: 0.08 },
+    { x: 0.55, y: 0.60, r: 0.10 },
+    { x: 0.25, y: 0.65, r: 0.07 },
+    { x: 0.70, y: 0.35, r: 0.06 },
+    { x: 0.48, y: 0.42, r: 0.05 },
+  ];
+
+  let agent = { x: 0.12, y: 0.50 };
+  const goal = { x: 0.88, y: 0.50 };
+  let iterCount = 0;
+  let trajectories = [];
+  let bestTrajectory = null;
+  let autoRunning = false;
+  let animFrame = 0;
+  let trailPoints = [];
+
+  function resetState() {
+    agent = { x: 0.12, y: 0.50 };
+    iterCount = 0;
+    trajectories = [];
+    bestTrajectory = null;
+    autoRunning = false;
+    trailPoints = [];
+    statIter.textContent = '0';
+    statReward.textContent = '--';
+    statDist.textContent = '--';
+    document.getElementById('btn-auto').textContent = 'Auto';
+  }
+
+  function dist(a, b) { return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2); }
+
+  function collides(px, py) {
+    for (const o of obstacles) {
+      if (dist({ x: px, y: py }, o) < o.r + 0.02) return true;
+    }
+    if (px < 0.02 || px > 0.98 || py < 0.02 || py > 0.98) return true;
+    return false;
+  }
+
+  function sampleTrajectories() {
+    const N = parseInt(ctrlSamples.value);
+    const horizon = parseInt(ctrlHorizon.value);
+    const temp = parseInt(ctrlTemp.value) / 100;
+
+    const trajs = [];
+    for (let i = 0; i < N; i++) {
+      const points = [{ x: agent.x, y: agent.y }];
+      let px = agent.x, py = agent.y;
+      let reward = 0;
+      let alive = true;
+      const stepSize = 0.04;
+
+      // Bias toward goal (policy prior)
+      const goalAngle = Math.atan2(goal.y - agent.y, goal.x - agent.x);
+
+      for (let h = 0; h < horizon; h++) {
+        if (!alive) { points.push({ x: px, y: py }); continue; }
+        const angle = goalAngle + (Math.random() - 0.5) * Math.PI * 1.2;
+        const nx = px + Math.cos(angle) * stepSize;
+        const ny = py + Math.sin(angle) * stepSize;
+
+        if (collides(nx, ny)) {
+          reward -= 5;
+          alive = false;
+          points.push({ x: px, y: py });
+        } else {
+          px = nx;
+          py = ny;
+          points.push({ x: px, y: py });
+          reward += 1 - dist({ x: px, y: py }, goal);
+        }
+      }
+      // Terminal value (bootstrap with distance to goal)
+      reward += (1 - dist({ x: px, y: py }, goal)) * 3;
+      trajs.push({ points, reward });
+    }
+
+    // Softmax weights
+    const maxR = Math.max(...trajs.map(t => t.reward));
+    const weights = trajs.map(t => Math.exp((t.reward - maxR) / Math.max(temp, 0.01)));
+    const sumW = weights.reduce((a, b) => a + b, 0);
+    trajs.forEach((t, i) => { t.weight = weights[i] / sumW; });
+
+    return trajs;
+  }
+
+  function step() {
+    if (dist(agent, goal) < 0.05) { autoRunning = false; return; }
+    trajectories = sampleTrajectories();
+    trajectories.sort((a, b) => b.reward - a.reward);
+    bestTrajectory = trajectories[0];
+
+    // Execute first action of best trajectory
+    if (bestTrajectory.points.length > 1) {
+      trailPoints.push({ x: agent.x, y: agent.y });
+      agent.x = bestTrajectory.points[1].x;
+      agent.y = bestTrajectory.points[1].y;
+    }
+
+    iterCount++;
+    statIter.textContent = iterCount;
+    statReward.textContent = bestTrajectory.reward.toFixed(2);
+    statDist.textContent = dist(agent, goal).toFixed(3);
+  }
+
+  document.getElementById('btn-step').onclick = step;
+  document.getElementById('btn-reset').onclick = resetState;
+
+  document.getElementById('btn-auto').onclick = function() {
+    autoRunning = !autoRunning;
+    this.textContent = autoRunning ? 'Pause' : 'Auto';
+  };
+
+  let autoTimer = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    // Background grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 20; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * w / 20, 0);
+      ctx.lineTo(i * w / 20, h);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, i * h / 20);
+      ctx.lineTo(w, i * h / 20);
+      ctx.stroke();
+    }
+
+    // Obstacles
+    for (const o of obstacles) {
+      const grd = ctx.createRadialGradient(o.x * w, o.y * h, 0, o.x * w, o.y * h, o.r * w);
+      grd.addColorStop(0, 'rgba(26,26,46,0.55)');
+      grd.addColorStop(0.7, 'rgba(26,26,46,0.35)');
+      grd.addColorStop(1, 'rgba(26,26,46,0.0)');
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(o.x * w, o.y * h, o.r * w, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Solid core
+      ctx.fillStyle = 'rgba(26,26,46,0.6)';
+      ctx.beginPath();
+      ctx.arc(o.x * w, o.y * h, o.r * w * 0.7, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Trajectories
+    if (trajectories.length > 0) {
+      // Draw worst to best
+      const sorted = [...trajectories].sort((a, b) => a.reward - b.reward);
+      for (const traj of sorted) {
+        const pts = traj.points;
+        if (pts.length < 2) continue;
+        const t = traj.weight * trajectories.length;
+        const r = Math.floor(220 - t * 180);
+        const g = Math.floor(60 + t * 180);
+        const b_val = 60;
+        const alpha = 0.08 + t * 0.5;
+        ctx.strokeStyle = `rgba(${r},${g},${b_val},${Math.min(alpha, 0.85)})`;
+        ctx.lineWidth = 0.5 + t * 3;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x * w, pts[0].y * h);
+        for (let i = 1; i < pts.length; i++) {
+          ctx.lineTo(pts[i].x * w, pts[i].y * h);
+        }
+        ctx.stroke();
+      }
+
+      // Best trajectory highlight
+      if (bestTrajectory) {
+        ctx.strokeStyle = 'rgba(5,150,105,0.9)';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([6, 4]);
+        ctx.beginPath();
+        const bpts = bestTrajectory.points;
+        ctx.moveTo(bpts[0].x * w, bpts[0].y * h);
+        for (let i = 1; i < bpts.length; i++) {
+          ctx.lineTo(bpts[i].x * w, bpts[i].y * h);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    // Trail
+    if (trailPoints.length > 1) {
+      ctx.strokeStyle = 'rgba(37,99,235,0.3)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(trailPoints[0].x * w, trailPoints[0].y * h);
+      for (let i = 1; i < trailPoints.length; i++) {
+        ctx.lineTo(trailPoints[i].x * w, trailPoints[i].y * h);
+      }
+      ctx.stroke();
+
+      for (const p of trailPoints) {
+        ctx.fillStyle = 'rgba(37,99,235,0.15)';
+        ctx.beginPath();
+        ctx.arc(p.x * w, p.y * h, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Goal
+    const gPulse = 1 + 0.1 * Math.sin(animFrame * 0.04);
+    ctx.fillStyle = 'rgba(5,150,105,0.15)';
+    ctx.beginPath();
+    ctx.arc(goal.x * w, goal.y * h, 18 * gPulse, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#059669';
+    ctx.beginPath();
+    ctx.arc(goal.x * w, goal.y * h, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.font = '10px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('G', goal.x * w, goal.y * h);
+
+    // Agent
+    ctx.fillStyle = 'rgba(37,99,235,0.15)';
+    ctx.beginPath();
+    ctx.arc(agent.x * w, agent.y * h, 16, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#2563eb';
+    ctx.beginPath();
+    ctx.arc(agent.x * w, agent.y * h, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.font = '10px Source Code Pro';
+    ctx.fillText('A', agent.x * w, agent.y * h);
+
+    // Goal reached message
+    if (dist(agent, goal) < 0.05) {
+      ctx.fillStyle = 'rgba(5,150,105,0.9)';
+      ctx.font = '600 20px Newsreader';
+      ctx.textAlign = 'center';
+      ctx.fillText('Goal Reached!', w / 2, h - 30);
+    }
+
+    // Auto stepping
+    autoTimer++;
+    if (autoRunning && autoTimer % 15 === 0) {
+      step();
+    }
+
+    animFrame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 2: Iteration Convergence
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('iter-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.43) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.43) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  const ctrlIters = document.getElementById('ctrl-iters');
+  const valIters = document.getElementById('val-iters');
+
+  // Pre-generate trajectory sets for each iteration
+  const startX = 0.1, startY = 0.5;
+  const targetX = 0.9, targetY = 0.4;
+  const SAMPLES = 48;
+  const HORIZON = 8;
+
+  function generateIterationData() {
+    const allIters = [];
+    let meanAngles = new Array(HORIZON).fill(null);
+
+    for (let iter = 0; iter < 8; iter++) {
+      const trajs = [];
+      const goalAngle = Math.atan2(targetY - startY, targetX - startX);
+
+      for (let s = 0; s < SAMPLES; s++) {
+        const pts = [{ x: startX, y: startY }];
+        let px = startX, py = startY;
+        let reward = 0;
+
+        for (let h = 0; h < HORIZON; h++) {
+          const spread = Math.max(0.08, 1.5 * Math.pow(0.55, iter));
+          const baseAngle = meanAngles[h] !== null ? meanAngles[h] : goalAngle;
+          const angle = baseAngle + (Math.random() - 0.5) * Math.PI * spread;
+          const step = 0.09;
+          px = Math.max(0.02, Math.min(0.98, px + Math.cos(angle) * step));
+          py = Math.max(0.02, Math.min(0.98, py + Math.sin(angle) * step));
+          pts.push({ x: px, y: py });
+        }
+
+        const d = Math.sqrt((px - targetX) ** 2 + (py - targetY) ** 2);
+        reward = 1 - d;
+        trajs.push({ points: pts, reward });
+      }
+
+      // Compute weighted mean for next iteration
+      const maxR = Math.max(...trajs.map(t => t.reward));
+      const temp = 0.15;
+      const weights = trajs.map(t => Math.exp((t.reward - maxR) / temp));
+      const sumW = weights.reduce((a, b) => a + b, 0);
+
+      for (let h = 0; h < HORIZON; h++) {
+        let wxSum = 0, wySum = 0;
+        trajs.forEach((t, i) => {
+          if (t.points[h + 1]) {
+            wxSum += weights[i] * t.points[h + 1].x;
+            wySum += weights[i] * t.points[h + 1].y;
+          }
+        });
+        const mx = wxSum / sumW;
+        const my = wySum / sumW;
+        const prevX = h === 0 ? startX : (trajs[0].points[h].x);
+        const prevY = h === 0 ? startY : (trajs[0].points[h].y);
+        meanAngles[h] = Math.atan2(my - (h === 0 ? startY : my * 0.5 + startY * 0.5),
+                                    mx - (h === 0 ? startX : mx * 0.5 + startX * 0.5));
+      }
+
+      trajs.forEach((t, i) => { t.weight = weights[i] / sumW; });
+      allIters.push(trajs);
+    }
+    return allIters;
+  }
+
+  let allIterData = generateIterationData();
+  let animIter = 0;
+  let animating = false;
+
+  ctrlIters.oninput = function() {
+    valIters.textContent = this.value;
+  };
+
+  document.getElementById('btn-animate-iters').onclick = function() {
+    animating = true;
+    animIter = 0;
+    ctrlIters.value = 1;
+    valIters.textContent = '1';
+    const interval = setInterval(() => {
+      animIter++;
+      if (animIter >= 8) { clearInterval(interval); animating = false; return; }
+      ctrlIters.value = animIter + 1;
+      valIters.textContent = animIter + 1;
+    }, 600);
+  };
+
+  document.getElementById('btn-reset-iters').onclick = function() {
+    allIterData = generateIterationData();
+    ctrlIters.value = 1;
+    valIters.textContent = '1';
+    animating = false;
+  };
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    // Background
+    ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 20; i++) {
+      ctx.beginPath(); ctx.moveTo(i * w / 20, 0); ctx.lineTo(i * w / 20, h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i * h / 20); ctx.lineTo(w, i * h / 20); ctx.stroke();
+    }
+
+    const iterIdx = parseInt(ctrlIters.value) - 1;
+    const trajs = allIterData[Math.min(iterIdx, allIterData.length - 1)];
+
+    if (trajs) {
+      const sorted = [...trajs].sort((a, b) => a.weight - b.weight);
+      for (const traj of sorted) {
+        const t = traj.weight * SAMPLES;
+        const r = Math.floor(220 - t * 180);
+        const g = Math.floor(60 + t * 180);
+        const alpha = 0.1 + t * 0.6;
+        ctx.strokeStyle = `rgba(${r},${g},60,${Math.min(alpha, 0.8)})`;
+        ctx.lineWidth = 0.5 + t * 2.5;
+        ctx.beginPath();
+        traj.points.forEach((p, i) => {
+          i === 0 ? ctx.moveTo(p.x * w, p.y * h) : ctx.lineTo(p.x * w, p.y * h);
+        });
+        ctx.stroke();
+      }
+    }
+
+    // Start
+    ctx.fillStyle = '#2563eb';
+    ctx.beginPath();
+    ctx.arc(startX * w, startY * h, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Target
+    const pulse = 1 + 0.08 * Math.sin(frame * 0.04);
+    ctx.fillStyle = 'rgba(5,150,105,0.15)';
+    ctx.beginPath();
+    ctx.arc(targetX * w, targetY * h, 16 * pulse, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#059669';
+    ctx.beginPath();
+    ctx.arc(targetX * w, targetY * h, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Iteration label
+    ctx.fillStyle = 'rgba(26,26,46,0.5)';
+    ctx.font = '500 13px Source Code Pro';
+    ctx.textAlign = 'left';
+    ctx.fillText('Iteration ' + (iterIdx + 1) + ' / 8', 16, 24);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ═══════════════════════════════════════════════════════════
+// FIGURE 3: Planning Pipeline
+// ═══════════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('pipeline-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (rect.width * 0.357) + 'px';
+    canvas.width = rect.width * dpr;
+    canvas.height = (rect.width * 0.357) * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas();
+
+  const W = () => canvas.width / dpr;
+  const H = () => canvas.height / dpr;
+
+  const stages = [
+    { label: 'Observe State', desc: 'Encode current observation into latent z', color: '#2563eb' },
+    { label: 'Sample from Policy', desc: 'Draw N action sequences from policy prior', color: '#7c3aed' },
+    { label: 'Roll Out Dynamics', desc: 'Predict z\' = d(z, a, e) for H steps', color: '#d97706' },
+    { label: 'Score Trajectories', desc: 'Evaluate reward + terminal Q-value', color: '#059669' },
+    { label: 'Execute Best Action', desc: 'Apply first action; replan next step', color: '#c2402a' },
+  ];
+
+  let currentStage = 0;
+  const valStage = document.getElementById('val-pipeline-stage');
+
+  function updateStageLabel() {
+    valStage.textContent = (currentStage + 1) + ' / ' + stages.length;
+  }
+
+  document.getElementById('btn-pipeline-step').onclick = function() {
+    currentStage = Math.min(currentStage + 1, stages.length - 1);
+    updateStageLabel();
+  };
+
+  document.getElementById('btn-pipeline-reset').onclick = function() {
+    currentStage = 0;
+    updateStageLabel();
+  };
+
+  let frame = 0;
+  function draw() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
+
+    const padX = 40, padY = 40;
+    const stageW = (w - padX * 2 - (stages.length - 1) * 16) / stages.length;
+    const stageH = h * 0.45;
+    const topY = padY + 30;
+
+    // Stage title
+    ctx.fillStyle = 'rgba(26,26,46,0.4)';
+    ctx.font = '500 12px Source Code Pro';
+    ctx.textAlign = 'center';
+    ctx.fillText('MPPI Planning Pipeline', w / 2, 22);
+
+    stages.forEach((stage, i) => {
+      const x = padX + i * (stageW + 16);
+      const active = i <= currentStage;
+      const isCurrent = i === currentStage;
+
+      // Box
+      ctx.fillStyle = active ? 'white' : 'rgba(255,255,255,0.4)';
+      ctx.strokeStyle = isCurrent ? stage.color : (active ? 'rgba(224,221,213,1)' : 'rgba(224,221,213,0.5)');
+      ctx.lineWidth = isCurrent ? 2 : 1;
+      const boxR = 6;
+      ctx.beginPath();
+      ctx.roundRect(x, topY, stageW, stageH, boxR);
+      ctx.fill();
+      ctx.stroke();
+
+      // Glow for current
+      if (isCurrent) {
+        ctx.shadowColor = stage.color;
+        ctx.shadowBlur = 8;
+        ctx.strokeStyle = stage.color;
+        ctx.beginPath();
+        ctx.roundRect(x, topY, stageW, stageH, boxR);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // Number
+      ctx.fillStyle = active ? stage.color : 'rgba(136,136,160,0.5)';
+      ctx.font = '500 10px Source Code Pro';
+      ctx.textAlign = 'center';
+      ctx.fillText('STAGE ' + (i + 1), x + stageW / 2, topY + 20);
+
+      // Label
+      ctx.fillStyle = active ? 'rgba(26,26,46,0.9)' : 'rgba(26,26,46,0.3)';
+      ctx.font = '600 13px Newsreader';
+      ctx.fillText(stage.label, x + stageW / 2, topY + 42);
+
+      // Icon area - simple animated shapes
+      if (active) {
+        const cx = x + stageW / 2;
+        const cy = topY + stageH * 0.62;
+        ctx.globalAlpha = isCurrent ? 1 : 0.5;
+
+        if (i === 0) {
+          // Eye / observe icon
+          ctx.strokeStyle = stage.color;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+          ctx.fillStyle = stage.color;
+          ctx.fill();
+        } else if (i === 1) {
+          // Scattered dots (sampling)
+          for (let d = 0; d < 8; d++) {
+            const angle = (d / 8) * Math.PI * 2 + frame * 0.01;
+            const r = 10 + 4 * Math.sin(frame * 0.03 + d);
+            ctx.fillStyle = stage.color;
+            ctx.globalAlpha = isCurrent ? 0.6 : 0.3;
+            ctx.beginPath();
+            ctx.arc(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r, 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        } else if (i === 2) {
+          // Forward arrows (dynamics)
+          for (let a = 0; a < 3; a++) {
+            const ax = cx - 12 + a * 12;
+            const progress = ((frame * 0.03 + a * 0.3) % 1);
+            ctx.fillStyle = stage.color;
+            ctx.globalAlpha = isCurrent ? (0.3 + progress * 0.5) : 0.3;
+            ctx.beginPath();
+            ctx.moveTo(ax + 4, cy - 3);
+            ctx.lineTo(ax + 10, cy);
+            ctx.lineTo(ax + 4, cy + 3);
+            ctx.fill();
+          }
+        } else if (i === 3) {
+          // Bar chart (scoring)
+          const heights = [0.4, 0.8, 0.6, 1.0, 0.3];
+          heights.forEach((ht, hi) => {
+            const bx = cx - 15 + hi * 8;
+            const bh = ht * 20;
+            ctx.fillStyle = stage.color;
+            ctx.globalAlpha = isCurrent ? (0.4 + ht * 0.4) : 0.3;
+            ctx.fillRect(bx, cy + 10 - bh, 5, bh);
+          });
+        } else if (i === 4) {
+          // Checkmark (execute)
+          ctx.strokeStyle = stage.color;
+          ctx.lineWidth = 2.5;
+          ctx.globalAlpha = isCurrent ? 1 : 0.4;
+          ctx.beginPath();
+          ctx.moveTo(cx - 8, cy);
+          ctx.lineTo(cx - 2, cy + 7);
+          ctx.lineTo(cx + 10, cy - 6);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // Arrow between boxes
+      if (i < stages.length - 1) {
+        const ax = x + stageW + 2;
+        const ay = topY + stageH / 2;
+        ctx.fillStyle = (i < currentStage) ? 'rgba(194,64,42,0.6)' : 'rgba(136,136,160,0.3)';
+        ctx.beginPath();
+        ctx.moveTo(ax + 2, ay - 4);
+        ctx.lineTo(ax + 10, ay);
+        ctx.lineTo(ax + 2, ay + 4);
+        ctx.fill();
+      }
+    });
+
+    // Description below
+    const desc = stages[currentStage].desc;
+    ctx.fillStyle = stages[currentStage].color;
+    ctx.font = '400 14px Spectral';
+    ctx.textAlign = 'center';
+    ctx.fillText(desc, w / 2, topY + stageH + 36);
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', setupCanvas);
+})();
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
