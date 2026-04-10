@@ -1,0 +1,23 @@
+filters:
+  and:
+    - 'file.hasTag("paper")'
+    - "importance >= 4"
+
+properties:
+  title:
+    displayName: "Paper"
+  venue:
+    displayName: "Venue"
+  domain:
+    displayName: "Domain"
+  method:
+    displayName: "Method"
+  importance:
+    displayName: "Impact"
+
+views:
+  - type: "table"
+    name: "High Impact Papers"
+    order:
+      - importance
+      - year

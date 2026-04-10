@@ -1,0 +1,30 @@
+filters:
+  and:
+    - 'file.hasTag("paper")'
+    - or:
+      - 'file.hasTag("lineage/peng")'
+      - 'file.hasTag("lineage/dreamer")'
+      - 'file.hasTag("lineage/jepa")'
+      - 'file.hasTag("lineage/pi")'
+      - 'file.hasTag("lineage/fair")'
+
+properties:
+  title:
+    displayName: "Paper"
+  lineage:
+    displayName: "Lineage"
+  predecessor:
+    displayName: "Builds On"
+  domain:
+    displayName: "Domain"
+  importance:
+    displayName: "Impact"
+
+views:
+  - type: "table"
+    name: "Papers by Lineage"
+    order:
+      - lineage
+      - year
+    groupBy:
+      property: "lineage"

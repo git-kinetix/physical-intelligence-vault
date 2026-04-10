@@ -1,0 +1,24 @@
+filters:
+  and:
+    - 'file.hasTag("domain/character-animation")'
+    - 'file.hasTag("paper")'
+
+properties:
+  title:
+    displayName: "Paper"
+  venue:
+    displayName: "Venue"
+  method:
+    displayName: "Method"
+  lineage:
+    displayName: "Lineage"
+  predecessor:
+    displayName: "Builds On"
+  importance:
+    displayName: "Impact"
+
+views:
+  - type: "table"
+    name: "Character Animation Papers"
+    order:
+      - year
