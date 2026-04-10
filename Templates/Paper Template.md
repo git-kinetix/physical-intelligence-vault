@@ -4,7 +4,14 @@ title: "{{title}}"
 authors: []
 year: 
 arxiv: ""
+repo: ""
+venue: ""
 group: ""
+domain: []
+method: []
+lineage: []
+predecessor: []
+importance: 
 aliases: []
 ---
 
