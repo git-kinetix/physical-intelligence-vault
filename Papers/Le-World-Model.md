@@ -17,6 +17,7 @@ aliases: [LeWorldModel, LeWM, Le-World-Model]
 
 !PDFs/Le-World-Model.pdf
 
+> **Interactive Explainer:** [LeWM — Interactive Explorations](https://dxlrak3ky5x8b.cloudfront.net/Explainers/le-world-model/index.html) — patch tokenization, embedding space, prediction, causal attention, and training dynamics visualized with interactive Canvas simulations.
 
 # LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture from Pixels
 
