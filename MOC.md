@@ -78,6 +78,7 @@ Vision-Language-Action models for generalist robot control.
 | [[Pi0]] | 2024 | Flow matching foundation model for dexterous tasks |
 | [[Octo]] | 2024 | Open-source generalist robot policy |
 | [[OpenVLA]] | 2024 | Open-source 7B VLA outperforming RT-2-X 55B |
+| [[ACT]] | 2023 | Action chunking with transformers for bimanual manipulation |
 | [[RT-2]] | 2023 | Pioneering VLA transferring web knowledge to robots |
 
 ---

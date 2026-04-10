@@ -21,7 +21,7 @@ pi0 is Physical Intelligence's generalist robot foundation model, presenting a n
 
 The approach consists of a 3B parameter VLM backbone coupled with a smaller 300M parameter action expert that uses flow matching to generate continuous robot actions. pi0 is pre-trained on over 10,000 hours of robot data spanning 7 robot platforms and 68 distinct tasks, including single-arm robots, dual-arm robots, and mobile manipulators. The model can perform tasks zero-shot after pre-training, follow language instructions, and acquire new skills via fine-tuning with as few as 1-20 hours of task-specific data.
 
-pi0 significantly outperforms prior VLA models ([[OpenVLA]], [[Octo]]) and task-specific baselines (ACT, Diffusion Policy) across zero-shot evaluation, language-conditioned control, and fine-tuning experiments on dexterous manipulation tasks including laundry folding, table bussing, grocery bagging, and box assembly.
+pi0 significantly outperforms prior VLA models ([[OpenVLA]], [[Octo]]) and task-specific baselines ([[ACT]], Diffusion Policy) across zero-shot evaluation, language-conditioned control, and fine-tuning experiments on dexterous manipulation tasks including laundry folding, table bussing, grocery bagging, and box assembly.
 
 ## Key Contributions
 

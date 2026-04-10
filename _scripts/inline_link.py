@@ -87,13 +87,24 @@ def process_line(line, own_paper_name):
             continue
 
         # Build pattern: match the name NOT already inside [[ ]]
-        # Use word boundary where possible, but some names have special chars
         escaped = re.escape(name)
 
-        # Pattern: name not preceded by [[ and not followed by ]]
-        # Also not inside an existing [[ ... ]] block
-        # (?!\.\d) prevents matching "V-JEPA 2" inside "V-JEPA 2.1" etc.
-        pattern = r'(?<!\[\[)(?<!\|)\b' + escaped + r'\b(?!\]\])(?!\|)(?!\.\d)'
+        # Build negative lookahead for longer names that start with this one
+        # e.g. "V-JEPA" should not match when followed by " 2" (→ "V-JEPA 2")
+        # e.g. "V-JEPA 2" should not match when followed by ".1" (→ "V-JEPA 2.1")
+        # e.g. "Pi0" should not match when followed by ".5" or ".6"
+        suffix_lookaheads = []
+        for longer_name in sorted_names:
+            if longer_name != name and longer_name.startswith(name) and len(longer_name) > len(name):
+                suffix = re.escape(longer_name[len(name):])
+                suffix_lookaheads.append(suffix)
+
+        lookahead = ""
+        if suffix_lookaheads:
+            # Combine all suffix lookaheads: (?!\.1|\.5|\.6| 2)
+            lookahead = "(?!" + "|".join(suffix_lookaheads) + ")"
+
+        pattern = r'(?<!\[\[)(?<!\|)\b' + escaped + r'\b(?!\]\])(?!\|)' + lookahead
 
         def replacer(m):
             # Check if we're inside a [[ ]] block by scanning backwards

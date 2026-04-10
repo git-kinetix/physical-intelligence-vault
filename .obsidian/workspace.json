@@ -222,6 +222,12 @@
   },
   "active": "360b1814d3a36d75",
   "lastOpenFiles": [
+    "_scripts/inline_link.py.tmp.3565356.1775836770682",
+    "MOC.md.tmp.3565356.1775836590883",
+    "PDFs/ACT.pdf",
+    "Papers/ACT.md",
+    "Papers/ACT.md.tmp.3565356.1775836431084",
+    "props-initial.png",
     "_scripts/inline_link.py.tmp.3016615.1775831844371",
     "_scripts/inline_link.py.tmp.3016615.1775831836287",
     "Papers/V-JEPA 2.md.tmp.3016615.1775831791254",
@@ -232,10 +238,6 @@
     "Papers/Octo.md",
     "MOC.md.tmp.3016615.1775829905630",
     "PDFs/DeepLoco.pdf",
-    "PDFs/CLoSD.pdf",
-    "PDFs/SuperPADL.pdf",
-    "PDFs/PADL.pdf",
-    "PDFs/AMP.pdf",
     "Papers/MCP.md",
     "Papers/CLoSD.md",
     "Papers/SFV.md",
@@ -262,7 +264,6 @@
     "pdf-embed.png",
     "paper-page.png",
     "homepage.png",
-    "Papers/ACT-JEPA.md",
     "Canvases/Physical Intelligence Overview.canvas"
   ]
 }
