@@ -26,14 +26,13 @@ Joint-Embedding Predictive Architectures for video/image understanding and robot
 ---
 
 ## World Models
-Models that learn environment dynamics for planning, imagination, and control in simulated environments.
+
+### RL World Models
+Models that learn environment dynamics from interaction for planning and control in game/simulation environments.
 
 | Paper | Year | Key Idea |
 |-------|------|----------|
 | [[Stable World Model]] | 2026 | Reproducible world modeling research framework |
-| [[Dream Dojo]] | 2026 | Generalist robot world model from human video |
-| [[Hunyuan World 1.5]] | 2025 | Interactive world model with 3D consistency |
-| [[PLDM]] | 2025 | Planning with latent dynamics from reward-free data |
 | [[TD-MPC2]] | 2024 | Scalable world models for continuous control |
 | [[DIAMOND]] | 2024 | Diffusion-based world model for visual detail |
 | [[Genie 2]] | 2024 | Generative interactive 3D environments |
@@ -42,41 +41,41 @@ Models that learn environment dynamics for planning, imagination, and control in
 | [[DreamerV2]] | 2021 | Discrete world models for Atari |
 | [[DreamerV1]] | 2020 | Latent imagination for behavior learning |
 
----
+### Character Animation
+Physics-based character control using reinforcement learning, adversarial training, and motion imitation.
 
-## Physics-Based Character Control
-Learning motor skills for simulated humanoids and characters via RL and motion imitation. Two main lineages: **VAE** (learn a latent action space) and **Adversarial** (learn a motion discriminator).
-
-### Adversarial Lineage (Peng et al.)
 | Paper | Year | Key Idea |
 |-------|------|----------|
 | [[CLoSD]] | 2025 | Closing the loop between simulation and diffusion |
-| [[PARC]] | 2025 | Physics-based augmentation with RL for controllers |
+| [[PARC]] | 2025 | Physics-based augmentation with RL for character controllers |
+| [[MaskedMimic]] | 2024 | Unified character control via masked motion inpainting |
 | [[SuperPADL]] | 2024 | Scaling language-directed physics-based control |
-| [[MaskedMimic]] | 2024 | Unified control via masked motion inpainting |
-| [[Vid2Player3D]] | 2023 | Tennis skills from broadcast video (SIGGRAPH Best Paper HM) |
 | [[CALM]] | 2023 | Conditional adversarial latent models for directable characters |
+| [[MuscleVAE]] | 2023 | Muscle-actuated character control with fatigue dynamics |
+| [[Vid2Player3D]] | 2023 | Tennis skills from broadcast video via hierarchical control |
 | [[ASE]] | 2022 | Adversarial skill embeddings at scale |
 | [[PADL]] | 2022 | Language-directed physics-based character control |
-| [[AMP]] | 2021 | Adversarial motion priors (key bridge paper) |
-| [[MCP]] | 2019 | Multiplicative compositional policies |
-| [[SFV]] | 2018 | RL of physical skills from monocular video |
-| [[DeepMimic]] | 2018 | Example-guided RL for physics-based character skills |
-| [[DeepLoco]] | 2017 | Hierarchical DRL for terrain locomotion |
-
-### VAE Lineage
-| Paper | Year | Key Idea |
-|-------|------|----------|
-| [[MuscleVAE]] | 2023 | Muscle-actuated character control with fatigue dynamics |
 | [[PhysicsVAE]] | 2022 | Conditional VAEs for physics-based character control |
 | [[ControlVAE]] | 2022 | Model-based generative controllers via learned world model |
+| [[AMP]] | 2021 | Adversarial motion priors for stylized character control |
+| [[Learning Agile Robotic Locomotion]] | 2020 | Sim-to-real quadruped by imitating animals (RSS Best Paper) |
 | [[MVAE]] | 2020 | Motion VAE for character control in latent space |
+| [[MCP]] | 2019 | Multiplicative compositional policies for complex behaviors |
+| [[DeepMimic]] | 2018 | Example-guided RL for physics-based character skills |
+| [[SFV]] | 2018 | RL of physical skills from monocular video |
+| [[Sim-to-Real Transfer]] | 2018 | Dynamics randomization for sim-to-real |
+| [[DeepLoco]] | 2017 | Hierarchical DRL for terrain locomotion |
 
-### Humanoid Whole-Body Control
+### Egocentric & Interactive
+World models for egocentric video prediction, interactive environments, and embodied planning.
+
 | Paper | Year | Key Idea |
 |-------|------|----------|
-| [[LeVERB]] | 2025 | Humanoid control with latent vision-language instruction |
-| [[Hierarchical Puppeteer]] | 2025 | Hierarchical visual whole-body humanoid control |
+| [[Dream Dojo]] | 2026 | Generalist robot world model from human video |
+| [[Hunyuan World 1.5]] | 2025 | Interactive world model with 3D consistency |
+| [[Hierarchical Puppeteer]] | 2025 | Hierarchical visual humanoid control |
+| [[PLDM]] | 2025 | Planning with latent dynamics from reward-free data |
+| [[PEVA]] | 2025 | Whole-body conditioned egocentric video prediction |
 
 ---
 
@@ -150,33 +149,22 @@ See [[Datasets Index]] for all datasets referenced across papers.
 ## Research Lineages
 
 ```mermaid
-graph TB
-    subgraph JEPA
-        IJEPA[I-JEPA] --> VJEPA[V-JEPA] --> VJEPA2[V-JEPA 2] --> VJEPA21[V-JEPA 2.1]
-        IJEPA --> LeJEPA[Le-JEPA] --> LeWM[Le-World-Model]
-        VJEPA2 --> LeWM
-        LeWM --> TDJEPA[TD-JEPA]
-    end
-
-    subgraph Character["Physics-Based Character Control"]
-        DL[DeepLoco] --> DM[DeepMimic]
-        DM --> AMP
-        AMP --> ASE --> CALM --> MM[MaskedMimic]
-        ASE --> PADL --> SuperPADL
-        DM --> MVAE --> PhysVAE[PhysicsVAE] --> CtrlVAE[ControlVAE] --> MuscVAE[MuscleVAE]
-    end
-
-    subgraph VLA
-        RT2[RT-2] --> Octo & OpenVLA & Gemini[Gemini Robotics]
-        ACT --> Pi0 --> Pi05[Pi0.5] --> Pi06[Pi0.6]
-    end
-
-    subgraph WM["World Models"]
-        D1[DreamerV1] --> D2[DreamerV2] --> D3[DreamerV3]
-        IRIS --> DIAMOND
-    end
-
-    VJEPA2 -.-> Pi0
-    AMP -.-> LeVERB
-    D3 -.-> TDMPC2[TD-MPC2]
+graph LR
+    JEPA[JEPA Family] --> WM[World Models]
+    WM --> VP[Video Planning]
+    VP --> VLA[VLA Models]
+    JEPA --> VLA
+    WM --> VLA
+    CA[Character Animation] --> WM
+    CA --> VLA
 ```
+
+**Cross-cutting connections:**
+- V-JEPA 2 → Le-World-Model → TD-JEPA (JEPA for control)
+- DreamerV1 → DreamerV2 → DreamerV3 (world model evolution)
+- DeepMimic → AMP → ASE → CALM → MaskedMimic (Peng lineage)
+- MVAE → MuscleVAE / PhysicsVAE / ControlVAE (VAE controllers)
+- Pi0 → Pi0.5 → Pi0.6 (Physical Intelligence progression)
+- NVIDIA Cosmos → GR00T (NVIDIA's physical AI stack)
+- RT-2 → Gemini Robotics (Google's VLA evolution)
+- V-JEPA 2 → Hierarchical Puppeteer (JEPA for humanoid control)
