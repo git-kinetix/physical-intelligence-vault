@@ -1,12 +1,17 @@
 ---
-tags: [paper, vla, motion]
+tags: [paper, domain/robotics, method/transformer, method/diffusion]
 title: "Octo: An Open-Source Generalist Robot Policy"
 authors: [Dibya Ghosh, Homer Walke, Karl Pertsch, Kevin Black, Oier Mees, Sudeep Dasari, Joey Hejna, Tobias Kreiman, Charles Xu, Jianlan Luo, You Liang Tan, Lawrence Yunliang Chen, Pannag Sanketi, Quan Vuong, Ted Xiao, Dorsa Sadigh, Chelsea Finn, Sergey Levine]
 year: 2024
 arxiv: "https://arxiv.org/abs/2405.12213"
 repo: "https://github.com/octo-models/octo"
 group: "VLA Models"
-importance: 
+venue: "RSS 2024"
+domain: [robotics]
+method: [transformer, diffusion]
+lineage: []
+predecessor: []
+importance: 3
 aliases: [Octo, Octo-Base, Octo-Small]
 ---
 

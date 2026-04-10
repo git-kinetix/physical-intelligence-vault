@@ -1,12 +1,17 @@
 ---
-tags: [paper, vla, motion]
+tags: [paper, domain/robotics, method/transformer, method/language-conditioned]
 title: "Gemini Robotics: Bringing AI into the Physical World"
 authors: [Gemini Robotics Team, Google DeepMind]
 year: 2025
 arxiv: "https://arxiv.org/abs/2503.20020"
 repo: "https://github.com/google-deepmind/gemini-robotics-sdk"
 group: "VLA Models"
-importance: 
+venue: "arXiv 2025"
+domain: [robotics]
+method: [transformer, language-conditioned]
+lineage: []
+predecessor: ["[[RT-2]]"]
+importance: 4
 aliases: [Gemini Robotics, Gemini Robotics-ER, Gemini VLA]
 ---
 

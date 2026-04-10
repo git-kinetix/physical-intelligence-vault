@@ -1,12 +1,17 @@
 ---
-tags: [paper, vla, motion]
+tags: [paper, domain/robotics, method/diffusion, method/transformer]
 title: "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots"
 authors: [Johan Bjorck, Fernando Castaneda, Nikita Cherniadev, Xingye Da, Runyu Ding, Linxi Fan, Yu Fang, Dieter Fox, Fengyuan Hu, Spencer Huang, Joel Jang, Zhenyu Jiang, Jan Kautz, Kaushil Kundalia, Lawrence Lao, Zhiqi Li, Zongyu Lin, Kevin Lin, Guilin Liu, Edith Llontop, Loic Magne, Ajay Mandlekar, Avnish Narayan, Soroush Nasiriany, Scott Reed, You Liang Tan, Guanzhi Wang, Zu Wang, Jing Wang, Qi Wang, Jiannan Xiang, Yuqi Xie, Yinzhen Xu, Zhenjia Xu, Seonghyeon Ye, Zhiding Yu, Ao Zhang, Hao Zhang, Yizhou Zhao, Ruijie Zheng, Yuke Zhu]
 year: 2025
 arxiv: "https://arxiv.org/abs/2503.14734"
 repo: "https://github.com/NVIDIA/Isaac-GR00T"
 group: "VLA Models"
-importance: 5
+venue: "arXiv 2025"
+domain: [robotics]
+method: [diffusion, transformer]
+lineage: []
+predecessor: []
+importance: 4
 aliases: [GR00T, GR00T-N1, GR00T N1, GR00T-N1-2B, NVIDIA GR00T]
 ---
 

@@ -1,12 +1,17 @@
 ---
-tags: [paper, vla, physics-simulation]
+tags: [paper, domain/robotics, method/transformer, method/language-conditioned]
 title: "LeVERB: Humanoid Whole-Body Control with Latent Vision-Language Instruction"
 authors: [Haoru Xue, Xiaoyu Huang, Dantong Niu, Qiayuan Liao, Thomas Kragerud, Jan Tommy Gravdahl, Xue Bin Peng, Guanya Shi, Trevor Darrell, Koushil Sreenath, Shankar Sastry]
 year: 2025
 arxiv: "https://arxiv.org/abs/2506.13751"
 repo: ""
 group: "VLA Models"
-importance: 
+venue: "arXiv 2025"
+domain: [robotics]
+method: [transformer, language-conditioned]
+lineage: []
+predecessor: []
+importance: 3
 aliases: [LeVERB, Latent Vision-Language Encoded Robot Behavior]
 ---
 

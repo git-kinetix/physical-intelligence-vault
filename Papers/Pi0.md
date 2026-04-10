@@ -1,11 +1,16 @@
 ---
-tags: [paper, vla, motion]
+tags: [paper, domain/robotics, method/flow-matching, method/transformer, lineage/pi]
 title: "pi0: A Vision-Language-Action Flow Model for General Robot Control"
 authors: [Kevin Black, Noah Brown, Danny Driess, Adnan Esmail, Michael Equi, Chelsea Finn, Niccolo Fusai, Lachy Groom, Karol Hausman, Brian Ichter, Szymon Jakubczak, Tim Jones, Liyiming Ke, Sergey Levine, Adrian Li-Bell, Mohith Mothukuri, Suraj Nair, Karl Pertsch, Lucy Xiaoyang Shi, James Tanner, Quan Vuong, Anna Walling, Haohuan Wang, Ury Zhilinsky]
 year: 2024
 arxiv: "https://arxiv.org/abs/2410.24164"
 repo: "https://github.com/Physical-Intelligence/openpi"
 group: "VLA Models"
+venue: "arXiv 2024"
+domain: [robotics]
+method: [flow-matching, transformer]
+lineage: [pi]
+predecessor: []
 importance: 5
 aliases: [pi0, pi-zero, pi_0]
 ---

@@ -1,12 +1,17 @@
 ---
-tags: [paper, vla, motion]
+tags: [paper, domain/robotics, method/imitation-learning, method/transformer]
 title: "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware"
 authors: [Tony Z. Zhao, Vikash Kumar, Sergey Levine, Chelsea Finn]
 year: 2023
 arxiv: "https://arxiv.org/abs/2304.13705"
 repo: "https://github.com/tonyzhaozh/act"
+venue: "RSS 2023"
 group: "VLA Models"
-importance: 
+domain: [robotics]
+method: [imitation-learning, transformer]
+lineage: []
+predecessor: []
+importance: 4
 aliases: [ACT, Action Chunking with Transformers]
 ---
 

@@ -1,12 +1,17 @@
 ---
-tags: [paper, vla, motion]
+tags: [paper, domain/robotics, method/transformer]
 title: "OpenVLA: An Open-Source Vision-Language-Action Model"
 authors: [Moo Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna, Suraj Nair, Rafael Rafailov, Ethan Foster, Grace Lam, Pannag Sanketi, Quan Vuong, Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey Levine, Percy Liang, Chelsea Finn]
 year: 2024
 arxiv: "https://arxiv.org/abs/2406.09246"
 repo: "https://github.com/openvla/openvla"
 group: "VLA Models"
-importance: 
+venue: "CoRL 2024"
+domain: [robotics]
+method: [transformer]
+lineage: []
+predecessor: []
+importance: 4
 aliases: [OpenVLA, OpenVLA-7B]
 ---
 
