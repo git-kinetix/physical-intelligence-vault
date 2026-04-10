@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, lineage/peng]
 title: "PARC: Physics-based Augmentation with Reinforcement Learning for Character Controllers"
 authors: [Michael Xu, Yi Shi, KangKang Yin, Xue Bin Peng]
 year: 2025
 arxiv: "https://arxiv.org/abs/2505.04002"
 repo: "https://github.com/mshoe/PARC"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2025"
+domain: [character-animation]
+method: [rl]
+lineage: [peng]
+predecessor: ["[[AMP]]"]
+importance: 2
 aliases: [PARC, Physics-based Augmentation with RL for Character Controllers]
 ---
 

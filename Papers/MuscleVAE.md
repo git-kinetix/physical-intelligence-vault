@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/vae, method/rl]
 title: "MuscleVAE: Model-Based Controllers of Muscle-Actuated Characters"
 authors: [Yusen Feng, Xiyan Xu, Libin Liu]
 year: 2023
 arxiv: "https://arxiv.org/abs/2312.07340"
 repo: "https://github.com/PKU-MoCCA/MuscleVAE"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2023"
+domain: [character-animation]
+method: [vae, rl]
+lineage: []
+predecessor: ["[[MVAE]]"]
+importance: 3
 aliases: [MuscleVAE, Muscle VAE]
 ---
 

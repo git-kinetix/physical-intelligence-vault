@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/masked-prediction, method/rl, lineage/peng]
 title: "MaskedMimic: Unified Physics-Based Character Control Through Masked Motion Inpainting"
 authors: [Chen Tessler, Yunrong Guo, Ofir Nabati, Gal Chechik, Xue Bin Peng]
 year: 2024
 arxiv: "https://arxiv.org/abs/2409.14393"
 repo: "https://github.com/NVlabs/ProtoMotions"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH Asia 2024"
+domain: [character-animation]
+method: [masked-prediction, rl]
+lineage: [peng]
+predecessor: ["[[CALM]]"]
+importance: 4
 aliases: [MaskedMimic, Masked Mimic]
 ---
 

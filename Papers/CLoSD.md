@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/diffusion, method/rl, lineage/peng]
 title: "CLoSD: Closing the Loop between Simulation and Diffusion for Multi-Task Character Control"
 authors: [Guy Tevet, Sigal Raab, Setareh Cohan, Daniele Reda, Zhengyi Luo, Xue Bin Peng, Amit H. Bermano, Michiel van de Panne]
 year: 2025
 arxiv: "https://arxiv.org/abs/2410.03441"
 repo: "https://github.com/GuyTevet/CLoSD"
 group: "World Models"
-importance: 
+venue: "ICLR 2025 Spotlight"
+domain: [character-animation]
+method: [diffusion, rl]
+lineage: [peng]
+predecessor: ["[[MaskedMimic]]"]
+importance: 3
 aliases: [CLoSD, Closing the Loop between Simulation and Diffusion]
 ---
 

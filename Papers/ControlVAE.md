@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/vae, method/rl]
 title: "ControlVAE: Model-Based Learning of Generative Controllers for Physics-Based Characters"
 authors: [Heyuan Yao, Zhenhua Song, Baoquan Chen, Libin Liu]
 year: 2022
 arxiv: "https://arxiv.org/abs/2210.06063"
 repo: "https://github.com/heyuanYao-pku/Control-VAE"
 group: "World Models"
-importance: 
+venue: "arXiv 2022"
+domain: [character-animation]
+method: [vae, rl]
+lineage: []
+predecessor: ["[[MVAE]]"]
+importance: 2
 aliases: [ControlVAE, Control-VAE]
 ---
 

@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/vae, method/rl]
 title: "Physics-based Character Controllers Using Conditional VAEs"
 authors: [Jungdam Won, Deepak Gopinath, Jessica Hodgins]
 year: 2022
 arxiv: ""
 repo: "https://github.com/facebookresearch/PhysicsVAE"
 group: "World Models"
-importance: 
+venue: "arXiv 2022"
+domain: [character-animation]
+method: [vae, rl]
+lineage: []
+predecessor: ["[[MVAE]]"]
+importance: 2
 aliases: [PhysicsVAE, Physics-VAE, Conditional VAE Character Control]
 ---
 

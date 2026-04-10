@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, method/language-conditioned, lineage/peng]
 title: "SuperPADL: Scaling Language-Directed Physics-Based Control with Progressive Supervised Distillation"
 authors: [Jordan Juravsky, Yunrong Guo, Sanja Fidler, Xue Bin Peng]
 year: 2024
 arxiv: "https://arxiv.org/abs/2407.10481"
 repo: ""
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2024"
+domain: [character-animation]
+method: [rl, language-conditioned]
+lineage: [peng]
+predecessor: ["[[PADL]]"]
+importance: 3
 aliases: [SuperPADL, Super PADL]
 ---
 

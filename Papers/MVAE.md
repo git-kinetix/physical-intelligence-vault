@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/vae, method/rl]
 title: "Character Controllers Using Motion VAEs"
 authors: [Hung Yu Ling, Fabio Zinno, George Cheng, Michiel van de Panne]
 year: 2020
 arxiv: "https://arxiv.org/abs/2103.14274"
 repo: "https://github.com/electronicarts/character-motion-vaes"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2020"
+domain: [character-animation]
+method: [vae, rl]
+lineage: []
+predecessor: []
+importance: 3
 aliases: [MVAE, Motion VAE, Character Controllers Using Motion VAEs]
 ---
 

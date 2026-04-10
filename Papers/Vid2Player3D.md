@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/character-animation, method/rl, method/imitation-learning, lineage/peng]
 title: "Learning Physically Simulated Tennis Skills from Broadcast Videos"
 authors: [Haotian Zhang, Ye Yuan, Viktor Makoviychuk, Yunrong Guo, Sanja Fidler, Xue Bin Peng, Kayvon Fatahalian]
 year: 2023
 arxiv: ""
 repo: "https://github.com/nv-tlabs/vid2player3d"
 group: "World Models"
-importance: 
+venue: "SIGGRAPH 2023"
+domain: [character-animation]
+method: [rl, imitation-learning]
+lineage: [peng]
+predecessor: ["[[SFV]]"]
+importance: 3
 aliases: [Vid2Player3D, vid2player3d, Learning Physically Simulated Tennis Skills from Broadcast Videos]
 ---
 
