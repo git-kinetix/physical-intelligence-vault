@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Transformers are Sample-Efficient World Models"
 authors: [Vincent Micheli, Eloi Alonso, Francois Fleuret]
 year: 2023
@@ -88,13 +88,13 @@ IRIS shows particularly strong performance on visually structured games where di
 
 ## Metrics Used
 
-- Human-Normalized Score (HNS) -- primary metric: (agent_score - random_score) / (human_score - random_score), evaluated as mean and median across 26 Atari games
+- Human-[[Normalized Task Score|Normalized Score]] ([[Human Normalized Mean|HNS]]) -- primary metric: (agent_score - random_score) / (human_score - random_score), evaluated as mean and median across 26 Atari games
 - Superhuman Games -- number of games where the agent exceeds human performance
 - [[Sample Efficiency]] -- performance achieved within 100K environment interactions (2 hours of play)
 
 ## Datasets Used
 
-- Atari 100K Benchmark -- 26 Atari 2600 games, each limited to 100K environment steps (400K frames with action repeat of 4)
+- [[Atari 2600 Games|Atari 100K]] Benchmark -- 26 Atari 2600 games, each limited to 100K environment steps (400K frames with action repeat of 4)
 
 ## Related Papers
 

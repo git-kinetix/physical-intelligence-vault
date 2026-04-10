@@ -1,5 +1,5 @@
 ---
-tags: [paper, jepa]
+tags: [paper, jepa, physics-simulation]
 title: "ACT-JEPA: Novel Joint-Embedding Predictive Architecture for Efficient Policy Representation Learning"
 authors: [Aleksandar Vujinovic, Aleksandar Kovacevic]
 year: 2025

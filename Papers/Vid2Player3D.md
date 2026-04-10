@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Learning Physically Simulated Tennis Skills from Broadcast Videos"
 authors: [Haotian Zhang, Ye Yuan, Viktor Makoviychuk, Yunrong Guo, Sanja Fidler, Xue Bin Peng, Kayvon Fatahalian]
 year: 2023

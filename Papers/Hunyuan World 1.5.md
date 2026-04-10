@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, motion]
 title: "WorldPlay: Towards Long-Term Geometric Consistency for Real-Time Interactive World Modeling"
 authors: [Wenqiang Sun, Haiyu Zhang, Haoyuan Wang, Junta Wu, Zehan Wang, Zhenwei Wang, Yunhong Wang, Jun Zhang, Tengfei Wang, Chunchao Guo]
 year: 2025

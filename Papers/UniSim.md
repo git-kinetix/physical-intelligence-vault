@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model, video-planning]
+tags: [paper, world-model, video-planning, motion]
 title: "Learning Interactive Real-World Simulators"
 authors: [Sherry Yang, Yilun Du, Kamyar Ghasemipour, Jonathan Tompson, Leslie Kaelbling, Dale Schuurmans, Pieter Abbeel]
 year: 2023
@@ -114,7 +114,7 @@ Larger models produce higher-fidelity simulations, with improvements plateauing 
 
 ## Metrics Used
 
-- Frechet Video Distance (FVD) -- measures quality and diversity of generated video against real video distributions
+- [[FVD|Frechet Video Distance]] ([[FVD]]) -- measures quality and diversity of generated video against real video distributions
 - CLIP Score -- measures alignment between generated video frames and conditioning text
 - CIDEr -- captioning quality metric for video captioning transfer evaluation
 - [[Success Rate]] -- task completion rate for sim-to-real transfer evaluation

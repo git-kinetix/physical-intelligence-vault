@@ -1,5 +1,5 @@
 ---
-tags: [paper, jepa]
+tags: [paper, jepa, motion]
 title: "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning"
 authors: [Mido Assran, Adrien Bardes, David Fan, Quentin Garrido, Russell Howes, Mojtaba Komeili, Matthew Muckley, Ammar Rizvi, Claire Roberts, Koustuv Sinha, Artem Zholus, Sergio Arnaud, Abha Gejji, Ada Martin, Francois Robert Hogan, Daniel Dugas, Piotr Bojanowski, Vasil Khalidov, Patrick Labatut, Francisco Massa, Marc Szafraniec, Kapil Krishnakumar, Yong Li, Xiaodong Ma, Sarath Chandar, Franziska Meier, Yann LeCun, Michael Rabbat, Nicolas Ballas]
 year: 2025
@@ -10,7 +10,7 @@ importance: 5
 aliases: [V-JEPA 2, VJEPA2, V-JEPA2]
 ---
 
-!PDFs/V-JEPA 2.pdf
+!PDFs/[[V-JEPA]] 2.pdf
 
 
 # [[V-JEPA]] 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning

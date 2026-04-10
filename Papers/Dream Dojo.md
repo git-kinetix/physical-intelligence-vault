@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, motion]
 title: "DreamDojo: A Generalist Robot World Model from Large-Scale Human Videos"
 authors: [Shenyuan Gao, William Liang, Kaiyuan Zheng, Ayaan Malik, Seonghyeon Ye, Sihyun Yu, Wei-Cheng Tseng, Yuzhu Dong, Kaichun Mo, Chen-Hsuan Lin, Qianli Ma, Seungjun Nah, Loic Magne, Jiannan Xiang, Yuqi Xie, Ruijie Zheng, Dantong Niu, You Liang Tan, K.R. Zentner, George Kurian, Suneel Indupuru, Pooya Jannaty, Jinwei Gu, Jun Zhang, Jitendra Malik, Pieter Abbeel, Ming-Yu Liu, Yuke Zhu, Joel Jang, Linxi Fan]
 year: 2026
@@ -163,7 +163,7 @@ Model-based planning using DreamDojo as a simulator roughly doubles success rate
 - [[Epic-Kitchens]] — kitchen activity video dataset (component of pretraining mixture)
 
 ## Related Papers
-- Cosmos-Predict2.5 — base video diffusion model that DreamDojo builds upon
+- [[NVIDIA Cosmos|Cosmos]]-Predict2.5 — base video diffusion model that DreamDojo builds upon
 - [[DreamerV3]] — model-based RL world model; different paradigm (latent state for RL vs. video generation for robotics)
 - [[Genie 2]] — generative interactive environment model
 - [[UniSim]] — universal simulator from real-world interaction data

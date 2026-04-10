@@ -1,5 +1,5 @@
 ---
-tags: [paper, jepa]
+tags: [paper, jepa, physics-simulation]
 title: "LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture from Pixels"
 authors: [Lucas Maes, Quentin Le Lidec, Damien Scieur, Yann LeCun, Randall Balestriero]
 year: 2026
@@ -124,7 +124,7 @@ LeWM reliably detects physically implausible events through surprise measurement
 
 - [[Success Rate]] — primary control task metric (percentage of successful task completions)
 - [[Linear Probe MSE]] — mean squared error of linear regression from latent embeddings to physical quantities
-- Pearson Correlation (r) — correlation between predicted and true physical quantities from latent probing
+- [[Pearson Correlation]] (r) — correlation between predicted and true physical quantities from latent probing
 - [[MLP Probe MSE]] — nonlinear (MLP) probing of physical quantities from latent space
 - [[Planning Time]] — wall-clock time per planning step (seconds)
 - [[Surprise Score]] — violation-of-expectation metric measuring prediction error for implausible vs. plausible events
@@ -134,7 +134,7 @@ LeWM reliably detects physically implausible events through surprise measurement
 ## Datasets Used
 
 - [[Push-T]] — 2D block pushing manipulation task (primary benchmark)
-- OGBench-Cube — 3D robotic manipulation with a robotic arm
+- [[OGBench]]-Cube — 3D robotic manipulation with a robotic arm
 - Two-Room — 2D navigation environment with room transitions
 - Reacher — 2-joint robotic arm reaching task
 

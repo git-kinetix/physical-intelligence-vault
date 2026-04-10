@@ -1,5 +1,5 @@
 ---
-tags: [paper, vla]
+tags: [paper, vla, motion]
 title: "pi0.5: a Vision-Language-Action Model with Open-World Generalization"
 authors: [Kevin Black, Noah Brown, James Darpinian, Karan Dhabalia, Danny Driess, Adnan Esmail, Michael Equi, Chelsea Finn, Niccolo Fusai, Manuel Y. Galliker, Dibya Ghosh, Lachy Groom, Karol Hausman, Brian Ichter, Szymon Jakubczak, Tim Jones, Liyiming Ke, Devin LeBlanc, Sergey Levine, Adrian Li-Bell, Mohith Mothukuri, Suraj Nair, Karl Pertsch, Allen Z. Ren, Lucy Xiaoyang Shi, Laura Smith, Jost Tobias Springenberg, Kyle Stachowicz, James Tanner, Quan Vuong, Homer Walke, Anna Walling, Haohuan Wang, Lili Yu, Ury Zhilinsky]
 year: 2025
@@ -10,7 +10,7 @@ importance:
 aliases: [pi0.5, pi-zero-point-five, pi_0.5]
 ---
 
-!PDFs/Pi0.5.pdf
+!PDFs/[[Pi0]].5.pdf
 
 
 # [[Pi0|pi0]].5: a Vision-Language-Action Model with Open-World Generalization

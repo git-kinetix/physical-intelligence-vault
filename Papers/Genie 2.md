@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model, video-planning]
+tags: [paper, world-model, video-planning, motion]
 title: "Genie 2: A Large-Scale Foundation World Model"
 authors: [Google DeepMind]
 year: 2024

@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills"
 authors: [Xue Bin Peng, Pieter Abbeel, Sergey Levine, Michiel van de Panne]
 year: 2018

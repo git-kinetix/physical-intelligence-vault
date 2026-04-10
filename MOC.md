@@ -42,10 +42,17 @@ Models that learn environment dynamics for planning, imagination, and control.
 | [[DreamerV3]] | 2023 | Single algorithm across diverse domains |
 | [[IRIS]] | 2023 | Transformer world model with discrete tokens |
 | [[Vid2Player3D]] | 2023 | Tennis skills from broadcast video via hierarchical control |
+| [[MaskedMimic]] | 2024 | Unified character control via masked motion inpainting |
+| [[CALM]] | 2023 | Conditional adversarial latent models for directable characters |
+| [[MuscleVAE]] | 2023 | Muscle-actuated character control with fatigue dynamics |
+| [[PhysicsVAE]] | 2022 | Conditional VAEs for physics-based character control |
+| [[ControlVAE]] | 2022 | Model-based generative controllers via learned world model |
+| [[ASE]] | 2022 | Adversarial skill embeddings at scale |
 | [[DreamerV2]] | 2021 | Discrete world models for Atari |
 | [[MVAE]] | 2020 | Motion VAE for character control in latent space |
 | [[DreamerV1]] | 2020 | Latent imagination for behavior learning |
 | [[DeepMimic]] | 2018 | Example-guided RL for physics-based character skills |
+| [[PARC]] | 2025 | Physics-based augmentation with RL for character controllers |
 
 ---
 

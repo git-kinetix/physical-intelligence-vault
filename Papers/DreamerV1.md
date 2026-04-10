@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Dream to Control: Learning Behaviors by Latent Imagination"
 authors: [Danijar Hafner, Timothy Lillicrap, Jimmy Ba, Mohammad Norouzi]
 year: 2020

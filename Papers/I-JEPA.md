@@ -1,5 +1,5 @@
 ---
-tags: [paper, jepa]
+tags: [paper, jepa, motion]
 title: "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture"
 authors: [Mahmoud Assran, Quentin Duval, Ishan Misra, Piotr Bojanowski, Pascal Vincent, Michael Rabbat, Yann LeCun, Nicolas Ballas]
 year: 2023

@@ -1,5 +1,5 @@
 ---
-tags: [paper, video-planning]
+tags: [paper, video-planning, motion]
 title: "Learning Universal Policies via Text-Guided Video Generation"
 authors: [Yilun Du, Mengjiao Yang, Bo Dai, Hanjun Dai, Ofir Nachum, Joshua B. Tenenbaum, Dale Schuurmans, Pieter Abbeel]
 year: 2023
@@ -92,7 +92,7 @@ Pretraining on internet video data improves both video generation quality and do
 ## Metrics Used
 
 - [[Success Rate]] -- task completion rate for manipulation tasks across seen and novel combinations
-- Frechet Video Distance (FVD) -- quality and diversity of generated video plans
+- [[FVD|Frechet Video Distance]] ([[FVD]]) -- quality and diversity of generated video plans
 - Frechet Inception Distance (FID) -- per-frame image quality of generated videos
 - CLIP Score -- alignment between generated video frames and text instructions
 

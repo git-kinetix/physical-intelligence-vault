@@ -1,5 +1,5 @@
 ---
-tags: [paper, jepa]
+tags: [paper, jepa, physics-simulation]
 title: "TD-JEPA: Latent-predictive Representations for Zero-Shot Reinforcement Learning"
 authors: [Marco Bagatella, Matteo Pirotta, Ahmed Touati, Alessandro Lazaric, Andrea Tirinzoni]
 year: 2025

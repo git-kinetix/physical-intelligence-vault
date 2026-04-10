@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Mastering Diverse Domains through World Models"
 authors: [Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, Timothy Lillicrap]
 year: 2023
@@ -147,8 +147,8 @@ DreamerV3 matches or exceeds IMPALA's performance on DMLab using 200x fewer envi
 
 ## Datasets Used
 - [[Atari 100K]] — 26 Atari games with budget of 100K steps (400K frames with action repeat), testing extreme data efficiency
-- DeepMind Control Suite (Vision) — continuous control tasks from pixels (64x64 RGB)
-- DeepMind Control Suite (Proprioceptive) — continuous control tasks from state observations
+- [[DeepMind Control Suite]] (Vision) — continuous control tasks from pixels (64x64 RGB)
+- [[DeepMind Control Suite]] (Proprioceptive) — continuous control tasks from state observations
 - [[BSuite]] — 23 diagnostic environments with 468 configurations testing core RL capabilities
 - [[Crafter]] — 2D open-world survival game with 22 achievements, testing diverse skill acquisition
 - [[DMLab]] — 3D first-person navigation and exploration tasks
@@ -163,4 +163,4 @@ DreamerV3 matches or exceeds IMPALA's performance on DMLab using 200x fewer envi
 - [[IRIS]] — transformer-based world model baseline for [[Atari 2600 Games|Atari 100K]]
 - SPR — self-predictive representations; model-free [[Atari 2600 Games|Atari 100K]] baseline
 - Muesli — strong model-based baseline for [[BSuite]]
-- TD-MPC2 — scalable world model for continuous control
+- [[TD-MPC2]] — scalable world model for continuous control

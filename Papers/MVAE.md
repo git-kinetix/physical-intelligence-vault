@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Character Controllers Using Motion VAEs"
 authors: [Hung Yu Ling, Fabio Zinno, George Cheng, Michiel van de Panne]
 year: 2020

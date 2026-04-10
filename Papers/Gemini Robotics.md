@@ -1,5 +1,5 @@
 ---
-tags: [paper, vla]
+tags: [paper, vla, motion]
 title: "Gemini Robotics: Bringing AI into the Physical World"
 authors: [Gemini Robotics Team, Google DeepMind]
 year: 2025

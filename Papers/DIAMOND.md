@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Diffusion for World Modeling: Visual Details Matter in Atari"
 authors: [Eloi Alonso, Adam Jelley, Vincent Micheli, Anssi Kanervisto, Amos Storkey, Tim Pearce, Francois Fleuret]
 year: 2024
@@ -94,14 +94,14 @@ DIAMOND requires 5.3x fewer neural function evaluations per generated frame than
 
 ## Metrics Used
 
-- Human-Normalized Score (HNS) -- (agent - random) / (human - random), reported as mean and IQM across 26 games
+- Human-[[Normalized Task Score|Normalized Score]] ([[Human Normalized Mean|HNS]]) -- (agent - random) / (human - random), reported as mean and IQM across 26 games
 - Interquartile Mean (IQM) -- robust aggregate metric less sensitive to outlier games
 - Neural Function Evaluations (NFE) -- computational cost per generated frame
 - Superhuman Games -- number of games exceeding human performance
 
 ## Datasets Used
 
-- Atari 100K Benchmark -- 26 Atari 2600 games, 100K environment steps each
+- [[Atari 2600 Games|Atari 100K]] Benchmark -- 26 Atari 2600 games, 100K environment steps each
 - Counter-Strike: Global Offensive -- gameplay footage for neural game engine demonstration
 
 ## Related Papers

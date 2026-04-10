@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, motion]
 title: "PEVA: Whole-Body Conditioned Egocentric Video Prediction"
 authors: [Yutong Bai, Danny Tran, Amir Bar, Yann LeCun, Trevor Darrell, Jitendra Malik]
 year: 2025

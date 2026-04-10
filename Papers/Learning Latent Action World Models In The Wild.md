@@ -1,5 +1,5 @@
 ---
-tags: [paper, video-planning]
+tags: [paper, video-planning, motion]
 title: "Learning Latent Action World Models In The Wild"
 authors: [Quentin Garrido, Tushar Nagarajan, Basile Terver, Nicolas Ballas, Yann LeCun, Michael Rabbat]
 year: 2026

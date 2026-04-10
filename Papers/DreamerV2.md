@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Mastering Atari with Discrete World Models"
 authors: [Danijar Hafner, Timothy Lillicrap, Mohammad Norouzi, Jimmy Ba]
 year: 2021

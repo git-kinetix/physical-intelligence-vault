@@ -1,5 +1,5 @@
 ---
-tags: [paper, vla]
+tags: [paper, vla, motion]
 title: "pi*0.6: a VLA That Learns From Experience"
 authors: [Ali Amin, Raichelle Aniceto, Ashwin Balakrishna, Kevin Black, Ken Conley, Grace Connors, James Darpinian, Karan Dhabalia, Jared DiCarlo, Danny Driess, Michael Equi, Adnan Esmail, Yunhao Fang, Chelsea Finn, Catherine Glossop, Thomas Godden, Ivan Goryachev, Lachy Groom, Hunter Hancock, Karol Hausman, Gashon Hussein, Brian Ichter, Szymon Jakubczak, Rowan Jen, Tim Jones, Ben Katz, Liyiming Ke, Chandra Kuchi, Marinda Lamb, Devin LeBlanc, Sergey Levine, Adrian Li-Bell, Yao Lu, Vishnu Mano, Mohith Mothukuri, Suraj Nair, Karl Pertsch, Allen Z. Ren, Charvi Sharma, Lucy Xiaoyang Shi, Laura Smith, Jost Tobias Springenberg, Kyle Stachowicz, Will Stoeckle, Alex Swerdlow, James Tanner, Marcel Torne, Quan Vuong, Anna Walling, Haohuan Wang, Blake Williams, Sukwon Yoo, Lili Yu, Ury Zhilinsky, Zhiyuan Zhou]
 year: 2025
@@ -9,7 +9,7 @@ importance:
 aliases: [pi0.6, pi-zero-point-six, pi_0.6, pi*0.6, RECAP]
 ---
 
-!PDFs/Pi0.6.pdf
+!PDFs/[[Pi0]].6.pdf
 
 
 # pi*0.6: a VLA That Learns From Experience

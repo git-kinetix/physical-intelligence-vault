@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "Learning from Reward-Free Offline Data: A Case for Planning with Latent Dynamics Models"
 authors: [Vlad Sobal, Wancong Zhang, Kyunghyun Cho, Randall Balestriero, Tim G. J. Rudner, Yann LeCun]
 year: 2025

@@ -1,5 +1,5 @@
 ---
-tags: [paper, jepa]
+tags: [paper, jepa, motion]
 title: "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics"
 authors: [Randall Balestriero, Yann LeCun]
 year: 2025

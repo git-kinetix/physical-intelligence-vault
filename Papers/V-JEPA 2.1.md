@@ -1,5 +1,5 @@
 ---
-tags: [paper, jepa]
+tags: [paper, jepa, motion]
 title: "V-JEPA 2.1: Unlocking Dense Features in Video Self-Supervised Learning"
 authors: [Lorenzo Mur-Labadia, Matthew Muckley, Amir Bar, Mido Assran, Koustuv Sinha, Mike Rabbat, Yann LeCun, Nicolas Ballas, Adrien Bardes]
 year: 2026
@@ -10,7 +10,7 @@ importance:
 aliases: [V-JEPA 2.1, VJEPA2.1]
 ---
 
-!PDFs/V-JEPA 2.1.pdf
+!PDFs/[[V-JEPA 2]].1.pdf
 
 
 # [[V-JEPA 2]].1: Unlocking Dense Features in Video Self-Supervised Learning

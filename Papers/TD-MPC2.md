@@ -1,5 +1,5 @@
 ---
-tags: [paper, world-model]
+tags: [paper, world-model, physics-simulation]
 title: "TD-MPC2: Scalable, Robust World Models for Continuous Control"
 authors: [Nicklas Hansen, Hao Su, Xiaolong Wang]
 year: 2024

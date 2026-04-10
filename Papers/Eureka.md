@@ -1,5 +1,5 @@
 ---
-tags: [paper, robotics]
+tags: [paper, robotics, physics-simulation]
 title: "Eureka: Human-Level Reward Design via Coding Large Language Models"
 authors: [Yecheng Jason Ma, William Liang, Guanzhi Wang, De-An Huang, Osbert Bastani, Dinesh Jayaraman, Yuke Zhu, Linxi Fan, Anima Anandkumar]
 year: 2023

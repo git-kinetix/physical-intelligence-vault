@@ -1,5 +1,5 @@
 ---
-tags: [paper, vla]
+tags: [paper, vla, motion]
 title: "OpenVLA: An Open-Source Vision-Language-Action Model"
 authors: [Moo Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna, Suraj Nair, Rafael Rafailov, Ethan Foster, Grace Lam, Pannag Sanketi, Quan Vuong, Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey Levine, Percy Liang, Chelsea Finn]
 year: 2024
