@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Lineages — Physical Intelligence Vault</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 8px 16px;
+      background: rgba(26, 26, 46, 0.85);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+      pointer-events: none;
+    }
+
+    #header span {
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+    }
+
+    #canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+
+    /* Legend */
+    #legend {
+      position: fixed;
+      top: 36px;
+      right: 16px;
+      z-index: 10;
+      background: rgba(26, 26, 46, 0.92);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      min-width: 160px;
+    }
+
+    #legend h3 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 8px;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .legend-line {
+      width: 36px;
+      height: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Tooltip */
+    #tooltip {
+      position: fixed;
+      z-index: 20;
+      background: rgba(26,26,46,0.96);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.85);
+      pointer-events: none;
+      display: none;
+      max-width: 220px;
+    }
+
+    /* SVG styles */
+    .node-rect {
+      rx: 7;
+      ry: 7;
+      cursor: pointer;
+    }
+
+    .node-label {
+      font-size: 11px;
+      font-weight: 700;
+      fill: #e0e0e0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .node-year {
+      font-size: 9px;
+      fill: rgba(255,255,255,0.45);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .edge-label {
+      font-size: 9px;
+      fill: rgba(255,255,255,0.55);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .group-bg {
+      pointer-events: none;
+    }
+
+    .group-label-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+
+<div id="header"><span>Research Lineages</span> — Physical Intelligence Vault</div>
+
+<div id="legend">
+  <h3>Edge Types</h3>
+  <div class="legend-row">
+    <svg width="36" height="10"><line x1="0" y1="5" x2="36" y2="5" stroke="rgba(200,200,200,0.7)" stroke-width="2"/></svg>
+    <span>extends</span>
+  </div>
+  <div class="legend-row">
+    <svg width="36" height="10"><line x1="0" y1="5" x2="36" y2="5" stroke="rgba(200,200,200,0.7)" stroke-width="1.5" stroke-dasharray="5,5"/></svg>
+    <span>inspires</span>
+  </div>
+  <div class="legend-row">
+    <svg width="36" height="10"><line x1="0" y1="5" x2="36" y2="5" stroke="rgba(200,200,200,0.7)" stroke-width="1.5" stroke-dasharray="2,4"/></svg>
+    <span>applies-to-real</span>
+  </div>
+  <div class="legend-row">
+    <svg width="36" height="10"><line x1="0" y1="5" x2="36" y2="5" stroke="rgba(200,200,200,0.7)" stroke-width="1.5" stroke-dasharray="8,3,2,3"/></svg>
+    <span>from-video</span>
+  </div>
+  <div class="legend-row">
+    <svg width="36" height="10"><line x1="0" y1="5" x2="36" y2="5" stroke="#9b59b6" stroke-width="1.5"/></svg>
+    <span>adds-language</span>
+  </div>
+  <div class="legend-row">
+    <svg width="36" height="10"><line x1="0" y1="5" x2="36" y2="5" stroke="#e67e22" stroke-width="1.5"/></svg>
+    <span>adds-diffusion</span>
+  </div>
+  <div class="legend-row">
+    <svg width="36" height="10"><line x1="0" y1="5" x2="36" y2="5" stroke="#2ecc71" stroke-width="1.5"/></svg>
+    <span>scales</span>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<svg id="canvas">
+  <defs>
+    <!-- Arrow markers for each edge type/color -->
+    <marker id="arrow-default" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="rgba(180,180,180,0.6)"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#9b59b6"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#e67e22"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#2ecc71"/>
+    </marker>
+    <!-- Highlighted versions -->
+    <marker id="arrow-default-hi" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="rgba(255,255,255,0.95)"/>
+    </marker>
+    <marker id="arrow-purple-hi" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#c39bd3"/>
+    </marker>
+    <marker id="arrow-orange-hi" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f0a050"/>
+    </marker>
+    <marker id="arrow-green-hi" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#58d68d"/>
+    </marker>
+  </defs>
+</svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+(function() {
+  "use strict";
+
+  // ─── Data ──────────────────────────────────────────────────────────────────
+
+  const GROUPS = [
+    {
+      id: "peng",
+      label: "Peng Lineage",
+      color: "#e74c3c",
+      gridCol: 0, gridRow: 0,  // wide, left
+      wide: true,
+    },
+    {
+      id: "vae",
+      label: "VAE Controllers",
+      color: "#e67e22",
+      gridCol: 1, gridRow: 0,
+    },
+    {
+      id: "jepa",
+      label: "JEPA Family",
+      color: "#3498db",
+      gridCol: 0, gridRow: 1,
+    },
+    {
+      id: "dreamer",
+      label: "Dreamer Series",
+      color: "#2ecc71",
+      gridCol: 1, gridRow: 1,
+    },
+    {
+      id: "pi",
+      label: "PI Progression",
+      color: "#9b59b6",
+      gridCol: 0, gridRow: 2,
+    },
+    {
+      id: "video",
+      label: "Video Planning",
+      color: "#1abc9c",
+      gridCol: 1, gridRow: 2,
+    },
+  ];
+
+  const NODES_RAW = [
+    // Peng Lineage
+    { id: "deeploco",     label: "DeepLoco",         year: 2017, group: "peng" },
+    { id: "deepmimic",    label: "DeepMimic",         year: 2018, group: "peng" },
+    { id: "sfv",          label: "SFV",               year: 2018, group: "peng" },
+    { id: "simtoreal",    label: "Sim-to-Real",       year: 2018, group: "peng" },
+    { id: "mcp",          label: "MCP",               year: 2019, group: "peng" },
+    { id: "learningagile",label: "Agile Locomotion",  year: 2020, group: "peng" },
+    { id: "amp",          label: "AMP",               year: 2021, group: "peng" },
+    { id: "ase",          label: "ASE",               year: 2022, group: "peng" },
+    { id: "padl",         label: "PADL",              year: 2022, group: "peng" },
+    { id: "calm",         label: "CALM",              year: 2023, group: "peng" },
+    { id: "maskedmimic",  label: "MaskedMimic",       year: 2024, group: "peng" },
+    { id: "superpadl",    label: "SuperPADL",         year: 2024, group: "peng" },
+    { id: "vid2player",   label: "Vid2Player3D",      year: 2023, group: "peng" },
+    { id: "closd",        label: "CLoSD",             year: 2025, group: "peng" },
+    { id: "parc",         label: "PARC",              year: 2025, group: "peng" },
+    // VAE
+    { id: "mvae",         label: "MVAE",              year: 2020, group: "vae" },
+    { id: "musclevae",    label: "MuscleVAE",         year: 2023, group: "vae" },
+    { id: "physicsvae",   label: "PhysicsVAE",        year: 2022, group: "vae" },
+    { id: "controlvae",   label: "ControlVAE",        year: 2022, group: "vae" },
+    // JEPA
+    { id: "ijepa",        label: "I-JEPA",            year: 2023, group: "jepa" },
+    { id: "vjepa",        label: "V-JEPA",            year: 2024, group: "jepa" },
+    { id: "vjepa2",       label: "V-JEPA 2",          year: 2025, group: "jepa" },
+    { id: "vjepa21",      label: "V-JEPA 2.1",        year: 2026, group: "jepa" },
+    { id: "lejepa",       label: "Le-JEPA",           year: 2025, group: "jepa" },
+    { id: "lewm",         label: "Le-World-Model",    year: 2026, group: "jepa" },
+    { id: "tdjepa",       label: "TD-JEPA",           year: 2025, group: "jepa" },
+    { id: "actjepa",      label: "ACT-JEPA",          year: 2025, group: "jepa" },
+    { id: "puppet",       label: "Hier. Puppeteer",   year: 2025, group: "jepa" },
+    { id: "pldm",         label: "PLDM",              year: 2025, group: "jepa" },
+    { id: "latentaction", label: "Latent Action WMs", year: 2026, group: "jepa" },
+    { id: "stablewm",     label: "Stable World Model",year: 2026, group: "jepa" },
+    // Dreamer
+    { id: "dreamer1",     label: "DreamerV1",         year: 2020, group: "dreamer" },
+    { id: "dreamer2",     label: "DreamerV2",         year: 2021, group: "dreamer" },
+    { id: "dreamer3",     label: "DreamerV3",         year: 2023, group: "dreamer" },
+    { id: "iris",         label: "IRIS",              year: 2023, group: "dreamer" },
+    { id: "diamond",      label: "DIAMOND",           year: 2024, group: "dreamer" },
+    { id: "tdmpc2",       label: "TD-MPC2",           year: 2024, group: "dreamer" },
+    // PI
+    { id: "pi0",          label: "Pi0",               year: 2024, group: "pi" },
+    { id: "pi05",         label: "Pi0.5",             year: 2025, group: "pi" },
+    { id: "pi06",         label: "Pi0.6",             year: 2025, group: "pi" },
+    // Video Planning
+    { id: "rt2",          label: "RT-2",              year: 2023, group: "video" },
+    { id: "gemini",       label: "Gemini Robotics",   year: 2025, group: "video" },
+    { id: "unipi",        label: "UniPi",             year: 2023, group: "video" },
+    { id: "unisim",       label: "UniSim",            year: 2023, group: "video" },
+    { id: "cosmos",       label: "NVIDIA Cosmos",     year: 2025, group: "video" },
+    { id: "dreamdojo",    label: "Dream Dojo",        year: 2026, group: "video" },
+  ];
+
+  const EDGES_RAW = [
+    // Peng Lineage
+    { source: "deeploco",      target: "deepmimic",    label: "extends" },
+    { source: "deepmimic",     target: "sfv",          label: "from-video" },
+    { source: "deepmimic",     target: "simtoreal",    label: "applies-to-real" },
+    { source: "deepmimic",     target: "mcp",          label: "inspires" },
+    { source: "deepmimic",     target: "learningagile",label: "applies-to-real" },
+    { source: "deepmimic",     target: "amp",          label: "inspires" },
+    { source: "sfv",           target: "vid2player",   label: "extends" },
+    { source: "amp",           target: "ase",          label: "extends" },
+    { source: "amp",           target: "parc",         label: "inspires" },
+    { source: "ase",           target: "calm",         label: "extends" },
+    { source: "ase",           target: "padl",         label: "adds-language" },
+    { source: "calm",          target: "maskedmimic",  label: "extends" },
+    { source: "padl",          target: "superpadl",    label: "scales" },
+    { source: "maskedmimic",   target: "closd",        label: "adds-diffusion" },
+    // VAE
+    { source: "mvae",          target: "musclevae",    label: "extends" },
+    { source: "mvae",          target: "physicsvae",   label: "extends" },
+    { source: "physicsvae",    target: "controlvae",   label: "extends" },
+    // JEPA
+    { source: "ijepa",         target: "vjepa",        label: "extends" },
+    { source: "vjepa",         target: "vjepa2",       label: "extends" },
+    { source: "vjepa2",        target: "vjepa21",      label: "extends" },
+    { source: "ijepa",         target: "lejepa",       label: "inspires" },
+    { source: "lejepa",        target: "lewm",         label: "inspires" },
+    { source: "vjepa2",        target: "lewm",         label: "inspires" },
+    { source: "ijepa",         target: "tdjepa",       label: "inspires" },
+    { source: "ijepa",         target: "actjepa",      label: "inspires" },
+    { source: "vjepa2",        target: "puppet",       label: "inspires" },
+    // Dreamer
+    { source: "dreamer1",      target: "dreamer2",     label: "extends" },
+    { source: "dreamer2",      target: "dreamer3",     label: "extends" },
+    { source: "dreamer2",      target: "iris",         label: "inspires" },
+    { source: "iris",          target: "diamond",      label: "inspires" },
+    // PI
+    { source: "pi0",           target: "pi05",         label: "extends" },
+    { source: "pi05",          target: "pi06",         label: "extends" },
+    // Cross-group
+    { source: "rt2",           target: "gemini",       label: "inspires" },
+  ];
+
+  // ─── Layout math ───────────────────────────────────────────────────────────
+
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+  const HEADER_H = 34;
+
+  // Grid: 2 columns. Left column is wider (Peng lineage is large).
+  // col 0 = 55% width, col 1 = 45% width
+  const COL_W = [W * 0.55, W * 0.45];
+  const ROW_H = (H - HEADER_H) / 3;
+
+  const PADDING = 32;
+
+  function groupCenter(g) {
+    const colOffset = g.gridCol === 0 ? 0 : COL_W[0];
+    const rowOffset = HEADER_H + g.gridRow * ROW_H;
+    return {
+      x: colOffset + COL_W[g.gridCol] / 2,
+      y: rowOffset + ROW_H / 2,
+    };
+  }
+
+  function groupBounds(g) {
+    const colOffset = g.gridCol === 0 ? 0 : COL_W[0];
+    const rowOffset = HEADER_H + g.gridRow * ROW_H;
+    return {
+      x: colOffset + PADDING / 2,
+      y: rowOffset + PADDING / 2,
+      w: COL_W[g.gridCol] - PADDING,
+      h: ROW_H - PADDING,
+    };
+  }
+
+  // ─── Edge style helpers ─────────────────────────────────────────────────────
+
+  const EDGE_STYLES = {
+    "extends":         { dash: "none",      stroke: "rgba(200,200,200,0.55)", weight: 2,   marker: "arrow-default", markerHi: "arrow-default-hi" },
+    "inspires":        { dash: "5,5",       stroke: "rgba(200,200,200,0.55)", weight: 1.5, marker: "arrow-default", markerHi: "arrow-default-hi" },
+    "applies-to-real": { dash: "2,4",       stroke: "rgba(200,200,200,0.55)", weight: 1.5, marker: "arrow-default", markerHi: "arrow-default-hi" },
+    "from-video":      { dash: "8,3,2,3",   stroke: "rgba(200,200,200,0.55)", weight: 1.5, marker: "arrow-default", markerHi: "arrow-default-hi" },
+    "adds-language":   { dash: "none",      stroke: "#9b59b6",               weight: 1.5, marker: "arrow-purple",  markerHi: "arrow-purple-hi" },
+    "adds-diffusion":  { dash: "none",      stroke: "#e67e22",               weight: 1.5, marker: "arrow-orange",  markerHi: "arrow-orange-hi" },
+    "scales":          { dash: "none",      stroke: "#2ecc71",               weight: 1.5, marker: "arrow-green",   markerHi: "arrow-green-hi" },
+  };
+
+  // ─── Build node/edge objects ────────────────────────────────────────────────
+
+  const groupMap = Object.fromEntries(GROUPS.map(g => [g.id, g]));
+
+  const nodes = NODES_RAW.map(n => {
+    const g = groupMap[n.group];
+    const c = groupCenter(g);
+    return {
+      ...n,
+      groupObj: g,
+      x: c.x + (Math.random() - 0.5) * 80,
+      y: c.y + (Math.random() - 0.5) * 80,
+      pinned: false,
+    };
+  });
+
+  const nodeMap = Object.fromEntries(nodes.map(n => [n.id, n]));
+
+  const links = EDGES_RAW.map(e => ({
+    ...e,
+    source: nodeMap[e.source],
+    target: nodeMap[e.target],
+    style: EDGE_STYLES[e.label] || EDGE_STYLES["extends"],
+  }));
+
+  // ─── SVG setup ─────────────────────────────────────────────────────────────
+
+  const svg = d3.select("#canvas")
+    .attr("width", W)
+    .attr("height", H);
+
+  const root = svg.append("g").attr("id", "root");
+
+  // Group backgrounds
+  const groupBgLayer = root.append("g").attr("id", "group-bg-layer");
+  const edgeLayer    = root.append("g").attr("id", "edge-layer");
+  const nodeLayer    = root.append("g").attr("id", "node-layer");
+
+  // Draw group backgrounds
+  GROUPS.forEach(g => {
+    const b = groupBounds(g);
+    const bg = groupBgLayer.append("g").attr("class", "group-bg");
+    bg.append("rect")
+      .attr("x", b.x).attr("y", b.y)
+      .attr("width", b.w).attr("height", b.h)
+      .attr("rx", 12).attr("ry", 12)
+      .attr("fill", g.color)
+      .attr("fill-opacity", 0.08)
+      .attr("stroke", g.color)
+      .attr("stroke-opacity", 0.3)
+      .attr("stroke-width", 1.5);
+    bg.append("text")
+      .attr("class", "group-label-text")
+      .attr("x", b.x + 14)
+      .attr("y", b.y + 18)
+      .attr("fill", g.color)
+      .text(g.label);
+  });
+
+  // ─── Edges ─────────────────────────────────────────────────────────────────
+
+  const NODE_W = 140, NODE_H = 45;
+
+  function edgeEndpoints(link) {
+    // Adjust path to start/end at node border
+    const sx = link.source.x, sy = link.source.y;
+    const tx = link.target.x, ty = link.target.y;
+    const dx = tx - sx, dy = ty - sy;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    // Offset from center by half node dimension in the direction of the edge
+    const halfW = NODE_W / 2, halfH = NODE_H / 2;
+    const tSrc = Math.min(halfW / Math.abs(dx || 0.001), halfH / Math.abs(dy || 0.001));
+    const tTgt = tSrc;
+    const x1 = sx + dx * tSrc;
+    const y1 = sy + dy * tSrc;
+    const x2 = tx - dx * tTgt;
+    const y2 = ty - dy * tTgt;
+    return { x1, y1, x2, y2 };
+  }
+
+  const edgeGroups = edgeLayer.selectAll(".edge-g")
+    .data(links)
+    .enter()
+    .append("g")
+    .attr("class", "edge-g")
+    .style("cursor", "default");
+
+  const edgeLines = edgeGroups.append("line")
+    .attr("class", "edge-line")
+    .attr("stroke", d => d.style.stroke)
+    .attr("stroke-width", d => d.style.weight)
+    .attr("stroke-dasharray", d => d.style.dash === "none" ? null : d.style.dash)
+    .attr("marker-end", d => `url(#${d.style.marker})`)
+    .attr("fill", "none");
+
+  // Edge label backgrounds + text
+  const edgeLabelBgs = edgeGroups.append("rect")
+    .attr("class", "edge-label-bg")
+    .attr("fill", "rgba(26,26,46,0.85)")
+    .attr("rx", 3).attr("ry", 3);
+
+  const edgeLabelTexts = edgeGroups.append("text")
+    .attr("class", "edge-label")
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "middle")
+    .text(d => d.label);
+
+  // ─── Nodes ─────────────────────────────────────────────────────────────────
+
+  const nodeGroups = nodeLayer.selectAll(".node-g")
+    .data(nodes)
+    .enter()
+    .append("g")
+    .attr("class", "node-g")
+    .style("cursor", "pointer");
+
+  // Shadow/glow rect (slightly larger, for the colored border)
+  nodeGroups.append("rect")
+    .attr("x", -NODE_W / 2).attr("y", -NODE_H / 2)
+    .attr("width", NODE_W).attr("height", NODE_H)
+    .attr("rx", 7).attr("ry", 7)
+    .attr("fill", "rgba(255,255,255,0.04)")
+    .attr("stroke", d => d.groupObj.color)
+    .attr("stroke-width", 0.5)
+    .attr("stroke-opacity", 0.3);
+
+  // White background rect
+  nodeGroups.append("rect")
+    .attr("x", -NODE_W / 2 + 4).attr("y", -NODE_H / 2)
+    .attr("width", NODE_W - 4).attr("height", NODE_H)
+    .attr("rx", 7).attr("ry", 7)
+    .attr("fill", "rgba(30,30,50,0.92)");
+
+  // Colored left border rect
+  nodeGroups.append("rect")
+    .attr("x", -NODE_W / 2).attr("y", -NODE_H / 2)
+    .attr("width", 4).attr("height", NODE_H)
+    .attr("rx", 3).attr("ry", 3)
+    .attr("fill", d => d.groupObj.color);
+
+  // Label
+  nodeGroups.append("text")
+    .attr("class", "node-label")
+    .attr("x", -NODE_W / 2 + 12).attr("y", -5)
+    .attr("dominant-baseline", "middle")
+    .text(d => d.label);
+
+  // Year
+  nodeGroups.append("text")
+    .attr("class", "node-year")
+    .attr("x", -NODE_W / 2 + 12).attr("y", 11)
+    .attr("dominant-baseline", "middle")
+    .text(d => d.year);
+
+  // ─── Interaction sets ───────────────────────────────────────────────────────
+
+  // Build adjacency: for each node, which links connect to it
+  const nodeLinks = Object.fromEntries(nodes.map(n => [n.id, new Set()]));
+  links.forEach((l, i) => {
+    nodeLinks[l.source.id].add(i);
+    nodeLinks[l.target.id].add(i);
+  });
+
+  function highlightNode(nodeId) {
+    const connectedLinks = nodeLinks[nodeId];
+    const connectedNodes = new Set([nodeId]);
+    connectedLinks.forEach(i => {
+      connectedNodes.add(links[i].source.id);
+      connectedNodes.add(links[i].target.id);
+    });
+
+    nodeGroups.style("opacity", d => connectedNodes.has(d.id) ? 1 : 0.2);
+    edgeGroups.style("opacity", (_, i) => connectedLinks.has(i) ? 1 : 0.05);
+    edgeLines
+      .attr("stroke-width", (d, i) => connectedLinks.has(i) ? d.style.weight * 2 : d.style.weight)
+      .attr("marker-end", (d, i) => connectedLinks.has(i) ? `url(#${d.style.markerHi})` : `url(#${d.style.marker})`);
+    edgeLabelTexts
+      .style("font-size", (d, i) => connectedLinks.has(i) ? "10px" : "9px")
+      .attr("fill", (d, i) => connectedLinks.has(i) ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.55)");
+  }
+
+  function clearHighlight() {
+    nodeGroups.style("opacity", 1);
+    edgeGroups.style("opacity", 1);
+    edgeLines
+      .attr("stroke-width", d => d.style.weight)
+      .attr("marker-end", d => `url(#${d.style.marker})`);
+    edgeLabelTexts
+      .style("font-size", "9px")
+      .attr("fill", "rgba(255,255,255,0.55)");
+  }
+
+  let hoveredNode = null;
+
+  nodeGroups
+    .on("mouseenter", function(event, d) {
+      hoveredNode = d.id;
+      highlightNode(d.id);
+    })
+    .on("mouseleave", function(event, d) {
+      hoveredNode = null;
+      clearHighlight();
+    })
+    .on("click", function(event, d) {
+      event.stopPropagation();
+      d.pinned = !d.pinned;
+      if (d.pinned) {
+        d.fx = d.x;
+        d.fy = d.y;
+        d3.select(this).select("rect:nth-child(2)")
+          .attr("fill", "rgba(50,50,80,0.97)");
+      } else {
+        d.fx = null;
+        d.fy = null;
+        d3.select(this).select("rect:nth-child(2)")
+          .attr("fill", "rgba(30,30,50,0.92)");
+      }
+    });
+
+  edgeGroups
+    .on("mouseenter", function(event, d, i) {
+      d3.select(this).select("line")
+        .attr("stroke-width", d.style.weight * 2);
+      d3.select(this).select("text")
+        .style("font-size", "11px")
+        .attr("fill", "rgba(255,255,255,0.95)");
+    })
+    .on("mouseleave", function(event, d) {
+      if (!hoveredNode) {
+        d3.select(this).select("line")
+          .attr("stroke-width", d.style.weight);
+        d3.select(this).select("text")
+          .style("font-size", "9px")
+          .attr("fill", "rgba(255,255,255,0.55)");
+      }
+    });
+
+  // ─── Drag ──────────────────────────────────────────────────────────────────
+
+  const drag = d3.drag()
+    .on("start", function(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    })
+    .on("drag", function(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    })
+    .on("end", function(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      if (!d.pinned) {
+        d.fx = null;
+        d.fy = null;
+      }
+    });
+
+  nodeGroups.call(drag);
+
+  // ─── Zoom & Pan ─────────────────────────────────────────────────────────────
+
+  const zoom = d3.zoom()
+    .scaleExtent([0.2, 4])
+    .on("zoom", (event) => {
+      root.attr("transform", event.transform);
+    });
+
+  svg.call(zoom);
+
+  // ─── Force simulation ───────────────────────────────────────────────────────
+
+  const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links)
+      .id(d => d.id)
+      .distance(120)
+      .strength(0.6))
+    .force("charge", d3.forceManyBody().strength(-400))
+    .force("collide", d3.forceCollide(80))
+    .force("x", d3.forceX(d => groupCenter(d.groupObj).x).strength(0.15))
+    .force("y", d3.forceY(d => groupCenter(d.groupObj).y).strength(0.15))
+    .alphaDecay(0.025)
+    .on("tick", ticked);
+
+  // ─── Tick ──────────────────────────────────────────────────────────────────
+
+  function ticked() {
+    // Clamp nodes within group bounds with some slack
+    nodes.forEach(n => {
+      if (n.pinned) return;
+      const b = groupBounds(n.groupObj);
+      const slack = 20;
+      const minX = b.x + slack;
+      const maxX = b.x + b.w - slack;
+      const minY = b.y + slack;
+      const maxY = b.y + b.h - slack;
+      // Soft clamping: apply force toward boundary if outside
+      if (n.x < minX) n.x = minX + (n.x - minX) * 0.3;
+      if (n.x > maxX) n.x = maxX + (n.x - maxX) * 0.3;
+      if (n.y < minY) n.y = minY + (n.y - minY) * 0.3;
+      if (n.y > maxY) n.y = maxY + (n.y - maxY) * 0.3;
+    });
+
+    // Update node positions
+    nodeGroups.attr("transform", d => `translate(${d.x},${d.y})`);
+
+    // Update edges
+    edgeGroups.each(function(d, i) {
+      const ep = computeEdgeEndpoints(d);
+      d3.select(this).select("line")
+        .attr("x1", ep.x1).attr("y1", ep.y1)
+        .attr("x2", ep.x2).attr("y2", ep.y2);
+
+      const mx = (ep.x1 + ep.x2) / 2;
+      const my = (ep.y1 + ep.y2) / 2;
+
+      const textEl = d3.select(this).select("text");
+      const bgEl   = d3.select(this).select("rect");
+
+      textEl.attr("x", mx).attr("y", my);
+
+      // Size background to text
+      try {
+        const bb = textEl.node().getBBox();
+        bgEl
+          .attr("x", bb.x - 2).attr("y", bb.y - 1)
+          .attr("width", bb.width + 4).attr("height", bb.height + 2);
+      } catch(e) {}
+    });
+  }
+
+  function computeEdgeEndpoints(link) {
+    const sx = link.source.x, sy = link.source.y;
+    const tx = link.target.x, ty = link.target.y;
+    const dx = tx - sx, dy = ty - sy;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const ux = dx / dist, uy = dy / dist;
+
+    // Find intersection with source node rect border
+    const hwS = NODE_W / 2, hhS = NODE_H / 2;
+    const tS = Math.min(
+      ux !== 0 ? Math.abs(hwS / ux) : Infinity,
+      uy !== 0 ? Math.abs(hhS / uy) : Infinity
+    );
+
+    // Find intersection with target node rect border
+    const hwT = NODE_W / 2, hhT = NODE_H / 2;
+    const tT = Math.min(
+      ux !== 0 ? Math.abs(hwT / ux) : Infinity,
+      uy !== 0 ? Math.abs(hhT / uy) : Infinity
+    );
+
+    // Marker offset (pixels to pull back from target center)
+    const markerOffset = 10;
+
+    const x1 = sx + ux * tS;
+    const y1 = sy + uy * tS;
+    const x2 = tx - ux * (tT + markerOffset);
+    const y2 = ty - uy * (tT + markerOffset);
+
+    return { x1, y1, x2, y2 };
+  }
+
+  // ─── Resize ────────────────────────────────────────────────────────────────
+
+  window.addEventListener("resize", () => {
+    // Simple reload on resize for now
+    // (full relayout would require recomputing all centers)
+    svg.attr("width", window.innerWidth).attr("height", window.innerHeight);
+  });
+
+})();
+</script>
+</body>
+</html>
