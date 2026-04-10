@@ -1,12 +1,17 @@
 ---
-tags: [paper, robotics, physics-simulation]
+tags: [paper, domain/robotics, method/rl, method/language-conditioned]
 title: "Eureka: Human-Level Reward Design via Coding Large Language Models"
 authors: [Yecheng Jason Ma, William Liang, Guanzhi Wang, De-An Huang, Osbert Bastani, Dinesh Jayaraman, Yuke Zhu, Linxi Fan, Anima Anandkumar]
 year: 2023
 arxiv: "https://arxiv.org/abs/2310.12931"
 repo: "https://github.com/eureka-research/Eureka"
 group: "Robotics"
-importance: 
+venue: "arXiv 2023"
+domain: [robotics]
+method: [rl, language-conditioned]
+lineage: []
+predecessor: []
+importance: 4
 aliases: [Eureka]
 ---
 

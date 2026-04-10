@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, video-planning, motion]
+tags: [paper, domain/video-generation, domain/robotics, method/diffusion]
 title: "Learning Interactive Real-World Simulators"
 authors: [Sherry Yang, Yilun Du, Kamyar Ghasemipour, Jonathan Tompson, Leslie Kaelbling, Dale Schuurmans, Pieter Abbeel]
 year: 2023
 arxiv: "https://arxiv.org/abs/2310.06114"
 repo: "https://github.com/universal-simulator/unisim"
 group: "Video Generation / Planning"
-importance: 
+venue: "ICLR 2024"
+domain: [video-generation, robotics]
+method: [diffusion]
+lineage: []
+predecessor: []
+importance: 3
 aliases: [UniSim, Universal Simulator]
 ---
 

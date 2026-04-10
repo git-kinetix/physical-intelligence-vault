@@ -1,11 +1,16 @@
 ---
-tags: [paper, video-planning, motion]
+tags: [paper, domain/video-generation, domain/robotics, method/diffusion]
 title: "Learning Universal Policies via Text-Guided Video Generation"
 authors: [Yilun Du, Mengjiao Yang, Bo Dai, Hanjun Dai, Ofir Nachum, Joshua B. Tenenbaum, Dale Schuurmans, Pieter Abbeel]
 year: 2023
 arxiv: "https://arxiv.org/abs/2302.00111"
 group: "Video Generation / Planning"
-importance: 
+venue: "NeurIPS 2023"
+domain: [video-generation, robotics]
+method: [diffusion]
+lineage: []
+predecessor: []
+importance: 4
 aliases: [UniPi, Universal Policy]
 ---
 

@@ -1,11 +1,16 @@
 ---
-tags: [paper, video-planning, motion]
+tags: [paper, domain/video-generation, method/transformer]
 title: "Learning Latent Action World Models In The Wild"
 authors: [Quentin Garrido, Tushar Nagarajan, Basile Terver, Nicolas Ballas, Yann LeCun, Michael Rabbat]
 year: 2026
 arxiv: "https://arxiv.org/abs/2601.05230"
 group: "Video Generation / Planning"
-importance: 
+venue: "arXiv 2026"
+domain: [video-generation]
+method: [transformer]
+lineage: []
+predecessor: []
+importance: 3
 aliases: [LAWM, Latent Action World Models]
 ---
 

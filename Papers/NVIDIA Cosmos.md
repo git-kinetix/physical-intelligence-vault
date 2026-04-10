@@ -1,12 +1,17 @@
 ---
-tags: [paper, video-planning, motion]
+tags: [paper, domain/video-generation, domain/robotics, method/diffusion, method/transformer]
 title: "Cosmos World Foundation Model Platform for Physical AI"
 authors: [Niket Agarwal, Arslan Ali, Maciej Bala, Yogesh Balaji, Erik Barker, Tiffany Cai, Prithvijit Chattopadhyay, Yongxin Chen, Yin Cui, Yifan Ding, Daniel Dworakowski, Jiaojiao Fan, Michele Fenzi, Francesco Ferroni, Sanja Fidler, Dieter Fox, Songwei Ge, Yunhao Ge, Jinwei Gu, Siddharth Gururani, Ethan He, Jiahui Huang, Jacob Huffman, Pooya Jannaty, Jingyi Jin, Seung Wook Kim, Gergely Klar, Grace Lam, Shiyi Lan, Laura Leal-Taixe, Anqi Li, Zhaoshuo Li, Chen-Hsuan Lin, Tsung-Yi Lin, Huan Ling, Ming-Yu Liu, Xian Liu, Alice Luo, Qianli Ma, Hanzi Mao, Kaichun Mo, Arsalan Mousavian, Seungjun Nah, Sriharsha Niverty, David Page, Despoina Paschalidou, Zeeshan Patel, Lindsey Pavao, Morteza Ramezanali, Fitsum Reda, Xiaowei Ren, Vasanth Rao Naik Sabavat, Ed Schmerling, Stella Shi, Bartosz Stefaniak, Shitao Tang, Lyne Tchapmi, Przemek Tredak, Wei-Cheng Tseng, Jibin Varghese, Hao Wang, Haoxiang Wang, Heng Wang, Ting-Chun Wang, Fangyin Wei, Xinyue Wei, Jay Zhangjie Wu, Jiashu Xu, Wei Yang, Lin Yen-Chen, Xiaohui Zeng, Yu Zeng, Jing Zhang, Qinsheng Zhang, Yuxuan Zhang, Qingqing Zhao, Artur Zolkowski]
 year: 2025
 arxiv: "https://arxiv.org/abs/2501.03575"
 repo: "https://github.com/NVIDIA/Cosmos"
 group: "Video Generation / Planning"
-importance: 
+venue: "arXiv 2025"
+domain: [video-generation, robotics]
+method: [diffusion, transformer]
+lineage: []
+predecessor: []
+importance: 4
 aliases: [Cosmos, NVIDIA Cosmos, Cosmos WFM, Cosmos-Predict1, Cosmos Tokenizer]
 ---
 
