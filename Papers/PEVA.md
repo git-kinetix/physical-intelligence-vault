@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, motion]
+tags: [paper, domain/egocentric, method/diffusion]
 title: "PEVA: Whole-Body Conditioned Egocentric Video Prediction"
 authors: [Yutong Bai, Danny Tran, Amir Bar, Yann LeCun, Trevor Darrell, Jitendra Malik]
 year: 2025
 arxiv: "https://arxiv.org/abs/2506.21552"
 repo: ""
 group: "Video Prediction"
-importance: 
+venue: "arXiv 2025"
+domain: [egocentric]
+method: [diffusion]
+lineage: []
+predecessor: []
+importance: 2
 aliases: [PEVA, Predict Egocentric Video from Human Actions]
 ---
 

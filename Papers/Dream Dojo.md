@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, motion]
+tags: [paper, domain/egocentric, domain/robotics, method/diffusion, method/transformer]
 title: "DreamDojo: A Generalist Robot World Model from Large-Scale Human Videos"
 authors: [Shenyuan Gao, William Liang, Kaiyuan Zheng, Ayaan Malik, Seonghyeon Ye, Sihyun Yu, Wei-Cheng Tseng, Yuzhu Dong, Kaichun Mo, Chen-Hsuan Lin, Qianli Ma, Seungjun Nah, Loic Magne, Jiannan Xiang, Yuqi Xie, Ruijie Zheng, Dantong Niu, You Liang Tan, K.R. Zentner, George Kurian, Suneel Indupuru, Pooya Jannaty, Jinwei Gu, Jun Zhang, Jitendra Malik, Pieter Abbeel, Ming-Yu Liu, Yuke Zhu, Joel Jang, Linxi Fan]
 year: 2026
 arxiv: "https://arxiv.org/abs/2602.06949"
 repo: "https://github.com/NVIDIA/DreamDojo"
 group: "World Models"
-importance: 
+venue: "arXiv 2026"
+domain: [egocentric, robotics]
+method: [diffusion, transformer]
+lineage: []
+predecessor: []
+importance: 3
 aliases: [DreamDojo, Dream Dojo]
 ---
 
@@ -63,12 +68,12 @@ DreamDojo is built on the [[NVIDIA Cosmos|Cosmos]]-Predict2.5 latent video diffu
 
 ### Table 1: Dataset Scale Comparison
 
-| Dataset | Type | Hours | Trajectories | Skills | Scenes |
-|---------|------|-------|-------------|--------|--------|
-| **[[DreamDojo-HV]]** | **Human** | **43,827** | **1,135K** | **6,015** | **1,135K** |
-| **Our Full Mixture** | **Human** | **44,711** | **1,179K** | **>=6,015** | **>=1,135K** |
-| [[AgiBot-World]] | Robot | 2,900 | 1,000K | 87 | 106 |
-| [[DROID]] | Robot | 350 | 76K | 86 | 564 |
+| Dataset              | Type      | Hours      | Trajectories | Skills      | Scenes       |
+| -------------------- | --------- | ---------- | ------------ | ----------- | ------------ |
+| **[[DreamDojo-HV]]** | **Human** | **43,827** | **1,135K**   | **6,015**   | **1,135K**   |
+| **Our Full Mixture** | **Human** | **44,711** | **1,179K**   | **>=6,015** | **>=1,135K** |
+| [[AgiBot-World]]     | Robot     | 2,900      | 1,000K       | 87          | 106          |
+| [[DROID]]            | Robot     | 350        | 76K          | 86          | 564          |
 
 DreamDojo's training data exceeds prior robot datasets by enormous margins: 15x more hours than [[AgiBot-World]], 96x more skills than any robot dataset, and 2,000x more unique scenes. This scale advantage is the core enabler of DreamDojo's generalization capabilities.
 
@@ -84,12 +89,12 @@ Pretraining with latent actions consistently outperforms both no pretraining and
 
 ### Table 3: Data Mixture Effects (DreamDojo-14B)
 
-| Evaluation Set | [[PSNR]] | [[SSIM]] | [[LPIPS]] |
-|---------------|------|------|-------|
-| In-lab Eval | 21.41 | 0.788 | 0.208 |
-| [[EgoDex]] Eval | 20.53 | 0.787 | 0.213 |
-| [[DreamDojo-HV]] Eval | 18.92 | 0.751 | 0.228 |
-| Counterfactual Eval | 21.09 | 0.793 | 0.185 |
+| Evaluation Set        | [[PSNR]] | [[SSIM]] | [[LPIPS]] |
+| --------------------- | -------- | -------- | --------- |
+| In-lab Eval           | 21.41    | 0.788    | 0.208     |
+| [[EgoDex]] Eval       | 20.53    | 0.787    | 0.213     |
+| [[DreamDojo-HV]] Eval | 18.92    | 0.751    | 0.228     |
+| Counterfactual Eval   | 21.09    | 0.793    | 0.185     |
 
 The 14B model achieves strong performance across all evaluation sets, including out-of-distribution benchmarks. The Counterfactual Eval (testing physics understanding through counterfactual scenarios) achieves particularly good [[LPIPS]] (0.185), suggesting strong physical reasoning.
 

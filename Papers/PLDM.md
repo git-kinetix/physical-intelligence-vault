@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/robotics, method/masked-prediction, method/rl, lineage/jepa]
 title: "Learning from Reward-Free Offline Data: A Case for Planning with Latent Dynamics Models"
 authors: [Vlad Sobal, Wancong Zhang, Kyunghyun Cho, Randall Balestriero, Tim G. J. Rudner, Yann LeCun]
 year: 2025
 arxiv: "https://arxiv.org/abs/2502.14819"
 repo: "https://github.com/vladisai/PLDM"
 group: "World Models"
-importance: 
+venue: "arXiv 2025"
+domain: [robotics]
+method: [masked-prediction, rl]
+lineage: [jepa]
+predecessor: []
+importance: 3
 aliases: [PLDM, Planning with Latent Dynamics Models]
 ---
 

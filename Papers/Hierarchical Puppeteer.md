@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, physics-simulation]
+tags: [paper, domain/robotics, domain/character-animation, method/masked-prediction, method/rl, lineage/jepa]
 title: "Hierarchical World Models as Visual Whole-Body Humanoid Controllers"
 authors: [Nicklas Hansen, Jyothir S V, Vlad Sobal, Yann LeCun, Xiaolong Wang, Hao Su]
 year: 2024
 arxiv: "https://arxiv.org/abs/2405.18418"
 repo: "https://github.com/nicklashansen/puppeteer"
 group: "World Models"
-importance: 
+venue: "arXiv 2025"
+domain: [robotics, character-animation]
+method: [masked-prediction, rl]
+lineage: [jepa]
+predecessor: ["[[V-JEPA 2]]"]
+importance: 3
 aliases: [Puppeteer, Hierarchical Puppeteer, RL Puppeteer]
 ---
 

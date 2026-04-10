@@ -1,12 +1,17 @@
 ---
-tags: [paper, world-model, motion]
+tags: [paper, domain/video-generation, method/diffusion, method/transformer]
 title: "WorldPlay: Towards Long-Term Geometric Consistency for Real-Time Interactive World Modeling"
 authors: [Wenqiang Sun, Haiyu Zhang, Haoyuan Wang, Junta Wu, Zehan Wang, Zhenwei Wang, Yunhong Wang, Jun Zhang, Tengfei Wang, Chunchao Guo]
 year: 2025
 arxiv: "https://arxiv.org/abs/2512.14614"
 repo: "https://github.com/Tencent-Hunyuan/HY-WorldPlay"
 group: "World Models"
-importance: 
+venue: "arXiv 2025"
+domain: [video-generation]
+method: [diffusion, transformer]
+lineage: []
+predecessor: []
+importance: 3
 aliases: [HY-World 1.5, WorldPlay, Hunyuan World 1.5]
 ---
 
