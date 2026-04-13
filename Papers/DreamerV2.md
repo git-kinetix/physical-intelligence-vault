@@ -18,7 +18,7 @@ aliases: [DreamerV2, Dreamer V2]
 !PDFs/DreamerV2.pdf
 
 
-# Mastering Atari with Discrete World Models
+# Mastering Atari with Discrete [[World Models]]
 
 ## Summary
 DreamerV2 is the first world-model-based reinforcement learning agent to achieve human-level performance on the Atari benchmark of 55 games. Building on [[DreamerV1]], it introduces two critical innovations: (1) replacing Gaussian latent variables with categorical (discrete) latent representations in the world model, and (2) KL balancing to improve the training dynamics of the RSSM. These changes enable the world model to more accurately capture the discrete, multi-modal nature of Atari environments.

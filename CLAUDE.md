@@ -1,11 +1,11 @@
 # Physical Intelligence Vault
 
-56 papers on physical intelligence. Use this to answer cross-paper questions.
+60 papers on physical intelligence. Use this to answer cross-paper questions.
 
 ## Groups at a glance
 
-**JEPA Family (9):** Le-World-Model, V-JEPA 2.1, ACT-JEPA, JEPA-WMs, Le-JEPA, TD-JEPA, V-JEPA 2, V-JEPA, I-JEPA
-**World Models (12):** Dream Dojo, Stable World Model, Hunyuan World 1.5, PEVA, PLDM, DIAMOND, Genie 2, TD-MPC2, DreamerV3, IRIS, DreamerV2, DreamerV1
+**JEPA Family (10):** Le-World-Model, V-JEPA 2.1, ACT-JEPA, Embodied AI Agents Modeling the World, JEPA-WMs, Le-JEPA, TD-JEPA, V-JEPA 2, V-JEPA, I-JEPA
+**World Models (15):** Dream Dojo, Stable World Model, Hunyuan World 1.5, PEVA, PLDM, DIAMOND, DINO-WM, Genie 2, TD-MPC2, DreamerV3, Habitat 3.0, IRIS, DreamerV2, DreamerV1, World Models
 **Character Animation (19):** CLoSD, LeVERB, PARC, Hierarchical Puppeteer, MaskedMimic, SuperPADL, CALM, MuscleVAE, Vid2Player3D, ASE, ControlVAE, PADL, PhysicsVAE, AMP, MVAE, MCP, DeepMimic, SFV, DeepLoco
 **VLA Models (9):** GR00T, Gemini Robotics, Pi0.5, Pi0.6, Octo, OpenVLA, Pi0, ACT, RT-2
 **Video Generation / Planning (4):** Learning Latent Action World Models In The Wild, NVIDIA Cosmos, UniPi, UniSim
@@ -22,7 +22,7 @@
 
 ## Vault structure
 
-- `Papers/` — 56 paper nodes with frontmatter (tags, year, arxiv, repo, importance, group)
+- `Papers/` — 60 paper nodes with frontmatter (tags, year, arxiv, repo, importance, group)
 - `Metrics/` — 64 metric definitions
 - `Datasets/` — 78 dataset descriptions
 - `Explainers/` — 10 interactive distill-style explainers

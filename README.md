@@ -1,6 +1,6 @@
 # Physical Intelligence Vault
 
-A research knowledge base covering **56 papers** on physical intelligence — world models, joint-embedding architectures, vision-language-action models, physics-based character control, and video generation for planning.
+A research knowledge base covering **60 papers** on physical intelligence — world models, joint-embedding architectures, vision-language-action models, physics-based character control, and video generation for planning.
 
 **Live site:** [dxlrak3ky5x8b.cloudfront.net](https://dxlrak3ky5x8b.cloudfront.net)
 
@@ -8,8 +8,8 @@ A research knowledge base covering **56 papers** on physical intelligence — wo
 
 | Content | Count |
 |---------|-------|
-| Papers | 56 |
-| Embedded PDFs | 51 |
+| Papers | 60 |
+| Embedded PDFs | 55 |
 | Metric definitions | 64 |
 | Dataset descriptions | 78 |
 | Interactive explainers | 10 |
@@ -19,10 +19,10 @@ Every paper node includes a summary, architecture breakdown, reproduced results 
 ## Papers by group
 
 ### JEPA Family
-Le-World-Model · V-JEPA 2.1 · ACT-JEPA · JEPA-WMs · Le-JEPA · TD-JEPA · V-JEPA 2 · V-JEPA · I-JEPA
+Le-World-Model · V-JEPA 2.1 · ACT-JEPA · Embodied AI Agents Modeling the World · JEPA-WMs · Le-JEPA · TD-JEPA · V-JEPA 2 · V-JEPA · I-JEPA
 
 ### World Models
-Dream Dojo · Stable World Model · Hunyuan World 1.5 · PEVA · PLDM · DIAMOND · Genie 2 · TD-MPC2 · DreamerV3 · IRIS · DreamerV2 · DreamerV1
+Dream Dojo · Stable World Model · Hunyuan World 1.5 · PEVA · PLDM · DIAMOND · DINO-WM · Genie 2 · TD-MPC2 · DreamerV3 · Habitat 3.0 · IRIS · DreamerV2 · DreamerV1 · World Models
 
 ### Character Animation
 CLoSD · LeVERB · PARC · Hierarchical Puppeteer · MaskedMimic · SuperPADL · CALM · MuscleVAE · Vid2Player3D · ASE · ControlVAE · PADL · PhysicsVAE · AMP · MVAE · MCP · DeepMimic · SFV · DeepLoco

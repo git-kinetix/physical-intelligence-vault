@@ -18,7 +18,7 @@ aliases: [DreamerV3, Dreamer V3]
 !PDFs/DreamerV3.pdf
 
 
-# Mastering Diverse Domains through World Models
+# Mastering Diverse Domains through [[World Models]]
 
 ## Summary
 DreamerV3 is a general-purpose reinforcement learning algorithm that masters a wide range of domains with a single set of hyperparameters, eliminating the need for domain-specific tuning. The key insight is a collection of robustness techniques -- symlog predictions, percentile-based return normalization, free bits for KL regularization, and unimix categoricals -- that enable stable learning across domains with vastly different reward scales, observation types, and action spaces. DreamerV3 is the first algorithm to collect diamonds in [[Minecraft]] from scratch without human demonstrations or curricula.
