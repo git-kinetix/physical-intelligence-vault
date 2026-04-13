@@ -1,0 +1,53 @@
+name: Update indexes on new paper
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Papers/*.md'
+
+jobs:
+  update-indexes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Detect new papers
+        id: detect
+        run: |
+          # Find papers added in the last commit
+          NEW=$(git diff --name-only HEAD~1 HEAD -- 'Papers/*.md' | head -20)
+          if [ -z "$NEW" ]; then
+            echo "No new papers detected"
+            echo "has_new=false" >> $GITHUB_OUTPUT
+          else
+            echo "New papers: $NEW"
+            echo "has_new=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update indexes
+        if: steps.detect.outputs.has_new == 'true'
+        run: python3 .github/scripts/update_indexes.py
+
+      - name: Commit and push
+        if: steps.detect.outputs.has_new == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add MOC.md README.md CLAUDE.md
+          # Only commit if there are changes
+          git diff --cached --quiet || git commit -m "Auto-update indexes for new papers
+
+          Co-Authored-By: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          git push

@@ -11,14 +11,17 @@
             "id": "360b1814d3a36d75",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Papers/V-JEPA 2.1.md",
-                "mode": "preview",
-                "source": true
+                "file": "Canvases/Research Lineages.canvas",
+                "viewState": {
+                  "x": 100,
+                  "y": -191.0143835222656,
+                  "zoom": -1.7715919372758389
+                }
               },
-              "icon": "lucide-file",
-              "title": "V-JEPA 2.1"
+              "icon": "lucide-layout-dashboard",
+              "title": "Research Lineages"
             }
           }
         ]
@@ -94,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Papers/V-JEPA 2.1.md",
+                "file": "Canvases/Research Lineages.canvas",
                 "collapseAll": false,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -104,7 +107,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for V-JEPA 2.1"
+              "title": "Backlinks for Research Lineages"
             }
           },
           {
@@ -113,12 +116,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Papers/V-JEPA 2.1.md",
+                "file": "Canvases/Research Lineages.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from V-JEPA 2.1"
+              "title": "Outgoing links from Research Lineages"
             }
           },
           {
@@ -142,7 +145,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "Papers/V-JEPA 2.1.md",
+                "file": "Canvases/Research Lineages.canvas",
                 "options": {
                   "collapse-filter": false,
                   "search": "tag:#paper  ",
@@ -170,7 +173,7 @@
                 }
               },
               "icon": "lucide-git-fork",
-              "title": "Graph of V-JEPA 2.1"
+              "title": "Graph of Research Lineages"
             }
           },
           {
@@ -193,13 +196,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Papers/V-JEPA 2.1.md",
+                "file": "Canvases/Research Lineages.canvas",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of V-JEPA 2.1"
+              "title": "Outline of Research Lineages"
             }
           }
         ],
@@ -207,7 +210,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 421.5
+    "width": 421.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -222,48 +226,53 @@
   },
   "active": "360b1814d3a36d75",
   "lastOpenFiles": [
-    "_scripts/inline_link.py.tmp.3565356.1775836770682",
-    "MOC.md.tmp.3565356.1775836590883",
-    "PDFs/ACT.pdf",
+    "PDFs/JEPA-WMs.pdf",
+    "Papers/JEPA-WMs.md",
+    "Papers/JEPA-WMs.md.tmp.3565356.1776082916482",
+    "CLAUDE.md",
+    "CLAUDE.md.tmp.3565356.1776082129704",
+    "Explainers/mvae/03-scheduled-sampling.html.tmp.3565356.1775846726488",
+    "Explainers/td-jepa/index.html.tmp.3565356.1775846715658",
+    "Explainers/mvae/03-scheduled-sampling.html.tmp.3565356.1775846691281",
+    "Explainers/mvae/02-mixture-of-experts.html.tmp.3565356.1775846662386",
+    "Explainers/mvae/02-mixture-of-experts.html.tmp.3565356.1775846607738",
+    "Explainers/mvae/01-latent-action-space.html.tmp.3565356.1775846582465",
+    "Explainers/le-jepa/index.html",
+    "Explainers/le-jepa/index.html.tmp.3565356.1775846525181",
+    "lineage-full-overview.png",
+    "lineage-zoomed-jepa.png",
+    "lineage-zoomed-peng.png",
+    "lineage-canvas-v1.png",
+    "graph-papers-only.png",
+    "Canvases/Research Lineages.canvas",
+    "docs/superpowers/plans/2026-04-10-vault-searchability.md",
+    "Canvases/Physical Intelligence Overview.canvas",
+    "Papers/Dream Dojo.md",
+    "docs/superpowers/specs/2026-04-10-vault-searchability-design.md",
+    "Datasets/DreamDojo-HV.md",
     "Papers/ACT.md",
-    "Papers/ACT.md.tmp.3565356.1775836431084",
-    "props-initial.png",
-    "_scripts/inline_link.py.tmp.3016615.1775831844371",
-    "_scripts/inline_link.py.tmp.3016615.1775831836287",
-    "Papers/V-JEPA 2.md.tmp.3016615.1775831791254",
-    "_scripts/fix_dotted_names.py",
-    "_scripts/fix_dotted_names.py.tmp.3016615.1775831762677",
-    "Papers/V-JEPA 2.md",
-    "Papers/V-JEPA 2.1.md",
-    "Papers/Octo.md",
-    "MOC.md.tmp.3016615.1775829905630",
-    "PDFs/DeepLoco.pdf",
-    "Papers/MCP.md",
-    "Papers/CLoSD.md",
-    "Papers/SFV.md",
-    "Papers/AMP.md",
-    "Papers/SuperPADL.md",
-    "Papers/DeepLoco.md",
-    "Papers/PADL.md",
-    "Papers/Learning Agile Robotic Locomotion.md",
-    "Papers/Sim-to-Real Transfer.md",
-    "Papers/PhysicsVAE.md",
+    "Papers/Eureka.md",
+    "Papers/Gemini Robotics.md",
+    "Papers/Genie 2.md",
+    "Papers/GR00T.md",
+    "Papers/Hierarchical Puppeteer.md",
+    "Papers/DreamerV1.md",
+    "Papers/DreamerV2.md",
+    "Papers/DreamerV3.md",
+    "Papers/DIAMOND.md",
     "Papers/ControlVAE.md",
-    "Papers/PARC.md",
-    "Papers/MaskedMimic.md",
-    "Papers/MuscleVAE.md",
+    "Papers/CLoSD.md",
+    "Papers/DeepLoco.md",
     "Papers/CALM.md",
     "Papers/ASE.md",
-    "Papers/Vid2Player3D.md",
-    "Papers/DeepMimic.md",
-    "Papers/MVAE.md",
-    "Papers/TD-MPC2.md",
-    "README.md",
-    "graph-papers-only.png",
+    "Papers/ACT-JEPA.md",
+    "Papers/AMP.md",
+    "MOC.md",
+    "Metrics Index.md",
+    "homepage.png",
     "pdf-fixed.png",
     "pdf-embed.png",
     "paper-page.png",
-    "homepage.png",
-    "Canvases/Physical Intelligence Overview.canvas"
+    "props-initial.png"
   ]
 }
