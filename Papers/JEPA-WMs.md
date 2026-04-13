@@ -15,7 +15,7 @@ importance:
 aliases: [JEPA-WMs, JEPA World Models, JEPA-WM]
 ---
 
-![[PDFs/JEPA-WMs.pdf]]
+!PDFs/JEPA-WMs.pdf
 
 # What Drives Success in Physical Planning with Joint-Embedding Predictive World Models?
 
